@@ -10,7 +10,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Kissena Invasive Watch",
-  description: "Invasive species sightings around Kissena Park and Queens College, Flushing, Queens.",
+  description: "Invasive species sightings across Queens, New York City, starting from Kissena Park.",
 };
 
 export default function RootLayout({ children }) {

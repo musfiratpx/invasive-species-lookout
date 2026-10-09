@@ -20,7 +20,7 @@ For file-by-file details, see [backend/data/README.md](../backend/data/README.md
 | Source | Used for | URL | Checked |
 |---|---|---|---|
 | iNaturalist API (via pyinaturalist), research-grade observations | Sightings, photos, sounds, monthly counts | <https://api.inaturalist.org/v1/docs/> | 2026-10-09 |
-| iNaturalist places: New York City (674), New York State (48), Kissena Park (125479), Kissena Corridor Park (125415) | Area fallbacks for photos and sounds | <https://www.inaturalist.org/places> | 2026-10-09 |
+| iNaturalist places: Queens County (675), New York City (674), New York State (48), Kissena Park (125479), Kissena Corridor Park (125415) | Map area (Queens) and fallbacks for photos and sounds | <https://www.inaturalist.org/places> | 2026-10-09 |
 
 Each photo and sound carries its own attribution, license and observation link in `backend/data/cache/media.json`.
 
@@ -85,6 +85,7 @@ Record judgment calls here so the team can explain them.
 | Date | Decision | Why |
 |---|---|---|
 | 2026-10-09 | Area = 2 km circle around 40.741, -73.812 | Covers both Kissena Park and Queens College; iNaturalist's park boundary leaves out QC. |
+| 2026-10-09 | Area expanded to all of Queens (iNaturalist place 675) | Team decision. 76 listed species, 14,620 sightings. Project name and API field names (e.g. `kissena_status`) kept so nothing breaks. |
 | 2026-10-09 | Sounds only looked up for animals | "Sounds" attached to plant observations are birdsong or wind, not the plant. |
 | 2026-10-09 | Sightings identified only to a parent species don't count for below-species list entries (porcelain berry, red-eared slider, Africanized honey bee) | The list names the variety or subspecies; counting the whole species would be a guess. The Researcher may revisit this. |
 | 2026-10-09 | Bamboos (*Phyllostachys*) and *Myriophyllum heterophyllum × laxum* are "Not yet ranked" | Their forms are "Not Assessable", or there is no form. |

@@ -15,9 +15,9 @@ Checks that the server is up and shows which modes are active.
 ```json
 {
   "ok": true,
-  "area": {"name": "Kissena Park & Queens College, Flushing, Queens", "inat_place_ids": [],
+  "area": {"name": "Queens, New York City", "inat_place_ids": [675],
            "center": [40.741, -73.812], "radius_km": 2.0},
-  "observations": 778,
+  "observations": 14620,
   "cache_updated_at": "2026-10-09T18:02:11+00:00",
   "rag_mode": "extractive",
   "retriever": "keyword"

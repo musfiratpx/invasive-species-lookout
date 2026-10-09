@@ -14,7 +14,7 @@ from app import config, data
 
 app = FastAPI(
     title="Kissena Invasive Watch API",
-    description="Invasive species sightings around Kissena Park and Queens College.",
+    description="Invasive species sightings across Queens, New York City.",
 )
 
 # Let the Next.js dev server (a different port) call this API from the browser.

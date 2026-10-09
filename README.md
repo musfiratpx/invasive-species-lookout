@@ -1,6 +1,6 @@
 # Kissena Invasive Watch
 
-An interactive map of **invasive species around Kissena Park and Queens College** (Flushing, Queens, NYC), built at **HackKnight 2026**.
+An interactive map of **invasive species across Queens, New York City**, started around Kissena Park and Queens College and built at **HackKnight 2026**.
 
 Click any sighting on the map to see what the species is, how dangerous it is (from official New York rankings, never AI), whether it's common or spreading here, when it shows up during the year, and how to handle it. Every fact links to its source.
 
@@ -64,9 +64,9 @@ The cached data is already in git. To update it, run these from `backend/` with 
 
 | Script | What it does |
 |---|---|
-| `python scripts/fetch_observations.py` | Sightings of NY-listed species within 2 km of Kissena Park and QC |
+| `python scripts/fetch_observations.py` | Sightings of NY-listed species in Queens (iNaturalist place 675) |
 | `python scripts/fetch_media.py` | Photos and real sound recordings, with credits |
-| `python scripts/fetch_seasonality.py` | Sightings per month (Kissena + QC, and all of NYC) |
+| `python scripts/fetch_seasonality.py` | Sightings per month (Queens, and all of NYC) |
 | `python scripts/build_insights.py` | Sidebar text from the fact sheets in `knowledge/` |
 | `python scripts/build_danger_levels.py` | Rebuilds `danger_levels.csv` from the official sources |
 | `python scripts/make_music.py` | One-time background music (needs `ELEVENLABS_API_KEY`) |
@@ -80,7 +80,7 @@ Restart the backend afterwards. The iNaturalist scripts go through `pyinaturalis
 | `SNOWFLAKE_*` | Retrieval through Snowflake Cortex Search. Run `backend/snowflake/setup.sql` once, then `python scripts/load_chunks.py`. |
 | `SNOWFLAKE_CORTEX_MODEL` (plus the settings above) | A Snowflake Cortex model rewrites fact-sheet sections into short plain-English text (still grounded only on our sources). |
 | `ELEVENLABS_API_KEY` | Lets `make_music.py` generate the background music. |
-| `INAT_PLACE_IDS` | Use exact iNaturalist park boundaries instead of the 2 km circle (leaves out QC). |
+| `INAT_PLACE_IDS` | Which iNaturalist place(s) to cover. Default `675` = Queens; `674` = all of NYC; empty = a 2 km circle around Kissena Park + QC. Rerun the fetch scripts after changing it. |
 
 Without these keys, the app uses local keyword search and shows fact-sheet text word for word.
 

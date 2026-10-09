@@ -28,7 +28,10 @@ export default function Legend() {
           </li>
         ))}
       </ul>
-      <p className="muted" style={{ margin: 0 }}>Dashed border = approximate location. Zoom in to see each sighting.</p>
+      <p className="muted" style={{ margin: 0 }}>
+        Zoom in to see each sighting. Sightings whose exact location is hidden for privacy are counted in each
+        species&apos; totals but not shown on the map.
+      </p>
     </aside>
   );
 }

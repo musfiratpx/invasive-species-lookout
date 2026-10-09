@@ -21,17 +21,17 @@ def _env(name, default=""):
 
 
 # --- Area -------------------------------------------------------------------
-# By default we search a circle that covers both Kissena Park and Queens College.
-# To use exact iNaturalist park boundaries instead, set INAT_PLACE_IDS in .env
-# (125479 = Kissena Park, 125415 = Kissena Corridor Park). Those leave out QC.
-INAT_PLACE_IDS = [int(p) for p in _env("INAT_PLACE_IDS").split(",") if p.strip()]
+# By default we cover all of Queens: iNaturalist place 675 = Queens County, NY.
+# Other places: 125479 = Kissena Park, 125415 = Kissena Corridor Park, 674 = New York City.
+# Set INAT_PLACE_IDS= (empty) in .env to use the circle below instead.
+INAT_PLACE_IDS = [int(p) for p in os.getenv("INAT_PLACE_IDS", "675").split("#")[0].split(",") if p.strip()]
 
-# The search circle (used when INAT_PLACE_IDS is empty).
+# The search circle (only used when INAT_PLACE_IDS is empty): 2 km around Kissena Park + Queens College.
 AREA_LAT = float(_env("AREA_LAT", "40.741"))
 AREA_LNG = float(_env("AREA_LNG", "-73.812"))
 AREA_RADIUS_KM = float(_env("AREA_RADIUS_KM", "2"))
 
-AREA_NAME = "Kissena Park & Queens College, Flushing, Queens"
+AREA_NAME = "Queens, New York City"
 
 # --- Paths ------------------------------------------------------------------
 DATA_DIR = BACKEND_DIR / "data"

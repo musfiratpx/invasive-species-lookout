@@ -15,10 +15,11 @@ Usage (from backend/):  python scripts/fetch_media.py
 """
 
 import json
+import sys
 
 import _setup  # noqa: F401  (adds backend/ to the import path)
 import pandas as pd
-from _setup import NY_STATE_PLACE_ID, NYC_PLACE_ID, area_params
+from _setup import NY_STATE_PLACE_ID, NYC_PLACE_ID, area_params, polite
 from pyinaturalist import get_observations
 
 from app import config
@@ -52,7 +53,7 @@ def find_photos(species_id, where, licenses):
     if licenses:
         params["photo_license"] = [code.upper() for code in licenses]  # the API wants "CC-BY", returns "cc-by"
     photos = []
-    for obs in get_observations(**params)["results"]:
+    for obs in polite(get_observations, **params)["results"]:
         for photo in obs.get("photos", [])[:1]:  # one photo per observation gives more variety
             if licenses is None or photo.get("license_code") in licenses:
                 photos.append(photo_record(photo, obs))
@@ -88,7 +89,7 @@ def find_sound(species_id):
             params = {"taxon_id": species_id, "sounds": True, "quality_grade": "research", "per_page": 10, **where}
             if licenses:
                 params["sound_license"] = [code.upper() for code in licenses]
-            for obs in get_observations(**params)["results"]:
+            for obs in polite(get_observations, **params)["results"]:
                 for sound in obs.get("sounds", []):
                     if sound.get("file_url") and (licenses is None or sound.get("license_code") in licenses):
                         return {
@@ -107,16 +108,23 @@ def find_sound(species_id):
 def main():
     observations = pd.read_csv(config.OBSERVATIONS_CSV)
     species = observations.drop_duplicates("species_id")[["species_id", "listed_name", "iconic_taxon"]]
-    print(f"Collecting media for {len(species)} species (about 1 request per second)...")
+    # Reuse species we already have (photos and sounds don't depend on the area much);
+    # pass --refresh to download everything again.
+    old = {} if "--refresh" in sys.argv or not config.MEDIA_JSON.exists() else json.loads(config.MEDIA_JSON.read_text())
+    print(f"Collecting media for {len(species)} species ({sum(str(int(s)) in old for s in species.species_id)} reused from cache)...")
 
     media = {}
     for _, row in species.iterrows():
         species_id = int(row["species_id"])
+        if str(species_id) in old:
+            media[str(species_id)] = old[str(species_id)]
+            continue
         photos = collect_photos(species_id)
         sound = None if row["iconic_taxon"] in SILENT_GROUPS else find_sound(species_id)
         media[str(species_id)] = {"scientific_name": row["listed_name"], "photos": photos, "sound": sound}
         cc = sum(1 for p in photos if p["license"])
         print(f"  {row['listed_name']:32s} photos: {len(photos)} ({cc} CC)   sound: {'yes' if sound else 'none'}")
+        config.MEDIA_JSON.write_text(json.dumps({**old, **media}, indent=2))  # save as we go, in case we're interrupted
 
     config.MEDIA_JSON.write_text(json.dumps(media, indent=2))
     with_sound = sum(1 for m in media.values() if m["sound"])
