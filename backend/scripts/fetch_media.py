@@ -80,11 +80,11 @@ def collect_photos(species_id):
 def find_sound(species_id):
     """
     One real recording: Kissena, then NYC, then NY State. Returns a dict or None.
-    In each area we try Creative Commons recordings first, because "all rights
-    reserved" ones can only be linked to, not played in the app.
+    We look for a Creative Commons recording in all three areas first, because
+    "all rights reserved" ones can only be linked to, not played in the app.
     """
-    for where in (area_params(), {"place_id": NYC_PLACE_ID}, {"place_id": NY_STATE_PLACE_ID}):
-        for licenses in (CC_LICENSES, None):
+    for licenses in (CC_LICENSES, None):
+        for where in (area_params(), {"place_id": NYC_PLACE_ID}, {"place_id": NY_STATE_PLACE_ID}):
             params = {"taxon_id": species_id, "sounds": True, "quality_grade": "research", "per_page": 10, **where}
             if licenses:
                 params["sound_license"] = [code.upper() for code in licenses]
