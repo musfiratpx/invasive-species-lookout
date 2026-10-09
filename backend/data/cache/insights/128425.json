@@ -1,25 +1,33 @@
 {
-  "summary": null,
-  "history": null,
+  "summary": "The oriental weatherfish, also called the pond loach or dojo loach, is a small fish that burrows into soft bottoms and can survive low-oxygen water by gulping air. Its name comes from the way it becomes more active when air pressure changes, so it has long been called a sign of coming storms. It may reduce the aquatic insects that native fish eat, and may compete with the native eastern mudminnow for food.",
+  "history": "The oriental weatherfish is native to eastern Asia, from Siberia to northern Vietnam, including Japan. In the United States, early populations came from fish that escaped from a goldfish farm in California and an aquarium supply company in Michigan, and other introductions were presumably released aquarium fish. It is established in several states, including New York.",
   "seasons": null,
   "handling": {
-    "text": null,
+    "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
     "touch_safe": null
   },
   "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
-      "title": "Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)",
-      "url": "https://www.nyimapinvasives.org/report"
+      "title": "Misgurnus anguillicaudatus (Pond Loach / Oriental Weatherfish) - Species Profile | USGS Nonindigenous Aquatic Species Database",
+      "url": "https://nas.er.usgs.gov/queries/FactSheet.aspx?speciesID=498"
+    },
+    {
+      "title": "Guidelines for Owners of Aquariums and Exotic Pets (NYS DEC)",
+      "url": "https://extapps.dec.ny.gov/docs/lands_forests_pdf/guideforaquaowners.pdf"
     },
     {
       "title": "NYC Parks Rules, 56 RCNY \u00a71-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)",
       "url": "https://www.nycgovparks.org/rules/section-1-04"
+    },
+    {
+      "title": "Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)",
+      "url": "https://www.nyimapinvasives.org/report"
     }
   ],
   "generated_with": {
     "retriever": "keyword",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:01:47.265816+00:00"
+  "generated_at": "2026-10-09T20:06:43.874956+00:00"
 }

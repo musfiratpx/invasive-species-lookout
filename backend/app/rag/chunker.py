@@ -80,6 +80,11 @@ def load_chunks(knowledge_dir=None):
     folder = Path(knowledge_dir or config.KNOWLEDGE_DIR)
     chunks = []
     for path in sorted(folder.glob("*.md")):
-        if not path.name.startswith("_") and path.name.lower() != "readme.md":
+        if path.name.startswith("_") or path.name.lower() == "readme.md":
+            continue
+        try:
             chunks.extend(chunk_file(path))
+        except yaml.YAMLError as error:
+            # One broken header shouldn't take down every species; skip it loudly instead.
+            print(f"[chunker] SKIPPED {path.name}: its --- header is not valid YAML ({error.problem})")
     return chunks

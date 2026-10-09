@@ -176,3 +176,12 @@ def test_report_is_never_ai_written(chunks):
 def test_html_comments_are_dropped(tmp_path):
     (tmp_path / "x.md").write_text(EXAMPLE_SHEET.replace("## History\n", "## History\n<!-- a hint, not content -->\n"))
     assert all(c.section != "History" for c in load_chunks(tmp_path))
+
+
+def test_broken_header_is_skipped_not_fatal(tmp_path, capsys):
+    (tmp_path / "good.md").write_text(EXAMPLE_SHEET)
+    (tmp_path / "bad.md").write_text('---\nsources:\n  - title: "a "quoted" word"\n---\n## Summary\ntext\n')
+    chunks = load_chunks(tmp_path)
+    assert any(c.file == "good.md" for c in chunks)
+    assert all(c.file != "bad.md" for c in chunks)
+    assert "SKIPPED bad.md" in capsys.readouterr().out

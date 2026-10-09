@@ -1,25 +1,29 @@
 {
-  "summary": null,
-  "history": null,
+  "summary": "Chinese yam, also called cinnamon vine, is a fast-growing vine that climbs over nearby plants and covers them in a thick blanket of leaves, shading them out; on trees it can get heavy enough to bend and break small stems. In North America it spreads mainly through small bulb-like buds (bulbils) that form along the vine, rather than by seed, and even broken or partly eaten bulbils can grow into new plants. Water can carry the bulbils more than 200 meters.",
+  "history": "Chinese yam is native to East Asia (northern China, Korea and Japan). It is rarely planted in gardens, and throwing out yard waste containing its tubers can spread it. In New York it is known from the Lower Hudson region and Long Island.",
   "seasons": null,
   "handling": {
-    "text": null,
+    "text": "Small, isolated patches can be controlled by digging out the entire underground tuber. Large infestations usually need herbicides and repeat treatments, because the deep tubers store food that lets the vine regrow. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
   },
   "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
-      "title": "Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)",
-      "url": "https://www.nyimapinvasives.org/report"
+      "title": "New York Non-Native Plant Invasiveness Ranking Form, Dioscorea polystachya",
+      "url": "https://nyis.info/wp-content/uploads/2024/10/d971e_Dioscorea.polystachya.NYS_.pdf"
     },
     {
       "title": "NYC Parks Rules, 56 RCNY \u00a71-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)",
       "url": "https://www.nycgovparks.org/rules/section-1-04"
+    },
+    {
+      "title": "Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)",
+      "url": "https://www.nyimapinvasives.org/report"
     }
   ],
   "generated_with": {
     "retriever": "keyword",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:01:47.265386+00:00"
+  "generated_at": "2026-10-09T20:06:43.874330+00:00"
 }
