@@ -1,8 +1,4 @@
 """
-Generate the app's background music ONCE with the ElevenLabs Music API.
-
-Ground rule: ElevenLabs is used ONLY for this background music, never for
-species sounds or voices.
 
 Saves:
   frontend/public/audio/background.mp3        the music file
@@ -27,15 +23,16 @@ import requests
 
 from app import config
 
+
 API_URL = "https://api.elevenlabs.io/v1/music"
 OUTPUT_FORMAT = "mp3_44100_128"
 
-PROMPT = "calm, light acoustic nature-documentary background music, no vocals, loopable, 60 seconds"
+PROMPT = "light classical nature-like background music, no vocals, loopable, 60 seconds"
 SETTINGS = {
     "prompt": PROMPT,
     "music_length_ms": 60_000,
-    "force_instrumental": True,  # guarantees no vocals
-    "model_id": "music_v1",      # the API's default model
+    "force_instrumental": True, 
+    "model_id": "music_v1",   
 }
 
 AUDIO_DIR = config.BACKEND_DIR.parent / "frontend" / "public" / "audio"
@@ -70,7 +67,6 @@ def main():
         timeout=300,
     )
     if response.status_code != 200:
-        # Show the API's error message, but never the key.
         print(f"ElevenLabs returned {response.status_code}: {response.text[:500]}")
         sys.exit(1)
 
