@@ -1,13 +1,17 @@
 {
-  "summary": null,
-  "history": null,
-  "seasons": null,
+  "summary": "Garlic mustard is an invasive herb and one of the worst invaders of forests in the Northeast and Midwest. It is one of very few non-native plants that can take over the shady forest floor, where it forms dense stands that block light, water and nutrients from native wildflowers. It also releases chemicals that slow the growth of other plants. Removing it has been shown to bring back a greater variety of other plants, including tree seedlings.",
+  "history": "Garlic mustard comes from Europe and parts of Asia and is believed to have been brought to North America for medicine and food. The earliest known report of it growing in the United States is from 1868 on Long Island, New York. It has since spread across the eastern United States and Canada and as far west as Washington, Utah and British Columbia.",
+  "seasons": "Garlic mustard takes two years to complete its life. In the first year, seeds sprout in February or early March and grow into a low rosette of dark green, kidney-shaped, scalloped leaves. In the second year it grows a flower stalk: small white four-petaled flowers appear in early April, four-sided seedpods form in May, and the plant dies by June. Crushed leaves smell like garlic, which helps identify it.",
   "handling": {
-    "text": null,
+    "text": "Hand-pulling can stop garlic mustard from spreading if it is done before the seeds form. At least the upper half of the root must come out, which is easiest in spring when the soil is soft, and pulling needs to be repeated for up to five years because seeds can survive that long in the soil. Seeds are mainly spread by people and animals carrying them, so limiting foot traffic and soil disturbance in the forest helps prevent new infestations.",
     "touch_safe": null
   },
   "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.",
   "sources": [
+    {
+      "title": "Garlic Mustard | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
+      "url": "https://nyis.info/species/garlic-mustard/"
+    },
     {
       "title": "Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)",
       "url": "https://www.nyimapinvasives.org/report"
@@ -17,5 +21,5 @@
     "retriever": "keyword",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T19:43:12.422894+00:00"
+  "generated_at": "2026-10-09T19:46:59.065565+00:00"
 }

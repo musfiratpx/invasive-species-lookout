@@ -36,6 +36,11 @@ Each photo and sound carries its own attribution, license and observation link i
 | Species / file | Sources used | Accessed | Written by |
 |---|---|---|---|
 | `how-to-report.md` (general) | NY iMapInvasives "Report an Invasive" (NY Natural Heritage Program: SUNY ESF + NYS DEC), <https://www.nyimapinvasives.org/report> | 2026-10-09 | Claude (draft), needs Researcher review |
+| `artemisia-vulgaris.md` (mugwort) | NYIS species profile <https://nyis.info/species/mugwort/>; NY ranking form (link in file) | 2026-10-09 | Claude (draft), needs Researcher review |
+| `cygnus-olor.md` (mute swan) | NYIS species profile <https://nyis.info/species/mute-swan/> | 2026-10-09 | Claude (draft), needs Researcher review |
+| `ficaria-verna.md` (lesser celandine) | NYIS species profile <https://nyis.info/species/lesser-celandine/> | 2026-10-09 | Claude (draft), needs Researcher review |
+| `rosa-multiflora.md` (multiflora rose) | NYIS species profile <https://nyis.info/species/multiflora-rose/> | 2026-10-09 | Claude (draft), needs Researcher review |
+| `alliaria-petiolata.md` (garlic mustard) | NYIS species profile <https://nyis.info/species/garlic-mustard/> | 2026-10-09 | Claude (draft), needs Researcher review |
 
 ## Decisions log
 
@@ -47,5 +52,6 @@ Record judgment calls here so the team can explain them.
 | 2026-10-09 | Sounds only looked up for animals | "Sounds" attached to plant observations are birdsong or wind, not the plant. |
 | 2026-10-09 | Sightings identified only to a parent species don't count for below-species list entries (porcelain berry, red-eared slider, Africanized honey bee) | The list names the variety or subspecies; counting the whole species would be a guess. The Researcher may revisit this. |
 | 2026-10-09 | Bamboos (*Phyllostachys*) and *Myriophyllum heterophyllum × laxum* are "Not yet ranked" | Their forms are "Not Assessable", or there is no form. |
+| 2026-10-09 | Mute swan `touch_safe: false` | NYIS: "Do not handle or harm the swans, their nests, or any eggs without DEC authorization." All plant sheets stay `null`: no source says explicitly whether touching is safe. |
 | 2026-10-09 | Plant "How to handle it" text describes control methods but doesn't tell visitors to pull plants in Kissena | Kissena is a NYC park. NYC Parks rules appear to forbid removing vegetation without permission (56 RCNY §1-04), but we could only find that text on unofficial copies, so it's not in the fact sheets yet. **Researcher: verify on nycgovparks.org/rules in a browser and add it to `how-to-report.md` if confirmed.** |
 | 2026-10-09 | Curly pondweed keeps rank "Very High" although its score is 79.79 | We copy the official rank as published. |
