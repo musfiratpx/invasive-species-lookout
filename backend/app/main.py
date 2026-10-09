@@ -7,10 +7,10 @@ Then open http://localhost:8000/docs to try every endpoint in the browser.
 
 from datetime import datetime, timezone
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from app import config
+from app import config, data
 
 app = FastAPI(
     title="Kissena Invasive Watch API",
@@ -60,3 +60,34 @@ def health():
         "rag_mode": "gemini" if config.gemini_enabled() else "extractive",
         "retriever": "snowflake" if config.snowflake_enabled() else "keyword",
     }
+
+
+@app.get("/api/map/observations")
+def map_observations(
+    bbox: str | None = Query(None, description="minLng,minLat,maxLng,maxLat (optional)"),
+):
+    """Sightings to draw on the map. Pass the visible map area as bbox to get only those."""
+    box = None
+    if bbox:
+        try:
+            box = [float(v) for v in bbox.split(",")]
+        except ValueError:
+            box = []
+        if len(box) != 4:
+            raise HTTPException(400, "bbox must be four numbers: minLng,minLat,maxLng,maxLat")
+    return data.map_observations(box)
+
+
+@app.get("/api/species")
+def species_list():
+    """Every NY-listed invasive species seen in the area, most-sighted first."""
+    return data.species_list()
+
+
+@app.get("/api/species/{species_id}")
+def species_detail(species_id: str):
+    """Everything the sidebar shows for one species (species_id = iNaturalist taxon ID)."""
+    detail = data.species_detail(species_id)
+    if detail is None:
+        raise HTTPException(404, f"No sightings of species {species_id} in our data")
+    return detail

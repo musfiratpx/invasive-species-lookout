@@ -41,7 +41,7 @@ def photo_record(photo, obs):
         "large_url": square_url.replace("/square.", "/large."),
         "attribution": photo.get("attribution", ""),
         "license": photo.get("license_code"),  # None means "all rights reserved"
-        "observation_url": obs.get("uri") or f"https://www.inaturalist.org/observations/{obs['id']}",
+        "observation_url": f"https://www.inaturalist.org/observations/{obs['id']}",
     }
 
 
@@ -99,7 +99,7 @@ def find_sound(species_id):
                             # The observer's own words, so the UI can say what you're hearing
                             # (e.g. the spongy moth "sound" is caterpillar droppings falling).
                             "observer_note": (obs.get("description") or "").strip()[:300],
-                            "observation_url": obs.get("uri") or f"https://www.inaturalist.org/observations/{obs['id']}",
+                            "observation_url": f"https://www.inaturalist.org/observations/{obs['id']}",
                         }
     return None
 

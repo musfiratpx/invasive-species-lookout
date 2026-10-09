@@ -536,7 +536,7 @@
         "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/2388942/large.jpg",
         "attribution": "(c) acwond, some rights reserved (CC BY-NC)",
         "license": "cc-by-nc",
-        "observation_url": "http://www.inaturalist.org/observations/1949816"
+        "observation_url": "https://www.inaturalist.org/observations/1949816"
       },
       {
         "photo_id": 385705602,
@@ -1689,7 +1689,7 @@
         "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1099999/large.jpg",
         "attribution": "(c) sheenachin, some rights reserved (CC BY-NC)",
         "license": "cc-by-nc",
-        "observation_url": "http://www.inaturalist.org/observations/867063"
+        "observation_url": "https://www.inaturalist.org/observations/867063"
       },
       {
         "photo_id": 534430870,

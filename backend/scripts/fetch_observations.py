@@ -140,7 +140,7 @@ def download_observations(matches, taxon_map):
             "latitude": lat,
             "longitude": lng,
             "place_guess": obs.get("place_guess") or "",
-            "url": obs.get("uri") or f"https://www.inaturalist.org/observations/{obs['id']}",
+            "url": f"https://www.inaturalist.org/observations/{obs['id']}",
             "license": obs.get("license_code") or "",
             "observer": (obs.get("user") or {}).get("login", ""),
             "obscured": bool(obs.get("obscured")),
