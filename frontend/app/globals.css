@@ -20,6 +20,10 @@
   --danger-1: #2e7d32;
   --danger-none: #757575;
 
+  /* Map clusters (neutral, not a danger color) */
+  --cluster: #37474f;
+  --cluster-ring: rgba(255, 255, 255, 0.85);
+
   /* Layout */
   --header-height: 48px;
   --sidebar-width: 400px;
@@ -78,18 +82,45 @@ button {
   width: 30px; height: 30px; border-radius: 50%;
   background: #fff; border: 3px solid; font-size: 16px; line-height: 1;
 }
-.species-marker.obscured { border-style: dashed; opacity: 0.7; }
+
+/* Cluster bubbles: one neutral color, so color on the map only ever means danger level */
+.cluster-bubble {
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; color: #fff; font-weight: 600; font-size: 13px;
+  background: var(--cluster); border: 3px solid var(--cluster-ring);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.cluster-small  { width: 30px !important; height: 30px !important; margin: -15px 0 0 -15px !important; }
+.cluster-medium { width: 38px !important; height: 38px !important; margin: -19px 0 0 -19px !important; }
+.cluster-large  { width: 48px !important; height: 48px !important; margin: -24px 0 0 -24px !important; font-size: 14px; }
 
 /* ---------- Legend ---------- */
 .legend {
   position: absolute; bottom: var(--gap); left: var(--gap); z-index: 1000;
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 8px 10px; font-size: 0.8rem; max-width: 220px;
+  padding: 8px 10px; font-size: 0.8rem; width: 230px; max-height: calc(100% - 2 * var(--gap)); overflow-y: auto;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
 }
-.legend h2 { font-size: 0.85rem; margin: 0 0 4px; }
-.legend ul { list-style: none; margin: 0 0 6px; padding: 0; }
-.legend li { display: flex; align-items: center; gap: 6px; margin: 2px 0; }
-.swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.legend h2 { font-size: 0.85rem; margin: 6px 0 4px; }
+.legend ul { list-style: none; margin: 0 0 4px; padding: 0; }
+.legend li { margin: 2px 0; }
+.legend-header { display: flex; align-items: center; justify-content: space-between; }
+.legend-count { margin: 0; }
+.legend-close { border: none; padding: 2px 6px; }
+.legend-note { margin: 6px 0 0; }
+.legend-open-button {
+  position: absolute; bottom: var(--gap); left: var(--gap); z-index: 1000;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2); padding: 6px 12px; font-weight: 600;
+}
+.swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex: none; }
+
+/* Filter chips: pressed = shown on the map, unpressed = hidden (faded, struck through) */
+.chip {
+  display: flex; align-items: center; gap: 6px; width: 100%;
+  padding: 3px 8px; border-radius: 999px; font-size: 0.8rem; text-align: left;
+}
+.chip[aria-pressed="false"] { opacity: 0.45; text-decoration: line-through; background: var(--surface); }
+.chip-count { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* ---------- Sidebar ---------- */
 .sidebar {
@@ -117,7 +148,7 @@ button {
     border-left: none; border-top: 1px solid var(--border);
     border-radius: 12px 12px 0 0;
   }
-  .legend { display: none; }
+  .legend { width: calc(100% - 2 * var(--gap)); max-height: 60%; }
 }
 
 /* Loading skeleton */

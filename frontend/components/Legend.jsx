@@ -1,36 +1,63 @@
+"use client";
 /**
- * Map legend: what the icon border colors and the icons mean.
+ * Map legend that doubles as a filter: tap a danger level or a type to hide or
+ * show it on the map. Each button shows how many sightings it covers;
+ * options with no sightings (e.g. no "Low" species in Queens) are left out.
+ * It can be collapsed behind a "Filter" button to keep the map clear
+ * (it starts collapsed on phones, see app/page.js).
  */
 
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
-import { TAXON_ICONS } from "@/lib/taxa";
+import { TYPE_FILTERS } from "@/lib/taxa";
 
 const LEVELS = [4, 3, 2, 1, null];
-const SHOWN_GROUPS = ["Plantae", "Aves", "Insecta", "Actinopterygii", "Mollusca", "Animalia"];
 
-export default function Legend() {
+export default function Legend({ open, onToggleOpen, hiddenLevels, hiddenTypes, onToggleLevel, onToggleType, counts, shown, total }) {
+  if (!open) {
+    return (
+      <button className="legend-open-button" onClick={onToggleOpen} aria-expanded="false">
+        Filter · {shown.toLocaleString()} sightings
+      </button>
+    );
+  }
+
   return (
-    <aside className="legend" aria-label="Map legend">
+    <aside className="legend" aria-label="Map legend and filters">
+      <div className="legend-header">
+        <p className="muted legend-count">
+          Showing {shown.toLocaleString()} of {total.toLocaleString()}
+        </p>
+        <button className="legend-close" onClick={onToggleOpen} aria-expanded="true" aria-label="Hide filters">✕</button>
+      </div>
+
       <h2>Danger level</h2>
       <ul>
-        {LEVELS.map((level) => (
+        {LEVELS.filter((level) => counts.levels[String(level)]).map((level) => (
           <li key={String(level)}>
-            <span className="swatch" style={{ background: DANGER_COLORS[level] }} aria-hidden="true" />
-            {DANGER_LABELS[level]}
+            <button className="chip" aria-pressed={!hiddenLevels.has(level)} onClick={() => onToggleLevel(level)}>
+              <span className="swatch" style={{ background: DANGER_COLORS[level] }} aria-hidden="true" />
+              {DANGER_LABELS[level]}
+              <span className="chip-count">{(counts.levels[String(level)] || 0).toLocaleString()}</span>
+            </button>
           </li>
         ))}
       </ul>
+
       <h2>Type</h2>
       <ul>
-        {SHOWN_GROUPS.map((group) => (
-          <li key={group}>
-            <span aria-hidden="true">{TAXON_ICONS[group].emoji}</span> {TAXON_ICONS[group].label}
+        {TYPE_FILTERS.filter((type) => counts.types[type.id]).map((type) => (
+          <li key={type.id}>
+            <button className="chip" aria-pressed={!hiddenTypes.has(type.id)} onClick={() => onToggleType(type.id)}>
+              <span aria-hidden="true">{type.emoji}</span> {type.label}
+              <span className="chip-count">{(counts.types[type.id] || 0).toLocaleString()}</span>
+            </button>
           </li>
         ))}
       </ul>
-      <p className="muted" style={{ margin: 0 }}>
-        Zoom in to see each sighting. Sightings whose exact location is hidden for privacy are counted in each
-        species&apos; totals but not shown on the map.
+
+      <p className="muted legend-note">
+        Tap to show or hide. Bubbles are groups of nearby sightings; zoom in to split them. Sightings with a hidden
+        (private) location are counted in each species&apos; totals but not drawn.
       </p>
     </aside>
   );
