@@ -26,6 +26,24 @@ export default function MusicToggle() {
     el.addEventListener("error", () => setMissing(true));
     audio.current = el;
 
+    // Keep background music out of real animal recordings, then restore it afterward.
+    let resumeAfterAnimalAudio = false;
+    const pauseForAnimalAudio = () => {
+      if (!el.paused) {
+        resumeAfterAnimalAudio = true;
+        el.pause();
+        setOn(false);
+      }
+    };
+    const resumeAfterAnimalAudioStops = () => {
+      if (resumeAfterAnimalAudio) {
+        resumeAfterAnimalAudio = false;
+        el.play().then(() => setOn(true)).catch(() => setMissing(true));
+      }
+    };
+    window.addEventListener("animal-audio-play", pauseForAnimalAudio);
+    window.addEventListener("animal-audio-stop", resumeAfterAnimalAudioStops);
+
     // If the visitor turned music on last time, start it on their first click
     // anywhere (we're not allowed to start it before they interact).
     let wantsMusic = false;
@@ -40,6 +58,8 @@ export default function MusicToggle() {
     return () => {
       el.pause();
       window.removeEventListener("pointerdown", startOnFirstClick);
+      window.removeEventListener("animal-audio-play", pauseForAnimalAudio);
+      window.removeEventListener("animal-audio-stop", resumeAfterAnimalAudioStops);
     };
   }, []);
 
