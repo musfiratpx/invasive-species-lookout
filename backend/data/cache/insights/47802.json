@@ -1,7 +1,7 @@
 {
-  "summary": "The spongy moth is a non-native moth whose caterpillars eat the leaves of many New York trees, especially oaks. Its populations rise and fall in cycles, and outbreaks usually end on their own through disease and predators. Most trees can survive several years in a row of losing their leaves, though trees may die when other stresses like disease or other insects affect them at the same time. According to DEC, spongy moths do not pose a major threat to New York's forests overall.",
-  "history": "The spongy moth originally comes from France. It arrived in the United States by accident in 1869, when some individuals escaped and established the first U.S. population in Medford, Massachusetts.",
-  "seasons": "Spongy moth egg masses appear as light-brown, fuzzy patches on tree trunks and other surfaces from August through April, with each mass containing 600 to 700 eggs. When spring arrives, tiny black caterpillars hatch and feed on tender new leaves, eventually growing to about 2.5 inches long. By late June and early July, the caterpillars transform into moths\u2014females are unable to fly, while males are often seen flying during summer and fall.",
+  "summary": "The spongy moth is a non-native moth whose caterpillars eat the leaves of many New York trees, especially oaks. Its populations rise and fall in cycles of roughly 10 to 15 years, and outbreaks usually end on their own through disease and predators. Most trees can survive two or three years in a row of losing their leaves; trees die mainly when other stresses, like disease or other insects, hit them in the same years. DEC says spongy moths do not pose a major threat to New York's forests overall.",
+  "history": "The spongy moth comes from France. It was accidentally brought to the United States in 1869, and some escaped and started the first U.S. population in Medford, Massachusetts.",
+  "seasons": "Egg masses look like light-brown, fuzzy or spongy patches on tree trunks and other surfaces, each holding 600 to 700 eggs; they can be found from about August through April. In spring, tiny black caterpillars hatch and eat tender new leaves, growing to about 2.5 inches. They turn into moths in late June and early July: the females cannot fly, while males are often seen flying in summer and fall.",
   "handling": {
     "text": "Do not touch the caterpillars without protection: their hairs can cause mild to moderate skin irritation in some people, especially in late spring and early summer when caterpillars are hatching and growing. On your own property, DEC says egg masses can be destroyed by scraping them off into a container of detergent. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
     "touch_safe": false
@@ -23,7 +23,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:47:57.140986+00:00"
+  "generated_at": "2026-10-09T20:58:44.661944+00:00"
 }

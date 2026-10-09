@@ -4,19 +4,18 @@ Tick items off as you go. Hacking ends **Sunday Oct 11, 12:00 PM ET**.
 
 Everyone should read [CLAUDE.md](../CLAUDE.md) (the ground rules) and be able to explain [SCORING.md](SCORING.md) to a judge.
 
-## Where we are (Oct 9, evening)
+## Where we are (Oct 9, night)
 
 - ✅ Map, clusters/icons and sidebar work end to end with real data: 778 sightings, 39 listed species around Kissena Park + Queens College.
 - ✅ Danger levels come from official NY data (151 species ranked). Tests pass.
 - ✅ Fact sheets drafted for **all 39 species** in `backend/knowledge/`, plus `how-to-report.md` with the verified NYC Parks rules.
-- ✅ Snowflake RAG is live: Cortex Search finds fact-sheet sections; Cortex COMPLETE rewrites Summary/History/Seasons. "How to handle it" and "How to report it" are always shown word for word (safety).
-- ⏳ Not done: drafts need human review, Cortex output needs checking, real design, background music.
+- ✅ Snowflake RAG is live: Cortex Search finds the right fact-sheet section for each species, and the sidebar shows that text **word for word** (Cortex rewriting is off; see the decision below).
+- ✅ Code is on GitHub: <https://github.com/musfiratpx/sail>.
+- ⏳ Not done: fact-sheet drafts need human review, real design, background music, and the latest local commits still need pushing.
 
-## Team decision (needed today)
+## Team decisions
 
-- [ ] **Keep Cortex rewriting, or turn it off?** Cortex sometimes adds small details the sources don't say (e.g. "seeds *annually*"). Options:
-  - Keep it: someone must read all 39 species' Summary/History/Seasons before the demo (Researcher + Backend).
-  - Turn it off: clear `SNOWFLAKE_CORTEX_MODEL` in `backend/.env` and rerun `build_insights.py`. Snowflake Cortex Search still does retrieval, and text stays exactly as sourced.
+- [x] **Cortex rewriting is OFF** (decided Oct 9). `SNOWFLAKE_CORTEX_MODEL` is empty, so `/api/health` shows `"retriever": "snowflake"` and `"rag_mode": "extractive"`. Why: in testing, Cortex added small details the sources don't say (e.g. "seeds *annually*"). What to tell judges: *Snowflake Cortex Search retrieves the right section of our sourced fact sheets; we show that text exactly, so nothing on screen is invented.* To turn it back on: set the model in `backend/.env` and rerun `build_insights.py`.
 
 ## Researcher
 
@@ -26,7 +25,6 @@ Owns: `backend/data/*.csv`, `backend/knowledge/`, `docs/DATA_SOURCES.md`
 - [x] Fact sheets drafted for all 39 species (see the table in `DATA_SOURCES.md`).
 - [x] `how-to-report.md` written; NYC Parks rule (56 RCNY §1-04) verified and added.
 - [ ] **Review every fact sheet against its sources.** In `DATA_SOURCES.md`, change "Claude (draft), needs Researcher review" to your name when a sheet is checked. Start with the most-sighted: mugwort, mute swan, lesser celandine, multiflora rose, garlic mustard, black locust, *Phragmites*, Norway maple.
-- [ ] If Cortex rewriting stays on: read each species' Summary/History/Seasons in the app and flag anything the fact sheet doesn't say.
 - [ ] Fill the thinnest sheets if you find official sources: monk parakeet (only summary + history), Asian shore crab and Japanese chaff flower (no handling advice), and the 8 form-only plants with no "Seasonal differences".
 - [ ] Replace the monk parakeet source (currently a *proposed* 2021 NY bill) with Cornell All About Birds or a DEC page. Open them in a browser; they block automated access.
 - [ ] Spot-check 5 rows of `danger_levels.csv` against their ranking-form PDFs (the `source_url` column).
@@ -64,9 +62,11 @@ Owns: `frontend/lib/api.js`, `docs/API.md`, `frontend/components/`
 Owns: `backend/`
 
 - [x] Snowflake search: PAT works, `setup.sql` run, 145 chunks loaded, `/api/health` says `"retriever": "snowflake"`.
-- [x] Snowflake writing: `SNOWFLAKE_CORTEX_MODEL=claude-haiku-4-5`, `/api/health` says `"rag_mode": "cortex"`. (Uses COMPLETE through SQL; the REST chat endpoint is blocked on our trial account.)
-- [ ] Apply the team decision on Cortex rewriting (above).
-- [ ] After every change to `knowledge/`: run `python scripts/load_chunks.py`, then `python scripts/build_insights.py` (~4 min with Cortex), then restart the backend and commit `data/cache/insights/`.
+- [x] Cortex rewriting tested (COMPLETE through SQL works; the REST chat endpoint is blocked on our trial account), then turned off by team decision. Sidebar text rebuilt word for word with Snowflake search.
+- [x] Rebuilt `backend/data/cache/insights/` committed (word-for-word text).
+- [ ] Push the local commits to GitHub (`git push`).
+- [ ] Tidy `backend/.env.example`: the Oct 9 commit added a stray VS Code message as a comment and removed the explanation comments. Keep values empty; `export ` in front is fine.
+- [ ] After every change to `knowledge/`: run `python scripts/load_chunks.py`, then `python scripts/build_insights.py` (fast with rewriting off), then restart the backend and commit `data/cache/insights/`.
 - [ ] Keep `pytest` green, and the app starting **with no keys**.
 - [ ] Re-run the fetch scripts before the demo (fetch_observations → fetch_media → fetch_seasonality), then commit the cache.
 - [ ] ElevenLabs: set `ELEVENLABS_API_KEY`, run `scripts/make_music.py` once, and commit `background.mp3` and `background.credit.json`.
@@ -79,7 +79,7 @@ Owns: `backend/`
 
 ## Before the demo (everyone)
 
-- [ ] Push to GitHub (nothing has been pushed yet).
+- [ ] Pull before you start working (`git pull`), and push often. The repo is <https://github.com/musfiratpx/sail>.
 - [ ] Fresh clone → README quick start works.
 - [ ] Turn the Wi-Fi off and check: sightings, danger levels, status, charts and sidebar text still load (all cached). Map tiles, photos and sounds come from the internet, so pan around the map and open a few species *before* the demo to warm the browser cache, or bring a phone hotspot.
-- [ ] Each person can explain: where danger levels come from, why some species are "Not yet ranked", why most species have no sound, and what Snowflake does (Cortex Search finds the right fact-sheet section; safety text is never AI-written).
+- [ ] Each person can explain: where danger levels come from, why some species are "Not yet ranked", why most species have no sound, and what Snowflake does (Cortex Search finds the right fact-sheet section; the text itself is never AI-written).

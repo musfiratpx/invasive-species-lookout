@@ -1,7 +1,7 @@
 {
-  "summary": "Wineberry is a spiny shrub related to raspberries and blackberries that creates dense, impenetrable thickets and crowds out native plants, including native berry bushes. It can spread into mature forests and reduces the area's value for both wildlife and people. You can identify wineberry by its reddish stems covered in dense red hairs, its three-leaflet leaves that are silvery underneath, and its bright red berries.",
-  "history": "Wineberry is native to East Asia and was brought to North America in the 1890s as breeding stock for raspberries. By the 1970s, it began invading natural areas, and it is now found in most states east of the Mississippi River.",
-  "seasons": "Wineberry leaves emerge in April, followed by flowers in May and fruit from late June through August, with leaves dropping by late November. Each cane follows a two-year cycle, growing leaves during its first year and then producing flowers and fruit in its second year. The plant's long canes can root themselves wherever their tips touch the ground.",
+  "summary": "Wineberry is a shrub related to raspberries and blackberries that forms spiny, impenetrable thickets, lowering an area's value for wildlife and for people. It replaces native plants, including native berry bushes, and can spread even into mature forests. You can recognize it by its reddish stems, which are covered in dense red hairs, its leaves with three leaflets that are silvery underneath, and its bright red berries.",
+  "history": "Wineberry is native to East Asia. It was brought to North America in the 1890s as breeding stock for raspberries, and by the 1970s it was found invading natural areas. It is now recorded in most states east of the Mississippi River.",
+  "seasons": "Leaves come out in April and flowers in May, with fruit from late June to August; the leaves drop in late November. Each cane lives two years: it grows leaves in its first year, then flowers and fruits in its second. Its long canes can take root where their tips touch the ground.",
   "handling": {
     "text": "Wineberry is armed with thorns and hairs, so minimize exposed skin when handling it. It is easier to control than many invasive plants because it lacks a strong underground root system: small patches can be hand-pulled or dug out, with follow-up visits for a few years to remove new plants sprouting from root pieces. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": false
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:52.812782+00:00"
+  "generated_at": "2026-10-09T20:59:12.768831+00:00"
 }

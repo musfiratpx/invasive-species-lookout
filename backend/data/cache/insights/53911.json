@@ -1,6 +1,6 @@
 {
-  "summary": "Common carp, which includes koi, is a pest fish that damages aquatic ecosystems in Queens. When carp feed, they root around on the bottom and uproot water plants while stirring up mud, which makes the water murky and blocks light. This destruction harms the plant-filled breeding areas that native fish and birds depend on. Removing carp from waterways has been shown to bring back more kinds of bottom-living invertebrates.",
-  "history": "Common carp originally came from Eurasia. While people once thought carp arrived in the Hudson River during the 1830s, those turned out to be goldfish or goldfish hybrids instead. The first confirmed arrival of carp was in California in 1872. Beginning in 1877, the U.S. Fish Commission deliberately stocked carp across much of the country as a food fish, but people soon lost interest in them. Today carp are considered a nuisance and have been found in every state except Alaska.",
+  "summary": "Common carp, which includes koi, is considered a pest fish because it destroys water plants and makes water murky. It roots around in the bottom while feeding, uprooting plants and stirring up mud, which blocks light and damages the plant-filled breeding areas that native fish and birds need. Removing carp has been shown to bring back more kinds of bottom-living invertebrates.",
+  "history": "Common carp is native to Eurasia. Early claims that it was brought to the Hudson River in the 1830s turned out to be goldfish or goldfish hybrids; the first confirmed arrival was in 1872 in California. Starting in 1877, the U.S. Fish Commission stocked carp across much of the country as a food fish, but it soon fell out of favor and is now considered a nuisance. It has been recorded in every state except Alaska.",
   "seasons": null,
   "handling": {
     "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:48:11.889532+00:00"
+  "generated_at": "2026-10-09T20:58:48.263435+00:00"
 }

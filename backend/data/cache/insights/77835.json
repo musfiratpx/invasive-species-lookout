@@ -1,7 +1,7 @@
 {
-  "summary": "Japanese honeysuckle is a woody vine that can grow up to 30 feet long and causes serious damage to forests. The heavy vines climb over native trees and can knock down weaker ones, while also blocking sunlight from reaching plants and tree seedlings below. Because its leaves stay green through winter in mild weather, it has a longer growing season than native plants and can survive in shadier conditions than other invasive honeysuckles. You can identify invasive honeysuckles by their hollow stems, which differ from the solid stems of native honeysuckles.",
-  "history": "Japanese honeysuckle comes from China, Japan, and Korea. It arrived on Long Island, New York, in 1806 as a garden plant and was sold widely for gardens until the early 1900s, when people recognized it as a weed. The plant escaped from gardens and spreads easily through birds.",
-  "seasons": "Japanese honeysuckle has semi-evergreen leaves that may remain green even through mild winters. The plant produces small, fragrant tube-shaped flowers that range from creamy white to pink and bloom from May to June. In the fall, it develops dark-purple or black berries.",
+  "summary": "Japanese honeysuckle is a woody vine that can reach 30 feet. Its vines cover native trees, and their weight can bring down weak trees; it also shades out the plants and tree seedlings below. Its leaves stay green into winter in mild weather, giving it a longer growing season than native plants, and it is the most shade-tolerant of the invasive honeysuckles. Invasive honeysuckles have hollow stems, while native honeysuckles have solid stems.",
+  "history": "Japanese honeysuckle is native to China, Japan and Korea. It was brought to Long Island, New York, in 1806 for gardens, and was widely sold as a garden plant until the early 1900s, when it was finally recognized as a weed. It escaped cultivation and is easily spread by birds.",
+  "seasons": "Its leaves are semi-evergreen and can stay green through mild winters. It flowers from May to June with small, very fragrant tube-shaped flowers, creamy white to pink, and produces dark-purple or black berries in the fall.",
   "handling": {
     "text": "Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:33.801310+00:00"
+  "generated_at": "2026-10-09T20:59:07.731469+00:00"
 }

@@ -1,7 +1,7 @@
 {
-  "summary": "Japanese chaff flower is a perennial plant that grows 20 to 39 inches tall with square, branching stems and swollen joints. It forms dense patches that shade out and displace many native plants. This species thrives in floodplains, ditches, bottomland forests, and riverbanks with rich, moist soil, but also spreads along roadsides, field edges, and vacant urban lots. Its tiny seed parts stick easily to clothing, allowing it to spread quickly along waterways and trails.",
-  "history": "Japanese chaff flower comes from East Asia, where it is native to Korea and Japan.",
-  "seasons": "Japanese Chaff Flower produces tiny green flowers on spikes at the ends of its stems and where leaves attach, blooming from August to September. The small bracts surrounding its seeds stick easily to cloth, which helps the plant spread to new areas.",
+  "summary": "Japanese chaff flower is a perennial plant about 20 to 39 inches tall with square, branching stems and swollen joints. Its tall growth and dense patches shade out and push out many native plants. It grows mainly in floodplains, ditches, bottomland forests and riverbanks with rich, moist soil, but also along roadsides, field edges and vacant urban lots. Its tiny seed parts stick easily to clothing, and it spreads quickly along waterways and trails.",
+  "history": "Japanese chaff flower is native to East Asia, mainly Korea and Japan.",
+  "seasons": "It flowers from August to September with spikes of tiny green flowers at the ends of the stems and where the leaves join. The small bracts around the seeds easily stick to cloth.",
   "handling": {
     "text": "In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:47:21.451314+00:00"
+  "generated_at": "2026-10-09T20:58:36.710216+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "summary": "Cup-plant is a very tall perennial wildflower that can grow up to 8 feet and forms a dense layer that shades out shorter plants. Along the Au Sable River in the Adirondacks it has formed near-monocultures, greatly reducing native plants. Large plants can make over 1,000 seeds, which birds eat and water carries, and it can also be spread along highways and by mowing equipment.",
-  "history": "Cup plant is native to the central United States and Canada, but it is considered non-native in New York and other parts of New England and the mid-Atlantic region. The plant is sometimes grown in gardens.",
+  "summary": "Cup-plant is a very tall perennial wildflower, up to 8 feet, that forms a dense layer above shorter plants and shades them out. Along the Au Sable River in the Adirondacks it has formed near-monocultures, greatly reducing native plants. Large plants can make over 1,000 seeds, which birds eat and water carries, and it can also be spread along highways and by mowing equipment.",
+  "history": "Cup-plant is native to the central United States and Canada, but most experts consider it non-native in New England and the mid-Atlantic, including New York. It is sometimes grown in gardens.",
   "seasons": null,
   "handling": {
     "text": "Large infestations take a major investment to control; managers along the Au Sable River have used cutting and spraying. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -23,7 +23,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:42.447332+00:00"
+  "generated_at": "2026-10-09T20:59:10.195379+00:00"
 }

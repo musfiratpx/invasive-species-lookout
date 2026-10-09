@@ -1,7 +1,7 @@
 {
-  "summary": "The mute swan is a large white swan with an orange bill and a black knob on its forehead. Unlike native swans, it stays in the same place all year instead of migrating, and it eats underwater plants that other animals depend on for cover. Some mute swans are very aggressive and territorial, chasing off and sometimes killing other waterbirds, and they take over nesting areas that native birds need.",
-  "history": "Mute swans originally come from Europe and parts of Asia. People brought them to the United States in the 1870s to display in zoos and on private estates, but some escaped into the wild in New Jersey in 1916 and in New York in 1919. These escaped swans began breeding in the wild, and their populations have since spread from southern Ontario to North Carolina. New York's population has grown to about 3,000 birds.",
-  "seasons": "Mute swans typically stay in the same area year-round, though they may move if food becomes scarce or water freezes. They build enormous nests measuring 4 to 5 feet across in March or April, usually among dense reeds or cattails, with eggs hatching by early June. These swans are most aggressive during nesting and while they are raising their young.",
+  "summary": "The mute swan is a large white swan with an orange bill and a black knob on its forehead. Unlike native swans, it does not migrate, so it stays in the same place all year, eating underwater plants that other animals rely on for cover. Some mute swans are very aggressive and territorial, chasing off and sometimes killing other waterbirds, and they take over nesting areas that native birds need.",
+  "history": "Mute swans are native to Europe and parts of Asia. They were first brought to the United States in the 1870s to decorate zoos and private estates. A few escaped into the wild in New Jersey in 1916 and in New York in 1919 and started wild breeding populations, which have since spread from southern Ontario to North Carolina. NYIS reports that New York's population has grown to about 3,000 birds.",
+  "seasons": "A mated pair usually stays in the same territory all year, moving only if food runs short or the water freezes over. They build very large nests (4 to 5 feet across) in March or April, often in dense reeds or cattails, and the eggs hatch in early June. Swans are most aggressive while nesting and raising their young.",
   "handling": {
     "text": "Do not handle or harm mute swans, their nests or their eggs without permission from the NYS Department of Environmental Conservation (DEC); mute swans are protected by New York State's Environmental Conservation Law. Contact the DEC if mute swans are causing a problem, and if you see a mute swan wearing a collar, report it to the DEC to help their tracking studies. NYC Parks rules also forbid chasing, harassing or harming any animal, nest or eggs in city parks.",
     "touch_safe": false
@@ -23,7 +23,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:19.580610+00:00"
+  "generated_at": "2026-10-09T20:59:04.297209+00:00"
 }

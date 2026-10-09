@@ -1,7 +1,7 @@
 {
-  "summary": "Norway maple is a large tree, usually 40 to 60 feet tall, that has been widely planted on lawns and along streets because of its hardiness. Its dense shade and shallow roots make it difficult for grass, native wildflowers, and young native trees like sugar maples to grow underneath it. The tree produces large amounts of seed and is now spreading into forests, including mature, shady ones, and in cities its roots can break pavement.",
-  "history": "Norway maple is native to Europe and western Asia and was brought to the United States as an ornamental tree. Once planted, its seeds escaped into the wild and spread easily through the wind. The tree's many winged seeds sprout quickly, and it appears to suffer less insect and fungus damage than native sugar maple, which may give it an advantage as it spreads.",
-  "seasons": "Norway maple leafs out earlier in spring than other maples. Small yellow or yellow-green flowers appear in clusters during April and May, followed by helicopter-like seeds with wide-spreading wings that mature over the summer. In fall, the leaves typically turn pale yellow. You can distinguish Norway maple from sugar maple by breaking a leaf stalk\u2014if milky sap oozes out, it's a Norway maple.",
+  "summary": "Norway maple is a large tree, usually 40 to 60 feet tall, that has been widely planted on lawns and along streets because it is so hardy. Its dense shade and shallow roots make it hard for grass, native wildflowers and young native trees like sugar maples to grow underneath it. It produces large amounts of seed and is now spreading into forests, even mature, shady ones, and in cities its roots can break pavement.",
+  "history": "Norway maple is native to Europe and western Asia. It came to the United States as an ornamental tree, and its seeds then escaped from planted trees. Its many winged seeds are spread by the wind and sprout quickly, and one study found it suffers less insect and fungus damage than native sugar maple, which may help it spread.",
+  "seasons": "Norway maple leafs out earlier in spring than other maples. Clusters of small yellow or yellow-green flowers appear in April and May, and over the summer the fruits mature into helicopter-like seeds with wide-spreading wings. In fall the leaves usually turn pale yellow. A quick way to tell it from sugar maple: a broken leaf stalk oozes milky sap.",
   "handling": {
     "text": "Seedlings can be pulled from moist soil while they are small; larger saplings can be dug out with their roots, and big trees cut down. Planting native maples, such as red, sugar or silver maple, instead of Norway maple helps prevent its spread. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:48:17.208870+00:00"
+  "generated_at": "2026-10-09T20:58:49.437785+00:00"
 }

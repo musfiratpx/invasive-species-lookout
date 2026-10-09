@@ -1,6 +1,6 @@
 {
-  "summary": "Yellow-groove bamboo is a running bamboo that spreads underground and forms dense thickets where little or nothing else can grow beneath them. Large stands of this bamboo, covering areas bigger than a quarter acre, have been found in Nassau County, New York. New York's official ranking lists it as \"Not Assessable\" because no one has conclusively shown it spreading into the wild on its own without people planting or moving it.",
-  "history": "Yellow-groove bamboo comes from China. These bamboos are popular in the plant trade, and they spread primarily when people plant them intentionally or when soil containing their underground stems is moved from place to place. Floodwaters can occasionally transport pieces to new locations downstream.",
+  "summary": "Yellow-groove bamboo is a running bamboo that spreads underground and forms dense thickets with little or nothing growing beneath them. Stands larger than a quarter acre are known from Nassau County, New York. New York's official ranking lists it as \"Not Assessable\", because no one has conclusively shown it spreading into the wild on its own, without people planting or moving it.",
+  "history": "Yellow-groove bamboo is native to China. Bamboos in this group are among the most popular sold, and they spread mainly when people plant them or move soil containing their underground stems. Floodwaters can sometimes carry pieces downstream.",
   "seasons": null,
   "handling": {
     "text": "Small patches can be controlled by repeated cutting or mowing, several times each growing season for several years, until the underground stems run out of energy. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -23,7 +23,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:47:34.602062+00:00"
+  "generated_at": "2026-10-09T20:58:40.338281+00:00"
 }

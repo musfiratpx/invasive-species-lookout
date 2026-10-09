@@ -1,7 +1,7 @@
 {
-  "summary": "Japanese virgin's bower, also called sweet autumn clematis, is a garden vine that can climb 30 feet when it has support. It grows so fast and so heavily that in natural areas it can smother mature trees and push out native plants. It is on New York's regulated list, which means it may still be sold and planted, but not where it threatens natural areas, and it must be sold with signs saying it is invasive. It looks very much like the native virgin's bower, but you can tell them apart because the native species has toothed and lobed leaves instead of smooth-edged ones.",
-  "history": "Autumn clematis is native to Japan and China and was brought to North America to be grown as an ornamental plant. People continue to plant it in gardens today because of its many small white flowers and feathery seedheads.",
-  "seasons": "In spring, new shoots emerge from the woody stems that grew the year before. The plant produces abundant small white flowers with four petals in August, making it easy to identify at that time. By late September, the flowers develop into silvery, feathery seedheads that curl and spread through the wind.",
+  "summary": "Japanese virgin's bower, also called sweet autumn clematis, is a garden vine that can climb 30 feet when it has support. It grows so fast and so heavily that in natural areas it can smother mature trees and push out native plants. It is on New York's regulated list: it may still be sold and planted, but not where it threatens natural areas, and it must be sold with signs saying it is invasive. It looks very much like the native virgin's bower, whose leaves are toothed and lobed instead of smooth-edged.",
+  "history": "Japanese virgin's bower is native to Japan and China and was brought to North America as an ornamental plant. It is still widely planted in gardens for its masses of small white flowers and feathery seedheads.",
+  "seasons": "New shoots grow from last year's woody stems in spring. It flowers in August, covering itself in a froth of small, four-petaled white flowers, which is when it is easiest to spot. Seeds form by late September, with silvery, feathery, curving seedheads that are spread by the wind.",
   "handling": {
     "text": "Plants and their roots can be dug out, but root pieces may resprout and seeds in the soil can keep sprouting for some time, so repeat visits may be needed. Planting the native virgin's bower instead gives a similar look without the invasive risk. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:48:54.067013+00:00"
+  "generated_at": "2026-10-09T20:58:58.507082+00:00"
 }

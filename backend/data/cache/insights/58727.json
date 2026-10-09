@@ -1,7 +1,7 @@
 {
-  "summary": "Japanese barberry is a thorny shrub that can grow up to 8 feet tall and forms dense thickets on forest floors, in open areas, and in disturbed places. This plant is hardy and can survive drought, full sun, and full shade. Areas with large barberry infestations can have up to 90% more Lyme-disease-carrying ticks than areas with native shrubs, likely because the shrub shelters the mice that young ticks feed on and keeps the air humid. Japanese barberry has also been linked to more invasive earthworms and increased soil erosion.",
-  "history": "Japanese barberry comes from Asia and was brought to the United States to be grown as an ornamental plant in gardens. Once established, it spreads in two ways: by producing seeds and by growing new shoots from existing plants.",
-  "seasons": "Japanese barberry produces umbrella-shaped clusters of white flowers on the undersides of its branches during April and May. The plant develops oblong red berries that appear in September.",
+  "summary": "Japanese barberry is a thorny shrub up to 8 feet tall that forms dense thickets on forest floors and also grows in open and disturbed areas. It survives drought, full sun and full shade. It has been linked to Lyme disease: areas with large barberry infestations can have up to 90% more Lyme-disease-carrying ticks than areas with native shrubs, likely because it shelters the mice that young ticks feed on and keeps the air humid. It has also been linked to more invasive earthworms and more soil erosion.",
+  "history": "Japanese barberry is native to Asia. It was brought to the United States as an ornamental plant, and spreads both by seed and by growing new shoots.",
+  "seasons": "In April and May it has umbrella-shaped clusters of white flowers on the undersides of its branches. Its oblong red berries appear in September.",
   "handling": {
     "text": "The stems have thorns, single or in pairs. Smaller shrubs can be pulled up; larger shrubs and infestations are treated with herbicides, which are applied in early spring and late fall when native plants are dormant. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:48:39.700318+00:00"
+  "generated_at": "2026-10-09T20:58:54.740130+00:00"
 }

@@ -1,7 +1,7 @@
 {
-  "summary": "Asian bittersweet is a woody vine that can grow up to 60 feet tall and causes serious damage to native plants by wrapping tightly around them and breaking their branches with its weight. Although it prefers sunny areas, it can survive in deep shade and thrives in disturbed woods, fields, and roadsides. This plant can look similar to the native American bittersweet, so it's important to identify it carefully.",
-  "history": "Asian bittersweet is native to eastern Asia. It was brought to North America as an ornamental plant in the mid-1800s.",
-  "seasons": "Asian bittersweet produces small flowers where leaves meet the stem during May and early June. The vine develops bright reddish-orange fruit in the fall. Its leaves are rounded to oval in shape and alternate along the stem.",
+  "summary": "Oriental bittersweet is a woody vine that can climb up to 60 feet. It badly damages native plants by wrapping tightly around them (girdling), and its extra weight can break branches. It grows best in sun but can survive deep shade, and is found in disturbed woods, fields and roadsides. It can be confused with the native American bittersweet.",
+  "history": "Oriental bittersweet is native to eastern Asia. It was brought to North America as an ornamental plant in the mid-1800s.",
+  "seasons": "Flowers bloom where the leaves meet the stem in May and early June. In fall the vine produces bright reddish-orange fruit. Its rounded to oval leaves alternate along the stem.",
   "handling": {
     "text": "Individual vines can be pulled up by the roots and removed by hand, or cut and the stumps treated with herbicide. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:10.461676+00:00"
+  "generated_at": "2026-10-09T20:59:01.999275+00:00"
 }

@@ -1,7 +1,7 @@
 {
-  "summary": "Sycamore maple is a tall tree that can reach up to 100 feet, with maple-shaped leaves and distinctive scaly, flaky bark that reveals a slightly orange layer underneath. Its seedlings are extremely shade-tolerant and grow quickly, allowing them to out-compete other young plants and transform diverse forests into stands dominated by sycamore maple. You'll find this tree growing along rivers, in disturbed woods, lawns, old fields, and roadsides.",
-  "history": "Sycamore maple comes from central and southern Europe. People brought it to the northeastern United States to plant along streets and in parks, and by the early 1900s it was spreading from these planted trees into wild natural areas. Today it grows wild in at least 12 states.",
-  "seasons": "In late spring, sycamore maples display dangling clusters of yellowish-green flowers that give way to paired winged seeds with notably broader wings than those of New York's native maples. Once a tree reaches about 25 to 30 years old, it can produce between 10,000 to 170,000 seeds annually, and most of these seeds are capable of sprouting.",
+  "summary": "Sycamore maple is a tall tree, up to 100 feet, with maple-shaped leaves and scaly, flaky bark that shows a slightly orange layer underneath when peeled. Its seedlings are extremely shade-tolerant and grow fast, so they can out-compete other young plants and turn diverse forests into stands of mostly sycamore maple. It grows along rivers, in disturbed woods, lawns, old fields and roadsides.",
+  "history": "Sycamore maple is native to central and southern Europe. It was brought to the northeastern United States as a street and park tree, and by the early 1900s it had been recorded spreading from planted trees into natural areas. It now grows wild in at least 12 states.",
+  "seasons": "Dangling clusters of yellowish-green flowers appear from May to June, followed by paired winged seeds with much broader wings than New York's native maples. A tree starts making seeds at about 25 to 30 years old and can then produce 10,000 to 170,000 seeds, most of which can sprout.",
   "handling": {
     "text": "Small seedlings can be pulled or dug up, but all of the root must come out. Mowing or cutting usually does not kill it and just makes the stem fork. Managed areas need to be checked for several years for new sprouts and seedlings. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:47:16.548904+00:00"
+  "generated_at": "2026-10-09T20:58:35.636887+00:00"
 }

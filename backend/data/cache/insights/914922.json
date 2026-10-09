@@ -1,7 +1,7 @@
 {
-  "summary": "Japanese knotweed is a tall, shrubby plant that grows 3 to 15 feet high with hollow, bamboo-like stems, sometimes earning it the nickname Japanese bamboo. It spreads rapidly into dense stands that block out sunlight from native plants and leave bare ground underneath that erodes easily, which is particularly damaging along streams. The plant can survive in deep shade, heat, salty soil, and drought conditions, and once it takes hold, it becomes extremely difficult to remove.",
-  "history": "Japanese knotweed comes from eastern Asia, including Japan, China, and Korea. People brought it to U.S. estates in the late 1800s because they wanted it as an ornamental plant and to help control erosion. By the mid-1890s, it had already spread to areas near Philadelphia, Schenectady, New York, and New Jersey. By the late 1930s, people recognized it as a pest.",
-  "seasons": "Japanese knotweed sends up new shoots each spring from an underground network of stems that can extend 65 feet or more. The plant produces branched sprays of small greenish-white flowers from August to September, which are later followed by small winged fruits. You can identify the stems by their smooth, hollow appearance and the swollen joints where each leaf attaches.",
+  "summary": "Japanese knotweed is a tall, shrubby plant, 3 to 15 feet tall, with hollow, bamboo-like stems, which is why it is sometimes called Japanese bamboo. It spreads quickly into thick stands that shade out native plants, leaving bare ground underneath that erodes easily, which is especially harmful along streams. It tolerates deep shade, heat, salty soil and drought, and once established it is extremely hard to get rid of.",
+  "history": "Japanese knotweed comes from eastern Asia (Japan, China and Korea). It was brought to U.S. estates as an ornamental plant in the late 1800s and was also used for erosion control. By the mid-1890s it had been reported near Philadelphia, in Schenectady, New York, and in New Jersey, and by the late 1930s it was already seen as a pest.",
+  "seasons": "Shoots come up each spring from a network of underground stems that can stretch 65 feet or more. Branched sprays of small greenish-white flowers bloom from August to September, followed by small winged fruits. The stems are smooth and hollow, with a swollen joint where each leaf attaches.",
   "handling": {
     "text": "Young plants can sometimes be pulled by hand, but any root left behind can resprout. All removed plant parts should be bagged and disposed of securely. It should not be mowed or cut with string trimmers, because the pieces get moved around and resprout, spreading it instead of controlling it. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:58.289329+00:00"
+  "generated_at": "2026-10-09T20:59:14.153810+00:00"
 }

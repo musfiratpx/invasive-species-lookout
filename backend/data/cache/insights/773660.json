@@ -1,6 +1,6 @@
 {
-  "summary": "Rusty willow, also called large gray willow, forms dense thickets that crowd out native shrubs and trees and can shade out rare native plants in Coastal Plain ponds. Because it is often mistaken for native willows and can cross-breed with them, it has been called a \"stealth invader.\" One tree can produce millions of wind-carried seeds, and broken branches readily take root, making this species particularly difficult to control.",
-  "history": "Rusty willow comes from Eurasia. It may have been sold under its own name or under other names in the trade. Branches from rusty willow in yard waste can root and start new plants.",
+  "summary": "Rusty willow, also called large gray willow, is a willow that forms dense thickets, crowding out native shrubs and trees, and it has been found shading out rare native plants in Coastal Plain ponds. It is often mistaken for native willows and can cross-breed with them, which is why it has been called a \"stealth invader\". One tree can produce millions of wind-carried seeds, and broken branches readily take root.",
+  "history": "Rusty willow is native to Eurasia. It may have been sold under its own name or under other names, and branches in yard waste can root and start new plants.",
   "seasons": null,
   "handling": {
     "text": "Once established it cannot be pulled by hand, and control is complicated because it grows in wetlands and is hard to tell apart from native willows. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -23,7 +23,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:27.934773+00:00"
+  "generated_at": "2026-10-09T20:59:06.426553+00:00"
 }

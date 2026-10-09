@@ -1,7 +1,7 @@
 {
-  "summary": "Common reed is a tall grass that spreads rapidly and forms thick stands that crowd out and shade native plants in wetlands. It transforms diverse marshes into areas dominated by a single plant species and can alter water flow patterns, reduce saltiness in brackish marshes, and increase fire risk, threatening the wildlife that depends on these wetlands. In New York, common reed grows in many places including roadside ditches, marshes, and the edges of rivers, lakes, and ponds. A native strain of common reed also exists, so the two types need to be carefully distinguished from each other.",
-  "history": "Common reed is native to Eurasia and Africa, and at least one strain is also native to the United States. A non-native strain arrived accidentally from Europe in ships' ballast in the late 1700s or early 1800s. This non-native strain is now the most common Phragmites in New York and the Northeast.",
-  "seasons": "Common reed grows over 15 feet tall with hollow stems that are usually green with yellow joints during the growing season. In winter, the stems turn yellow as they dry out, and old dead stems remain standing in the plant stands. The plant blooms in late July and August, producing purple-to-gold branching flower heads that are followed by grayish, fluffy seeds.",
+  "summary": "The non-native common reed (Phragmites) is a tall grass that quickly forms dense stands, crowding out and shading native plants in wetlands. It turns rich, diverse marshes into stands of a single plant, and can change how water flows, lower the saltiness of brackish marshes, and raise the risk of fire, which threatens the wildlife that depends on those wetlands. In New York it grows almost everywhere: roadside ditches, marshes, and the edges of rivers, lakes and ponds. A native strain of Phragmites also exists, so the two need to be told apart carefully.",
+  "history": "Common reed is native to Eurasia and Africa, and at least one strain is also native to the United States. The non-native strain was brought accidentally from Europe in ships' ballast in the late 1700s or early 1800s. It is now the most common Phragmites in New York and the Northeast.",
+  "seasons": "Phragmites can grow over 15 feet tall. Its hollow stems are usually green with yellow joints during the growing season and turn yellow when dry in winter, and old dead stems stay standing in the stands. It blooms in late July and August with purple-to-gold, branching flower heads, followed by grayish, fluffy seeds.",
   "handling": {
     "text": "Pulling Phragmites by hand does not work because of its tough, spreading root network, and small root pieces left in the soil grow into new plants. Mowing gives only short-term results. Because native and non-native Phragmites look alike, it should be properly identified before anyone manages it, and herbicides used in wetlands must be applied by a certified pesticide applicator. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:05.179130+00:00"
+  "generated_at": "2026-10-09T20:59:00.830392+00:00"
 }

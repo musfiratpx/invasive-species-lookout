@@ -1,6 +1,6 @@
 {
-  "summary": "Goldfish released into the wild can form large populations that out-compete and replace native fish. They feed along the bottom, stirring up mud, which clouds the water, changes water quality and can cause algae blooms, and they uproot and reduce water plants. Goldfish can survive poor water quality and low oxygen, letting them out-compete native fish in damaged waters. Wild goldfish are usually olive-green rather than orange.",
-  "history": "Goldfish are native to eastern Asia, including China, and are thought to be the first foreign fish brought to North America. The first recorded releases happened in the late 1600s, and by the early 1800s they were already reproducing in ponds in New York. In the late 1800s the U.S. Fish Commission raised and shipped them to many states for aquariums, fountains and ornamental lakes, and they are now found in every state except Alaska.",
+  "summary": "Goldfish released into the wild can form large populations that out-compete and replace native fish. They feed along the bottom, stirring up mud, which clouds the water, changes water quality and can cause algae blooms, and they uproot and reduce water plants. NYS DEC notes goldfish can survive poor water quality and low oxygen, letting them out-compete native fish in damaged waters. Wild goldfish are usually olive-green rather than orange.",
+  "history": "Goldfish are native to eastern Asia, including China. They are thought to be the first foreign fish brought to North America, with the first recorded releases in the late 1600s, and by the early 1800s they were already reproducing in ponds in New York. In the late 1800s the U.S. Fish Commission raised and shipped them to many states for aquariums, fountains and ornamental lakes. They are now found in every state except Alaska.",
   "seasons": null,
   "handling": {
     "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
@@ -27,7 +27,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:48:34.081290+00:00"
+  "generated_at": "2026-10-09T20:58:53.654824+00:00"
 }

@@ -1,7 +1,7 @@
 {
-  "summary": "Multiflora rose is a fast-growing shrub that can reach 10 to 15 feet tall and form dense, thorny thickets that crowd out native plants. It invades open woods, forest edges, fields, fence lines, roadsides and the edges of marshes. You can identify it by the pair of fringed bracts at the base of each leaf stalk and its stems, which usually have many curved thorns. A single large plant can produce thousands of seeds that stay alive in the soil for up to 20 years.",
+  "summary": "Multiflora rose is a fast-growing shrub that can reach 10 to 15 feet tall and form dense, thorny thickets that crowd out native plants. It invades open woods, forest edges, fields, fence lines, roadsides and the edges of marshes. You can tell it apart from other roses by the pair of fringed bracts (stipules) at the base of each leaf stalk, and its stems usually have many curved thorns. A single large plant can produce thousands of seeds that stay alive in the soil for up to 20 years.",
   "history": "Multiflora rose is native to eastern China, Japan and Korea. It was brought to the United States from Japan in 1866 as a rootstock for garden roses. In the 1930s the U.S. Soil Conservation Service promoted it for erosion control and as \"living fences\" to hold in livestock, and it was also planted for wildlife cover and later in highway medians. It then became a problem in pastures and fields and is now found in 41 states.",
-  "seasons": "Multiflora rose produces clusters of fragrant white to pale-pink flowers in late May or June. Small red fruits called hips develop over the summer and remain on the plant through the winter.",
+  "seasons": "Multiflora rose blooms in late May or June with clusters of fragrant white to pale-pink flowers. Small fruits (hips) form over the summer and turn red by mid-September. The hips stay on the plant through the winter.",
   "handling": {
     "text": "The stems usually have many curved thorns. Small seedlings can be pulled by hand, and smaller plants can be dug out, but all the roots must be removed because they can resprout. Cutting or mowing three to six times per growing season for two to four years can kill it. Because its seeds last for years in the soil, follow-up treatments are likely to be needed. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -23,7 +23,7 @@
   ],
   "generated_with": {
     "retriever": "snowflake",
-    "generator": "cortex"
+    "generator": "extractive"
   },
-  "generated_at": "2026-10-09T20:49:38.819528+00:00"
+  "generated_at": "2026-10-09T20:59:09.103535+00:00"
 }
