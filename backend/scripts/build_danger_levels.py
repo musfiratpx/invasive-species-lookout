@@ -10,8 +10,8 @@ Rules (same as docs/SCORING.md and app/danger.py):
   - A plant with no usable rank ("Unknown", "Not Assessable", or no form) gets NO row,
     so the app shows "Not yet ranked". We never guess.
 
-health_warning is left empty on purpose: the Researcher fills it in by hand,
-only when an official source says so.
+health_warning is filled in by hand by the Researcher, only when an official
+source says so. Re-running this script KEEPS those hand-written warnings.
 
 Usage (from backend/):  python scripts/build_danger_levels.py
 """
@@ -75,6 +75,10 @@ def main():
     # iNaturalist's current name for each species becomes one more synonym, so a
     # sighting matches even when iNaturalist renamed it (Humulus japonicus -> Humulus scandens).
     taxon_map = json.loads(TAXON_MAP_JSON.read_text()) if TAXON_MAP_JSON.exists() else {}
+    # Keep health warnings the Researcher already typed in.
+    old_warnings = {}
+    if OUT_CSV.exists():
+        old_warnings = {r["scientific_name"]: r["health_warning"] for r in csv.DictReader(OUT_CSV.open())}
 
     rows, unranked = [], []
     for sp in listed:
@@ -89,7 +93,7 @@ def main():
         base = {
             "scientific_name": sp["scientific_name"],
             "match_names": match_names,
-            "health_warning": "",
+            "health_warning": old_warnings.get(sp["scientific_name"], ""),
             "checked_on": today,
         }
 
