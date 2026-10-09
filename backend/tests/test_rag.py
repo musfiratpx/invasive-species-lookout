@@ -4,12 +4,12 @@ The example text below is made up for testing and is NOT real species informatio
 No network or API keys are used.
 """
 
-from types import SimpleNamespace
-
 import pytest
 
 from app.rag.chunker import GENERAL, load_chunks
-from app.rag.generator import ExtractiveGenerator, GeminiGenerator
+from app import config
+from app.rag import generator as generator_module
+from app.rag.generator import CortexGenerator, ExtractiveGenerator
 from app.rag.insights import build_insights
 from app.rag.retriever import KeywordRetriever
 
@@ -95,28 +95,55 @@ def test_species_without_sheet_gets_nothing(chunks):
     assert insights["sources"] == []
 
 
-def _fake_gemini(reply):
-    """A GeminiGenerator whose 'model' always returns `reply`, so no API call is made."""
-    generator = GeminiGenerator.__new__(GeminiGenerator)
-    generator.model = "test-model"
-    generator.client = SimpleNamespace(models=SimpleNamespace(
-        generate_content=lambda **kwargs: SimpleNamespace(text=reply)))
+def _fake_cortex(reply):
+    """A CortexGenerator whose model always returns `reply`, so no Snowflake call is made."""
+    generator = CortexGenerator()
+    generator._ask_model = lambda system, user: reply
     return generator
 
 
-def test_gemini_no_info_becomes_none(chunks):
-    assert _fake_gemini("NO_INFO").generate("History", SPECIES, chunks)["text"] is None
+def test_cortex_no_info_becomes_none(chunks):
+    assert _fake_cortex("NO_INFO").generate("History", SPECIES, chunks)["text"] is None
 
 
-def test_gemini_answer_includes_sources(chunks):
-    answer = _fake_gemini("A short grounded answer.").generate("Summary", SPECIES, chunks)
+def test_cortex_answer_includes_sources(chunks):
+    answer = _fake_cortex("A short grounded answer.").generate("Summary", SPECIES, chunks)
     assert answer["text"] == "A short grounded answer."
     assert answer["sources"]
 
 
-def test_gemini_is_not_called_without_chunks():
-    def explode(**kwargs):
+def test_cortex_is_not_called_without_chunks():
+    def explode(system, user):
         raise AssertionError("the model must not be called with no sources")
-    generator = _fake_gemini("unused")
-    generator.client.models.generate_content = explode
+    generator = _fake_cortex("unused")
+    generator._ask_model = explode
     assert generator.generate("Summary", SPECIES, [])["text"] is None
+
+
+def test_cortex_request_shape(chunks, monkeypatch):
+    """Checks the HTTP request we send to Snowflake, using a stand-in instead of the network."""
+    monkeypatch.setitem(config.SNOWFLAKE, "account", "example-account")
+    monkeypatch.setitem(config.SNOWFLAKE, "pat", "test-token")
+    monkeypatch.setitem(config.SNOWFLAKE, "cortex_model", "test-model")
+    sent = {}
+
+    class FakeResponse:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return {"choices": [{"message": {"content": "Grounded text."}}]}
+
+    def fake_post(url, headers, json, timeout):
+        sent.update(url=url, headers=headers, body=json)
+        return FakeResponse()
+
+    monkeypatch.setattr(generator_module.requests, "post", fake_post)
+    answer = CortexGenerator().generate("Summary", SPECIES, chunks)
+
+    assert answer["text"] == "Grounded text."
+    assert sent["url"] == "https://example-account.snowflakecomputing.com/api/v2/cortex/v1/chat/completions"
+    assert sent["headers"]["Authorization"] == "Bearer test-token"
+    assert sent["body"]["model"] == "test-model"
+    assert [m["role"] for m in sent["body"]["messages"]] == ["system", "user"]
+    assert "EXAMPLE TEXT" in sent["body"]["messages"][1]["content"]  # the chunks are in the prompt

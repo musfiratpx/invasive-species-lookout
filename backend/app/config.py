@@ -46,9 +46,6 @@ SEASONALITY_JSON = CACHE_DIR / "seasonality.json"
 INSIGHTS_DIR = CACHE_DIR / "insights"
 
 # --- Optional services --------------------------------------------------------
-GEMINI_API_KEY = _env("GEMINI_API_KEY")
-GEMINI_MODEL = _env("GEMINI_MODEL")
-
 SNOWFLAKE = {
     "account": _env("SNOWFLAKE_ACCOUNT"),
     "user": _env("SNOWFLAKE_USER"),
@@ -58,6 +55,8 @@ SNOWFLAKE = {
     "database": _env("SNOWFLAKE_DATABASE", "INVASIVE_WATCH"),
     "schema": _env("SNOWFLAKE_SCHEMA", "PUBLIC"),
     "search_service": _env("SNOWFLAKE_SEARCH_SERVICE", "KNOWLEDGE_SEARCH"),
+    # Model for writing the sidebar text with Cortex. Empty = no AI writing (word-for-word fallback).
+    "cortex_model": _env("SNOWFLAKE_CORTEX_MODEL"),
 }
 
 ELEVENLABS_API_KEY = _env("ELEVENLABS_API_KEY")
@@ -70,5 +69,6 @@ def snowflake_enabled():
     return all(SNOWFLAKE[k] for k in ("account", "user", "pat", "warehouse"))
 
 
-def gemini_enabled():
-    return bool(GEMINI_API_KEY and GEMINI_MODEL)
+def cortex_generation_enabled():
+    """True when Snowflake is set up AND a Cortex model is chosen for writing text."""
+    return snowflake_enabled() and bool(SNOWFLAKE["cortex_model"])

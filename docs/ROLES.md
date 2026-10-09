@@ -62,8 +62,8 @@ Owns: `backend/`
 
 - [ ] Keep `pytest` green, and the app starting **with no keys**.
 - [ ] Re-run the fetch scripts before the demo (fetch_observations → fetch_media → fetch_seasonality), then commit the cache.
-- [ ] Gemini: set `GEMINI_API_KEY` and `GEMINI_MODEL`, then run `build_insights.py`. Read the output: it must use only the fact sheets.
-- [ ] Snowflake: create a PAT (your user needs a network policy), run `snowflake/setup.sql`, then run `scripts/load_chunks.py`, and check that `/api/health` says `"retriever": "snowflake"`.
+- [ ] Snowflake search: create a PAT (your user needs a network policy), run `snowflake/setup.sql`, then run `scripts/load_chunks.py`, and check that `/api/health` says `"retriever": "snowflake"`.
+- [ ] Snowflake writing: set `SNOWFLAKE_CORTEX_MODEL` to a model available in your region, then run `build_insights.py`. Check that `/api/health` says `"rag_mode": "cortex"`, and read the output: it must use only the fact sheets.
 - [ ] ElevenLabs: set the key, run `scripts/make_music.py` once, and commit `background.mp3` and `background.credit.json`.
 - [ ] Optional: `POST /api/ask` (grounded Q&A, see `docs/API.md`).
 - [ ] After every change to `knowledge/`, run `build_insights.py` and restart the backend.

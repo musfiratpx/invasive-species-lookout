@@ -4,8 +4,8 @@ data/cache/insights/<species_id>.json, so the sidebar is instant at the demo
 and doesn't depend on live AI calls or Wi-Fi.
 
 Re-run this whenever the Researcher adds or edits a file in knowledge/.
-Uses Snowflake / Gemini if they're set in .env, otherwise the local
-keyword search + word-for-word (extractive) fallback.
+Uses Snowflake (Cortex Search + Cortex chat) if it's set in .env, otherwise the
+local keyword search + word-for-word (extractive) fallback.
 
 Usage (from backend/):  python scripts/build_insights.py
 """

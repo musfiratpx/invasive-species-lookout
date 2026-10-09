@@ -17,7 +17,7 @@ import re
 
 import requests
 
-from app import config
+from app import config, snowflake_api
 from app.rag.chunker import GENERAL, Chunk, load_chunks
 
 STOP_WORDS = {"the", "a", "an", "of", "and", "or", "to", "in", "is", "it", "how", "what", "does", "for", "on"}
@@ -65,15 +65,10 @@ class SnowflakeRetriever:
     def __init__(self):
         sf = config.SNOWFLAKE
         self.url = (
-            f"https://{sf['account']}.snowflakecomputing.com/api/v2/databases/{sf['database']}"
+            f"{snowflake_api.base_url()}/api/v2/databases/{sf['database']}"
             f"/schemas/{sf['schema']}/cortex-search-services/{sf['search_service']}:query"
         )
-        self.headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": f"Bearer {sf['pat']}",
-            "X-Snowflake-Authorization-Token-Type": "PROGRAMMATIC_ACCESS_TOKEN",
-        }
+        self.headers = snowflake_api.headers()
 
     def retrieve(self, query, scientific_name=None, k=5):
         body = {"query": query, "columns": self.COLUMNS, "limit": k}

@@ -13,7 +13,7 @@ Click any sighting on the map to see what the species is, how dangerous it is (f
                                                             ▼
  backend/knowledge/*.md ─► RAG (keyword or Snowflake        FastAPI  (backend/app/)
    (Researcher's fact      Cortex Search → extractive  ──►  /api/species, /api/map/observations
-    sheets)                or Gemini) → cache/insights/          │
+    sheets)                Cortex chat) → cache/insights/        │
                                                                  ▼
                                                Next.js + Leaflet  (frontend/)
                                                map → clusters/icons → species sidebar
@@ -22,7 +22,7 @@ Click any sighting on the map to see what the species is, how dangerous it is (f
 - **The app reads only cached files.** It never calls iNaturalist or an AI service while running, so the demo works even if the Wi-Fi drops.
 - **Invasive status** comes only from the NYS DEC 6 NYCRR Part 575 list.
 - **Danger level** comes only from official NY ranks (see [docs/SCORING.md](docs/SCORING.md)).
-- **No API keys are needed** to run the app. Keys only switch on the optional extras: Gemini, Snowflake and the ElevenLabs music.
+- **No API keys are needed** to run the app. Keys only switch on the optional extras: Snowflake Cortex (search + writing) and the ElevenLabs music.
 
 ## Quick start
 
@@ -77,8 +77,8 @@ Restart the backend afterwards. The iNaturalist scripts go through `pyinaturalis
 
 | Setting | Turns on |
 |---|---|
-| `GEMINI_API_KEY` + `GEMINI_MODEL` | Gemini rewrites fact-sheet sections into short plain-English text (still grounded only on our sources). |
 | `SNOWFLAKE_*` | Retrieval through Snowflake Cortex Search. Run `backend/snowflake/setup.sql` once, then `python scripts/load_chunks.py`. |
+| `SNOWFLAKE_CORTEX_MODEL` (plus the settings above) | A Snowflake Cortex model rewrites fact-sheet sections into short plain-English text (still grounded only on our sources). |
 | `ELEVENLABS_API_KEY` | Lets `make_music.py` generate the background music. |
 | `INAT_PLACE_IDS` | Use exact iNaturalist park boundaries instead of the 2 km circle (leaves out QC). |
 

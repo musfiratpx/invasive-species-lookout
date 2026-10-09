@@ -24,7 +24,7 @@ Checks that the server is up and shows which modes are active.
 }
 ```
 
-- `rag_mode`: `"gemini"` when `GEMINI_API_KEY` and `GEMINI_MODEL` are set, otherwise `"extractive"`.
+- `rag_mode`: `"cortex"` when the Snowflake settings and `SNOWFLAKE_CORTEX_MODEL` are set (Cortex writes the text), otherwise `"extractive"` (fact-sheet text word for word).
 - `retriever`: `"snowflake"` when the Snowflake settings are filled in, otherwise `"keyword"`.
 
 ## `GET /api/map/observations?bbox=minLng,minLat,maxLng,maxLat`

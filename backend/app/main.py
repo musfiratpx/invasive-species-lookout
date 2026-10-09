@@ -57,7 +57,7 @@ def health():
         "observations": _count_cached_observations(),
         "cache_updated_at": _cache_updated_at(),
         # Which RAG pieces will be used. Without keys we fall back to local, non-AI versions.
-        "rag_mode": "gemini" if config.gemini_enabled() else "extractive",
+        "rag_mode": "cortex" if config.cortex_generation_enabled() else "extractive",
         "retriever": "snowflake" if config.snowflake_enabled() else "keyword",
     }
 
