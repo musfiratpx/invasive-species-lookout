@@ -1,0 +1,23 @@
+# Backend dependencies, pinned so everyone on the team gets the same versions.
+# Install with:  pip install -r requirements.txt
+
+# Web API
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+
+# Data
+pyinaturalist==0.21.1   # all iNaturalist access (it rate-limits for us)
+pandas==3.0.6
+requests==2.34.2
+pypdf==6.20.0           # only for scripts/import_nyis_ranks.py
+
+# Config
+python-dotenv==1.2.4
+
+# RAG (optional at runtime: the app falls back to local mode without keys)
+google-genai==2.29.0
+snowflake-connector-python==4.8.0
+
+# Tests
+pytest==9.1.1
+httpx==0.28.1           # needed by FastAPI's TestClient
