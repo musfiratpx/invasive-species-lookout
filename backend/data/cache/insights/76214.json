@@ -1,0 +1,15 @@
+{
+  "summary": null,
+  "history": null,
+  "seasons": null,
+  "handling": {
+    "text": null,
+    "touch_safe": null
+  },
+  "sources": [],
+  "generated_with": {
+    "retriever": "keyword",
+    "generator": "extractive"
+  },
+  "generated_at": "2026-10-09T18:36:00.395239+00:00"
+}

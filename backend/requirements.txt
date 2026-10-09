@@ -13,6 +13,7 @@ pypdf==6.20.0           # only for scripts/import_nyis_ranks.py
 
 # Config
 python-dotenv==1.2.4
+pyyaml==6.0.3           # reads the header of each knowledge/ fact sheet
 
 # RAG (optional at runtime: the app falls back to local mode without keys)
 google-genai==2.29.0
