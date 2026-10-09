@@ -1,0 +1,9 @@
+---
+sources:
+  - title: Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)
+    url: https://www.nyimapinvasives.org/report
+    accessed: 2026-10-09
+---
+
+## How to report it
+New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.

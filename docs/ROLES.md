@@ -13,11 +13,11 @@ Owns: `backend/data/*.csv`, `backend/knowledge/`, `docs/DATA_SOURCES.md`
 - [ ] Fill in `health_warning` in `danger_levels.csv` **only** where an official source says so (giant hogweed is the classic example, even though it isn't seen at Kissena). Rebuilding with `build_danger_levels.py` keeps your warnings.
 - [ ] Decide on the three below-species-level entries (porcelain berry variety, red-eared slider subspecies, Africanized honey bee). Should sightings identified only to the species count? If yes, add the species name to `synonyms` in `ny_invasive_list.csv` and record why in `DATA_SOURCES.md`.
 - [ ] Write fact sheets in `knowledge/`, copying `_TEMPLATE.md`. Start with the most-sighted species:
-  - [ ] mugwort (*Artemisia vulgaris*)
-  - [ ] mute swan (*Cygnus olor*)
-  - [ ] lesser celandine (*Ficaria verna*)
-  - [ ] multiflora rose (*Rosa multiflora*)
-  - [ ] garlic mustard (*Alliaria petiolata*)
+  - [x] mugwort (*Artemisia vulgaris*): draft, review it
+  - [x] mute swan (*Cygnus olor*): draft, review it
+  - [x] lesser celandine (*Ficaria verna*): draft, review it
+  - [x] multiflora rose (*Rosa multiflora*): draft, review it
+  - [x] garlic mustard (*Alliaria petiolata*): draft, review it
   - [ ] black locust (*Robinia pseudoacacia*)
   - [ ] common reed (*Phragmites australis*)
   - [ ] Norway maple (*Acer platanoides*)
@@ -28,7 +28,8 @@ Owns: `backend/data/*.csv`, `backend/knowledge/`, `docs/DATA_SOURCES.md`
   - [ ] cup-plant (*Silphium perfoliatum*)
   - [ ] Amur honeysuckle (*Lonicera maackii*)
   - [ ] spongy moth (*Lymantria dispar*)
-- [ ] Write one general file, `how-to-report.md` (iMapInvasives / NYC Parks reporting).
+- [x] Write one general file, `how-to-report.md` (iMapInvasives). Draft done.
+- [ ] Verify the NYC Parks rule on removing plants (56 RCNY §1-04) at nycgovparks.org/rules in a browser, and add it to `how-to-report.md` if confirmed (see the DATA_SOURCES decisions log).
 - [ ] Use only official sources (NYS DEC, NYS Ag & Markets, NYC Parks, PRISMs, Cornell, iMapInvasives). Leave a section empty rather than guess.
 - [ ] Set `touch_safe` only when a source explicitly says whether it's safe to touch.
 - [ ] Log every source in `docs/DATA_SOURCES.md` with its URL and the date you accessed it.
