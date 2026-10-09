@@ -12,7 +12,7 @@ import { TYPE_FILTERS } from "@/lib/taxa";
 
 const LEVELS = [4, 3, 2, 1, null];
 
-export default function Legend({ open, onToggleOpen, view, onChangeView, hiddenLevels, hiddenTypes, onToggleLevel, onToggleType, counts, shown, total }) {
+export default function Legend({ open, onToggleOpen, focusName, view, onChangeView, hiddenLevels, hiddenTypes, onToggleLevel, onToggleType, counts, shown, total }) {
   if (!open) {
     return (
       <button className="legend-open-button" onClick={onToggleOpen} aria-expanded="false">
@@ -37,11 +37,15 @@ export default function Legend({ open, onToggleOpen, view, onChangeView, hiddenL
       </div>
       {view === "heat" && <p className="muted legend-note">The glow shows where sightings are dense. Zoom in to see icons.</p>}
 
+      {focusName && (
+        <p className="legend-paused">Showing only {focusName}, so these filters are paused. Use “Show all” to go back.</p>
+      )}
+
       <h2>Danger level</h2>
       <ul>
         {LEVELS.filter((level) => counts.levels[String(level)]).map((level) => (
           <li key={String(level)}>
-            <button className="chip" aria-pressed={!hiddenLevels.has(level)} onClick={() => onToggleLevel(level)}>
+            <button className="chip" aria-pressed={!hiddenLevels.has(level)} onClick={() => onToggleLevel(level)} disabled={!!focusName}>
               <span className="swatch" style={{ background: DANGER_COLORS[level] }} aria-hidden="true" />
               {DANGER_LABELS[level]}
               <span className="chip-count">{(counts.levels[String(level)] || 0).toLocaleString()}</span>
@@ -54,7 +58,7 @@ export default function Legend({ open, onToggleOpen, view, onChangeView, hiddenL
       <ul>
         {TYPE_FILTERS.filter((type) => counts.types[type.id]).map((type) => (
           <li key={type.id}>
-            <button className="chip" aria-pressed={!hiddenTypes.has(type.id)} onClick={() => onToggleType(type.id)}>
+            <button className="chip" aria-pressed={!hiddenTypes.has(type.id)} onClick={() => onToggleType(type.id)} disabled={!!focusName}>
               <span aria-hidden="true">{type.emoji}</span> {type.label}
               <span className="chip-count">{(counts.types[type.id] || 0).toLocaleString()}</span>
             </button>
@@ -63,10 +67,8 @@ export default function Legend({ open, onToggleOpen, view, onChangeView, hiddenL
       </ul>
 
       <p className="muted legend-note">
-        Tap to show or hide. Bubbles are groups of nearby sightings: tap one to zoom in, or to list what&apos;s there
-        once you&apos;re close. &quot;×N&quot; on an icon means N sightings of that species within about 100 m. Sightings
-        with a hidden (private) or very imprecise (over 1 km) location are counted in each species&apos; totals but not
-        drawn.
+        Tap to show or hide. Tap a bubble to zoom in or list what&apos;s there. &quot;×N&quot; = N sightings within ~100 m.
+        Sightings with a private or imprecise (&gt;1 km) location are counted but not drawn.
       </p>
     </aside>
   );

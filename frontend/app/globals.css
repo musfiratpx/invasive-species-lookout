@@ -60,7 +60,45 @@ button {
   padding: 0 var(--gap);
   border-bottom: 1px solid var(--border);
 }
-.header h1 { font-size: 1.1rem; margin: 0; }
+.header h1 { font-size: 1.1rem; margin: 0; white-space: nowrap; }
+.header { gap: var(--gap); }
+
+/* Species search in the header */
+.search { position: relative; flex: 1; max-width: 360px; margin-left: auto; }
+.search input {
+  width: 100%; font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px;
+}
+.search-results {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 2000;
+  list-style: none; margin: 0; padding: 4px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 60vh; overflow-y: auto;
+}
+.search-results li { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: var(--radius); cursor: pointer; }
+.search-results li.active { background: var(--surface); }
+.search-name { display: flex; flex-direction: column; line-height: 1.2; }
+.search-name em { color: var(--muted); font-size: 0.8rem; }
+.search-empty { padding: 8px; cursor: default; }
+
+/* "Showing only X" banner over the map */
+.focus-banner {
+  position: absolute; top: var(--gap); left: 50%; transform: translateX(-50%); z-index: 1000;
+  display: flex; align-items: center; gap: 10px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 999px; padding: 6px 8px 6px 14px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2); font-size: 0.9rem; max-width: calc(100% - 2 * var(--gap));
+}
+.focus-banner button { border-radius: 999px; }
+.show-on-map { margin-top: 6px; }
+.legend-paused { background: var(--surface); border-radius: var(--radius); padding: 6px; margin: 6px 0 0; }
+.chip:disabled { cursor: default; }
+
+/* Find me / All of Queens buttons (styled like Leaflet's +/- buttons) */
+.map-buttons button {
+  display: block; width: 30px; height: 30px; border: none; border-radius: 0; padding: 0;
+  background: #fff; font-size: 16px; line-height: 30px; text-align: center;
+}
+.map-buttons button + button { border-top: 1px solid #ccc; }
+.map-buttons button:hover { background: #f4f4f4; }
 
 .main { position: relative; flex: 1; min-height: 0; }
 .map { position: absolute; inset: 0; }
@@ -117,7 +155,7 @@ button {
 .legend {
   position: absolute; bottom: var(--gap); left: var(--gap); z-index: 1000;
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 8px 10px; font-size: 0.8rem; width: 230px; max-height: calc(100% - 2 * var(--gap)); overflow-y: auto;
+  padding: 8px 10px; font-size: 0.8rem; width: 230px; max-height: calc(100% - 190px); overflow-y: auto; /* leaves room for the map buttons at the top left */
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
 }
 .legend h2 { font-size: 0.85rem; margin: 6px 0 4px; }
@@ -162,6 +200,12 @@ button {
 
 /* Mobile: the sidebar becomes a bottom sheet */
 @media (max-width: 640px) {
+  /* Phones: search gets its own row under the title; music button shrinks to its icon */
+  .header { flex-wrap: wrap; height: auto; padding: 6px var(--gap); row-gap: 6px; }
+  .header h1 { font-size: 1rem; flex: 1; }
+  .search { order: 3; flex-basis: 100%; max-width: none; margin-left: 0; }
+  .music-label { display: none; }
+  .focus-banner { top: auto; bottom: 56px; font-size: 0.8rem; }
   .sidebar {
     top: auto; left: 0; width: 100%; height: 65%;
     border-left: none; border-top: 1px solid var(--border);

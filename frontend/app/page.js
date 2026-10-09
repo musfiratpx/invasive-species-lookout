@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Legend from "@/components/Legend";
 import MusicToggle from "@/components/MusicToggle";
+import SpeciesSearch from "@/components/SpeciesSearch";
 import SpeciesSidebar from "@/components/SpeciesSidebar";
 import { mergeNearbySightings } from "@/lib/aggregate";
 import { getMapObservations } from "@/lib/api";
@@ -37,6 +38,7 @@ export default function Home() {
   const [hiddenTypes, setHiddenTypes] = useState(new Set());
   const [legendOpen, setLegendOpen] = useState(true);
   const [view, setView] = useState("bubbles"); // "bubbles" or "heat"
+  const [focusSpeciesId, setFocusSpeciesId] = useState(null); // show only this species on the map
 
   useEffect(() => {
     // Start with the filter panel closed on phones, so the map isn't covered.
@@ -61,9 +63,22 @@ export default function Home() {
   }, [observations]);
 
   const visible = useMemo(
-    () => observations.filter((obs) => !hiddenLevels.has(obs.danger_level) && !hiddenTypes.has(obs.type)),
-    [observations, hiddenLevels, hiddenTypes],
+    () =>
+      focusSpeciesId
+        ? observations.filter((obs) => obs.species_id === focusSpeciesId) // one species: ignore the other filters
+        : observations.filter((obs) => !hiddenLevels.has(obs.danger_level) && !hiddenTypes.has(obs.type)),
+    [observations, hiddenLevels, hiddenTypes, focusSpeciesId],
   );
+  const focusName = useMemo(() => {
+    const first = focusSpeciesId && observations.find((obs) => obs.species_id === focusSpeciesId);
+    return first ? first.common_name || first.scientific_name : null;
+  }, [focusSpeciesId, observations]);
+
+  // Picking a species in search opens its sidebar and shows only it on the map.
+  const pickSpecies = useCallback((id) => {
+    setSelectedSpeciesId(id);
+    setFocusSpeciesId(id);
+  }, []);
 
   // One map point per species per ~100 m (with a count), instead of one per sighting.
   const points = useMemo(() => mergeNearbySightings(visible), [visible]);
@@ -74,14 +89,22 @@ export default function Home() {
     <div className="app">
       <header className="header">
         <h1>Kissena Invasive Watch</h1>
+        <SpeciesSearch onPick={pickSpecies} />
         <MusicToggle />
       </header>
 
       <main className="main">
-        <MapView points={points} sightings={visible} view={view} onSelectSpecies={setSelectedSpeciesId} />
+        <MapView points={points} sightings={visible} view={view} focusKey={focusSpeciesId} onSelectSpecies={setSelectedSpeciesId} />
+        {focusSpeciesId && (
+          <div className="focus-banner" role="status">
+            Showing only <strong>{focusName}</strong> ({visible.length.toLocaleString()} sightings)
+            <button onClick={() => setFocusSpeciesId(null)}>Show all</button>
+          </div>
+        )}
         <Legend
           open={legendOpen}
           onToggleOpen={() => setLegendOpen((o) => !o)}
+          focusName={focusSpeciesId ? focusName : null}
           view={view}
           onChangeView={setView}
           hiddenLevels={hiddenLevels}
@@ -93,7 +116,14 @@ export default function Home() {
           total={observations.length}
         />
         {loadError && <div className="banner" role="alert">{loadError}</div>}
-        {selectedSpeciesId && <SpeciesSidebar speciesId={selectedSpeciesId} onClose={closeSidebar} />}
+        {selectedSpeciesId && (
+          <SpeciesSidebar
+            speciesId={selectedSpeciesId}
+            onClose={closeSidebar}
+            onShowOnMap={() => setFocusSpeciesId(selectedSpeciesId)}
+            shownOnMap={focusSpeciesId === selectedSpeciesId}
+          />
+        )}
       </main>
 
       <footer className="footer">

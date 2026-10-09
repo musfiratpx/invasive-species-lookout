@@ -58,11 +58,16 @@ export default function MusicToggle() {
   };
 
   if (missing) {
-    return <button disabled title="Run backend/scripts/make_music.py to create it">Music not available</button>;
+    return (
+      <button className="music-button" disabled title="Run backend/scripts/make_music.py to create it">
+        <span aria-hidden="true">🔇</span><span className="music-label"> Music not available</span>
+      </button>
+    );
   }
   return (
-    <button onClick={toggle} aria-pressed={on} aria-label={on ? "Turn background music off" : "Turn background music on"}>
-      {on ? "🔊 Music on" : "🔈 Music off"}
+    <button className="music-button" onClick={toggle} aria-pressed={on} aria-label={on ? "Turn background music off" : "Turn background music on"}>
+      <span aria-hidden="true">{on ? "🔊" : "🔈"}</span>
+      <span className="music-label">{on ? " Music on" : " Music off"}</span>
     </button>
   );
 }
