@@ -16,7 +16,7 @@ import SoundPlayer from "@/components/SoundPlayer";
 import { getSpecies } from "@/lib/api";
 import { NY_STATUS_LABELS, STATUS_LABELS } from "@/lib/labels";
 
-export default function SpeciesSidebar({ speciesId, onClose, onShowOnMap, shownOnMap }) {
+export default function SpeciesSidebar({ speciesId, onClose, onBack, backLabel, onShowOnMap, shownOnMap }) {
   const [species, setSpecies] = useState(null);
   const [error, setError] = useState(null);
   const closeButton = useRef(null);
@@ -48,6 +48,11 @@ export default function SpeciesSidebar({ speciesId, onClose, onShowOnMap, shownO
         ✕
       </button>
 
+      {onBack && (
+        <button className="sidebar-back" onClick={onBack}>
+          ← {backLabel}
+        </button>
+      )}
       {error && <p role="alert">{error}</p>}
       {!species && !error && <Skeleton />}
       {species && <SpeciesDetails species={species} onShowOnMap={onShowOnMap} shownOnMap={shownOnMap} />}

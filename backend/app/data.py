@@ -14,6 +14,7 @@ import pandas as pd
 from app import config
 from app.danger import find_danger
 from app.invasive_list import load_invasive_list
+from app.parks import load_parks
 from app.status import status_for_all
 
 # Shown when we have no official handling guidance (ground rule 5: safety first).
@@ -30,7 +31,14 @@ def observations():
     if not config.OBSERVATIONS_CSV.exists():
         return pd.DataFrame(columns=["observation_id", "species_id", "listed_name", "observed_on"])
     df = pd.read_csv(config.OBSERVATIONS_CSV, dtype={"species_id": str, "license": str})
-    return df.fillna({"common_name": "", "place_guess": "", "license": ""})
+    df = df.fillna({"common_name": "", "place_guess": "", "license": ""})
+    # Which park each sighting is in (made by scripts/assign_parks.py); None if outside parks.
+    parks_csv = config.CACHE_DIR / "observation_parks.csv"
+    if parks_csv.exists():
+        df = df.merge(pd.read_csv(parks_csv, dtype={"park_id": str}), on="observation_id", how="left")
+    else:
+        df["park_id"] = None
+    return df
 
 
 @lru_cache(maxsize=1)
@@ -105,9 +113,76 @@ def map_observations(bbox=None):
             # How precise the location is, in meters (None if unknown). Some sightings are only
             # placed at "Queens" (the borough's center point, ~12 km accuracy); the map hides those.
             "accuracy_m": None if pd.isna(getattr(row, "accuracy_m", None)) else float(row.accuracy_m),
+            "park_id": None if pd.isna(row.park_id) else row.park_id,  # NYC Parks property ID, e.g. "Q015"
         }
         for row in df.itertuples()
     ]
+
+
+# ---------- Park profiles ----------
+
+@lru_cache(maxsize=1)
+def parks_by_id():
+    return {p["park_id"]: p for p in load_parks()}
+
+
+def park_list():
+    """Every Queens park with at least one sighting, most sightings first."""
+    df = observations().dropna(subset=["park_id"])
+    result = []
+    for park_id, group in df.groupby("park_id"):
+        park = parks_by_id().get(park_id)
+        if park:
+            result.append({
+                "park_id": park_id, "name": park["name"], "acres": park["acres"], "type": park["type"],
+                "sightings": int(len(group)), "species": int(group["species_id"].nunique()),
+            })
+    return sorted(result, key=lambda p: p["sightings"], reverse=True)
+
+
+def park_detail(park_id):
+    """Everything the park profile panel shows, or None for an unknown park."""
+    park = parks_by_id().get(park_id)
+    if not park:
+        return None
+    group = observations()[observations()["park_id"] == park_id]
+
+    species = []
+    for species_id, rows in group.groupby("species_id"):
+        summary = _species_summary(species_id, rows)  # "sightings" here = sightings in this park
+        species.append({k: summary[k] for k in ("species_id", "scientific_name", "common_name", "iconic_taxon",
+                                                "danger_level", "danger_label", "sightings")})
+    species.sort(key=lambda s: s["sightings"], reverse=True)
+
+    # How many listed species of each danger level are in the park.
+    by_level = {}
+    for s in species:
+        by_level[s["danger_label"]] = by_level.get(s["danger_label"], 0) + 1
+
+    months = pd.to_datetime(group["observed_on"]).dt.month.value_counts()
+    recent = group.sort_values("observed_on", ascending=False).head(5)
+    return {
+        "park_id": park_id,
+        "name": park["name"],
+        "acres": park["acres"],
+        "type": park["type"],
+        "address": park["address"],
+        "sightings": int(len(group)),
+        "species_count": len(species),
+        "species_by_danger": by_level,
+        "species": species,
+        "by_month_of_year": [int(months.get(m, 0)) for m in range(1, 13)],
+        "first_seen": group["observed_on"].min() if len(group) else None,
+        "last_seen": group["observed_on"].max() if len(group) else None,
+        "recent": [
+            {"observed_on": r.observed_on, "species_id": r.species_id,
+             "common_name": r.common_name or r.scientific_name, "url": r.url}
+            for r in recent.itertuples()
+        ],
+        "outline": {"type": "MultiPolygon", "coordinates": park["geometry"]},  # GeoJSON, for drawing the boundary
+        "source": {"title": "NYC Parks Properties (NYC Department of Parks and Recreation, NYC Open Data)",
+                   "url": "https://data.cityofnewyork.us/d/enfh-gkve"},
+    }
 
 
 def _photos(species_id):

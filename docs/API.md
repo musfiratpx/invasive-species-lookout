@@ -150,6 +150,41 @@ Field notes:
   - `report` is how to report a sighting, shown **word for word** from the sources (never AI-rewritten). It holds the species' own reporting note, if any, then the general instructions from `knowledge/how-to-report.md`. Paragraphs are separated by a blank line (`\n\n`). `null` means no reporting source yet.
   - `sources` lists `{title, url}` for every document used.
 
+## `GET /api/parks`
+
+Every Queens park with at least one sighting, most sightings first. Boundaries are NYC Parks' official "Parks Properties" (NYC Open Data). Properties sharing a specific name (e.g. two pieces of "Kissena Corridor Park") are merged into one park; generic names like "Park" get their address added.
+
+```json
+[{"park_id": "Q001", "name": "Alley Pond Park", "acres": 635.514, "type": "Flagship Park", "sightings": 3138, "species": 49}]
+```
+
+Only sightings with a trustworthy location (not privacy-blurred, accuracy within 1 km) are matched to parks.
+
+## `GET /api/parks/{park_id}`
+
+A park's profile. Unknown `park_id` → `404`.
+
+```json
+{
+  "park_id": "Q024", "name": "Kissena Park", "acres": 237.147, "type": "Community Park", "address": "...",
+  "sightings": 498, "species_count": 31,
+  "species_by_danger": {"Very High": 16, "High": 12, "Moderate": 2, "Not yet ranked": 1},
+  "species": [{"species_id": "52856", "scientific_name": "Artemisia vulgaris", "common_name": "common mugwort",
+               "iconic_taxon": "Plantae", "danger_level": 3, "danger_label": "High", "sightings": 88}],
+  "by_month_of_year": [8, 7, 19, 167, 65, 39, 61, 24, 28, 45, 24, 11],
+  "first_seen": "...", "last_seen": "2026-10-08",
+  "recent": [{"observed_on": "2026-10-08", "species_id": "52856", "common_name": "common mugwort", "url": "https://www.inaturalist.org/observations/..."}],
+  "outline": {"type": "MultiPolygon", "coordinates": [...]},
+  "source": {"title": "NYC Parks Properties (...)", "url": "https://data.cityofnewyork.us/d/enfh-gkve"}
+}
+```
+
+- `species_by_danger` counts **species** (not sightings) at each danger level.
+- `species[].sightings` is sightings **in this park**.
+- `outline` is GeoJSON for drawing the park boundary.
+
+The map endpoint also includes `park_id` (or `null`) on each sighting.
+
 ## `POST /api/ask` (planned, optional)
 
 Request `{"question": "..."}`, response `{"answer": "...", "sources": [{"title": "...", "url": "..."}]}`. It uses the same grounded RAG as the sidebar. Not built yet.

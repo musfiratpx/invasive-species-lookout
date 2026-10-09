@@ -89,6 +89,25 @@ button {
 }
 .focus-banner button { border-radius: 999px; }
 .show-on-map { margin-top: 6px; }
+.sidebar-back { margin-bottom: 8px; }
+
+/* Park profile */
+.park-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+.stat-row { display: flex; gap: var(--gap); }
+.stat { flex: 1; background: var(--surface); border-radius: var(--radius); padding: 8px; display: flex; flex-direction: column; }
+.stat strong { font-size: 1.4rem; }
+.stat span { color: var(--muted); font-size: 0.8rem; }
+.danger-mix { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; }
+.danger-mix-legend { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.85rem; }
+.danger-mix-legend li { display: flex; align-items: center; gap: 4px; }
+.park-species { list-style: none; padding: 0; margin: 0; }
+.park-species button {
+  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+  border: none; border-radius: var(--radius); padding: 6px; background: none;
+}
+.park-species button:hover, .park-species button:focus-visible { background: var(--surface); }
+.spot-park { display: block; width: 100%; margin: 6px 0 0; border-radius: var(--radius); text-align: left; font-weight: 600; }
+.search-results li.group-start { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 8px; }
 .legend-paused { background: var(--surface); border-radius: var(--radius); padding: 6px; margin: 6px 0 0; }
 .chip:disabled { cursor: default; }
 

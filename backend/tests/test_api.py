@@ -56,3 +56,16 @@ def test_bbox_filters_and_validates():
     assert 0 < len(some) < len(all_points)
     assert client.get("/api/map/observations?bbox=1,2,3").status_code == 400
     assert client.get("/api/map/observations?bbox=a,b,c,d").status_code == 400
+
+
+def test_parks_list_and_profile():
+    parks = client.get("/api/parks").json()
+    assert len(parks) > 0
+    assert [p["sightings"] for p in parks] == sorted((p["sightings"] for p in parks), reverse=True)
+    profile = client.get(f"/api/parks/{parks[0]['park_id']}").json()
+    assert profile["sightings"] == parks[0]["sightings"]
+    assert profile["species_count"] == len(profile["species"]) == parks[0]["species"]
+    assert sum(s["sightings"] for s in profile["species"]) == profile["sightings"]
+    assert len(profile["by_month_of_year"]) == 12
+    assert profile["outline"]["type"] == "MultiPolygon"
+    assert client.get("/api/parks/NOPE").status_code == 404

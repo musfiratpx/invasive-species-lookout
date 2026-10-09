@@ -36,3 +36,13 @@ export function getSpeciesList() {
 export function getSpecies(speciesId) {
   return getJson(`/api/species/${encodeURIComponent(speciesId)}`);
 }
+
+/** Every Queens park with at least one sighting, most sightings first. */
+export function getParks() {
+  return getJson("/api/parks");
+}
+
+/** A park's profile: species, danger mix, months, recent sightings and outline. */
+export function getPark(parkId) {
+  return getJson(`/api/parks/${encodeURIComponent(parkId)}`);
+}

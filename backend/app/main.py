@@ -84,6 +84,21 @@ def species_list():
     return data.species_list()
 
 
+@app.get("/api/parks")
+def park_list():
+    """Every Queens park with at least one sighting (official NYC Parks boundaries), most sightings first."""
+    return data.park_list()
+
+
+@app.get("/api/parks/{park_id}")
+def park_detail(park_id: str):
+    """A park's profile: its listed species, danger mix, months, recent sightings and outline."""
+    detail = data.park_detail(park_id)
+    if detail is None:
+        raise HTTPException(404, f"No park {park_id} in our data")
+    return detail
+
+
 @app.get("/api/species/{species_id}")
 def species_detail(species_id: str):
     """Everything the sidebar shows for one species (species_id = iNaturalist taxon ID)."""

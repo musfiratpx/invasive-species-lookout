@@ -67,6 +67,8 @@ The cached data is already in git. To update it, run these from `backend/` with 
 | `python scripts/fetch_observations.py` | Sightings of NY-listed species in Queens (iNaturalist place 675) |
 | `python scripts/fetch_media.py` | Photos and real sound recordings, with credits |
 | `python scripts/fetch_seasonality.py` | Sightings per month (Queens, and all of NYC) |
+| `python scripts/fetch_parks.py` | Official Queens park boundaries from NYC Parks (NYC Open Data) |
+| `python scripts/assign_parks.py` | Works out which park each sighting is in (for park profiles) |
 | `python scripts/build_insights.py` | Sidebar text from the fact sheets in `knowledge/` |
 | `python scripts/build_danger_levels.py` | Rebuilds `danger_levels.csv` from the official sources |
 | `python scripts/make_music.py` | One-time background music (needs `ELEVENLABS_API_KEY`) |

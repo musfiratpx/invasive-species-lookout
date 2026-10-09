@@ -24,6 +24,12 @@ For file-by-file details, see [backend/data/README.md](../backend/data/README.md
 
 Each photo and sound carries its own attribution, license and observation link in `backend/data/cache/media.json`.
 
+## Parks
+
+| Source | Used for | URL | Checked |
+|---|---|---|---|
+| NYC Parks "Parks Properties" (NYC Department of Parks and Recreation, NYC Open Data) | Park boundaries, names, acres for park profiles | <https://data.cityofnewyork.us/d/enfh-gkve> | 2026-10-09 |
+
 ## Map and music
 
 | Source | Used for | URL |

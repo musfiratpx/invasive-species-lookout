@@ -1,9 +1,11 @@
 "use client";
 /**
- * Search box: type part of a common or scientific name, pick a species, and the page
- * opens its sidebar and shows only that species on the map.
+ * Search box for species and parks. Type part of a species name (common or
+ * scientific) or a park name, then pick a result:
+ *   - a species opens its sidebar and shows only that species on the map;
+ *   - a park opens its profile and shows only that park's sightings, outlined.
  * Works with the keyboard (arrow keys + Enter, Escape to close), which also gives
- * keyboard users a way into the map's species.
+ * keyboard users a way into the map.
  */
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -12,9 +14,10 @@ import { getSpeciesList } from "@/lib/api";
 import { DANGER_COLORS } from "@/lib/labels";
 import { taxonIcon } from "@/lib/taxa";
 
-const MAX_RESULTS = 8;
+const MAX_SPECIES = 6;
+const MAX_PARKS = 4;
 
-export default function SpeciesSearch({ onPick }) {
+export default function SpeciesSearch({ parks, onPickSpecies, onPickPark }) {
   const [species, setSpecies] = useState([]);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -32,16 +35,23 @@ export default function SpeciesSearch({ onPick }) {
     return () => document.removeEventListener("pointerdown", onDown);
   }, []);
 
+  // One flat list (so arrow keys work across both groups): species first, then parks.
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return species.slice(0, MAX_RESULTS); // most-sighted first (the API sorts them)
-    return species
-      .filter((s) => s.common_name.toLowerCase().includes(q) || s.scientific_name.toLowerCase().includes(q))
-      .slice(0, MAX_RESULTS);
-  }, [query, species]);
+    const speciesHits = species
+      .filter((s) => !q || s.common_name.toLowerCase().includes(q) || s.scientific_name.toLowerCase().includes(q))
+      .slice(0, q ? MAX_SPECIES : 4)
+      .map((s) => ({ kind: "species", id: s.species_id, item: s }));
+    const parkHits = parks
+      .filter((p) => !q || p.name.toLowerCase().includes(q))
+      .slice(0, q ? MAX_PARKS : 3)
+      .map((p) => ({ kind: "park", id: p.park_id, item: p }));
+    return [...speciesHits, ...parkHits];
+  }, [query, species, parks]);
 
-  function pick(s) {
-    onPick(s.species_id);
+  function pick(result) {
+    if (result.kind === "species") onPickSpecies(result.id);
+    else onPickPark(result.id);
     setQuery("");
     setOpen(false);
   }
@@ -53,41 +63,50 @@ export default function SpeciesSearch({ onPick }) {
     else if (e.key === "Escape") { setOpen(false); }
   }
 
+  const optionId = (r) => `search-option-${r.kind}-${r.id}`;
+
   return (
     <div className="search" ref={box}>
       <input
         type="search"
-        placeholder={`Search ${species.length || ""} species…`}
-        aria-label="Search species"
+        placeholder={`Search ${species.length || ""} species or ${parks.length || ""} parks…`}
+        aria-label="Search species or parks"
         role="combobox"
         aria-expanded={open}
-        aria-controls="species-results"
-        aria-activedescendant={open && results[active] ? `species-option-${results[active].species_id}` : undefined}
+        aria-controls="search-results"
+        aria-activedescendant={open && results[active] ? optionId(results[active]) : undefined}
         value={query}
         onFocus={() => setOpen(true)}
         onChange={(e) => { setQuery(e.target.value); setActive(0); setOpen(true); }}
         onKeyDown={onKeyDown}
       />
       {open && (
-        <ul id="species-results" role="listbox" className="search-results">
-          {results.length === 0 && <li className="muted search-empty">No listed species match “{query}”.</li>}
-          {results.map((s, i) => (
+        <ul id="search-results" role="listbox" className="search-results">
+          {results.length === 0 && <li className="muted search-empty">No species or parks match “{query}”.</li>}
+          {results.map((r, i) => (
             <li
-              key={s.species_id}
-              id={`species-option-${s.species_id}`}
+              key={optionId(r)}
+              id={optionId(r)}
               role="option"
               aria-selected={i === active}
-              className={i === active ? "active" : undefined}
+              className={`${i === active ? "active" : ""}${i > 0 && results[i - 1].kind !== r.kind ? " group-start" : ""}`}
               onMouseEnter={() => setActive(i)}
-              onPointerDown={(e) => { e.preventDefault(); pick(s); }}
+              onPointerDown={(e) => { e.preventDefault(); pick(r); }}
             >
-              <span className="swatch" style={{ background: DANGER_COLORS[s.danger_level ?? null] }} aria-hidden="true" />
-              <span aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>
-              <span className="search-name">
-                {s.common_name}
-                <em>{s.scientific_name}</em>
-              </span>
-              <span className="chip-count">{s.sightings.toLocaleString()}</span>
+              {r.kind === "species" ? (
+                <>
+                  <span className="swatch" style={{ background: DANGER_COLORS[r.item.danger_level ?? null] }} aria-hidden="true" />
+                  <span aria-hidden="true">{taxonIcon(r.item.iconic_taxon).emoji}</span>
+                  <span className="search-name">{r.item.common_name}<em>{r.item.scientific_name}</em></span>
+                  <span className="chip-count">{r.item.sightings.toLocaleString()}</span>
+                </>
+              ) : (
+                <>
+                  <span aria-hidden="true">🌳</span>
+                  <span className="search-name">{r.item.name}<em>Park · {r.item.species} species</em></span>
+                  <span className="chip-count">{r.item.sightings.toLocaleString()}</span>
+                </>
+              )}
             </li>
           ))}
         </ul>

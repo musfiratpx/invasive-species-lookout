@@ -14,6 +14,8 @@
  *   out; icons take over from zoom 15.
  * - Extras: zoom down to level 20, a scale bar, "Find me" and "All of Queens" buttons,
  *   and zooming to a species' sightings when one is picked in search.
+ * - Parks: when a park is picked, its official boundary is outlined and the map zooms to
+ *   it. The "what's here" list links to the profile of the park a crowded spot is in.
  *
  * Markers are plain Leaflet objects, not React components: Queens has ~15,000
  * sightings, and one React component each froze phones for seconds.
@@ -77,8 +79,20 @@ function previewText(cluster) {
   return `<strong>${sightingsIn(cluster)} sightings</strong><br>${names}${more}`;
 }
 
+/** The park most of a bubble's sightings are in (if at least half are), or null. */
+function mainParkOf(cluster) {
+  const counts = new Map();
+  let total = 0;
+  for (const m of cluster.getAllChildMarkers()) {
+    total += m.options.count;
+    if (m.options.parkId) counts.set(m.options.parkId, (counts.get(m.options.parkId) || 0) + m.options.count);
+  }
+  const [best, n] = [...counts.entries()].sort((a, b) => b[1] - a[1])[0] || [null, 0];
+  return n * 2 >= total ? best : null;
+}
+
 /** HTML for the "what's here" popup: one row per species, most sightings first. */
-function speciesListHtml(cluster) {
+function speciesListHtml(cluster, parkNames, currentFocus) {
   const rows = speciesIn(cluster);
   const shown = rows.slice(0, 12);
   const items = shown
@@ -90,7 +104,11 @@ function speciesListHtml(cluster) {
     )
     .join("");
   const more = rows.length > shown.length ? `<p class="muted">…and ${rows.length - shown.length} more species. Zoom in to see them.</p>` : "";
-  return `<div class="spot-list"><strong>${sightingsIn(cluster)} sightings here</strong><ul>${items}</ul>${more}</div>`;
+  const parkId = mainParkOf(cluster);
+  const parkLink = parkId && parkNames[parkId] && currentFocus !== `park:${parkId}` // no link to the park you're already in
+    ? `<button type="button" class="spot-park" data-park-id="${escapeHtml(parkId)}">🌳 ${escapeHtml(parkNames[parkId])} profile →</button>`
+    : "";
+  return `<div class="spot-list"><strong>${sightingsIn(cluster)} sightings here</strong>${parkLink}<ul>${items}</ul>${more}</div>`;
 }
 
 function toMarker(p) {
@@ -100,6 +118,7 @@ function toMarker(p) {
     icon: makeMarkerIcon({ iconicTaxon: p.iconic_taxon, dangerLevel: p.danger_level, count }),
     keyboard: false, // thousands of tab stops would make keyboard use impossible (use the search box instead)
     speciesId: p.species_id,
+    parkId: p.park_id,
     name,
     dangerLevel: p.danger_level,
     count,
@@ -109,7 +128,7 @@ function toMarker(p) {
 }
 
 /** Adds the sightings (bubbles/icons, street-level detail, and optionally the heat map) to the map. */
-function SightingsLayer({ points, sightings, view, focusKey, onSelectSpecies }) {
+function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames, onSelectSpecies, onSelectPark }) {
   const map = useMap();
   const merged = useRef(null); // ×N points, used below street level
   const detail = useRef(null); // every sighting separately, used at street level
@@ -119,6 +138,12 @@ function SightingsLayer({ points, sightings, view, focusKey, onSelectSpecies }) 
   latest.current = { sightings, view };
   const onSelect = useRef(onSelectSpecies);
   onSelect.current = onSelectSpecies;
+  const onPark = useRef(onSelectPark);
+  onPark.current = onSelectPark;
+  const names = useRef(parkNames);
+  names.current = parkNames;
+  const currentFocus = useRef(focusKey);
+  currentFocus.current = focusKey;
 
   // Build the detail layer only when someone actually zooms to street level.
   function ensureDetail() {
@@ -175,14 +200,14 @@ function SightingsLayer({ points, sightings, view, focusKey, onSelectSpecies }) 
         }
         const popup = L.popup({ maxWidth: 260, className: "spot-popup" })
           .setLatLng(cluster.getLatLng())
-          .setContent(speciesListHtml(cluster))
+          .setContent(speciesListHtml(cluster, names.current, currentFocus.current))
           .openOn(map);
         popup.getElement().addEventListener("click", (e) => {
-          const button = e.target.closest("[data-species-id]");
-          if (button) {
-            map.closePopup(popup);
-            onSelect.current(button.dataset.speciesId);
-          }
+          const button = e.target.closest("[data-species-id], [data-park-id]");
+          if (!button) return;
+          map.closePopup(popup);
+          if (button.dataset.parkId) onPark.current(button.dataset.parkId);
+          else onSelect.current(button.dataset.speciesId);
         });
       });
       return group;
@@ -268,23 +293,38 @@ function SightingsLayer({ points, sightings, view, focusKey, onSelectSpecies }) 
     return () => { cancelled = true; };
   }, [view, sightings]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // When a species is picked in search ("focus"), zoom the map to its sightings;
-  // when focus is cleared, go back to all of Queens.
+  // Draw the focused park's official boundary.
+  const outlineLayer = useRef(null);
+  useEffect(() => {
+    if (outlineLayer.current) map.removeLayer(outlineLayer.current);
+    outlineLayer.current = outline
+      ? L.geoJSON(outline, { style: { color: "#2e7d32", weight: 3, fillColor: "#2e7d32", fillOpacity: 0.06, dashArray: "6 4" }, interactive: false }).addTo(map)
+      : null;
+  }, [outline, map]);
+
+  // When something is focused, zoom to it once: a park to its outline, a species to its
+  // sightings. When focus is cleared, go back to all of Queens.
   const lastFocus = useRef(null);
   useEffect(() => {
-    if (focusKey && focusKey !== lastFocus.current && points.length) {
-      map.fitBounds(L.latLngBounds(points.map((p) => [p.latitude, p.longitude])), { padding: [60, 60], maxZoom: 16 });
-      lastFocus.current = focusKey;
+    if (focusKey && focusKey !== lastFocus.current) {
+      const isPark = focusKey.startsWith("park:");
+      const bounds = isPark
+        ? outline && L.geoJSON(outline).getBounds()
+        : points.length && L.latLngBounds(points.map((p) => [p.latitude, p.longitude]));
+      if (bounds) {
+        map.fitBounds(bounds, { padding: [40, 40], maxZoom: isPark ? 17 : 16 });
+        lastFocus.current = focusKey;
+      }
     } else if (!focusKey && lastFocus.current) {
       map.setView(CENTER, ZOOM);
       lastFocus.current = null;
     }
-  }, [focusKey, points, map]);
+  }, [focusKey, points, outline, map]);
 
   return null;
 }
 
-export default function MapView({ points, sightings, view, focusKey, onSelectSpecies }) {
+export default function MapView({ points, sightings, view, focusKey, outline, parkNames, onSelectSpecies, onSelectPark }) {
   return (
     <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map">
       <TileLayer
@@ -293,7 +333,16 @@ export default function MapView({ points, sightings, view, focusKey, onSelectSpe
         maxZoom={MAX_ZOOM}
         maxNativeZoom={19}
       />
-      <SightingsLayer points={points} sightings={sightings} view={view} focusKey={focusKey} onSelectSpecies={onSelectSpecies} />
+      <SightingsLayer
+        points={points}
+        sightings={sightings}
+        view={view}
+        focusKey={focusKey}
+        outline={outline}
+        parkNames={parkNames}
+        onSelectSpecies={onSelectSpecies}
+        onSelectPark={onSelectPark}
+      />
     </MapContainer>
   );
 }
