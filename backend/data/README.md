@@ -15,7 +15,7 @@ These come from iNaturalist and are **committed to git on purpose**, so the demo
 | File | What it is | Script |
 |---|---|---|
 | `cache/taxon_map.json` | Each listed species → its iNaturalist taxon ID. iNaturalist's search follows synonyms, e.g. *Cynanchum rossicum* → *Vincetoxicum rossicum*. | `fetch_observations.py` (add `--refresh-taxa` to redo) |
-| `cache/observations.csv` | Every research-grade sighting of a listed species in the area. `taxon_id` is what the observer saw (it may be a variety). `species_id` and `listed_name` say which list entry it counts toward. | `fetch_observations.py` |
+| `cache/observations.csv` | Every research-grade sighting of a listed species in the area. `accuracy_m` is how precise the public location is (meters); 422 are worse than 1 km (e.g. 78 placed only at "Queens", at the borough's center point) and are counted but not drawn on the map. `taxon_id` is what the observer saw (it may be a variety). `species_id` and `listed_name` say which list entry it counts toward. | `fetch_observations.py` |
 | `cache/media.json` | Up to 8 photos and at most one real sound per species, with attribution, license and observation link. CC licenses are preferred, and `license: null` means all rights reserved. **Sounds are only looked up for animals**, and each one keeps the observer's note (`observer_note`): a "sound" on a plant observation is really birdsong or wind. | `fetch_media.py` |
 | `cache/seasonality.json` | Sightings per month (Jan–Dec): `kissena` = our area (all of Queens) from our cache, and `nyc` from iNaturalist's histogram for all of New York City. | `fetch_seasonality.py` |
 

@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Legend from "@/components/Legend";
 import MusicToggle from "@/components/MusicToggle";
 import SpeciesSidebar from "@/components/SpeciesSidebar";
+import { mergeNearbySightings } from "@/lib/aggregate";
 import { getMapObservations } from "@/lib/api";
 import { typeFilterOf } from "@/lib/taxa";
 
@@ -18,6 +19,8 @@ const MapView = dynamic(() => import("@/components/MapView"), {
   ssr: false,
   loading: () => <p className="muted" style={{ padding: 12 }}>Loading map…</p>,
 });
+
+const MAX_ACCURACY_M = 1000;
 
 /** Add or remove one value from a Set, returning a new Set (React needs a new object to notice). */
 function toggle(set, value) {
@@ -33,15 +36,17 @@ export default function Home() {
   const [hiddenLevels, setHiddenLevels] = useState(new Set());
   const [hiddenTypes, setHiddenTypes] = useState(new Set());
   const [legendOpen, setLegendOpen] = useState(true);
+  const [view, setView] = useState("bubbles"); // "bubbles" or "heat"
 
   useEffect(() => {
     // Start with the filter panel closed on phones, so the map isn't covered.
     if (window.innerWidth < 640) setLegendOpen(false);
     getMapObservations()
-      // Sightings with blurred locations are left off the map: iNaturalist moves them
-      // up to ~20 km for privacy, so drawing them would put species in the wrong town.
-      // They still count in the sidebar's totals, charts and status.
-      .then((all) => setObservations(all.filter((obs) => !obs.obscured).map((obs) => ({ ...obs, type: typeFilterOf(obs.iconic_taxon) }))))
+      // Left off the map (but still counted in the sidebar's totals, charts and status):
+      //  - privacy-blurred sightings: iNaturalist moves them up to ~20 km, so they'd land in the wrong town;
+      //  - very imprecise sightings (over 1 km): e.g. ones only placed at "Queens", which iNaturalist
+      //    puts at the borough's center point and which would create a fake hotspot there.
+      .then((all) => setObservations(all.filter((obs) => !obs.obscured && !(obs.accuracy_m > MAX_ACCURACY_M)).map((obs) => ({ ...obs, type: typeFilterOf(obs.iconic_taxon) }))))
       .catch(() => setLoadError("Couldn't load sightings. Is the backend running on port 8000?"));
   }, []);
 
@@ -60,6 +65,9 @@ export default function Home() {
     [observations, hiddenLevels, hiddenTypes],
   );
 
+  // One map point per species per ~100 m (with a count), instead of one per sighting.
+  const points = useMemo(() => mergeNearbySightings(visible), [visible]);
+
   const closeSidebar = useCallback(() => setSelectedSpeciesId(null), []);
 
   return (
@@ -70,10 +78,12 @@ export default function Home() {
       </header>
 
       <main className="main">
-        <MapView observations={visible} onSelectSpecies={setSelectedSpeciesId} />
+        <MapView points={points} sightings={visible} view={view} onSelectSpecies={setSelectedSpeciesId} />
         <Legend
           open={legendOpen}
           onToggleOpen={() => setLegendOpen((o) => !o)}
+          view={view}
+          onChangeView={setView}
           hiddenLevels={hiddenLevels}
           hiddenTypes={hiddenTypes}
           onToggleLevel={(level) => setHiddenLevels((s) => toggle(s, level))}

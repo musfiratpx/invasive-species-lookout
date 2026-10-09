@@ -12,7 +12,7 @@ import { TYPE_FILTERS } from "@/lib/taxa";
 
 const LEVELS = [4, 3, 2, 1, null];
 
-export default function Legend({ open, onToggleOpen, hiddenLevels, hiddenTypes, onToggleLevel, onToggleType, counts, shown, total }) {
+export default function Legend({ open, onToggleOpen, view, onChangeView, hiddenLevels, hiddenTypes, onToggleLevel, onToggleType, counts, shown, total }) {
   if (!open) {
     return (
       <button className="legend-open-button" onClick={onToggleOpen} aria-expanded="false">
@@ -29,6 +29,13 @@ export default function Legend({ open, onToggleOpen, hiddenLevels, hiddenTypes, 
         </p>
         <button className="legend-close" onClick={onToggleOpen} aria-expanded="true" aria-label="Hide filters">✕</button>
       </div>
+
+      <h2>Map style</h2>
+      <div className="segmented" role="group" aria-label="Map style">
+        <button aria-pressed={view === "bubbles"} onClick={() => onChangeView("bubbles")}>Bubbles</button>
+        <button aria-pressed={view === "heat"} onClick={() => onChangeView("heat")}>Heat map</button>
+      </div>
+      {view === "heat" && <p className="muted legend-note">The glow shows where sightings are dense. Zoom in to see icons.</p>}
 
       <h2>Danger level</h2>
       <ul>
@@ -56,8 +63,10 @@ export default function Legend({ open, onToggleOpen, hiddenLevels, hiddenTypes, 
       </ul>
 
       <p className="muted legend-note">
-        Tap to show or hide. Bubbles are groups of nearby sightings; zoom in to split them. Sightings with a hidden
-        (private) location are counted in each species&apos; totals but not drawn.
+        Tap to show or hide. Bubbles are groups of nearby sightings: tap one to zoom in, or to list what&apos;s there
+        once you&apos;re close. &quot;×N&quot; on an icon means N sightings of that species within about 100 m. Sightings
+        with a hidden (private) or very imprecise (over 1 km) location are counted in each species&apos; totals but not
+        drawn.
       </p>
     </aside>
   );

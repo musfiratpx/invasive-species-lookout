@@ -101,7 +101,10 @@ def map_observations(bbox=None):
             "longitude": float(row.longitude),
             "observed_on": row.observed_on,
             "danger_level": levels[row.listed_name],
-            "obscured": bool(row.obscured),  # location blurred by iNaturalist: show as approximate
+            "obscured": bool(row.obscured),  # location blurred by iNaturalist for privacy
+            # How precise the location is, in meters (None if unknown). Some sightings are only
+            # placed at "Queens" (the borough's center point, ~12 km accuracy); the map hides those.
+            "accuracy_m": None if pd.isna(getattr(row, "accuracy_m", None)) else float(row.accuracy_m),
         }
         for row in df.itertuples()
     ]

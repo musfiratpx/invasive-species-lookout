@@ -78,9 +78,16 @@ button {
 
 /* ---------- Map markers ---------- */
 .species-marker {
-  display: flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: #fff; border: 3px solid; font-size: 16px; line-height: 1;
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #fff; border: 3px solid; font-size: 13px; line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+/* "×N" badge: several sightings of this species within ~100 m */
+.marker-badge {
+  position: absolute; top: -8px; right: -12px;
+  background: var(--cluster); color: #fff; border-radius: 999px;
+  font-size: 9px; font-weight: 700; padding: 1px 4px; line-height: 1.3;
 }
 
 /* Cluster bubbles: one neutral color, so color on the map only ever means danger level */
@@ -90,9 +97,21 @@ button {
   background: var(--cluster); border: 3px solid var(--cluster-ring);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
-.cluster-small  { width: 30px !important; height: 30px !important; margin: -15px 0 0 -15px !important; }
-.cluster-medium { width: 38px !important; height: 38px !important; margin: -19px 0 0 -19px !important; }
-.cluster-large  { width: 48px !important; height: 48px !important; margin: -24px 0 0 -24px !important; font-size: 14px; }
+/* "What's here" popup for crowded spots */
+.spot-list ul { list-style: none; margin: 6px 0 0; padding: 0; max-height: 220px; overflow-y: auto; }
+.spot-list li button {
+  display: flex; align-items: center; gap: 6px; width: 100%; text-align: left;
+  border: none; border-radius: var(--radius); padding: 4px 6px; background: none;
+}
+.spot-list li button:hover, .spot-list li button:focus-visible { background: var(--surface); }
+.spot-list .muted { margin: 6px 0 0; }
+
+/* Two-option switch (map style) */
+.segmented { display: flex; gap: 0; margin-bottom: 4px; }
+.segmented button { flex: 1; border-radius: 0; font-size: 0.8rem; padding: 3px 6px; }
+.segmented button:first-child { border-radius: 999px 0 0 999px; }
+.segmented button:last-child { border-radius: 0 999px 999px 0; border-left: none; }
+.segmented button[aria-pressed="true"] { background: var(--cluster); color: #fff; border-color: var(--cluster); }
 
 /* ---------- Legend ---------- */
 .legend {

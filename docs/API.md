@@ -43,7 +43,8 @@ Sightings to draw on the map. `bbox` is optional. Without it, you get every sigh
     "longitude": -73.8118106561,
     "observed_on": "2026-10-08",
     "danger_level": 3,
-    "obscured": false
+    "obscured": false,
+    "accuracy_m": 10.0
   }
 ]
 ```
@@ -51,7 +52,8 @@ Sightings to draw on the map. `bbox` is optional. Without it, you get every sigh
 - `species_id` is the iNaturalist taxon ID of the **listed** species (a string). Use it for `/api/species/{species_id}`.
 - `scientific_name` is what the observer recorded, which may be a variety of the listed species.
 - `danger_level` is `1`–`4`, or `null` for "Not yet ranked".
-- `obscured: true` means iNaturalist blurred the location for privacy. Draw it as approximate.
+- `obscured: true` means iNaturalist blurred the location for privacy (moved up to ~20 km). The map doesn't draw these.
+- `accuracy_m` is how precise the location is, in meters, or `null` if unknown. The map doesn't draw sightings over 1,000 m: some are only placed at "Queens", which iNaturalist puts at the borough's center point.
 - `iconic_taxon` is one of `Plantae, Insecta, Aves, Reptilia, Mammalia, Actinopterygii, Mollusca, Fungi, Amphibia, Arachnida, Animalia, Chromista, Protozoa`. The map icon is picked from this.
 
 ## `GET /api/species`
