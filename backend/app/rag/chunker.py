@@ -59,7 +59,8 @@ def chunk_file(path):
     # Split before every "## " heading; the first piece is any text above the first heading.
     for part in re.split(r"^## ", body, flags=re.M)[1:]:
         heading, _, text = part.partition("\n")
-        text = text.strip()
+        # Drop <!-- notes --> (like the hints in _TEMPLATE.md) so they never reach the app.
+        text = re.sub(r"<!--.*?-->", "", text, flags=re.S).strip()
         if not text:
             continue  # empty section = our sources don't cover it
         chunks.append(Chunk(

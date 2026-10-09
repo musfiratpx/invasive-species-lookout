@@ -21,4 +21,4 @@ A mated pair usually stays in the same territory all year, moving only if food r
 Do not handle or harm mute swans, their nests or their eggs without permission from the NYS Department of Environmental Conservation (DEC); mute swans are protected by New York State's Environmental Conservation Law. Contact the DEC if mute swans are causing a problem, and if you see a mute swan wearing a collar, report it to the DEC to help their tracking studies.
 
 ## How to report it
-Report sightings to New York's iMapInvasives database (see "How to report" for details). Report collared mute swans to the NYS DEC.
+If you see a mute swan wearing a collar, report it to the NYS Department of Environmental Conservation (DEC) to help their tracking studies.

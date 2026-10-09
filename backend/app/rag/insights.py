@@ -1,13 +1,17 @@
 """
-Build the sidebar's text sections for one species: summary, history, seasons, handling.
+Build the sidebar's text sections for one species: summary, history, seasons,
+handling and report.
 
 For each section we retrieve chunks, then generate from ONLY those chunks.
 touch_safe never comes from AI: it is copied from the fact sheet header, which
 the Researcher fills in only when a source explicitly says so.
+"How to report it" is never rewritten by AI either: reporting steps must be exact,
+so we show the source text word for word.
 """
 
 from datetime import datetime, timezone
 
+from app.rag.chunker import GENERAL
 from app.rag.generator import get_generator
 from app.rag.retriever import get_retriever
 
@@ -18,6 +22,22 @@ SECTIONS = {
     "seasons": "Seasonal differences",
     "handling": "How to handle it",
 }
+REPORT_HEADING = "How to report it"
+
+
+def _report(retriever, name):
+    """
+    The species' own reporting note (if its fact sheet has one), followed by the
+    general reporting instructions from knowledge/how-to-report.md. Word for word.
+    """
+    chunks = retriever.retrieve(f"{REPORT_HEADING} report sighting", scientific_name=name, k=5)
+    own = [c for c in chunks if c.section == REPORT_HEADING and c.scientific_name == name][:1]
+    general = [c for c in chunks if c.section == REPORT_HEADING and c.scientific_name == GENERAL][:1]
+    picked = own + general
+    if not picked:
+        return None, []
+    sources = [s for c in picked for s in c.sources]
+    return "\n\n".join(c.text for c in picked), sources
 
 
 def build_insights(species, retriever=None, generator=None):
@@ -43,11 +63,17 @@ def build_insights(species, retriever=None, generator=None):
             flags = [c.touch_safe for c in chunks if c.scientific_name == name and c.touch_safe is not None]
             touch_safe = flags[0] if flags else None
 
+    report_text, report_sources = _report(retriever, name)
+    for source in report_sources:
+        if source not in all_sources:
+            all_sources.append(source)
+
     return {
         "summary": result["summary"],
         "history": result["history"],
         "seasons": result["seasons"],
         "handling": {"text": result["handling"], "touch_safe": touch_safe},
+        "report": report_text,
         "sources": all_sources,
         "generated_with": {"retriever": retriever.name, "generator": generator.name},
         "generated_at": datetime.now(timezone.utc).isoformat(),

@@ -26,3 +26,5 @@ sources:
 ## How to handle it
 
 ## How to report it
+<!-- Only species-specific reporting notes go here (e.g. "report collared swans to DEC").
+     The general iMapInvasives instructions come from how-to-report.md and are shown for every species. -->

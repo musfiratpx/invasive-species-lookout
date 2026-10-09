@@ -20,4 +20,3 @@ Garlic mustard takes two years to complete its life. In the first year, seeds sp
 Hand-pulling can stop garlic mustard from spreading if it is done before the seeds form. At least the upper half of the root must come out, which is easiest in spring when the soil is soft, and pulling needs to be repeated for up to five years because seeds can survive that long in the soil. Seeds are mainly spread by people and animals carrying them, so limiting foot traffic and soil disturbance in the forest helps prevent new infestations.
 
 ## How to report it
-Report sightings to New York's iMapInvasives database (see "How to report" for details).

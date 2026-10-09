@@ -92,7 +92,8 @@ def test_species_without_sheet_gets_nothing(chunks):
     assert insights["summary"] is None
     assert insights["handling"]["text"] is None
     assert insights["handling"]["touch_safe"] is None
-    assert insights["sources"] == []
+    # The only source is the general reporting page, not anything about this species
+    assert insights["sources"] == [{"title": "Example reporting page (test only)", "url": "https://example.org/report"}]
 
 
 def _fake_cortex(reply):
@@ -147,3 +148,31 @@ def test_cortex_request_shape(chunks, monkeypatch):
     assert sent["body"]["model"] == "test-model"
     assert [m["role"] for m in sent["body"]["messages"]] == ["system", "user"]
     assert "EXAMPLE TEXT" in sent["body"]["messages"][1]["content"]  # the chunks are in the prompt
+
+
+def test_report_combines_species_note_and_general_instructions(tmp_path):
+    sheet = EXAMPLE_SHEET + "\n## How to report it\nEXAMPLE TEXT: species-specific reporting note.\n"
+    (tmp_path / "celastrus-orbiculatus.md").write_text(sheet)
+    (tmp_path / "how-to-report.md").write_text(EXAMPLE_GENERAL)
+    insights = build_insights(SPECIES, KeywordRetriever(load_chunks(tmp_path)), ExtractiveGenerator())
+    first, second = insights["report"].split("\n\n")
+    assert "species-specific" in first and "report sightings" in second
+    assert {"title": "Example reporting page (test only)", "url": "https://example.org/report"} in insights["sources"]
+
+
+def test_report_for_species_without_sheet_uses_general_file(chunks):
+    insights = build_insights({"scientific_name": "Rosa multiflora", "common_name": "multiflora rose"},
+                              KeywordRetriever(chunks), ExtractiveGenerator())
+    assert insights["report"] == "EXAMPLE TEXT: report sightings for testing."
+    assert insights["summary"] is None  # still no species facts without a sheet
+
+
+def test_report_is_never_ai_written(chunks):
+    insights = build_insights(SPECIES, KeywordRetriever(chunks), _fake_cortex("AI WROTE THIS"))
+    assert insights["summary"] == "AI WROTE THIS"
+    assert insights["report"] == "EXAMPLE TEXT: report sightings for testing."
+
+
+def test_html_comments_are_dropped(tmp_path):
+    (tmp_path / "x.md").write_text(EXAMPLE_SHEET.replace("## History\n", "## History\n<!-- a hint, not content -->\n"))
+    assert all(c.section != "History" for c in load_chunks(tmp_path))

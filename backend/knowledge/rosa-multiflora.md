@@ -20,4 +20,3 @@ Multiflora rose blooms in late May or June with clusters of fragrant white to pa
 The stems usually have many curved thorns. Small seedlings can be pulled by hand, and smaller plants can be dug out, but all the roots must be removed because they can resprout. Cutting or mowing three to six times per growing season for two to four years can kill it. Because its seeds last for years in the soil, follow-up treatments are likely to be needed.
 
 ## How to report it
-Report sightings to New York's iMapInvasives database (see "How to report" for details).

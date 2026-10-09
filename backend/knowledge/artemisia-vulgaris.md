@@ -23,4 +23,3 @@ Mugwort shoots come up in spring, and it flowers from July to late September wit
 Mugwort is hard to control because of its dense root system. Pulling it does not work and can even help it spread, because small pieces of root left in the soil grow into new plants (pieces as small as 2 cm can regrow). It also survives mowing, even when mowed for two years in a row. Its root pieces are easily spread when soil, yard waste and nursery plants are moved.
 
 ## How to report it
-Report sightings to New York's iMapInvasives database (see "How to report" for details).

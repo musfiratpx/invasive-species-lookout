@@ -119,6 +119,7 @@ Everything the sidebar shows for one species. An unknown `species_id` returns `4
       "touch_safe": null,
       "is_default": true
     },
+    "report": "New York's official database for invasive species sightings is iMapInvasives, ...",
     "sources": []
   }
 }
@@ -144,6 +145,7 @@ Field notes:
   - A `null` section means our sources don't cover it. Show "No information in our sources yet".
   - `handling.text` is never empty. When `is_default` is `true`, it's the cautious default message.
   - `touch_safe` is `true`, `false`, or `null`. It is only non-`null` when a source explicitly says so.
+  - `report` is how to report a sighting, shown **word for word** from the sources (never AI-rewritten). It holds the species' own reporting note, if any, then the general instructions from `knowledge/how-to-report.md`. Paragraphs are separated by a blank line (`\n\n`). `null` means no reporting source yet.
   - `sources` lists `{title, url}` for every document used.
 
 ## `POST /api/ask` (planned, optional)

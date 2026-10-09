@@ -138,6 +138,7 @@ def _insights(species_id):
             "touch_safe": handling.get("touch_safe"),  # null unless a source explicitly says
             "is_default": not handling.get("text"),
         },
+        "report": cached.get("report"),  # how to report a sighting; null = no reporting source yet
         "sources": cached.get("sources", []),
     }
 

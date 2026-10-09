@@ -42,10 +42,12 @@ def main():
         )
         (config.INSIGHTS_DIR / f"{row.species_id}.json").write_text(json.dumps(insights, indent=2))
         filled = [key for key in SECTIONS if (insights[key]["text"] if key == "handling" else insights[key])]
-        covered += bool(filled)
+        if insights["report"]:
+            filled.append("report")
+        covered += bool(set(filled) - {"report"})  # "report" alone comes from the general file
         print(f"  {row.listed_name:32s} {', '.join(filled) or '(no fact sheet yet)'}")
 
-    print(f"\n{covered} of {len(species)} species have at least one section from our sources.")
+    print(f"\n{covered} of {len(species)} species have their own fact sheet; all get the general reporting text if how-to-report.md exists.")
     print(f"Saved to {config.INSIGHTS_DIR.relative_to(config.BACKEND_DIR)}/")
 
 

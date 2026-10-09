@@ -20,4 +20,3 @@ Lesser celandine is a short-lived spring plant. Its shoots come up from late Mar
 Lesser celandine is hard to control because it spreads from small underground tubers and from tiny bulb-like buds (bulbils) that form on the plant. Small patches can be dug out, but every tuber must be removed from the soil. Mowing early in the season can slow it but risks spreading the bulbils. Herbicides can also be effective with less soil disturbance; NYIS notes to always check state and local regulations and follow label instructions.
 
 ## How to report it
-Report sightings to New York's iMapInvasives database (see "How to report" for details).

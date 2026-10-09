@@ -2,7 +2,7 @@
 /**
  * Slide-in panel with everything about one species, in this order:
  * photos, names, danger level, Kissena status, sound, seasons, summary,
- * history, how to handle it, sources. Closes with the X button or Escape.
+ * history, how to handle it, how to report it, sources. Closes with the X button or Escape.
  * (On phones, CSS turns it into a bottom sheet.)
  */
 
@@ -100,6 +100,8 @@ function SpeciesDetails({ species }) {
         {insights.handling.touch_safe === true && <p className="muted">Sources say it is safe to touch.</p>}
         <p className={insights.handling.is_default ? "warning" : undefined}>{insights.handling.text}</p>
       </section>
+
+      <InsightSection title="How to report it" text={insights.report} />
 
       <section>
         <h3>Sources</h3>
