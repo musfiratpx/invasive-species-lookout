@@ -1,0 +1,21 @@
+# Secrets: never commit real keys (the .example files are fine)
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node / Next.js
+node_modules/
+.next/
+
+# Downloaded source PDFs (re-created by scripts/import_nyis_ranks.py)
+backend/data/cache/nyis_forms/
+
+# macOS
+.DS_Store
