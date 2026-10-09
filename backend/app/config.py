@@ -22,9 +22,10 @@ def _env(name, default=""):
 
 # --- Area -------------------------------------------------------------------
 # iNaturalist place 125479 = Kissena Park. 125415 = Kissena Corridor Park.
-INAT_PLACE_IDS = [int(p) for p in _env("INAT_PLACE_IDS", "125479").split(",") if p.strip()]
+# Set INAT_PLACE_IDS= (empty) in .env to use the circle below instead.
+INAT_PLACE_IDS = [int(p) for p in os.getenv("INAT_PLACE_IDS", "125479").split(",") if p.strip()]
 
-# Fallback circle that covers Kissena Park and Queens College.
+# Circle used when INAT_PLACE_IDS is empty. Covers Kissena Park and Queens College.
 AREA_LAT = float(_env("AREA_LAT", "40.741"))
 AREA_LNG = float(_env("AREA_LNG", "-73.812"))
 AREA_RADIUS_KM = float(_env("AREA_RADIUS_KM", "2"))

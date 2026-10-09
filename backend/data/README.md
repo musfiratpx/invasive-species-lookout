@@ -8,6 +8,24 @@ Every file here comes from an official source or is computed from one. Nothing i
 | `sources/nyis_plant_ranks.csv` | Rank and score from every New York Non-Native Plant Invasiveness Ranking Form (183 forms). | nyis.info (New York Invasive Species Information) | `python scripts/import_nyis_ranks.py` downloads the PDFs and reads them. The score is recomputed as 100 × a / b from each form's "Outcome score" row. |
 | `danger_levels.csv` | Danger level (1–4) for each listed species. | The two files above | `python scripts/build_danger_levels.py`. The rules are in `docs/SCORING.md`. `health_warning` is filled in by hand, only from an official source. |
 
+## Cache files (`cache/`)
+
+These come from iNaturalist and are **committed to git on purpose**, so the demo works offline. Re-run the scripts (from `backend/`, in this order) to refresh them.
+
+| File | What it is | Script |
+|---|---|---|
+| `cache/taxon_map.json` | Each listed species → its iNaturalist taxon ID. iNaturalist's search follows synonyms, e.g. *Cynanchum rossicum* → *Vincetoxicum rossicum*. | `fetch_observations.py` (add `--refresh-taxa` to redo) |
+| `cache/observations.csv` | Every research-grade sighting of a listed species in the area. `taxon_id` is what the observer saw (it may be a variety). `species_id` and `listed_name` say which list entry it counts toward. | `fetch_observations.py` |
+| `cache/media.json` | Up to 8 photos and at most one real sound per species, with attribution, license and observation link. CC licenses are preferred, and `license: null` means all rights reserved. **Sounds are only looked up for animals**: a "sound" on a plant observation is really birdsong or wind. | `fetch_media.py` |
+| `cache/seasonality.json` | Sightings per month (Jan–Dec): `kissena` from our cache, and `nyc` from iNaturalist's histogram for all of New York City. | `fetch_seasonality.py` |
+
+Snapshot taken 2026-10-09: 438 sightings of 31 listed species in Kissena Park (iNaturalist place 125479). 2 species have a real recording (mute swan, monk parakeet).
+
+**Things to say if asked:**
+- Sightings show where people *looked and posted*, not everywhere a species *is*. Busy paths and popular events (like City Nature Challenge weekends) show up as spikes.
+- Three list entries are below species level: porcelain berry (a variety), red-eared slider (a subspecies) and Africanized honey bee. Sightings identified only to the parent species (e.g. *Trachemys scripta*) are **not** counted, because the list doesn't say so. The Researcher can decide to add the species name to `synonyms`.
+- Two listed names have no iNaturalist match (*Myriophyllum heterophyllum × laxum*, *Achatina achatina*). Neither is a Kissena species.
+
 ## Known gaps and quirks (2026-10-09)
 
 - **Not yet ranked:** three listed plants have no usable state rank, so the app shows "Not yet ranked" for them:
