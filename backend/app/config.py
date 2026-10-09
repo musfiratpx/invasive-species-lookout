@@ -21,11 +21,12 @@ def _env(name, default=""):
 
 
 # --- Area -------------------------------------------------------------------
-# iNaturalist place 125479 = Kissena Park. 125415 = Kissena Corridor Park.
-# Set INAT_PLACE_IDS= (empty) in .env to use the circle below instead.
-INAT_PLACE_IDS = [int(p) for p in os.getenv("INAT_PLACE_IDS", "125479").split(",") if p.strip()]
+# By default we search a circle that covers both Kissena Park and Queens College.
+# To use exact iNaturalist park boundaries instead, set INAT_PLACE_IDS in .env
+# (125479 = Kissena Park, 125415 = Kissena Corridor Park). Those leave out QC.
+INAT_PLACE_IDS = [int(p) for p in _env("INAT_PLACE_IDS").split(",") if p.strip()]
 
-# Circle used when INAT_PLACE_IDS is empty. Covers Kissena Park and Queens College.
+# The search circle (used when INAT_PLACE_IDS is empty).
 AREA_LAT = float(_env("AREA_LAT", "40.741"))
 AREA_LNG = float(_env("AREA_LNG", "-73.812"))
 AREA_RADIUS_KM = float(_env("AREA_RADIUS_KM", "2"))

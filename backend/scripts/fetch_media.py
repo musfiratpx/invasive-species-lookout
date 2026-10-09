@@ -96,6 +96,9 @@ def find_sound(species_id):
                             "file_content_type": sound.get("file_content_type"),
                             "attribution": sound.get("attribution", ""),
                             "license": sound.get("license_code"),  # None means "all rights reserved"
+                            # The observer's own words, so the UI can say what you're hearing
+                            # (e.g. the spongy moth "sound" is caterpillar droppings falling).
+                            "observer_note": (obs.get("description") or "").strip()[:300],
                             "observation_url": obs.get("uri") or f"https://www.inaturalist.org/observations/{obs['id']}",
                         }
     return None

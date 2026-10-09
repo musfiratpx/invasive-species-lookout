@@ -16,10 +16,12 @@ These come from iNaturalist and are **committed to git on purpose**, so the demo
 |---|---|---|
 | `cache/taxon_map.json` | Each listed species → its iNaturalist taxon ID. iNaturalist's search follows synonyms, e.g. *Cynanchum rossicum* → *Vincetoxicum rossicum*. | `fetch_observations.py` (add `--refresh-taxa` to redo) |
 | `cache/observations.csv` | Every research-grade sighting of a listed species in the area. `taxon_id` is what the observer saw (it may be a variety). `species_id` and `listed_name` say which list entry it counts toward. | `fetch_observations.py` |
-| `cache/media.json` | Up to 8 photos and at most one real sound per species, with attribution, license and observation link. CC licenses are preferred, and `license: null` means all rights reserved. **Sounds are only looked up for animals**: a "sound" on a plant observation is really birdsong or wind. | `fetch_media.py` |
+| `cache/media.json` | Up to 8 photos and at most one real sound per species, with attribution, license and observation link. CC licenses are preferred, and `license: null` means all rights reserved. **Sounds are only looked up for animals**, and each one keeps the observer's note (`observer_note`): a "sound" on a plant observation is really birdsong or wind. | `fetch_media.py` |
 | `cache/seasonality.json` | Sightings per month (Jan–Dec): `kissena` from our cache, and `nyc` from iNaturalist's histogram for all of New York City. | `fetch_seasonality.py` |
 
-Snapshot taken 2026-10-09: 438 sightings of 31 listed species in Kissena Park (iNaturalist place 125479). 2 species have a real recording (mute swan, monk parakeet).
+Snapshot taken 2026-10-09: 778 sightings of 39 listed species within 2 km of 40.741, -73.812, which covers Kissena Park and Queens College. 3 species have a real recording: mute swan, monk parakeet, and spongy moth. The spongy moth recording is of caterpillar droppings falling during an outbreak, per the observer's note, which we save as `observer_note`.
+
+9 sightings have `obscured = true`: iNaturalist moves the point by up to ~20 km to protect the observer or the species, so the map should mark them as approximate.
 
 **Things to say if asked:**
 - Sightings show where people *looked and posted*, not everywhere a species *is*. Busy paths and popular events (like City Nature Challenge weekends) show up as spikes.
