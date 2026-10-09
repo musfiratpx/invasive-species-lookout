@@ -1,7 +1,7 @@
 {
-  "summary": "Autumn olive is a large shrub up to 15 feet tall and 20 feet wide, with dull green leaves that are silvery underneath. It shades out and out-competes native plants. Bacteria in its roots let it pull nitrogen from the air, so it can grow in very poor soil, but this also changes the soil and disrupts its normal nutrient cycle. A single shrub can produce 200,000 seeds in a year, and birds love the berries and spread the seeds.",
-  "history": "Autumn olive is native to East Asia.",
-  "seasons": "Autumn olive flowers in early summer. Mature shrubs then produce dense clusters of bright red berries.",
+  "summary": "Autumn olive is a large shrub that can grow up to 15 feet tall and 20 feet wide, with dull green leaves that are silvery underneath. It shades out and out-competes native plants, and bacteria in its roots allow it to pull nitrogen from the air so it can grow in very poor soil, though this changes the soil and disrupts its normal nutrient cycle. A single shrub can produce 200,000 seeds in a year, and birds eat the berries and spread the seeds.",
+  "history": "Autumn olive comes from East Asia originally.",
+  "seasons": "Autumn olive flowers in early summer and then produces dense clusters of bright red berries as it matures.",
   "handling": {
     "text": "Seedlings can be pulled by hand. Larger plants are cut and the stump treated with herbicide, and follow-up treatments may be needed. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.891996+00:00"
+  "generated_at": "2026-10-09T20:49:14.689405+00:00"
 }

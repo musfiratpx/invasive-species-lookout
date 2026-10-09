@@ -1,6 +1,6 @@
 {
   "summary": "The oriental weatherfish, also called the pond loach or dojo loach, is a small fish that burrows into soft bottoms and can survive low-oxygen water by gulping air. Its name comes from the way it becomes more active when air pressure changes, so it has long been called a sign of coming storms. It may reduce the aquatic insects that native fish eat, and may compete with the native eastern mudminnow for food.",
-  "history": "The oriental weatherfish is native to eastern Asia, from Siberia to northern Vietnam, including Japan. In the United States, early populations came from fish that escaped from a goldfish farm in California and an aquarium supply company in Michigan, and other introductions were presumably released aquarium fish. It is established in several states, including New York.",
+  "history": "The Oriental weatherfish comes from eastern Asia, ranging from Siberia to northern Vietnam and Japan. In the United States, the first populations arrived when fish escaped from a goldfish farm in California and an aquarium supply company in Michigan, with additional fish likely released from aquariums. The species is now established in several states, including New York.",
   "seasons": null,
   "handling": {
     "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.874956+00:00"
+  "generated_at": "2026-10-09T20:47:01.656000+00:00"
 }

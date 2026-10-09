@@ -1,7 +1,7 @@
 {
-  "summary": "Japanese hop is a climbing or trailing vine with rough, mostly five-lobed leaves and downward-pointing prickles on its stems. A single vine can grow up to 35 feet in one season, letting it cover large areas and crowd out native plants. It likes sun, moisture and rich bare soil, and is most common along stream banks and floodplains, though it also grows on roadsides, old fields and forest edges.",
-  "history": "Japanese hop is native to eastern Asia. It was brought to the United States in the late 1800s as an Asian tonic and an ornamental vine, and it is still sold for those uses today. It is most common in the northeastern United States and eastern Canada.",
-  "seasons": "Japanese hop is an annual vine, growing fresh each year. Its small green flowers grow where the leaves meet the stem, with male and female flowers on separate plants: the female flowers hang in cone-shaped clusters. The small seeds are spread by wind and water.",
+  "summary": "Japanese hops is a climbing or trailing vine with rough, mostly five-lobed leaves and downward-pointing prickles on its stems. A single vine can grow up to 35 feet in one season, allowing it to cover large areas and crowd out native plants. It thrives in sunny, moist areas with rich bare soil and is most commonly found along stream banks and floodplains, though it also grows on roadsides, old fields, and forest edges.",
+  "history": "Japanese hops is native to eastern Asia and was brought to the United States in the late 1800s, where it was used as an Asian tonic and an ornamental vine. It is still sold for those same purposes today. The plant is most common in the northeastern United States and eastern Canada.",
+  "seasons": "Japanese hops is an annual vine that grows fresh each year from seed. The plant produces small green flowers where the leaves meet the stem, with male and female flowers appearing on different plants. Female flowers form cone-shaped clusters that hang from the vine, and the small seeds spread through wind and water.",
   "handling": {
     "text": "Do not buy, plant or transplant Japanese hop. The stems have prickles, so vines should only be hand-pulled while wearing gloves, long sleeves, long pants and shoes to avoid injury. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": false
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.880864+00:00"
+  "generated_at": "2026-10-09T20:47:48.389184+00:00"
 }

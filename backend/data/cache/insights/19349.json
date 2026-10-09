@@ -1,6 +1,6 @@
 {
   "summary": "The monk parakeet, also called the Quaker parakeet, is a parrot that lives wild in small colonies in parts of New York City and lower Westchester County. On New York's invasive species list it is a regulated species: it is legal to own, buy and sell, but it is illegal to release one into the wild.",
-  "history": "According to the findings in a proposed 2021 New York State Assembly bill, the ancestors of New York's flocks are believed to have been legally imported from their native Argentina, and wild monk parakeets have lived in the state since the late 1960s. The same bill estimated there were fewer than 1,000 wild monk parakeets in New York and described their population as fairly stable over the previous 20 years.",
+  "history": "Monk parakeets in New York are believed to be descendants of birds that were legally imported from Argentina. These parakeets have been living wild in the state since the late 1960s. According to a proposed state bill, there were fewer than 1,000 wild monk parakeets in New York, and their population had remained fairly stable over the previous 20 years.",
   "seasons": null,
   "handling": {
     "text": "In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.879732+00:00"
+  "generated_at": "2026-10-09T20:47:38.260974+00:00"
 }

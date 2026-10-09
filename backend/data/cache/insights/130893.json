@@ -1,6 +1,6 @@
 {
-  "summary": "Wintercreeper is a vine that forms dense mats and can climb over other plants, shading out what grows beneath it and occasionally killing the trees and plants it grows on. It tolerates shade and poor soil and spreads both by seed and by its stems and roots.",
-  "history": "Wintercreeper is native to temperate Asia. It is commonly planted as an ornamental, and birds, small mammals and water spread its seeds into natural areas.",
+  "summary": "Fortune's spindle, also known as wintercreeper, is a climbing vine that spreads across the ground in thick mats and can grow up and over other plants. As it covers areas, it blocks sunlight from reaching plants below it and can sometimes kill the trees and plants it climbs on. This vine is hardy and can survive in shady spots and poor soil, and it spreads through seeds as well as through its stems and roots.",
+  "history": "Fortune's spindle is native to temperate Asia. It is commonly planted as an ornamental, and birds, small mammals and water spread its seeds into natural areas.",
   "seasons": null,
   "handling": {
     "text": "If caught early, infestations can be pulled by hand. Its roots and stems can grow into new plants, so pieces should not be left behind. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -22,8 +22,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.875504+00:00"
+  "generated_at": "2026-10-09T20:47:05.644396+00:00"
 }

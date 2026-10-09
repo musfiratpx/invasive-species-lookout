@@ -1,6 +1,6 @@
 {
-  "summary": "Black locust is a tree that can form dense stands with heavy shade and little growing underneath. It is a nitrogen-fixing tree: it adds nitrogen to the soil, which can help other non-native plants invade, and studies found the soil stays changed for many years after the trees are removed. It can create a new tree layer in grasslands, fields and hedgerows, and spreads by sending up shoots from its roots as well as by seed.",
-  "history": "Black locust is native to the United States, in the central and southern Appalachians and the Ozarks, but it is not native to New York and has spread to all eastern states and Canadian provinces. It was widely planted in the past for many purposes, and New York State's own tree nursery still sells about 10,000 trees a year, mostly for reclaiming gravel pits.",
+  "summary": "Black locust is a tree that forms dense stands with heavy shade, leaving little room for other plants to grow underneath. This tree adds nitrogen to the soil, which can actually help other non-native plants take over an area, and the soil remains changed for many years even after the trees are removed. Black locust invades grasslands, fields, and hedgerows by spreading through both root shoots and seeds.",
+  "history": "Black locust is native to parts of the central and southern United States, but it arrived in New York from elsewhere and has since spread throughout the eastern states and Canadian provinces. People have planted it widely for various purposes over the years, and it continues to be sold in large numbers, particularly for restoring areas like gravel pits.",
   "seasons": null,
   "handling": {
     "text": "Black locust's bark, seeds and leaves can be fatal to livestock if eaten. It is hard to remove: taking out large trees takes major effort, and trees treated with herbicide can keep resprouting for several years. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -22,8 +22,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.886073+00:00"
+  "generated_at": "2026-10-09T20:48:30.451217+00:00"
 }

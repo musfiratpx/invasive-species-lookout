@@ -1,7 +1,7 @@
 {
-  "summary": "Mile-a-minute weed is a fast-growing, barbed vine that can grow up to six inches a day. It forms dense mats that climb over and smother other plants, shrubs and even trees, blocking their light and weighing them down until they weaken or die. It reduces native plants and the wildlife that depend on them, and its barbed thickets also discourage people from using an area. You can recognize it by its triangle-shaped leaves and the round, cup-like leafy collars around its stem.",
-  "history": "Mile-a-minute weed is native to India and eastern Asia. It was accidentally brought to York County, Pennsylvania, in 1930 in contaminated holly seed. In New York it has been recorded mostly in counties south of the northern Connecticut border, and it is estimated to occupy only about 20% of its potential U.S. range.",
-  "seasons": "Seeds sprout from early April through early July. It flowers and makes fruit over a long period, from June through October, producing spikes of blue, berry-like fruits. Frost kills the vines, and the seeds spend the winter in the soil, where they can stay alive for up to six years. Birds carry the seeds long distances, and the seeds can also float in water for a week or more.",
+  "summary": "Mile-a-minute weed is a fast-growing, barbed vine that can grow up to six inches a day and forms dense mats that climb over and smother other plants, shrubs, and even trees by blocking their light and weighing them down until they weaken or die. It reduces native plants and the wildlife that depend on them, and its barbed thickets also discourage people from using an area. You can recognize it by its triangle-shaped leaves and the round, cup-like leafy collars around its stem.",
+  "history": "Mile-a-minute weed is native to India and eastern Asia. It arrived in the United States by accident in 1930 when contaminated holly seed was brought to York County, Pennsylvania. In New York, the weed has been found mostly in counties south of the northern Connecticut border, and it currently occupies only about 20% of the area where it could potentially spread across the U.S.",
+  "seasons": "Mile-a-minute weed seeds sprout from early April through early July and produce blue, berry-like fruits from June through October. Frost kills the vines at the end of the growing season, but the seeds survive winter in the soil and can remain alive for up to six years. Birds and water both help spread the seeds over long distances, with seeds able to float for a week or more.",
   "handling": {
     "text": "The vines and leaf undersides are covered in backward-pointing barbs. Hand-pulling works best early in the season, before the barbs harden; after that, thicker gloves are needed. Later in the season, pull carefully so the fruit isn't knocked off and spread. A tiny weevil that feeds only on mile-a-minute has been released in the U.S. and is currently the most promising control. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": false
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.876215+00:00"
+  "generated_at": "2026-10-09T20:47:11.285784+00:00"
 }

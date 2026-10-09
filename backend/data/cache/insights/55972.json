@@ -1,6 +1,6 @@
 {
-  "summary": "Alder buckthorn, also called glossy buckthorn, is a shrub that forms dense thickets whose shade wipes out native tree seedlings, saplings and wildflowers, and it can change which trees make up the forest canopy. In New York City it forms infestations of several acres, mostly under black locust trees, and it has been described as one of the most damaging non-native plants in Pelham Bay Park in the Bronx. Birds and mice eat its fruit, and the fruit can also float and be carried by water.",
-  "history": "Alder buckthorn is native to Eurasia. It was grown as an ornamental plant, though demand for it today is near zero. It is now found in all northeastern states and provinces except Delaware and Virginia.",
+  "summary": "Alder buckthorn, also called glossy buckthorn, is a shrub that grows in dense thickets and creates so much shade that native tree seedlings, saplings, and wildflowers cannot survive underneath it. This invasive plant can even change which types of trees end up dominating the forest. In New York City, alder buckthorn has formed infestations covering several acres, particularly beneath black locust trees, and it is considered one of the most damaging non-native plants in Pelham Bay Park in the Bronx. Birds and mice eat its fruit, which can also float on water and spread to new areas.",
+  "history": "Alder buckthorn comes from Eurasia and was originally grown as an ornamental plant, though few people want it anymore. Today it is found throughout the northeastern United States and Canada, except in Delaware and Virginia.",
   "seasons": null,
   "handling": {
     "text": "It resprouts vigorously when cut back, and burning usually just leads to more resprouting. Its seeds can stay alive in the soil for at least three years. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -22,8 +22,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.884712+00:00"
+  "generated_at": "2026-10-09T20:48:21.280977+00:00"
 }

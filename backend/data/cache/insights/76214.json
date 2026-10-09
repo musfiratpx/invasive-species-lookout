@@ -1,7 +1,7 @@
 {
-  "summary": "Spotted knapweed is a plant up to 3 feet tall with purple, thistle-like flowers that have a spotted look at their base. It spreads quickly in disturbed areas, crowding out other plants, and can also invade undisturbed places because it sprouts very early in spring and releases chemicals that harm other plants. Animals don't like to eat it, so it reduces food for livestock and wildlife, and it has been linked to more soil erosion. Its thick taproot lets it grow in poor, rocky or sandy soils.",
-  "history": "Spotted knapweed is native to southeastern Europe. It was brought to North America by accident in contaminated seed and ships' ballast, and spreads mainly by seed.",
-  "seasons": "In its first year it grows as a low rosette of leaves 6 to 8 inches long. In later years it grows up to 3 feet tall with flowers at the ends of its many branches; a plant can live up to nine years. Each plant can produce up to 1,000 seeds, which are carried by the wind.",
+  "summary": "Spotted knapweed is a plant up to 3 feet tall with purple, thistle-like flowers that have a spotted appearance at their base. It spreads quickly in disturbed areas and can also invade undisturbed places because it sprouts very early in spring and releases chemicals that harm other plants. Animals don't like to eat it, which reduces food for livestock and wildlife, and it has been linked to more soil erosion. Its thick taproot allows it to grow in poor, rocky, or sandy soils.",
+  "history": "Spotted knapweed originally comes from southeastern Europe. It arrived in North America by accident, mixed in with contaminated seed and ships' ballast. The plant spreads mainly through its seeds.",
+  "seasons": "Spotted knapweed starts out as a low rosette of leaves that are 6 to 8 inches long in its first year. In later years, it grows much taller\u2014up to 3 feet\u2014with flowers at the ends of many branches, and a single plant can live up to nine years. Each plant can produce up to 1,000 seeds that spread by wind.",
   "handling": {
     "text": "Several insects and fungi have been released to help control spotted knapweed, with varying success, and herbicides can reduce it. Its seeds build up in the soil and resist heat, so control takes ongoing monitoring, and burning or composting only works at very high temperatures. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.893375+00:00"
+  "generated_at": "2026-10-09T20:49:24.331343+00:00"
 }

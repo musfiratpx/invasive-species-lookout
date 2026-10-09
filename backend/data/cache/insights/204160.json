@@ -1,7 +1,7 @@
 {
-  "summary": "Border privet is a shrub that can grow 20 feet tall, sometimes with short thorny twigs on its branches. It forms dense thickets that shade out native plants and crowd out native shrubs and tree seedlings in regrowing forests. It grows in abandoned fields and along roadsides, and invades forest edges, forest gaps, stream edges and floodplains.",
+  "summary": "Border privet is a shrub that can grow up to 20 feet tall and sometimes has short thorny twigs on its branches. It spreads by forming dense thickets that shade out native plants and prevent native shrubs and tree seedlings from growing in regrowing forests. You'll find this invasive species in abandoned fields, along roadsides, at forest edges, in forest gaps, along stream edges, and in floodplains.",
   "history": "Border privet is native to Japan.",
-  "seasons": "It produces clusters of small, white, trumpet-shaped flowers at the tips of its branches. Its berries turn black when ripe and stay on the plant into winter.",
+  "seasons": "Border privet produces clusters of small, white, trumpet-shaped flowers at the tips of its branches. Its berries turn black when ripe and remain on the plant through the winter months.",
   "handling": {
     "text": "Smaller shrubs can be pulled by hand; larger shrubs are treated with herbicide. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.880258+00:00"
+  "generated_at": "2026-10-09T20:47:43.249970+00:00"
 }

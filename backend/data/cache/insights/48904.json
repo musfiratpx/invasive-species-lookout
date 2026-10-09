@@ -1,7 +1,7 @@
 {
-  "summary": "The Asian shore crab is a small crab, about 1.4 to 1.7 inches across, with a square shell that has three spines on each side. Its shell can be green, red, orange-brown or purple; its claws have red spots and its legs have light and dark bands. It eats almost anything, including seaweed, salt marsh grass, young fish and small invertebrates, so it could harm native fish, shellfish and crabs and out-compete native mud crabs, blue crabs and lobsters.",
-  "history": "The Asian shore crab is native to the western Pacific Ocean, from Russia to Hong Kong and Japan. No one knows exactly how it reached the U.S. Atlantic coast, but it is thought that adults or larvae arrived in ballast water released by international ships. In New York it is known from the Hudson River and its lower tributaries and from Oyster Bay on Long Island's north shore.",
-  "seasons": "It breeds from May to September, and a female can produce three or four batches of eggs each season, each with up to 50,000 eggs. Its tiny larvae drift in the water for about a month before settling, so they can be carried long distances.",
+  "summary": "The Asian shore crab is a small crab measuring about 1.4 to 1.7 inches across with a square shell featuring three spines on each side. Its shell can be green, red, orange-brown or purple, with red-spotted claws and banded legs in light and dark colors. This crab eats almost anything, including seaweed, salt marsh grass, young fish and small invertebrates, which means it could harm native fish, shellfish and crabs and out-compete native mud crabs, blue crabs and lobsters.",
+  "history": "The Asian shore crab is native to the western Pacific Ocean, ranging from Russia to Hong Kong and Japan. Scientists believe it arrived on the U.S. Atlantic coast through ballast water discharged by international ships, though the exact pathway remains unknown. In New York, this crab has been found in the Hudson River and its lower tributaries, as well as in Oyster Bay on Long Island's north shore.",
+  "seasons": "Asian shore crabs breed from May to September, and females can produce three or four batches of eggs during this time, with each batch containing up to 50,000 eggs. The tiny larvae float in the water for about a month before settling in a new location, which means they can travel long distances on ocean currents.",
   "handling": {
     "text": "In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
     "touch_safe": null
@@ -22,8 +22,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.882253+00:00"
+  "generated_at": "2026-10-09T20:48:02.361619+00:00"
 }

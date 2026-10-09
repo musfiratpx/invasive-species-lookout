@@ -1,7 +1,7 @@
 """
 Find the fact-sheet chunks that best answer a question.
 
-Interface:  retrieve(query, scientific_name=None, k=5) -> list[Chunk]
+Interface:  retrieve(query, scientific_name=None, k=5, section=None) -> list[Chunk]
 
   - SnowflakeRetriever: asks a Snowflake Cortex Search service (used when the
     Snowflake settings in .env are filled in).
@@ -35,12 +35,14 @@ class KeywordRetriever:
     def __init__(self, chunks=None):
         self.chunks = chunks if chunks is not None else load_chunks()
 
-    def retrieve(self, query, scientific_name=None, k=5):
+    def retrieve(self, query, scientific_name=None, k=5, section=None):
         query_words = _words(query)
         scored = []
         for chunk in self.chunks:
             # Only this species' fact sheet, plus general files (e.g. how to report).
             if scientific_name and chunk.scientific_name not in (scientific_name, GENERAL):
+                continue
+            if section and chunk.section != section:
                 continue
             # A match in the section heading counts much more than one in the body.
             score = 3 * len(query_words & _words(chunk.section)) + len(query_words & _words(chunk.text))
@@ -70,13 +72,18 @@ class SnowflakeRetriever:
         )
         self.headers = snowflake_api.headers()
 
-    def retrieve(self, query, scientific_name=None, k=5):
+    def retrieve(self, query, scientific_name=None, k=5, section=None):
         body = {"query": query, "columns": self.COLUMNS, "limit": k}
+        filters = []
         if scientific_name:
-            body["filter"] = {"@or": [
+            filters.append({"@or": [
                 {"@eq": {"SCIENTIFIC_NAME": scientific_name}},
                 {"@eq": {"SCIENTIFIC_NAME": GENERAL}},
-            ]}
+            ]})
+        if section:
+            filters.append({"@eq": {"SECTION": section}})  # SECTION is an ATTRIBUTE in setup.sql
+        if filters:
+            body["filter"] = filters[0] if len(filters) == 1 else {"@and": filters}
         response = requests.post(self.url, headers=self.headers, json=body, timeout=20)
         response.raise_for_status()
         return [self._to_chunk(row) for row in response.json().get("results", [])]
@@ -103,12 +110,12 @@ class FallbackRetriever:
         self.main, self.backup = main, backup
         self.name = main.name
 
-    def retrieve(self, query, scientific_name=None, k=5):
+    def retrieve(self, query, scientific_name=None, k=5, section=None):
         try:
-            return self.main.retrieve(query, scientific_name, k)
+            return self.main.retrieve(query, scientific_name, k, section)
         except Exception as error:  # noqa: BLE001  (any failure should fall back, not crash)
             print(f"[retriever] {self.main.name} failed ({type(error).__name__}); using keyword search")
-            return self.backup.retrieve(query, scientific_name, k)
+            return self.backup.retrieve(query, scientific_name, k, section)
 
 
 def get_retriever():

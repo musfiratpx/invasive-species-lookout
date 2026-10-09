@@ -1,7 +1,7 @@
 {
-  "summary": "Amur honeysuckle is a shrub, usually 6 to 15 feet tall, that forms very dense thickets that crowd out native plants and tree seedlings. It leafs out very early in spring, which gives it a head start over native plants. Its berries are less fatty and nutritious than native berries, which can harm migrating birds that eat lots of them. Invasive honeysuckles have hollow stems, while native honeysuckles have solid stems, which is one way to tell them apart.",
-  "history": "Amur honeysuckle is native to China, Japan and Korea. It was sent as seeds to arboretums across the United States in the late 1800s to see whether it would grow here, and was then planted for soil stabilization and wildlife until the mid-1980s. It escaped cultivation and is easily spread by birds that eat its berries.",
-  "seasons": "It is one of the first shrubs to leaf out in spring. From May to June it has small, very fragrant tube-shaped flowers, white to pink, and its dark-red berries don't ripen until late fall.",
+  "summary": "Amur honeysuckle is a shrub that typically grows 6 to 15 feet tall and creates very dense thickets that crowd out native plants and tree seedlings. Because it leafs out very early in spring, it gets a head start over native plants. The berries it produces are less fatty and nutritious than native berries, which can harm migrating birds that eat lots of them. You can distinguish invasive honeysuckles from native ones by their hollow stems, whereas native honeysuckles have solid stems.",
+  "history": "Amur honeysuckle comes from China, Japan, and Korea. In the late 1800s, seeds were sent to arboretums across the United States to test whether it could grow here, and it was then planted to stabilize soil and provide food for wildlife until the mid-1980s. The plant escaped from these plantings and is now easily spread by birds that eat its berries.",
+  "seasons": "Amur honeysuckle is among the first shrubs to produce leaves when spring arrives. The plant produces small, fragrant tube-shaped flowers that range from white to pink during May and June. Its dark-red berries take until late fall to fully ripen.",
   "handling": {
     "text": "Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.897222+00:00"
+  "generated_at": "2026-10-09T20:49:47.415776+00:00"
 }

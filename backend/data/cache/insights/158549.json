@@ -1,7 +1,7 @@
 {
-  "summary": "Japanese angelica tree is a fast-growing shrub or tree that can reach almost 40 feet, growing up to two feet in a season. It has very large, fern-like leaves and stems covered in sharp spines. It forms dense stands whose shade crowds out native shrubs and wildflowers, and one plant can quickly spread into a large colony. It grows in disturbed woods and edges such as old fields, thickets and hedgerows.",
-  "history": "Japanese angelica tree is native to East Asia. It is a relatively recent invader in the Northeast, so little is yet known about how fast it reproduces.",
-  "seasons": "It blooms in July and August with huge, flat clusters of white flowers, sometimes two feet across, which is when it is easiest to spot. Small purple to black berries generally appear in September.",
+  "summary": "Japanese angelica tree is a fast-growing shrub or tree that can reach almost 40 feet, growing up to two feet in a season. It has very large, fern-like leaves and stems covered in sharp spines. It forms dense stands whose shade crowds out native shrubs and wildflowers, and one plant can quickly spread into a large colony. The tree grows in disturbed woods and edges such as old fields, thickets and hedgerows.",
+  "history": "Japanese angelica tree is native to East Asia and has only recently arrived in the Northeast. Because it is still a fairly new invader to this region, scientists don't yet know much about how quickly it reproduces.",
+  "seasons": "Japanese angelica tree produces large, flat clusters of white flowers in July and August that can reach two feet across, making it easy to identify during this time. Small purple to black berries typically develop by September.",
   "handling": {
     "text": "Young plants can be pulled or dug up before they make seed; larger plants tend to resprout from roots left in the ground. Managed areas should be checked for several years for new seedlings. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.877984+00:00"
+  "generated_at": "2026-10-09T20:47:26.179479+00:00"
 }

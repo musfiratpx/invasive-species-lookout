@@ -1,6 +1,6 @@
 {
-  "summary": "Canada thistle is a thistle 1.5 to 5 feet tall with small light-purple (sometimes white) flower heads and pale green leaves with many spines along their edges. Unlike other thistles, it spreads through an extensive sideways root system, forming dense patches of connected plants, with male and female flower heads on separate plants. It grows mainly in open, wet to moist places such as pastures, wetlands, floodplains, roadsides and ditches. It pushes out native plants, lowering plant and animal diversity, and it also reduces farm crop yields and pasture productivity.",
-  "history": "Despite its name, Canada thistle is native to Eurasia. It was brought to North America in shipments of agricultural seed, and it spreads by its roots and by people moving it around.",
+  "summary": "Creeping thistle is a spiky plant that grows 1.5 to 5 feet tall with small light-purple or sometimes white flower heads. It spreads through an extensive sideways root system that creates dense patches of connected plants, with male and female flowers on separate plants. This thistle thrives in open, wet to moist areas like pastures, wetlands, floodplains, roadsides and ditches, where it pushes out native plants, lowers plant and animal diversity, and reduces farm crop yields and pasture productivity.",
+  "history": "Creeping thistle is actually native to Eurasia, not North America. It arrived in North America through contaminated shipments of agricultural seed. The plant spreads both through its root system and when people move it from place to place.",
   "seasons": null,
   "handling": {
     "text": "Canada thistle spreads mostly through its roots, so mowing can hold it back but will not usually get rid of it. Infestations often need several control methods together and ongoing monitoring, and the whole patch needs treatment to stop it from resprouting. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -26,8 +26,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.888002+00:00"
+  "generated_at": "2026-10-09T20:48:43.822905+00:00"
 }

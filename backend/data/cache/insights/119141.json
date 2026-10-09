@@ -1,6 +1,6 @@
 {
-  "summary": "Chinese yam, also called cinnamon vine, is a fast-growing vine that climbs over nearby plants and covers them in a thick blanket of leaves, shading them out; on trees it can get heavy enough to bend and break small stems. In North America it spreads mainly through small bulb-like buds (bulbils) that form along the vine, rather than by seed, and even broken or partly eaten bulbils can grow into new plants. Water can carry the bulbils more than 200 meters.",
-  "history": "Chinese yam is native to East Asia (northern China, Korea and Japan). It is rarely planted in gardens, and throwing out yard waste containing its tubers can spread it. In New York it is known from the Lower Hudson region and Long Island.",
+  "summary": "Chinese yam, also called cinnamon vine, is a fast-growing vine that climbs over nearby plants and smothers them under a thick layer of leaves, blocking out their sunlight. On trees, the vine can become so heavy that it bends and breaks small branches. In North America, Chinese yam spreads mainly through small bulb-like buds that form along the vine rather than through seeds, and even damaged bulbils can sprout into new plants. Water can transport these bulbils more than 200 meters away.",
+  "history": "Chinese yam is native to East Asia, including northern China, Korea, and Japan. It is rarely planted in gardens, but the species can spread when yard waste containing its tubers is thrown out. In New York, Chinese yam has been found in the Lower Hudson region and Long Island.",
   "seasons": null,
   "handling": {
     "text": "Small, isolated patches can be controlled by digging out the entire underground tuber. Large infestations usually need herbicides and repeat treatments, because the deep tubers store food that lets the vine regrow. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
@@ -22,8 +22,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.874330+00:00"
+  "generated_at": "2026-10-09T20:46:57.832200+00:00"
 }

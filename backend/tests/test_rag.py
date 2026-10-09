@@ -4,6 +4,8 @@ The example text below is made up for testing and is NOT real species informatio
 No network or API keys are used.
 """
 
+import json
+
 import pytest
 
 from app.rag.chunker import GENERAL, load_chunks
@@ -122,32 +124,33 @@ def test_cortex_is_not_called_without_chunks():
 
 
 def test_cortex_request_shape(chunks, monkeypatch):
-    """Checks the HTTP request we send to Snowflake, using a stand-in instead of the network."""
-    monkeypatch.setitem(config.SNOWFLAKE, "account", "example-account")
-    monkeypatch.setitem(config.SNOWFLAKE, "pat", "test-token")
+    """Checks the SQL we send to Snowflake, using a stand-in connection instead of the network."""
     monkeypatch.setitem(config.SNOWFLAKE, "cortex_model", "test-model")
     sent = {}
 
-    class FakeResponse:
-        def raise_for_status(self):
-            pass
+    class FakeCursor:
+        def execute(self, sql, params):
+            sent.update(sql=sql, params=params)
+            return self
 
-        def json(self):
-            return {"choices": [{"message": {"content": "Grounded text."}}]}
+        def fetchone(self):
+            return ('{"choices": [{"messages": "Grounded text."}]}',)
 
-    def fake_post(url, headers, json, timeout):
-        sent.update(url=url, headers=headers, body=json)
-        return FakeResponse()
+    class FakeConnection:
+        def cursor(self):
+            return FakeCursor()
 
-    monkeypatch.setattr(generator_module.requests, "post", fake_post)
+    monkeypatch.setattr(generator_module.snowflake_api, "connect", lambda: FakeConnection())
     answer = CortexGenerator().generate("Summary", SPECIES, chunks)
 
     assert answer["text"] == "Grounded text."
-    assert sent["url"] == "https://example-account.snowflakecomputing.com/api/v2/cortex/v1/chat/completions"
-    assert sent["headers"]["Authorization"] == "Bearer test-token"
-    assert sent["body"]["model"] == "test-model"
-    assert [m["role"] for m in sent["body"]["messages"]] == ["system", "user"]
-    assert "EXAMPLE TEXT" in sent["body"]["messages"][1]["content"]  # the chunks are in the prompt
+    assert "snowflake.cortex.complete" in sent["sql"]
+    model, messages, options = sent["params"]
+    assert model == "test-model"
+    messages = json.loads(messages)
+    assert [m["role"] for m in messages] == ["system", "user"]
+    assert "EXAMPLE TEXT" in messages[1]["content"]  # the chunks are in the prompt
+    assert json.loads(options)["temperature"] == 0
 
 
 def test_report_combines_species_note_and_general_instructions(tmp_path):
@@ -167,10 +170,11 @@ def test_report_for_species_without_sheet_uses_general_file(chunks):
     assert insights["summary"] is None  # still no species facts without a sheet
 
 
-def test_report_is_never_ai_written(chunks):
+def test_report_and_handling_are_never_ai_written(chunks):
     insights = build_insights(SPECIES, KeywordRetriever(chunks), _fake_cortex("AI WROTE THIS"))
     assert insights["summary"] == "AI WROTE THIS"
     assert insights["report"] == "EXAMPLE TEXT: report sightings for testing."
+    assert insights["handling"]["text"] == "EXAMPLE TEXT: pull it up for testing."  # safety text, word for word
 
 
 def test_html_comments_are_dropped(tmp_path):

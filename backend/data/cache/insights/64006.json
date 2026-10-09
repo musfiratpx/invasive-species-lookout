@@ -1,7 +1,7 @@
 {
-  "summary": "The Asian clam is a small freshwater clam with an oval-triangular shell that is olive or yellowish to black-brown with thick, ring-shaped growth lines. It burrows into the bottoms of streams and lakes and filters huge amounts of tiny plants and particles from the water, which other filter-feeding animals also need, though scientists are still studying how much it harms native mussels. Dense populations can release nutrients that feed algae, and its shells can clog water and power plant intake pipes and pile up on swimming beaches.",
-  "history": "The Asian clam is native to the fresh waters of eastern and southern Asia. It probably reached the U.S. West Coast around 1930, possibly brought as food or with imported oysters, and live clams were first found in the Columbia River in Washington in 1938. It then spread across the continent and is now found in 44 states, including many lakes, rivers and Long Island ponds in New York.",
-  "seasons": "Adults usually reproduce twice a year, and a single clam, which can fertilize itself, can produce 1,000 to 100,000 young each year. Populations can crash after sudden temperature changes or low oxygen, but they recover quickly. It cannot survive water colder than about 2\u00b0C (36\u00b0F), and needs water around 15\u00b0C (59\u00b0F) or warmer to reproduce.",
+  "summary": "The Asian clam is a small freshwater clam with an oval-triangular shell that ranges in color from olive or yellowish to black-brown and features thick, ring-shaped growth lines. It burrows into stream and lake bottoms and filters large amounts of tiny plants and particles from the water that other filter-feeding animals depend on, though scientists are still studying how much damage it causes to native mussels. Dense populations can release nutrients that feed algae growth, and the clam's shells can clog water and power plant intake pipes as well as accumulate on swimming beaches.",
+  "history": "The Asian clam is native to the fresh waters of eastern and southern Asia. It probably reached the U.S. West Coast around 1930, possibly brought as food or with imported oysters, and live clams were first found in the Columbia River in Washington in 1938. From there, it spread across the continent and is now found in 44 states, including many lakes, rivers and Long Island ponds in New York.",
+  "seasons": "Asian clams reproduce twice a year, and a single clam can produce between 1,000 and 100,000 young each year since it can fertilize itself. These clams cannot survive in water colder than about 2\u00b0C (36\u00b0F), and they need water around 15\u00b0C (59\u00b0F) or warmer to reproduce. While their populations can crash after sudden temperature changes or low oxygen levels, they recover quickly from these setbacks.",
   "handling": {
     "text": "Because it spreads so easily, getting rid of the Asian clam is usually not possible, so the focus is on stopping its spread. It is likely spread by people: through bait buckets, released market clams, water in boats' bilges and livewells, and plants or mud on anchors and trailers. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
     "touch_safe": null
@@ -22,8 +22,8 @@
     }
   ],
   "generated_with": {
-    "retriever": "keyword",
-    "generator": "extractive"
+    "retriever": "snowflake",
+    "generator": "cortex"
   },
-  "generated_at": "2026-10-09T20:06:43.889978+00:00"
+  "generated_at": "2026-10-09T20:48:59.796290+00:00"
 }

@@ -3,7 +3,7 @@ Turn retrieved chunks into a short answer for one sidebar section.
 
 Interface:  generate(section, species, chunks) -> {"text": str | None, "sources": [{title, url}]}
 
-  - CortexGenerator: Snowflake Cortex rewrites the chunks as 2-4 plain-English
+  - CortexGenerator: Snowflake Cortex COMPLETE rewrites the chunks as 2-4 plain-English
     sentences (used when the Snowflake settings AND SNOWFLAKE_CORTEX_MODEL are set).
   - ExtractiveGenerator: no AI. Returns the matching fact-sheet section as written.
 
@@ -11,7 +11,7 @@ Ground rule: answers come ONLY from the chunks. If they don't cover the
 section, text is None and the UI says "No information in our sources yet".
 """
 
-import requests
+import json
 
 from app import config, snowflake_api
 
@@ -21,8 +21,11 @@ SYSTEM_PROMPT = f"""You write short texts for a public map of invasive species i
 Rules:
 - Use ONLY the numbered source excerpts you are given. Do not add any fact from your own knowledge.
 - Write 2 to 4 plain-English sentences for a general audience. No lists, no headings, no citations in the text.
-- If the excerpts do not answer the request, reply with exactly {NO_INFO} and nothing else.
-- Never say whether the species is safe to touch unless an excerpt says so explicitly."""
+- The excerpts come from the matching section of our fact sheet. Rewrite what they say; do not judge whether the section title fits.
+- If the excerpts contain no information about this species, reply with exactly {NO_INFO} and nothing else.
+- Never say whether the species is safe to touch unless an excerpt says so explicitly.
+- Do not add any number, date, time period (such as "per year"), organization, place or reason that is not in the excerpts.
+- Keep every rule, warning and permission exactly as the excerpts state it. Never merge two separate rules into one sentence or change who or what a rule applies to."""
 
 
 def _sources(chunks):
@@ -55,14 +58,14 @@ class ExtractiveGenerator:
 class CortexGenerator:
     """
     Writes the text with a Snowflake Cortex model, grounded on the given chunks only.
-    Uses Cortex's Chat Completions REST endpoint with the same PAT as Cortex Search.
-    Docs: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-rest-api
+    Calls SNOWFLAKE.CORTEX.COMPLETE through SQL. (We tried Cortex's REST chat endpoint
+    first, but our trial account gets a 403 there, while COMPLETE through SQL works.)
+    Docs: https://docs.snowflake.com/en/sql-reference/functions/complete-snowflake-cortex
     """
 
     name = "cortex"
 
     def __init__(self):
-        self.url = f"{snowflake_api.base_url()}/api/v2/cortex/v1/chat/completions"
         self.model = config.SNOWFLAKE["cortex_model"]
 
     def _prompt(self, section, species, chunks):
@@ -71,25 +74,20 @@ class CortexGenerator:
         )
         return (
             f"Species: {species['common_name']} ({species['scientific_name']})\n"
-            f"Write the \"{section}\" section about this species.\n\n"
+            f"Rewrite the \"{section}\" section of our fact sheet about this species for the public.\n\n"
             f"Source excerpts:\n{excerpts}"
         )
 
     def _ask_model(self, system, user):
-        """One chat request; returns the model's reply text. Separate so tests can replace it."""
-        response = requests.post(
-            self.url,
-            headers=snowflake_api.headers(),
-            json={
-                "model": self.model,
-                "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-                "temperature": 0.2,  # low = stick closely to the excerpts
-                "max_completion_tokens": 300,
-            },
-            timeout=60,
-        )
-        response.raise_for_status()
-        return response.json()["choices"][0]["message"]["content"] or ""
+        """One COMPLETE call; returns the model's reply text. Separate so tests can replace it."""
+        messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
+        options = {"temperature": 0, "max_tokens": 300}  # temperature 0 = stick as closely as possible to the excerpts
+        row = snowflake_api.connect().cursor().execute(
+            "select snowflake.cortex.complete(%s, parse_json(%s), parse_json(%s))",
+            (self.model, json.dumps(messages), json.dumps(options)),
+        ).fetchone()
+        # COMPLETE returns JSON text like {"choices": [{"messages": "the answer"}], ...}
+        return json.loads(row[0])["choices"][0]["messages"] or ""
 
     def generate(self, section, species, chunks):
         if not chunks:
