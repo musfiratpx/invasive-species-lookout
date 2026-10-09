@@ -1,7 +1,7 @@
 "use client";
 /**
  * 12-month bar chart of real sightings, drawn with plain SVG.
- * Switch between our area (Kissena + QC) and all of NYC. Local numbers are
+ * Switch between our area (Queens) and all of NYC. Local numbers are
  * often small, and the NYC view shows the seasonal pattern more clearly.
  */
 
@@ -24,12 +24,12 @@ export default function SeasonChart({ kissena, nyc }) {
   return (
     <div className="season-chart">
       <div role="group" aria-label="Which area to show">
-        <button onClick={() => setView("kissena")} aria-pressed={view === "kissena"}>Kissena + QC</button>{" "}
+        <button onClick={() => setView("kissena")} aria-pressed={view === "kissena"}>Queens</button>{" "}
         <button onClick={() => setView("nyc")} aria-pressed={view === "nyc"}>All of NYC</button>
       </div>
 
       <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} role="img"
-           aria-label={`Sightings per month, ${view === "kissena" ? "Kissena and Queens College" : "New York City"}: ` +
+           aria-label={`Sightings per month, ${view === "kissena" ? "Queens" : "New York City"}: ` +
              MONTHS.map((m, i) => `${m} ${counts[i]}`).join(", ")}>
         {counts.map((count, i) => {
           const h = ((HEIGHT - BOTTOM) * count) / max;
@@ -46,7 +46,7 @@ export default function SeasonChart({ kissena, nyc }) {
       </svg>
       <p className="muted">
         {total} research-grade iNaturalist sightings by month
-        {view === "kissena" ? " near Kissena Park and Queens College" : " across New York City"}.
+        {view === "kissena" ? " in Queens" : " across New York City"}.
       </p>
     </div>
   );

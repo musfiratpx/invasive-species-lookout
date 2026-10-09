@@ -7,6 +7,7 @@ script use `from app import config` like the server does.
 """
 
 import sys
+import time
 from pathlib import Path
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
@@ -32,3 +33,21 @@ def area_params():
 # Checked with the iNaturalist places API on 2026-10-09.
 NYC_PLACE_ID = 674
 NY_STATE_PLACE_ID = 48
+
+
+def polite(api_function, **params):
+    """
+    Call a pyinaturalist function, pausing 1 second first. If iNaturalist says
+    "slow down" (HTTP 429), wait and try again instead of crashing: 1, 2, then 4 minutes.
+    """
+    import requests
+
+    for wait_minutes in (1, 2, 4, None):
+        time.sleep(1)
+        try:
+            return api_function(**params)
+        except requests.exceptions.HTTPError as error:
+            if error.response is None or error.response.status_code != 429 or wait_minutes is None:
+                raise
+            print(f"    iNaturalist asked us to slow down; waiting {wait_minutes} min...")
+            time.sleep(60 * wait_minutes)

@@ -1,5 +1,6 @@
 """
-"Kissena status" tags for a species, computed with pandas from cached sightings.
+"Kissena status" tags for a species, computed with pandas from cached sightings in our
+area (all of Queens by default). The name stays "kissena_status" so the API doesn't change.
 
   new_arrival  - the first sighting in our area was within the last 365 days
   spreading    - sightings so far this year > 1.5 x the same period last year, and at least 5 this year

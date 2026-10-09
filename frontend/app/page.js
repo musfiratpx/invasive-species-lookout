@@ -25,7 +25,10 @@ export default function Home() {
 
   useEffect(() => {
     getMapObservations()
-      .then(setObservations)
+      // Sightings with blurred locations are left off the map: iNaturalist moves them
+      // up to ~20 km for privacy, so drawing them would put species in the wrong town.
+      // They still count in the sidebar's totals, charts and status.
+      .then((all) => setObservations(all.filter((obs) => !obs.obscured)))
       .catch(() => setLoadError("Couldn't load sightings. Is the backend running on port 8000?"));
   }, []);
 

@@ -1,7 +1,7 @@
 "use client";
 /**
  * Slide-in panel with everything about one species, in this order:
- * photos, names, danger level, Kissena status, sound, seasons, summary,
+ * photos, names, danger level, status in Queens, sound, seasons, summary,
  * history, how to handle it, how to report it, sources. Closes with the X button or Escape.
  * (On phones, CSS turns it into a bottom sheet.)
  */
@@ -73,12 +73,12 @@ function SpeciesDetails({ species }) {
       </section>
 
       <section>
-        <h3>Around Kissena</h3>
+        <h3>In Queens</h3>
         {species.kissena_status.map((tag) => (
           <span key={tag} className="tag">{STATUS_LABELS[tag]}</span>
         ))}
         <p className="muted">
-          {sightings.total} sighting{sightings.total === 1 ? "" : "s"} near Kissena Park and Queens College, from{" "}
+          {sightings.total} research-grade sighting{sightings.total === 1 ? "" : "s"} in Queens, from{" "}
           {sightings.first_seen} to {sightings.last_seen}.
         </p>
       </section>

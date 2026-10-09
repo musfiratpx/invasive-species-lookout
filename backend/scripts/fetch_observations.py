@@ -22,7 +22,7 @@ import sys
 from collections import Counter
 
 import _setup  # noqa: F401  (adds backend/ to the import path)
-from _setup import area_params
+from _setup import area_params, polite
 from pyinaturalist import get_observation_species_counts, get_observations, get_taxa
 
 from app import config
@@ -41,7 +41,7 @@ OBSERVATION_COLUMNS = [
 
 def resolve_name(name):
     """Find the iNaturalist taxon whose name or synonym exactly equals `name`. Returns a dict or None."""
-    response = get_taxa(q=name, per_page=10)
+    response = polite(get_taxa, q=name, per_page=10)
     wanted = normalize_name(name)
     for taxon in response["results"]:
         if not taxon.get("is_active", True):
@@ -79,7 +79,7 @@ def build_taxon_map(listed, refresh=False):
 
 def species_in_area():
     """All taxa with research-grade sightings in the area: list of taxon dicts with ancestor_ids."""
-    response = get_observation_species_counts(quality_grade="research", page="all", **area_params())
+    response = polite(get_observation_species_counts, quality_grade="research", page="all", **area_params())
     return [r["taxon"] for r in response["results"]]
 
 
@@ -110,7 +110,7 @@ def report_near_misses(area_taxa, taxon_map):
     for listed_name, entry in taxon_map.items():
         if not entry or entry["rank"] in ("species", "genus", "hybrid"):
             continue
-        parent_id = get_taxa(taxon_id=entry["taxon_id"])["results"][0]["parent_id"]
+        parent_id = polite(get_taxa, taxon_id=entry["taxon_id"])["results"][0]["parent_id"]
         if parent_id in area_species:
             print(f"  note: '{listed_name}' is listed below species level; sightings of "
                   f"{area_species[parent_id]} identified only to species are NOT counted.")
@@ -118,7 +118,8 @@ def report_near_misses(area_taxa, taxon_map):
 
 def download_observations(matches, taxon_map):
     """Download all research-grade observations of the matched taxa in the area."""
-    response = get_observations(
+    response = polite(
+        get_observations,
         taxon_id=list(matches.keys()), quality_grade="research", page="all", per_page=200, **area_params()
     )
     rows = []
