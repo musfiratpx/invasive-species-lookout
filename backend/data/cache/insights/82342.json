@@ -1,13 +1,25 @@
 {
-  "summary": null,
-  "history": null,
-  "seasons": null,
+  "summary": "Amur honeysuckle is a shrub, usually 6 to 15 feet tall, that forms very dense thickets that crowd out native plants and tree seedlings. It leafs out very early in spring, which gives it a head start over native plants. Its berries are less fatty and nutritious than native berries, which can harm migrating birds that eat lots of them. Invasive honeysuckles have hollow stems, while native honeysuckles have solid stems, which is one way to tell them apart.",
+  "history": "Amur honeysuckle is native to China, Japan and Korea. It was sent as seeds to arboretums across the United States in the late 1800s to see whether it would grow here, and was then planted for soil stabilization and wildlife until the mid-1980s. It escaped cultivation and is easily spread by birds that eat its berries.",
+  "seasons": "It is one of the first shrubs to leaf out in spring. From May to June it has small, very fragrant tube-shaped flowers, white to pink, and its dark-red berries don't ripen until late fall.",
   "handling": {
-    "text": null,
+    "text": "Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
+    {
+      "title": "Honeysuckle Spp. | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
+      "url": "https://nyis.info/species/honeysuckle-spp/"
+    },
+    {
+      "title": "New York Non-Native Plant Invasiveness Ranking Form, Lonicera maackii",
+      "url": "https://nyis.info/wp-content/uploads/2024/10/e4b40_Lonicera.maackii.NYS_.pdf"
+    },
+    {
+      "title": "NYC Parks Rules, 56 RCNY \u00a71-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)",
+      "url": "https://www.nycgovparks.org/rules/section-1-04"
+    },
     {
       "title": "Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)",
       "url": "https://www.nyimapinvasives.org/report"
@@ -17,5 +29,5 @@
     "retriever": "keyword",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T19:46:59.071573+00:00"
+  "generated_at": "2026-10-09T20:01:47.287424+00:00"
 }

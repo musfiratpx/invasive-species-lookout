@@ -1,13 +1,25 @@
 {
-  "summary": null,
-  "history": null,
-  "seasons": null,
+  "summary": "Border privet is a shrub that can grow 20 feet tall, sometimes with short thorny twigs on its branches. It forms dense thickets that shade out native plants and crowd out native shrubs and tree seedlings in regrowing forests. It grows in abandoned fields and along roadsides, and invades forest edges, forest gaps, stream edges and floodplains.",
+  "history": "Border privet is native to Japan.",
+  "seasons": "It produces clusters of small, white, trumpet-shaped flowers at the tips of its branches. Its berries turn black when ripe and stay on the plant into winter.",
   "handling": {
-    "text": null,
+    "text": "Smaller shrubs can be pulled by hand; larger shrubs are treated with herbicide. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
+    {
+      "title": "Border Privet | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
+      "url": "https://nyis.info/species/border-privet/"
+    },
+    {
+      "title": "New York Non-Native Plant Invasiveness Ranking Form, Ligustrum obtusifolium",
+      "url": "https://nyis.info/wp-content/uploads/2024/10/10d08_Ligustrum.obtusifolium.NYS_.pdf"
+    },
+    {
+      "title": "NYC Parks Rules, 56 RCNY \u00a71-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)",
+      "url": "https://www.nycgovparks.org/rules/section-1-04"
+    },
     {
       "title": "Report an Invasive | NY iMapInvasives (NY Natural Heritage Program, a partnership of SUNY ESF and NYS DEC)",
       "url": "https://www.nyimapinvasives.org/report"
@@ -17,5 +29,5 @@
     "retriever": "keyword",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T19:46:59.062504+00:00"
+  "generated_at": "2026-10-09T20:01:47.271473+00:00"
 }

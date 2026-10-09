@@ -6,6 +6,9 @@ sources:
   - title: Mute Swan | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)
     url: https://nyis.info/species/mute-swan/
     accessed: 2026-10-09
+  - title: "NYC Parks Rules, 56 RCNY §1-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)"
+    url: https://www.nycgovparks.org/rules/section-1-04
+    accessed: 2026-10-09
 ---
 
 ## Summary
@@ -18,7 +21,7 @@ Mute swans are native to Europe and parts of Asia. They were first brought to th
 A mated pair usually stays in the same territory all year, moving only if food runs short or the water freezes over. They build very large nests (4 to 5 feet across) in March or April, often in dense reeds or cattails, and the eggs hatch in early June. Swans are most aggressive while nesting and raising their young.
 
 ## How to handle it
-Do not handle or harm mute swans, their nests or their eggs without permission from the NYS Department of Environmental Conservation (DEC); mute swans are protected by New York State's Environmental Conservation Law. Contact the DEC if mute swans are causing a problem, and if you see a mute swan wearing a collar, report it to the DEC to help their tracking studies.
+Do not handle or harm mute swans, their nests or their eggs without permission from the NYS Department of Environmental Conservation (DEC); mute swans are protected by New York State's Environmental Conservation Law. Contact the DEC if mute swans are causing a problem, and if you see a mute swan wearing a collar, report it to the DEC to help their tracking studies. NYC Parks rules also forbid chasing, harassing or harming any animal, nest or eggs in city parks.
 
 ## How to report it
 If you see a mute swan wearing a collar, report it to the NYS Department of Environmental Conservation (DEC) to help their tracking studies.

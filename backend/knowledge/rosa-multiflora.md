@@ -5,6 +5,9 @@ sources:
   - title: Multiflora Rose | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)
     url: https://nyis.info/species/multiflora-rose/
     accessed: 2026-10-09
+  - title: "NYC Parks Rules, 56 RCNY §1-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)"
+    url: https://www.nycgovparks.org/rules/section-1-04
+    accessed: 2026-10-09
 ---
 
 ## Summary
@@ -17,6 +20,6 @@ Multiflora rose is native to eastern China, Japan and Korea. It was brought to t
 Multiflora rose blooms in late May or June with clusters of fragrant white to pale-pink flowers. Small fruits (hips) form over the summer and turn red by mid-September. The hips stay on the plant through the winter.
 
 ## How to handle it
-The stems usually have many curved thorns. Small seedlings can be pulled by hand, and smaller plants can be dug out, but all the roots must be removed because they can resprout. Cutting or mowing three to six times per growing season for two to four years can kill it. Because its seeds last for years in the soil, follow-up treatments are likely to be needed.
+The stems usually have many curved thorns. Small seedlings can be pulled by hand, and smaller plants can be dug out, but all the roots must be removed because they can resprout. Cutting or mowing three to six times per growing season for two to four years can kill it. Because its seeds last for years in the soil, follow-up treatments are likely to be needed. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
 
 ## How to report it

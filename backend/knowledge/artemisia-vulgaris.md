@@ -8,6 +8,9 @@ sources:
   - title: New York Non-Native Plant Invasiveness Ranking Form, Artemisia vulgaris
     url: https://nyis.info/wp-content/uploads/2024/10/7168d_Artemisia.vulgaris.NYS_.pdf
     accessed: 2026-10-09
+  - title: "NYC Parks Rules, 56 RCNY §1-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)"
+    url: https://www.nycgovparks.org/rules/section-1-04
+    accessed: 2026-10-09
 ---
 
 ## Summary
@@ -20,6 +23,6 @@ Mugwort is native to Europe and eastern Asia, where it has long been used as a m
 Mugwort shoots come up in spring, and it flowers from July to late September with many tiny green flowers clustered at the ends of the stems. The leaves are covered underneath with woolly, silver-white hairs, and the plant has an aromatic, slightly pungent smell. The stems become somewhat woody as they age.
 
 ## How to handle it
-Mugwort is hard to control because of its dense root system. Pulling it does not work and can even help it spread, because small pieces of root left in the soil grow into new plants (pieces as small as 2 cm can regrow). It also survives mowing, even when mowed for two years in a row. Its root pieces are easily spread when soil, yard waste and nursery plants are moved.
+Mugwort is hard to control because of its dense root system. Pulling it does not work and can even help it spread, because small pieces of root left in the soil grow into new plants (pieces as small as 2 cm can regrow). It also survives mowing, even when mowed for two years in a row. Its root pieces are easily spread when soil, yard waste and nursery plants are moved. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
 
 ## How to report it
