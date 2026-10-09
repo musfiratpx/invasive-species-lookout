@@ -67,6 +67,10 @@ Owns: `backend/`
 - [ ] ElevenLabs: set the key, run `scripts/make_music.py` once, and commit `background.mp3` and `background.credit.json`.
 - [ ] Optional: `POST /api/ask` (grounded Q&A, see `docs/API.md`).
 - [ ] After every change to `knowledge/`, run `build_insights.py` and restart the backend.
+## Backend human discussion
+- [ ] search function / filter that sorts by types
+- [ ] 
+
 
 ## Before the demo (everyone)
 
