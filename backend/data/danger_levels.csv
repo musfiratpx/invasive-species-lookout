@@ -2,12 +2,12 @@ scientific_name,match_names,basis,ny_rank,ny_rank_score,danger_level,health_warn
 Caulerpa taxifolia,Caulerpa taxifolia,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Didymosphenia geminata,Didymosphenia geminata,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Prymnesium parvum,Prymnesium parvum,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Cylindrospermopsis raciborskii,Cylindrospermopsis raciborskii,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Cylindrospermopsis raciborskii,Cylindrospermopsis raciborskii;Raphidiopsis raciborskii,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Grateloupia turuturu,Grateloupia turuturu,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Acer pseudoplatanus,Acer pseudoplatanus,ny_plant_rank,High,71.11,3,,https://nyis.info/wp-content/uploads/2024/10/5fdc1_Acer.pseudoplatanus.NYS_.pdf,2026-10-09
 Achyranthes japonica,Achyranthes japonica,ny_plant_rank,High,71.08,3,,https://nyis.info/wp-content/uploads/2024/10/f5e32_Achyranthes.japonica.NYS_.pdf,2026-10-09
 Alliaria petiolata,Alliaria petiolata,ny_plant_rank,Very High,84.00,4,,https://nyis.info/wp-content/uploads/2024/10/92019_Alliaria.petiolata.NYS_.pdf,2026-10-09
-Ampelopsis brevipedunculata,Ampelopsis brevipedunculata,ny_plant_rank,High,71.26,3,,https://nyis.info/wp-content/uploads/2024/10/914e3_Ampelopsis.brevipedunculata.NYS_.pdf,2026-10-09
+Ampelopsis brevipedunculata,Ampelopsis brevipedunculata;Ampelopsis glandulosa brevipedunculata,ny_plant_rank,High,71.26,3,,https://nyis.info/wp-content/uploads/2024/10/914e3_Ampelopsis.brevipedunculata.NYS_.pdf,2026-10-09
 Anthriscus sylvestris,Anthriscus sylvestris,ny_plant_rank,High,78.75,3,,https://nyis.info/wp-content/uploads/2024/10/4dfde_Anthriscus.sylvestris.NYS1_.pdf,2026-10-09
 Aralia elata,Aralia elata,ny_plant_rank,Very High,80.46,4,,https://nyis.info/wp-content/uploads/2024/10/02750_Aralia.elata_.NYS_.pdf,2026-10-09
 Artemisia vulgaris,Artemisia vulgaris,ny_plant_rank,High,79.31,3,,https://nyis.info/wp-content/uploads/2024/10/7168d_Artemisia.vulgaris.NYS_.pdf,2026-10-09
@@ -23,7 +23,7 @@ Cynanchum louiseae,Cynanchum louiseae;Cynanchum nigrum;Vincetoxicum nigrum,ny_pl
 Cynanchum rossicum,Cynanchum rossicum;Cynanchum medium;Vincetoxicum medium;Vincetoxicum rossicum,ny_plant_rank,Very High,87.63,4,,https://nyis.info/wp-content/uploads/2024/10/0f96d_Cynanchum.rossicum.NYS_.pdf,2026-10-09
 Dioscorea polystachya,Dioscorea polystachya;Dioscorea batatas,ny_plant_rank,High,77.50,3,,https://nyis.info/wp-content/uploads/2024/10/d971e_Dioscorea.polystachya.NYS_.pdf,2026-10-09
 Dipsacus laciniatus,Dipsacus laciniatus,ny_plant_rank,High,75.56,3,,https://nyis.info/wp-content/uploads/2024/10/55aa1_Dipsacus.laciniatus.NYS_.pdf,2026-10-09
-Egeria densa,Egeria densa,ny_plant_rank,High,74.71,3,,https://nyis.info/wp-content/uploads/2024/10/8a115_Egeria.densa_.NYS_.pdf,2026-10-09
+Egeria densa,Egeria densa;Elodea densa,ny_plant_rank,High,74.71,3,,https://nyis.info/wp-content/uploads/2024/10/8a115_Egeria.densa_.NYS_.pdf,2026-10-09
 Elaeagnus umbellata,Elaeagnus umbellata,ny_plant_rank,Very High,94.00,4,,https://nyis.info/wp-content/uploads/2024/10/128ee_Elaeagnus.umbellata.NYS_.pdf,2026-10-09
 Euphorbia cyparissias,Euphorbia cyparissias,ny_plant_rank,High,75.32,3,,https://nyis.info/wp-content/uploads/2024/10/76447_Euphorbia.cyparissias.NYS_.pdf,2026-10-09
 Euphorbia esula,Euphorbia esula,ny_plant_rank,High,75.90,3,,https://nyis.info/wp-content/uploads/2024/10/36096_Euphorbia.esula_.NYS_.pdf,2026-10-09
@@ -31,7 +31,7 @@ Ficaria verna,Ficaria verna;Ranunculus ficaria,ny_plant_rank,Very High,85.56,4,,
 Frangula alnus,Frangula alnus;Rhamnus frangula,ny_plant_rank,High,73.81,3,,https://nyis.info/wp-content/uploads/2024/10/540b7_Frangula.alnus_.NYS_.pdf,2026-10-09
 Glyceria maxima,Glyceria maxima,ny_plant_rank,High,79.52,3,,https://nyis.info/wp-content/uploads/2024/10/e59b0_Glyceria.maxima.NYS_.pdf,2026-10-09
 Heracleum mantegazzianum,Heracleum mantegazzianum,ny_plant_rank,High,72.00,3,,https://nyis.info/wp-content/uploads/2024/10/2575f_Heracleum.mantegazzianum.NYS_.pdf,2026-10-09
-Humulus japonicus,Humulus japonicus,ny_plant_rank,High,74.03,3,,https://nyis.info/wp-content/uploads/2024/10/c7aeb_Humulus.japonicus.NYS_.pdf,2026-10-09
+Humulus japonicus,Humulus japonicus;Humulus scandens,ny_plant_rank,High,74.03,3,,https://nyis.info/wp-content/uploads/2024/10/c7aeb_Humulus.japonicus.NYS_.pdf,2026-10-09
 Hydrilla verticillata,Hydrilla verticillata,ny_plant_rank,Very High,91.40,4,,https://nyis.info/wp-content/uploads/2024/10/1bd86_Hydrilla.verticillata.NYS_.pdf,2026-10-09
 Hydrocharis morsus-ranae,Hydrocharis morsus-ranae,ny_plant_rank,Very High,85.57,4,,https://nyis.info/wp-content/uploads/2024/10/c6668_Hydrocharis-morsus-ranae.NYS_.pdf,2026-10-09
 Imperata cylindrica,Imperata cylindrica;Imperata arundinacea;Lagurus cylindricus,ny_plant_rank,High,79.00,3,,https://nyis.info/wp-content/uploads/2024/10/c60bb_Imperata-cylindrica.NYS_.pdf,2026-10-09
@@ -94,7 +94,7 @@ Tinca tinca,Tinca tinca,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_for
 Carassius auratus,Carassius auratus,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Cyprinella lutrensis,Cyprinella lutrensis,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Cyprinus carpio,Cyprinus carpio,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Gymnocephalus cernuus,Gymnocephalus cernuus,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Gymnocephalus cernuus,Gymnocephalus cernuus;Gymnocephalus cernua,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Monopterus albus,Monopterus albus,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Oreochromis aureus,Oreochromis aureus,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Oreochromis niloticus,Oreochromis niloticus,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
@@ -102,20 +102,20 @@ Pterois miles,Pterois miles,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands
 Pterois volitans,Pterois volitans,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Sander lucioperca,Sander lucioperca;Stizostedion lucioperca,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Scardinius erythrophthalmus,Scardinius erythrophthalmus,ny_part575_status,,,2,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Bellamya chinensis,Bellamya chinensis;Cipangopaludina chinensis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Bellamya japonica,Bellamya japonica,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Bellamya chinensis,Bellamya chinensis;Cipangopaludina chinensis;Margarya chinensis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Bellamya japonica,Bellamya japonica;Heterogen japonica,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Bithynia tentaculata,Bithynia tentaculata,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Bythotrephes longimanus,Bythotrephes longimanus;Bythotrephes cederstroemi,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Cercopagis pengoi,Cercopagis pengoi,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Corbicula fluminea,Corbicula fluminea,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Crassostrea ariakensis,Crassostrea ariakensis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Didemnum,Didemnum,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Crassostrea ariakensis,Crassostrea ariakensis;Magallana ariakensis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Didemnum,Didemnum;Didemnum*,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Dreissena polymorpha,Dreissena polymorpha,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Dreissena rostriformis bugensis,Dreissena rostriformis bugensis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Dreissena rostriformis bugensis,Dreissena rostriformis bugensis;Dreissena bugensis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Eriocheir sinensis,Eriocheir sinensis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Hemigrapsus sanguineus,Hemigrapsus sanguineus,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Hemimysis anomala,Hemimysis anomala,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Orconectes rusticus,Orconectes rusticus,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Orconectes rusticus,Orconectes rusticus;Faxonius rusticus,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Potamopyrgus antipodarum,Potamopyrgus antipodarum,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Rapana venosa,Rapana venosa,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Styela plicata,Styela plicata,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
@@ -126,7 +126,7 @@ Achatina achatina,Achatina achatina,ny_part575_status,,,3,,https://dec.ny.gov/do
 Achatina fulica,Achatina fulica;Lissachatina fulica,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Adelges tsugae,Adelges tsugae,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Agrilus planipennis,Agrilus planipennis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
-Amynthas,Amynthas,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
+Amynthas,Amynthas;Amynthas*,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Anoplophora glabripennis,Anoplophora glabripennis,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Apis mellifera scutellata,Apis mellifera scutellata,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09
 Archachatina marginata,Archachatina marginata,ny_part575_status,,,3,,https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf,2026-10-09

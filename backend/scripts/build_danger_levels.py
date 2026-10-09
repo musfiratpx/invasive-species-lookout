@@ -17,6 +17,7 @@ Usage (from backend/):  python scripts/build_danger_levels.py
 """
 
 import csv
+import json
 import re
 from datetime import date
 from pathlib import Path
@@ -25,6 +26,8 @@ BACKEND = Path(__file__).resolve().parent.parent
 LIST_CSV = BACKEND / "data" / "ny_invasive_list.csv"
 RANKS_CSV = BACKEND / "data" / "sources" / "nyis_plant_ranks.csv"
 OUT_CSV = BACKEND / "data" / "danger_levels.csv"
+# Written by fetch_observations.py: each listed name -> its current iNaturalist name.
+TAXON_MAP_JSON = BACKEND / "data" / "cache" / "taxon_map.json"
 
 PART_575_URL = "https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf"
 
@@ -69,10 +72,20 @@ def main():
     listed = list(csv.DictReader(LIST_CSV.open()))
     forms = list(csv.DictReader(RANKS_CSV.open()))
     today = date.today().isoformat()
+    # iNaturalist's current name for each species becomes one more synonym, so a
+    # sighting matches even when iNaturalist renamed it (Humulus japonicus -> Humulus scandens).
+    taxon_map = json.loads(TAXON_MAP_JSON.read_text()) if TAXON_MAP_JSON.exists() else {}
 
     rows, unranked = [], []
     for sp in listed:
-        match_names = ";".join([sp["scientific_name"]] + [n for n in sp["synonyms"].split(";") if n])
+        names = [sp["scientific_name"]] + [n for n in sp["synonyms"].split(";") if n]
+        inat = taxon_map.get(sp["scientific_name"])
+        if inat and inat["inat_name"] not in names:
+            names.append(inat["inat_name"])
+        if len(sp["scientific_name"].split()) == 1:
+            # A genus-only entry (e.g. "Amynthas" = Amynthas spp.) covers every species in it.
+            names.append(sp["scientific_name"] + "*")
+        match_names = ";".join(names)
         base = {
             "scientific_name": sp["scientific_name"],
             "match_names": match_names,
