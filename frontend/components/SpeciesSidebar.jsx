@@ -15,6 +15,7 @@ import SeasonChart from "@/components/SeasonChart";
 import SoundPlayer from "@/components/SoundPlayer";
 import { getSpecies } from "@/lib/api";
 import { NY_STATUS_LABELS, STATUS_LABELS } from "@/lib/labels";
+import { REPORT_URL } from "@/lib/meanings";
 
 export default function SpeciesSidebar({ speciesId, onClose, onBack, backLabel, onShowOnMap, shownOnMap }) {
   const [species, setSpecies] = useState(null);
@@ -70,6 +71,7 @@ function SpeciesDetails({ species, onShowOnMap, shownOnMap }) {
         <h2>{species.common_name}</h2>
         <p className="scientific-name">{species.scientific_name}</p>
         <p className="muted">{NY_STATUS_LABELS[species.ny_status]}</p>
+        <ReportButton />
         {onShowOnMap && (
           <button className="show-on-map" onClick={onShowOnMap} disabled={shownOnMap}>
             {shownOnMap ? "Showing only this species on the map" : "Show only this species on the map"}
@@ -79,7 +81,7 @@ function SpeciesDetails({ species, onShowOnMap, shownOnMap }) {
 
       <section>
         <h3>Danger level</h3>
-        <DangerBadge danger={species.danger} />
+        <DangerBadge danger={species.danger} nyStatus={species.ny_status} />
       </section>
 
       <section>
@@ -148,5 +150,17 @@ function Skeleton() {
       <div className="skeleton" style={{ height: 16, width: "40%" }} />
       <div className="skeleton" style={{ height: 80 }} />
     </div>
+  );
+}
+
+/** "Report a sighting" link to New York's official invasive species database. */
+export function ReportButton() {
+  return (
+    <p className="report">
+      <a className="report-button" href={REPORT_URL} target="_blank" rel="noreferrer">
+        📣 Report a sighting
+      </a>
+      <span className="muted"> on NY iMapInvasives (free; no account needed)</span>
+    </p>
   );
 }

@@ -10,23 +10,18 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { getSpeciesList } from "@/lib/api";
 import { DANGER_COLORS } from "@/lib/labels";
 import { taxonIcon } from "@/lib/taxa";
 
 const MAX_SPECIES = 6;
 const MAX_PARKS = 4;
 
-export default function SpeciesSearch({ parks, onPickSpecies, onPickPark }) {
-  const [species, setSpecies] = useState([]);
+// species and parks are loaded by the page (so its "Try again" button reloads them too).
+export default function SpeciesSearch({ species, parks, onPickSpecies, onPickPark }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const box = useRef(null);
-
-  useEffect(() => {
-    getSpeciesList().then(setSpecies).catch(() => setSpecies([]));
-  }, []);
 
   // Close the list when clicking anywhere else.
   useEffect(() => {

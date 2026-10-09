@@ -19,12 +19,32 @@ export function getHealth() {
 }
 
 /**
- * Sightings for the map. bbox is optional: [minLng, minLat, maxLng, maxLat].
- * We currently load everything once (under 1,000 points), so no bbox is needed.
+ * Sightings for the map (~15,000 for Queens, about 4 MB), loaded once.
+ * onProgress(fraction) is called as the download comes in (0 to 1), so the page
+ * can show a progress bar. bbox is optional: [minLng, minLat, maxLng, maxLat].
  */
-export function getMapObservations(bbox) {
+export async function getMapObservations({ bbox, onProgress } = {}) {
   const query = bbox ? `?bbox=${bbox.join(",")}` : "";
-  return getJson(`/api/map/observations${query}`);
+  const response = await fetch(`${API_URL}/api/map/observations${query}`);
+  if (!response.ok) throw new Error(`API /api/map/observations failed with status ${response.status}`);
+  const total = Number(response.headers.get("Content-Length")) || 0;
+  if (!onProgress || !total || !response.body) return response.json();
+
+  // Read the download in pieces so we can report how far along it is.
+  const reader = response.body.getReader();
+  const pieces = [];
+  let received = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    pieces.push(value);
+    received += value.length;
+    onProgress(Math.min(received / total, 1));
+  }
+  const bytes = new Uint8Array(received);
+  let offset = 0;
+  for (const piece of pieces) { bytes.set(piece, offset); offset += piece.length; }
+  return JSON.parse(new TextDecoder().decode(bytes));
 }
 
 /** Every listed species seen in the area, most-sighted first. */

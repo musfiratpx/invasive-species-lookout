@@ -8,8 +8,9 @@
 import { useState } from "react";
 
 import { DANGER_COLORS } from "@/lib/labels";
+import { PART_575_QA_URL, dangerMeaning, legalMeaning } from "@/lib/meanings";
 
-export default function DangerBadge({ danger }) {
+export default function DangerBadge({ danger, nyStatus }) {
   const [showHow, setShowHow] = useState(false);
   const color = DANGER_COLORS[danger.level ?? null];
 
@@ -22,15 +23,14 @@ export default function DangerBadge({ danger }) {
       </div>
       <strong>{danger.label}</strong>
 
-      {danger.basis === "ny_plant_rank" && (
-        <p className="muted">
-          New York plant invasiveness rank: {danger.ny_rank} (score {danger.score} out of 100)
+      {/* Plain-language meaning, built only from the official definitions (lib/meanings.js) */}
+      <p className="meaning">{dangerMeaning(danger)}</p>
+      {legalMeaning(nyStatus) && (
+        <p className="meaning">
+          {legalMeaning(nyStatus)}{" "}
+          <a href={PART_575_QA_URL} target="_blank" rel="noreferrer">NYS DEC</a>
         </p>
       )}
-      {danger.basis === "ny_part575_status" && (
-        <p className="muted">Based on its New York legal category (prohibited or regulated).</p>
-      )}
-      {danger.level === null && <p className="muted">No official rank found yet. We don't guess.</p>}
 
       {danger.health_warning && <p className="warning">⚠ {danger.health_warning}</p>}
 

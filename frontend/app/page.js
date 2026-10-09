@@ -12,18 +12,19 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Legend from "@/components/Legend";
+import MapStatus from "@/components/MapStatus";
 import MusicToggle from "@/components/MusicToggle";
 import ParkProfile from "@/components/ParkProfile";
 import SpeciesSearch from "@/components/SpeciesSearch";
 import SpeciesSidebar from "@/components/SpeciesSidebar";
 import { mergeNearbySightings } from "@/lib/aggregate";
-import { getMapObservations, getPark, getParks } from "@/lib/api";
+import { getHealth, getMapObservations, getPark, getParks, getSpeciesList } from "@/lib/api";
 import { typeFilterOf } from "@/lib/taxa";
 
 // Leaflet needs the browser's `window`, so the map must not render on the server.
 const MapView = dynamic(() => import("@/components/MapView"), {
   ssr: false,
-  loading: () => <p className="muted" style={{ padding: 12 }}>Loading map…</p>,
+  loading: () => null, // the loading card (MapStatus) covers this moment
 });
 
 const MAX_ACCURACY_M = 1000;
@@ -38,7 +39,10 @@ function toggle(set, value) {
 export default function Home() {
   const [observations, setObservations] = useState([]);
   const [parks, setParks] = useState([]);
-  const [loadError, setLoadError] = useState(null);
+  const [speciesList, setSpeciesList] = useState([]); // for the search box
+  const [loadStatus, setLoadStatus] = useState("loading"); // "loading", "error" or "done"
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [expectedCount, setExpectedCount] = useState(null);
   const [selectedSpeciesId, setSelectedSpeciesId] = useState(null);
   const [hiddenLevels, setHiddenLevels] = useState(new Set());
   const [hiddenTypes, setHiddenTypes] = useState(new Set());
@@ -49,18 +53,30 @@ export default function Home() {
   const [parkError, setParkError] = useState(null);
   const [parkPanelOpen, setParkPanelOpen] = useState(false);
 
+  // Load the sightings (and park list). Called again by the "Try again" button.
+  const loadData = useCallback(() => {
+    setLoadStatus("loading");
+    setLoadProgress(0);
+    getHealth().then((h) => setExpectedCount(h.observations)).catch(() => {});
+    getMapObservations({ onProgress: setLoadProgress })
+      .then((all) => {
+        // Left off the map (but still counted in the sidebar's totals, charts and status):
+        //  - privacy-blurred sightings: iNaturalist moves them up to ~20 km, so they'd land in the wrong town;
+        //  - very imprecise sightings (over 1 km): e.g. ones only placed at "Queens", which iNaturalist
+        //    puts at the borough's center point and which would create a fake hotspot there.
+        setObservations(all.filter((obs) => !obs.obscured && !(obs.accuracy_m > MAX_ACCURACY_M)).map((obs) => ({ ...obs, type: typeFilterOf(obs.iconic_taxon) })));
+        setLoadStatus("done");
+      })
+      .catch(() => setLoadStatus("error"));
+    getParks().then(setParks).catch(() => setParks([]));
+    getSpeciesList().then(setSpeciesList).catch(() => setSpeciesList([]));
+  }, []);
+
   useEffect(() => {
     // Start with the filter panel closed on phones, so the map isn't covered.
     if (window.innerWidth < 640) setLegendOpen(false);
-    getMapObservations()
-      // Left off the map (but still counted in the sidebar's totals, charts and status):
-      //  - privacy-blurred sightings: iNaturalist moves them up to ~20 km, so they'd land in the wrong town;
-      //  - very imprecise sightings (over 1 km): e.g. ones only placed at "Queens", which iNaturalist
-      //    puts at the borough's center point and which would create a fake hotspot there.
-      .then((all) => setObservations(all.filter((obs) => !obs.obscured && !(obs.accuracy_m > MAX_ACCURACY_M)).map((obs) => ({ ...obs, type: typeFilterOf(obs.iconic_taxon) }))))
-      .catch(() => setLoadError("Couldn't load sightings. Is the backend running on port 8000?"));
-    getParks().then(setParks).catch(() => setParks([]));
-  }, []);
+    loadData();
+  }, [loadData]);
 
   // Load the park profile whenever a park is focused.
   const focusedParkId = focus?.kind === "park" ? focus.id : null;
@@ -128,7 +144,7 @@ export default function Home() {
     <div className="app">
       <header className="header">
         <h1>Kissena Invasive Watch</h1>
-        <SpeciesSearch parks={parks} onPickSpecies={pickSpecies} onPickPark={pickPark} />
+        <SpeciesSearch species={speciesList} parks={parks} onPickSpecies={pickSpecies} onPickPark={pickPark} />
         <MusicToggle />
       </header>
 
@@ -153,7 +169,7 @@ export default function Home() {
             <button onClick={clearFocus}>Show all</button>
           </div>
         )}
-        <Legend
+        {loadStatus === "done" && <Legend
           open={legendOpen}
           onToggleOpen={() => setLegendOpen((o) => !o)}
           focusName={focus ? focusName : null}
@@ -166,8 +182,14 @@ export default function Home() {
           counts={counts}
           shown={visible.length}
           total={observations.length}
+        />}
+        <MapStatus
+          status={loadStatus !== "done" ? loadStatus : visible.length === 0 && observations.length > 0 ? "empty" : null}
+          expected={expectedCount}
+          progress={loadProgress}
+          onRetry={loadData}
+          onResetFilters={() => { setHiddenLevels(new Set()); setHiddenTypes(new Set()); }}
         />
-        {loadError && <div className="banner" role="alert">{loadError}</div>}
         {selectedSpeciesId ? (
           <SpeciesSidebar
             speciesId={selectedSpeciesId}

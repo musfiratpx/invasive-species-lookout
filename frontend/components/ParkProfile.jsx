@@ -8,6 +8,7 @@
 
 import { useEffect, useRef } from "react";
 
+import { ReportButton } from "@/components/SpeciesSidebar";
 import { DANGER_COLORS, MONTHS } from "@/lib/labels";
 import { taxonIcon } from "@/lib/taxa";
 
@@ -47,6 +48,7 @@ function Details({ park, onPickSpecies }) {
           {park.acres ? `${Math.round(park.acres).toLocaleString()} acres` : ""}
           {park.address ? ` · ${park.address}` : ""}
         </p>
+        <ReportButton />
       </section>
 
       <section className="stat-row">

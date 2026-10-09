@@ -90,6 +90,31 @@ button {
 .focus-banner button { border-radius: 999px; }
 .show-on-map { margin-top: 6px; }
 .sidebar-back { margin-bottom: 8px; }
+.meaning { font-size: 0.9rem; margin: 6px 0; }
+
+/* Messages over the map: loading, can't connect, no results */
+.map-status {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1100;
+  width: min(340px, calc(100% - 2 * var(--gap))); text-align: center;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+  padding: 18px 20px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+.map-status p { margin: 6px 0; }
+.map-status-small { top: auto; bottom: 70px; transform: translateX(-50%); }
+.spinner {
+  width: 28px; height: 28px; margin: 0 auto 6px; border-radius: 50%;
+  border: 3px solid var(--surface); border-top-color: var(--cluster); animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress { height: 6px; background: var(--surface); border-radius: 999px; overflow: hidden; margin: 8px 0 2px; }
+.progress span { display: block; height: 100%; background: var(--cluster); transition: width 0.2s; }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } .progress span { transition: none; } }
+.report { margin: 8px 0 0; }
+.report-button {
+  display: inline-block; background: var(--cluster); color: #fff; text-decoration: none;
+  border-radius: 999px; padding: 6px 14px; font-weight: 600;
+}
+.report-button:hover, .report-button:focus-visible { filter: brightness(1.2); }
 
 /* Park profile */
 .park-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
