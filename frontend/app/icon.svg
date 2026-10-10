@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#18382f"/><path d="M8 24C8 14 13 8 24 8c0 11-6 16-16 16z M8 24l10-10" fill="none" stroke="#d8e9a5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- The ♧ clover from the logo: cream outline on the nav bar's forest green.
+       Three outlined circles plus a stem, then the same circles filled in green on top,
+       which hides the lines where the circles overlap and leaves one clean outline. -->
+  <rect width="32" height="32" rx="7" fill="#18382f"/>
+  <g fill="none" stroke="#f7f5e9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="16" cy="10" r="5"/>
+    <circle cx="10" cy="17" r="5"/>
+    <circle cx="22" cy="17" r="5"/>
+    <path d="M16 16v9.5M12.5 26h7"/>
+  </g>
+  <g fill="#18382f">
+    <circle cx="16" cy="10" r="3.9"/>
+    <circle cx="10" cy="17" r="3.9"/>
+    <circle cx="22" cy="17" r="3.9"/>
+  </g>
+</svg>
