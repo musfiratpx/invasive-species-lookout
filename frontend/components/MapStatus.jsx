@@ -1,6 +1,6 @@
 /**
  * Messages shown on top of the map while it isn't showing sightings:
- *   - loading:  "Loading 14,620 sightings…" with a progress bar
+ *   - loading:  "Loading 72,899 sightings…" with a progress bar
  *   - error:    the data server can't be reached, with a "Try again" button
  *   - empty:    the filters hide everything, with a "Reset filters" button
  */

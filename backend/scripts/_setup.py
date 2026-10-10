@@ -29,7 +29,7 @@ def area_params():
     return {"lat": config.AREA_LAT, "lng": config.AREA_LNG, "radius": config.AREA_RADIUS_KM}
 
 
-# iNaturalist place IDs used when Kissena alone has too few photos or sounds.
+# iNaturalist place IDs for photo and sound fallbacks (and the NYC season curve).
 # Checked with the iNaturalist places API on 2026-10-09.
 NYC_PLACE_ID = 674
 NY_STATE_PLACE_ID = 48

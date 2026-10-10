@@ -71,7 +71,7 @@ export default function FieldGuide() {
 
       <header className="guide-header">
         <div>
-          <p className="muted park-kicker">Invasive species field guide · Kissena Invasive Watch</p>
+          <p className="muted park-kicker">Invasive species field guide · Invasive Species Lookout</p>
           <h1>{park.name}</h1>
           <p className="muted">
             {[park.type, park.acres && `${Math.round(park.acres).toLocaleString()} acres`, park.address].filter(Boolean).join(" · ")}

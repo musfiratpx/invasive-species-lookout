@@ -2,12 +2,11 @@
 Collect real photos and (if any exist) one real sound recording for each species
 in data/cache/observations.csv. Saves data/cache/media.json.
 
-Photos: up to 8 per species from research-grade observations, Kissena first, then
-New York City if we have fewer than 3. Creative Commons photos are preferred; we
-only fall back to "all rights reserved" photos (shown as a link, not embedded) if
-there aren't enough CC ones.
+Photos: up to 8 per species from research-grade observations in our map area (all of
+New York City). Creative Commons photos are preferred; we only fall back to
+"all rights reserved" photos (shown as a link, not embedded) if there are fewer than 3 CC ones.
 
-Sound: animals only (plants don't make sounds). Kissena first, then NYC, then
+Sound: animals only (plants don't make sounds). Our map area (NYC) first, then all of
 New York State. At most one recording.
 If iNaturalist has none, we store null. We NEVER create or generate a sound.
 
@@ -61,7 +60,7 @@ def find_photos(species_id, where, licenses):
 
 
 def collect_photos(species_id):
-    """CC photos from Kissena, then CC from NYC, then any license, until we have enough."""
+    """CC photos from our area (NYC), then CC from NYC, then any license, until we have enough."""
     attempts = [
         (area_params(), CC_LICENSES),
         ({"place_id": NYC_PLACE_ID}, CC_LICENSES),
@@ -80,7 +79,7 @@ def collect_photos(species_id):
 
 def find_sound(species_id):
     """
-    One real recording: Kissena, then NYC, then NY State. Returns a dict or None.
+    One real recording: our area (NYC), then NYC, then NY State. Returns a dict or None.
     We look for a Creative Commons recording in all three areas first, because
     "all rights reserved" ones can only be linked to, not played in the app.
     """

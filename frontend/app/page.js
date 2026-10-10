@@ -1,7 +1,7 @@
 "use client";
 /**
  * The one page of the app. From the top: the nav bar and welcome banner (Hero.jsx, from the
- * SAIL mockup), then the "Explore" section with the map app in a large frame: a toolbar (search
+ * SAIL mockup); the "Explore" section with the map app in a large frame: a toolbar (search
  * box that opens Browse, music + Quiz), map, legend/filters, the side panel (species details,
  * park profile or Browse list) and a short footer (data date + Credits dialog).
  *
@@ -263,12 +263,15 @@ export default function Home() {
 
   return (
     <>
-    <Hero />
+    <Hero species={speciesList} parks={parks} />
     <section className="discovery" id="explore">
     <div className="section-heading">
-      <p className="eyebrow">LOOK A LITTLE CLOSER</p>
-      <h2>Explore your environment.</h2>
-      <p>Discover wildlife and explore the species that share our landscape.</p>
+      <p className="eyebrow">WHAT&apos;S GROWING NEAR YOU</p>
+      <h2>Find invasive species near you.</h2>
+      <p>
+        Every point is a real sighting of a species on New York&apos;s official invasive list. Tap one to see what it
+        is, how risky it is, and what to do about it.
+      </p>
     </div>
     <div className="app">
       <header className="header">

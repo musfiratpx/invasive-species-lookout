@@ -96,11 +96,11 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
 
       <section>
         <h3>In New York City</h3>
-        {species.kissena_status.map((tag) => (
+        {species.nyc_status.map((tag) => (
           <span key={tag} className="tag">{STATUS_LABELS[tag]}</span>
         ))}
         {/* These two tags come from counting reports, which can mislead, so say so right here. */}
-        {(species.kissena_status.includes("spreading") || species.kissena_status.includes("new_arrival")) && (
+        {(species.nyc_status.includes("spreading") || species.nyc_status.includes("new_arrival")) && (
           <details className="info">
             <summary>ⓘ <span className="visually-hidden">What these tags mean</span></summary>
             <p className="muted">

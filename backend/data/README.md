@@ -20,7 +20,7 @@ These come from iNaturalist and are **committed to git on purpose**, so the demo
 | `cache/observations.csv` | Every research-grade sighting of a listed species in the area. `accuracy_m` is how precise the public location is (meters); 2,349 are worse than 1 km (e.g. ones placed only at a borough like "Queens", at its center point) and are counted but not drawn on the map. `taxon_id` is what the observer saw (it may be a variety). `species_id` and `listed_name` say which list entry it counts toward. | `fetch_observations.py` |
 | `cache/observation_parks.csv` | Which park each sighting is in (`observation_id`, `park_id`). Only sightings that aren't privacy-blurred and are accurate to within 1 km are matched. | `assign_parks.py` (run after `fetch_observations.py` or `fetch_parks.py`) |
 | `cache/media.json` | Up to 8 photos and at most one real sound per species, with attribution, license and observation link. CC licenses are preferred, and `license: null` means all rights reserved. **Sounds are only looked up for animals**, and each one keeps the observer's note (`observer_note`): a "sound" on a plant observation is really birdsong or wind. | `fetch_media.py` |
-| `cache/seasonality.json` | Sightings per month (Jan–Dec): `kissena` = our area (all of NYC) from our cache, and `nyc` from iNaturalist's histogram for all of New York City. Now that the area is NYC, the app shows only `kissena`. | `fetch_seasonality.py` |
+| `cache/seasonality.json` | Sightings per month (Jan–Dec): `area` = our map area (all of NYC) counted from our cache, and `nyc` from iNaturalist's histogram for all of New York City. The app shows `area`; `nyc` is kept for the API. | `fetch_seasonality.py` |
 | `cache/activity_by_month.json` | Research-grade sightings of **any** species per month (Jan–Dec), in our area (`area`) and all of NYC (`nyc`), from iNaturalist's histogram. The API divides each species' monthly counts by these, so the season chart isn't just a picture of when people are out posting (e.g. the City Nature Challenge every late April). | `fetch_seasonality.py` (`--refresh` to redo) |
 
 Snapshot taken 2026-10-10: 72,899 sightings of 83 listed species in New York City (iNaturalist place 674). (Earlier versions: a 2 km circle around Kissena Park and Queens College, 778 sightings of 39 species; then Queens County, 14,620 sightings of 76 species.) 3 species have a real recording: mute swan, monk parakeet, and spongy moth. The spongy moth recording is of caterpillar droppings falling during an outbreak, per the observer's note, which we save as `observer_note`.
@@ -30,7 +30,7 @@ Snapshot taken 2026-10-10: 72,899 sightings of 83 listed species in New York Cit
 **Things to say if asked:**
 - Sightings show where people *looked and posted*, not everywhere a species *is*. Busy paths and popular events (like City Nature Challenge weekends) show up as spikes.
 - Three list entries are below species level: porcelain berry (a variety), red-eared slider (a subspecies) and Africanized honey bee. Sightings identified only to the parent species (e.g. *Trachemys scripta*) are **not** counted, because the list doesn't say so. The Researcher can decide to add the species name to `synonyms`.
-- Two listed names have no iNaturalist match (*Myriophyllum heterophyllum × laxum*, *Achatina achatina*). Neither is a Kissena species.
+- Two listed names have no iNaturalist match (*Myriophyllum heterophyllum × laxum*, *Achatina achatina*). Neither appears in our NYC sightings.
 
 ## Known gaps and quirks (2026-10-09)
 

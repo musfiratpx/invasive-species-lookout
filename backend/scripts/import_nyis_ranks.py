@@ -32,7 +32,7 @@ MEDIA_API = "https://nyis.info/wp-json/wp/v2/media"
 # pypdf prints noisy font warnings for these older PDFs; the text still extracts fine.
 logging.getLogger("pypdf").setLevel(logging.ERROR)
 
-HEADERS = {"User-Agent": "KissenaInvasiveWatch/0.1 (HackKnight 2026 student project)"}
+HEADERS = {"User-Agent": "InvasiveSpeciesLookout/0.1 (HackKnight 2026 student project)"}
 
 
 def list_form_urls():

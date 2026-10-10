@@ -9,8 +9,8 @@ import "maplibre-gl/dist/maplibre-gl.css"; // the background map (components/Bas
 import "./globals.css";
 
 export const metadata = {
-  title: "Kissena Invasive Watch",
-  description: "Invasive species sightings across New York City, starting from Kissena Park in Queens.",
+  title: "Invasive Species Lookout",
+  description: "Where New York-listed invasive species have been spotted across New York City, how risky they are, and how to report them.",
 };
 
 export default function RootLayout({ children }) {

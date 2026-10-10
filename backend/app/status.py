@@ -1,6 +1,6 @@
 """
-"Kissena status" tags for a species, computed with pandas from cached sightings in our
-area (all of New York City by default). The name stays "kissena_status" so the API doesn't change.
+Status tags for a species in New York City ("nyc_status" in the API), computed with pandas
+from cached sightings in our area (all five boroughs, iNaturalist place 674).
 
   new_arrival  - the first sighting in our area was within the last 365 days
   spreading    - sightings so far this year > 1.5 x the same period last year, and at least 5 this year
@@ -29,7 +29,7 @@ def _same_period_count(dates, year, today):
     return int(((dates >= start) & (dates <= end)).sum())
 
 
-def kissena_status(observed_on, today=None):
+def status_tags(observed_on, today=None):
     """
     Status tags for one species.
 
@@ -59,6 +59,6 @@ def kissena_status(observed_on, today=None):
 def status_for_all(observations, today=None):
     """{species_id: [tags]} for every species in the observations DataFrame."""
     return {
-        str(species_id): kissena_status(group["observed_on"], today)
+        str(species_id): status_tags(group["observed_on"], today)
         for species_id, group in observations.groupby("species_id")
     }

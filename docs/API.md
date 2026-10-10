@@ -15,8 +15,7 @@ Checks that the server is up and shows which modes are active.
 ```json
 {
   "ok": true,
-  "area": {"name": "New York City", "inat_place_ids": [674],
-           "center": [40.741, -73.812], "radius_km": 2.0},
+  "area": {"name": "New York City", "inat_place_ids": [674]},
   "observations": 72899,
   "cache_updated_at": "2026-10-09T18:02:11+00:00",
   "rag_mode": "extractive",
@@ -69,14 +68,14 @@ Every listed species seen in the area, most-sighted first.
     "iconic_taxon": "Plantae",
     "danger_level": 3,
     "danger_label": "High",
-    "kissena_status": ["common_here"],
+    "nyc_status": ["common_here"],
     "sightings": 166
   }
 ]
 ```
 
 - `danger_label` is `"Very High" | "High" | "Moderate" | "Low" | "Not yet ranked"`.
-- `kissena_status` contains zero or more of `"common_here" | "spreading" | "new_arrival"`. See [SCORING.md](SCORING.md).
+- `nyc_status` contains zero or more of `"common_here" | "spreading" | "new_arrival"`. See [SCORING.md](SCORING.md).
 
 ## `GET /api/species/{species_id}`
 
@@ -94,7 +93,7 @@ Everything the sidebar shows for one species. An unknown `species_id` returns `4
     "ny_rank": "Very High", "score": 86.67, "health_warning": null,
     "source_url": "https://nyis.info/wp-content/uploads/2024/10/9b927_Celastrus.orbiculatus.NYS_.pdf"
   },
-  "kissena_status": ["common_here"],
+  "nyc_status": ["common_here"],
   "sightings": {
     "total": 1182,
     "by_month_of_year": [33, 18, 15, 205, 99, 66, 80, 65, 94, 63, 97, 347],

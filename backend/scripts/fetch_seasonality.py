@@ -2,10 +2,10 @@
 Month-by-month sighting counts for each species. Saves data/cache/seasonality.json.
 
 Two views per species, both from real research-grade iNaturalist sightings:
-  - "kissena": counted with pandas from data/cache/observations.csv (no network)
-  - "nyc":     iNaturalist's month-of-year histogram for all of New York City.
-               Kissena alone often has only a few sightings, so the NYC curve shows
-               the seasonal pattern more clearly. The UI must label which one it shows.
+  - "area": counted with pandas from data/cache/observations.csv (no network). This is our
+            map area, which is all of New York City, and it's what the app shows.
+  - "nyc":  iNaturalist's month-of-year histogram for all of New York City. It was useful when
+            the map covered a smaller area; now it matches "area" and is kept for the API.
 
 Also saves data/cache/activity_by_month.json: how many research-grade sightings of
 ANY species people posted each month, in our area and in all of NYC (2 requests).
@@ -29,7 +29,7 @@ from pyinaturalist import get_observation_histogram
 from app import config
 
 
-def kissena_by_month(observations, species_id):
+def area_by_month(observations, species_id):
     """Count cached sightings of one species per month (index 0 = January)."""
     months = pd.to_datetime(observations.loc[observations["species_id"] == species_id, "observed_on"]).dt.month
     counts = months.value_counts()
@@ -81,11 +81,11 @@ def main():
         cached_nyc = old.get(str(species_id), {}).get("nyc")
         seasonality[str(species_id)] = {
             "scientific_name": row["listed_name"],
-            "kissena": kissena_by_month(observations, species_id),  # = our area (now all of NYC)
+            "area": area_by_month(observations, species_id),  # our map area: all of NYC
             "nyc": cached_nyc if cached_nyc else nyc_by_month(species_id),
         }
         s = seasonality[str(species_id)]
-        print(f"  {row['listed_name']:32s} Kissena {sum(s['kissena']):4d}   NYC {sum(s['nyc']):6d}")
+        print(f"  {row['listed_name']:32s} area {sum(s['area']):5d}   NYC {sum(s['nyc']):6d}")
 
     config.SEASONALITY_JSON.write_text(json.dumps(seasonality, indent=2))
     print(f"\nSaved {config.SEASONALITY_JSON.relative_to(config.BACKEND_DIR)}")

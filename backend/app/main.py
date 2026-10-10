@@ -17,7 +17,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from app import config, data
 
 app = FastAPI(
-    title="Kissena Invasive Watch API",
+    title="Invasive Species Lookout API",
     description="Invasive species sightings across New York City (all five boroughs).",
 )
 
@@ -57,12 +57,11 @@ def health():
     """Quick check that the server is up, plus which data and AI modes are active."""
     return {
         "ok": True,
-        "area": {
-            "name": config.AREA_NAME,
-            "inat_place_ids": config.INAT_PLACE_IDS,
-            "center": [config.AREA_LAT, config.AREA_LNG],
-            "radius_km": config.AREA_RADIUS_KM,
-        },
+        # The area is either iNaturalist places (default: all of NYC) or, only if no places
+        # are set, a circle; so the circle's center and radius are shown only in that case.
+        "area": {"name": config.AREA_NAME, "inat_place_ids": config.INAT_PLACE_IDS}
+        if config.INAT_PLACE_IDS
+        else {"name": config.AREA_NAME, "center": [config.AREA_LAT, config.AREA_LNG], "radius_km": config.AREA_RADIUS_KM},
         "observations": _count_cached_observations(),
         "cache_updated_at": _cache_updated_at(),
         # Which RAG pieces will be used. Without keys we fall back to local, non-AI versions.
@@ -75,7 +74,8 @@ def health():
 def _all_observations_bytes():
     """
     Every sighting for the map, as JSON bytes and as gzip-compressed JSON bytes.
-    Building, encoding and compressing ~15,000 sightings takes ~180 ms, and every page
+    Building, encoding and compressing ~73,000 sightings (all of NYC) took ~1.5 s on the
+    first request when measured on 2026-10-10, and every page
     load asks for exactly this, so we do it once. The sightings themselves are also only
     read once (data.observations() is cached the same way), so restart the server after
     re-running the fetch scripts, as before.

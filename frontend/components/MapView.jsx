@@ -319,12 +319,12 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSel
     showRightLayer();
   }, [points]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Draw the focused park's official boundary.
+  // Draw the focused park's official boundary, in dark forest green so it stands out from the light green park fill.
   const outlineLayer = useRef(null);
   useEffect(() => {
     if (outlineLayer.current) map.removeLayer(outlineLayer.current);
     outlineLayer.current = outline
-      ? L.geoJSON(outline, { style: { color: "#2e7d32", weight: 3, fillColor: "#2e7d32", fillOpacity: 0.06, dashArray: "6 4" }, interactive: false }).addTo(map)
+      ? L.geoJSON(outline, { style: { color: "#18382f", weight: 3, fillColor: "#18382f", fillOpacity: 0.06, dashArray: "6 4" }, interactive: false }).addTo(map)
       : null;
   }, [outline, map]);
 

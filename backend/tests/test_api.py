@@ -34,7 +34,7 @@ def test_species_list_is_sorted_and_ranked_from_data():
 def test_species_detail_has_every_sidebar_section():
     species_id = client.get("/api/species").json()[0]["species_id"]
     body = client.get(f"/api/species/{species_id}").json()
-    for key in ("scientific_name", "common_name", "ny_status", "danger", "kissena_status",
+    for key in ("scientific_name", "common_name", "ny_status", "danger", "nyc_status",
                 "sightings", "photos", "sound", "insights"):
         assert key in body
     assert len(body["sightings"]["by_month_of_year"]) == 12

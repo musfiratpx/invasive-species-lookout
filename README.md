@@ -1,6 +1,6 @@
-# Kissena Invasive Watch
+# Invasive Species Lookout (ISL)
 
-An interactive map of **invasive species across New York City**, built at **HackKnight 2026** (Queens College). It started around Kissena Park and Queens College, grew to all of Queens, and now covers all five boroughs: **83 New York–listed invasive species and 72,899 research-grade sightings**.
+An interactive map of **invasive species across New York City**, built at **HackKnight 2026** (Queens College). It started around Kissena Park and Queens College, grew to all of Queens, and now covers all five boroughs of New York City: **83 New York–listed invasive species and 72,899 research-grade sightings**.
 
 Every fact links to its source. Danger levels come from official New York rankings, never from AI.
 

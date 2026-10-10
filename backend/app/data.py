@@ -101,7 +101,7 @@ def _species_summary(species_id, group):
         "iconic_taxon": group["iconic_taxon"].mode().iloc[0],
         "danger_level": danger["level"],
         "danger_label": danger["label"],
-        "kissena_status": statuses().get(species_id, []),
+        "nyc_status": statuses().get(species_id, []),
         "sightings": int(len(group)),
     }
 
@@ -342,13 +342,13 @@ def species_detail(species_id):
         "iconic_taxon": summary["iconic_taxon"],
         "ny_status": listed["ny_status"],
         "danger": find_danger(summary["scientific_name"]),
-        "kissena_status": summary["kissena_status"],
+        "nyc_status": summary["nyc_status"],
         "sightings": {
             "total": summary["sightings"],
-            "by_month_of_year": season.get("kissena", [0] * 12),
+            "by_month_of_year": season.get("area", [0] * 12),
             "nyc_by_month_of_year": season.get("nyc", [0] * 12),
             # The same months adjusted for how busy each month is (see _per_10k).
-            "by_month_per_10k": _per_10k(season.get("kissena", [0] * 12), activity().get("area")),
+            "by_month_per_10k": _per_10k(season.get("area", [0] * 12), activity().get("area")),
             "nyc_by_month_per_10k": _per_10k(season.get("nyc", [0] * 12), activity().get("nyc")),
             "first_seen": dates.iloc[0],
             "last_seen": dates.iloc[-1],

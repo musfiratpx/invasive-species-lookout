@@ -40,8 +40,8 @@ const PAINT = {
   background: { "background-color": "#eef0e2" }, // land
   park: { "fill-color": "#d3e2bf" },
   landcover_wood: { "fill-color": "#c9dab3" },
-  water: { "fill-color": "#a9c4b8" },
-  waterway: { "line-color": "#a9c4b8" },
+  water: { "fill-color": "#a6c3cf" }, // blue-gray, so shorelines stand out from green parks
+  waterway: { "line-color": "#a6c3cf" },
   "aeroway-area": { "fill-color": "#e4e8d6" },
   road_area_pier: { "fill-color": "#eef0e2" },
   road_pier: { "line-color": "#eef0e2" },
@@ -56,7 +56,7 @@ const PAINT = {
   highway_motorway_bridge_inner: { "line-color": "#f8f8ee" },
 };
 const LABEL_TEXT = "#18382f"; // forest green place names
-const WATER_LABEL_TEXT = "#3d6b5c";
+const WATER_LABEL_TEXT = "#3b6275";
 const LABEL_HALO = "#f5f5e9"; // cream outline so names stay readable
 
 /** Returns a copy of the Positron style with busy layers hidden and our colors applied. */

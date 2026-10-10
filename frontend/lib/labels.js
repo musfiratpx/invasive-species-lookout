@@ -1,7 +1,6 @@
 /**
  * Display text and colors shared by several components.
- * Danger colors are placeholders until the Designer picks the real palette
- * (they also live as CSS variables in app/globals.css).
+ * Danger colors point at the CSS variables in app/globals.css (change them there).
  */
 
 export const DANGER_COLORS = {

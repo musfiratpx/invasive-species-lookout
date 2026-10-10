@@ -15,7 +15,7 @@ export const PART_575_QA_URL = "https://dec.ny.gov/docs/lands_forests_pdf/islist
 export const REPORT_URL = "https://www.nyimapinvasives.org/report";
 
 // NYC Parks volunteer pages for the "Report it, don't pull it" box (checked 2026-10-10).
-// "Stewardship Registration": upcoming stewardship projects, filterable by borough (Queens).
+// "Stewardship Registration": upcoming stewardship projects, filterable by borough.
 export const STEWARDSHIP_URL = "https://www.nycgovparks.org/reg/stewardship";
 // NYC Parks volunteer events calendar (some events remove invasive plants, led by Parks or partner groups).
 export const VOLUNTEER_EVENTS_URL = "https://www.nycgovparks.org/events/volunteer";

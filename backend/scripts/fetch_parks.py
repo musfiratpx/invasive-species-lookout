@@ -31,7 +31,7 @@ def rounded(coords):
 
 def main():
     response = requests.get(URL, params={"$limit": 50000}, timeout=120,
-                            headers={"User-Agent": "KissenaInvasiveWatch/0.1 (HackKnight 2026 student project)"})
+                            headers={"User-Agent": "InvasiveSpeciesLookout/0.1 (HackKnight 2026 student project)"})
     response.raise_for_status()
     features = []
     for feature in response.json()["features"]:

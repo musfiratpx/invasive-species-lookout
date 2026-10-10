@@ -189,12 +189,12 @@ function RoundOver({ right, onPlayAgain, nextButton }) {
 
 /**
  * "Copy my score": copies e.g. "I spotted 8 of 10 NYC invasive species in the
- * Kissena Invasive Watch quiz. Can you beat me? <link>". No accounts, nothing sent anywhere.
+ * Invasive Species Lookout quiz. Can you beat me? <link>". No accounts, nothing sent anywhere.
  */
 function CopyScore({ right }) {
   const [status, setStatus] = useState(null); // null, "copied" or "manual"
   const link = `${siteUrl()}/?quiz=1`;
-  const message = `I spotted ${right} of ${ROUND_LENGTH} NYC invasive species in the Kissena Invasive Watch quiz. Can you beat me? ${link}`;
+  const message = `I spotted ${right} of ${ROUND_LENGTH} NYC invasive species in the Invasive Species Lookout quiz. Can you beat me? ${link}`;
 
   function copy() {
     // The clipboard only works on https:// or localhost; otherwise show the text to copy by hand.
