@@ -614,7 +614,8 @@ details.info > summary::-webkit-details-marker { display: none; }
 /* Browse: sortable lists of species and parks */
 /* Browse stays on the page under a species or park opened from it (keeps scroll position).
    visibility: hidden also hides it from screen readers and the Tab key. */
-.browse.covered { visibility: hidden; }
+.browse.covered, .sidebar.covered { visibility: hidden; } /* also "Near you" under a species */
+.near-privacy { margin-top: var(--space-4); }
 .browse-tabs { margin: 10px 0; }
 .row-list { list-style: none; padding: 0; margin: 8px 0 0; }
 .row-button {

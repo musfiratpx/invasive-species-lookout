@@ -22,6 +22,7 @@ import Hero from "@/components/Hero";
 import Legend from "@/components/Legend";
 import MapStatus from "@/components/MapStatus";
 import MusicToggle from "@/components/MusicToggle";
+import NearMePanel from "@/components/NearMePanel";
 import ParkProfile from "@/components/ParkProfile";
 import Quiz from "@/components/Quiz";
 import SearchBox from "@/components/SearchBox";
@@ -72,6 +73,11 @@ export default function Home() {
   const [parkPanelOpen, setParkPanelOpen] = useState(false);
   const [urlRead, setUrlRead] = useState(false); // don't write the address bar before reading it
   const [sheetCollapsed, setSheetCollapsed] = useState(false); // phones: panel shrunk to a strip
+  // "Near you": where the browser says you are (never sent anywhere or put in the address bar),
+  // whether its panel is open, and a counter the toolbar button bumps to ask the map to find you.
+  const [location, setLocation] = useState(null);
+  const [nearOpen, setNearOpen] = useState(false);
+  const [locateRequest, setLocateRequest] = useState(0);
 
   // Load the species and park lists (search box and Browse). Called again by Browse's "Try again".
   const loadLists = useCallback(() => {
@@ -150,7 +156,7 @@ export default function Home() {
   }, [url]);
 
   // A newly opened panel always starts full size on phones.
-  const panelKey = selectedSpeciesId || (parkPanelOpen && focus?.id) || browseTab;
+  const panelKey = selectedSpeciesId || (parkPanelOpen && focus?.id) || browseTab || (nearOpen && "near");
   useEffect(() => setSheetCollapsed(false), [panelKey]);
 
   // While one species or park is focused, the filters are paused and the banner already says
@@ -239,6 +245,7 @@ export default function Home() {
     setSelectedSpeciesId(null);
     setFocus({ kind: "park", id });
     setParkPanelOpen(true);
+    setNearOpen(false); // one side panel at a time
   }, []);
   const clearFocus = useCallback(() => {
     setFocus(null);
@@ -252,12 +259,23 @@ export default function Home() {
   const openBrowse = useCallback(() => {
     setSelectedSpeciesId(null);
     setParkPanelOpen(false);
+    setNearOpen(false);
     setBrowseTab((tab) => tab || "species");
   }, []);
   // Closing Browse also empties the search box, so the next search starts fresh.
   const closeBrowse = useCallback(() => { setBrowseTab(null); setSearchText(""); }, []);
 
   const closeSidebar = useCallback(() => setSelectedSpeciesId(null), []);
+
+  // Location found (📍 on the map, or "Near me" in the toolbar): show what's been seen nearby.
+  const showNearMe = useCallback((spot) => {
+    setLocation(spot);
+    setSelectedSpeciesId(null);
+    setParkPanelOpen(false);
+    setBrowseTab(null);
+    setNearOpen(true);
+  }, []);
+  const closeNearMe = useCallback(() => { setNearOpen(false); setLocation(null); }, []);
   const closePark = useCallback(() => setParkPanelOpen(false), []);
   const inPark = focus?.kind === "park";
 
@@ -284,6 +302,9 @@ export default function Home() {
           speciesCount={speciesList.length}
           parkCount={parks.length}
         />
+        <button className="header-button" onClick={() => setLocateRequest((n) => n + 1)} aria-label="Species seen near me">
+          📍<span className="button-label"> Near me</span>
+        </button>
         <MusicToggle />
         {/* On phones only the icons show (CSS hides .button-label); aria-label keeps the name for screen readers. */}
         <button className="header-button" onClick={() => setQuiz("open")} aria-label={quiz === "paused" ? "Back to the quiz" : "Quiz: spot the species"}>
@@ -303,6 +324,9 @@ export default function Home() {
           selectedSpeciesId={selectedSpeciesId}
           onSelectSpecies={setSelectedSpeciesId}
           onSelectPark={pickPark}
+          location={location}
+          locateRequest={locateRequest}
+          onLocated={showNearMe}
         />
         {focus && (
           <div className="focus-banner" role="status">
@@ -354,13 +378,23 @@ export default function Home() {
             onClose={closeBrowse}
           />
         )}
+        {nearOpen && location && (
+          <NearMePanel
+            location={location}
+            sightings={observations}
+            species={speciesList}
+            covered={Boolean(selectedSpeciesId)}
+            onPickSpecies={setSelectedSpeciesId}
+            onClose={closeNearMe}
+          />
+        )}
         {selectedSpeciesId ? (
           <SpeciesSidebar
             speciesId={selectedSpeciesId}
             mapCount={selectedMapCount}
             onClose={closeSidebar}
-            onBack={quiz === "paused" ? () => setQuiz("open") : (inPark && parkPanelOpen) || browseTab ? closeSidebar : null}
-            backLabel={quiz === "paused" ? "Back to the quiz" : inPark && parkPanelOpen ? `Back to ${focusName}` : "Back to Browse"}
+            onBack={quiz === "paused" ? () => setQuiz("open") : (inPark && parkPanelOpen) || browseTab || nearOpen ? closeSidebar : null}
+            backLabel={quiz === "paused" ? "Back to the quiz" : inPark && parkPanelOpen ? `Back to ${focusName}` : nearOpen ? "Back to near you" : "Back to Browse"}
             onShowOnMap={inPark ? null : () => setFocus({ kind: "species", id: selectedSpeciesId })}
             shownOnMap={focus?.kind === "species" && focus.id === selectedSpeciesId}
           />

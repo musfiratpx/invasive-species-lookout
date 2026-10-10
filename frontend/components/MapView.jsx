@@ -10,7 +10,7 @@
  *   previews the species inside; from zoom 17 points are shown one by one.
  * - Crowded spots: clicking a bubble zooms in; once you're zoomed in close (16+),
  *   it opens a list of the species there instead.
- * - Extras: zoom down to level 20, a scale bar, "Find me" and "All of NYC" buttons,
+ * - Extras: zoom down to level 20, a scale bar, "Find me" (opens "Near you", NearMePanel.jsx) and "All of NYC" buttons,
  *   and zooming to a species' sightings when one is picked in search.
  * - Parks: at mid zoom every park is outlined faintly and can be tapped (ParkOutlines.jsx).
  *   When a park is picked, its official boundary is outlined boldly and the map zooms to
@@ -28,6 +28,7 @@ import { MapContainer, useMap } from "react-leaflet";
 import Basemap from "@/components/Basemap";
 import ParkOutlines from "@/components/ParkOutlines";
 import ScrollZoomOnClick from "@/components/ScrollZoomOnClick";
+import { NEAR_RADIUS_M } from "@/components/NearMePanel";
 import { makeMarkerIcon } from "@/components/SpeciesIcon";
 import { cssColor } from "@/lib/cssColor";
 import { formatDay } from "@/lib/dates";
@@ -184,7 +185,7 @@ function roomForPanel(map) {
 }
 
 /** Adds the sightings (bubbles/icons, or street-level detail) to the map. */
-function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark }) {
+function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark, location, locateRequest, onLocated }) {
   const map = useMap();
   const merged = useRef(null); // ×N points, used below street level
   const detail = useRef(null); // every sighting separately, used at street level
@@ -202,6 +203,8 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
   currentFocus.current = focusKey;
   const selected = useRef(selectedSpeciesId);
   selected.current = selectedSpeciesId;
+  const located = useRef(onLocated);
+  located.current = onLocated;
 
   // Build the detail layer only when someone actually zooms to street level.
   function ensureDetail() {
@@ -282,7 +285,6 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
     const scale = L.control.scale({ position: "bottomright" }).addTo(map);
 
     // "Find me" and "All of NYC" buttons under the +/- zoom buttons.
-    let you = null;
     const Buttons = L.Control.extend({
       onAdd() {
         const box = L.DomUtil.create("div", "leaflet-bar map-buttons");
@@ -293,19 +295,14 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
         box.addEventListener("click", (e) => {
           const action = e.target.closest("[data-action]")?.dataset.action;
           if (action === "home") map.setView(CENTER, ZOOM, motion());
-          if (action === "locate") map.locate({ setView: true, maxZoom: 17 }); // location stays in the browser
+          if (action === "locate") map.locate(); // location stays in the browser (see NearMePanel.jsx)
         });
         return box;
       },
     });
     const buttons = new Buttons({ position: "topleft" }).addTo(map);
-    const onFound = (e) => {
-      if (you) map.removeLayer(you);
-      you = L.layerGroup([
-        L.circle(e.latlng, { radius: e.accuracy, color: cssColor("--you"), weight: 1, fillOpacity: 0.1 }),
-        L.circleMarker(e.latlng, { radius: 7, color: cssColor("--bg"), weight: 2, fillColor: cssColor("--you"), fillOpacity: 1 }).bindTooltip("You are here"),
-      ]).addTo(map);
-    };
+    // Found you: tell the page, which opens "Near you" and passes the spot back as `location`.
+    const onFound = (e) => located.current({ lat: e.latlng.lat, lng: e.latlng.lng, accuracy: e.accuracy });
     const onLocateError = () => {
       L.popup().setLatLng(map.getCenter()).setContent("Couldn't get your location. Check that location access is allowed.").openOn(map);
     };
@@ -320,11 +317,31 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
       map.off("locationerror", onLocateError);
       stopAdding.current.merged();
       stopAdding.current.detail();
-      for (const layer of [merged.current, detail.current, you]) if (layer) map.removeLayer(layer);
+      for (const layer of [merged.current, detail.current]) if (layer) map.removeLayer(layer);
       scale.remove();
       buttons.remove();
     };
   }, [map]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // The toolbar's "Near me" button asks the map to find you (each press bumps locateRequest).
+  useEffect(() => {
+    if (locateRequest) map.locate();
+  }, [locateRequest, map]);
+
+  // Your spot: a blue dot, how precise the location is, and a dashed circle showing the
+  // "Near you" area. The map zooms to that circle, leaving room for the panel.
+  useEffect(() => {
+    if (!location) return;
+    const center = [location.lat, location.lng];
+    const area = L.circle(center, { radius: NEAR_RADIUS_M, color: cssColor("--you"), weight: 2, dashArray: "6 6", fill: false, interactive: false });
+    const you = L.layerGroup([
+      area,
+      L.circle(center, { radius: location.accuracy, color: cssColor("--you"), weight: 1, fillOpacity: 0.1, interactive: false }),
+      L.circleMarker(center, { radius: 7, color: cssColor("--bg"), weight: 2, fillColor: cssColor("--you"), fillOpacity: 1 }).bindTooltip("You are here"),
+    ]).addTo(map);
+    map.fitBounds(area.getBounds(), { ...roomForPanel(map), ...motion() });
+    return () => map.removeLayer(you);
+  }, [location, map]);
 
   // Rebuild the merged markers whenever the (filtered) points change; refresh detail if it's showing.
   useEffect(() => {
@@ -378,7 +395,7 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
   return null;
 }
 
-export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark }) {
+export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark, location, locateRequest, onLocated }) {
   const animate = !prefersLessMotion(); // also turns off the zoom and fade animations of the map itself
   return (
     <MapContainer center={CENTER} zoom={ZOOM} minZoom={MIN_ZOOM} maxZoom={MAX_ZOOM}
@@ -400,6 +417,9 @@ export default function MapView({ points, sightings, focusKey, outline, allOutli
         selectedSpeciesId={selectedSpeciesId}
         onSelectSpecies={onSelectSpecies}
         onSelectPark={onSelectPark}
+        location={location}
+        locateRequest={locateRequest}
+        onLocated={onLocated}
       />
     </MapContainer>
   );
