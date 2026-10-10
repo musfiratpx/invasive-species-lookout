@@ -307,11 +307,11 @@ export default function Home() {
         <button className="header-button" onClick={() => setLocateRequest((n) => n + 1)} aria-label="Species seen near me">
           📍<span className="button-label"> Near me</span>
         </button>
-        <MusicToggle />
         {/* On phones only the icons show (CSS hides .button-label); aria-label keeps the name for screen readers. */}
         <button className="header-button" onClick={() => setQuiz("open")} aria-label={quiz === "paused" ? "Back to the quiz" : "Quiz: spot the species"}>
           🎯<span className="button-label"> Quiz</span>
         </button>
+        <MusicToggle />
       </header>
 
       <main className={["main", panelKey && "panel-open", sheetCollapsed && "sheet-collapsed"].filter(Boolean).join(" ")}>
