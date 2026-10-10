@@ -644,11 +644,12 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
    species above it. Rows without a credit keep the button's own padding. */
 .row-list li { border-bottom: 1px solid var(--border); }
 .row-list .row-button { border-bottom: none; }
-.row-list .row-button:has(+ .photo-credit) { padding-bottom: 2px; }
+.row-list .row-button:has(+ .photo-credit), .row-list .row-button:has(+ .row-link) { padding-bottom: 2px; }
+.row-list .photo-credit:has(+ .row-link) { padding-bottom: 2px; } /* New tab: credit, then the first-sighting link */
 .row-list .photo-credit { display: block; padding: 0 4px 8px 56px; }
 .photo-credit { font-size: var(--text-xs); color: var(--muted); text-decoration: none; overflow-wrap: anywhere; }
 .photo-credit:hover { text-decoration: underline; }
-.row-link { display: block; padding: 0 4px 8px 32px; font-size: var(--text-xs); } /* "View the first sighting" under a New row */
+.row-link { display: block; padding: 0 4px 8px 56px; font-size: var(--text-xs); } /* lined up with the row's text, after the photo */ /* "View the first sighting" under a New row */
 .row-detail {
   display: flex; flex-direction: column; align-items: flex-end;
   font-size: var(--text-sm); color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums;

@@ -128,12 +128,13 @@ def species_list():
 def early_warning():
     """
     Species recorded in a borough for the first time recently ("New arrivals"), from the cache
-    built by scripts/build_early_warning.py with Tiger Cloud. Each item gets the same names and
-    danger level as the species list. Before the script has run there are simply no items.
+    built by scripts/build_early_warning.py with Tiger Cloud. Each item gets the same names,
+    danger level and photo (`thumb`) as the species list. Before the script has run there are
+    simply no items.
     """
     cached = _read_json(config.EARLY_WARNING_JSON, {"items": []})
     summaries = {s["species_id"]: s for s in species_list()}
-    shared = ("scientific_name", "common_name", "iconic_taxon", "danger_level", "danger_label")
+    shared = ("scientific_name", "common_name", "iconic_taxon", "danger_level", "danger_label", "thumb")
     cached["items"] = [
         {**{key: summaries[item["species_id"]][key] for key in shared}, **item}
         for item in cached["items"]

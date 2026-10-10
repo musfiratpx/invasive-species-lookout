@@ -195,7 +195,7 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
                     {tab === "species" ? <SpeciesRow s={item} query={query} /> : tab === "parks" ? <ParkRow p={item} query={query} /> : <ArrivalRow a={item} />}
                   </button>
                   {/* Links can't go inside a button, so the photo credit and the first-sighting link sit under it. */}
-                  {tab === "species" && item.thumb && <PhotoCredit photo={item.thumb} />}
+                  {(tab === "species" || tab === "new") && item.thumb && <PhotoCredit photo={item.thumb} />}
                   {tab === "new" && (
                     // The evidence: the actual first sighting.
                     <a className="row-link" href={item.first_observation_url} target="_blank" rel="noreferrer">
@@ -282,7 +282,10 @@ function ArrivalRow({ a }) {
   const before = a.already_in.length;
   return (
     <>
-      <span aria-hidden="true">{taxonIcon(a.iconic_taxon).emoji}</span>
+      {/* Same small photo as the Species list (an emoji only when there's no openly licensed photo). */}
+      {a.thumb
+        ? <img className="row-thumb" src={a.thumb.url} alt="" loading="lazy" />
+        : <span className="row-thumb row-thumb-empty" aria-hidden="true">{taxonIcon(a.iconic_taxon).emoji}</span>}
       <span className="search-name">
         {speciesName(a)}
         <em>First recorded in {a.borough} · {formatDay(a.first_seen)}</em>

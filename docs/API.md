@@ -168,13 +168,14 @@ Field notes:
             "iconic_taxon": "Actinopterygii", "danger_level": 3, "danger_label": "High",
             "borough": "Queens", "first_seen": "2026-09-16", "first_observation_id": 400772439,
             "first_observation_url": "https://www.inaturalist.org/observations/400772439", "sightings_since": 1,
-            "already_in": [{"borough": "Staten Island", "first_seen": "2019-03-31"}]}]}
+            "already_in": [{"borough": "Staten Island", "first_seen": "2019-03-31"}],
+            "thumb": {"url": "…", "attribution": "…", "license": "cc-by-nc", "observation_url": "…"}}]}
 ```
 
 - "First recorded" means first in our research-grade iNaturalist data, not the day the species arrived.
 - Only precise sightings count (not privacy-blurred, accuracy within 1 km), like the map.
 - The two years end at `newest_sighting`, not today. `already_in` lists boroughs where the species was recorded earlier.
-- Names and danger level match `GET /api/species`. Before the script has run, `items` is empty.
+- Names, danger level and `thumb` (an openly licensed photo, or `null`) match `GET /api/species`. Before the script has run, `items` is empty.
 
 ## `GET /api/parks`
 

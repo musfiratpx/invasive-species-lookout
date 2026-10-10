@@ -42,6 +42,9 @@ def test_early_warning_items_are_recent_and_linked():
         assert item["first_observation_url"].startswith("https://www.inaturalist.org/observations/")
         # Boroughs listed as "already in" were reached before this one.
         assert all(e["first_seen"] < item["first_seen"] for e in item["already_in"])
+        # Its photo is openly licensed and credited, like in the species list.
+        if item["thumb"]:
+            assert item["thumb"]["license"] and item["thumb"]["attribution"]
 
 
 def test_species_detail_has_every_sidebar_section():
