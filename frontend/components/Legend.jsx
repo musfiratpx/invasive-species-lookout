@@ -66,7 +66,7 @@ export default function Legend({ open, onToggleOpen, focusName, period, onChange
       />
 
       <details className="legend-help">
-        <summary>How to read the map</summary>
+        <summary>ⓘ How to read the map</summary>
         <ul className="muted">
           <li>Tap a danger level to show or hide it. Pick plants, birds and more from the Plants &amp; animals menu.</li>
           <li>Numbered bubbles group nearby sightings. Tap one to zoom in, or to list what&apos;s there.</li>

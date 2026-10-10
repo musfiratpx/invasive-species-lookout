@@ -100,7 +100,7 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
     <div className="dialog-backdrop" hidden={hidden} onClick={onClose} onKeyDown={onKeyDown}>
       <div className="dialog quiz" role="dialog" aria-modal="true" aria-labelledby="quiz-title" onClick={(e) => e.stopPropagation()}>
         <button ref={closeButton} className="sidebar-close" onClick={onClose} aria-label="Close quiz">✕</button>
-        <h2 id="quiz-title">🎯 Spot the species</h2>
+        <h2 id="quiz-title"><span aria-hidden="true">◎</span> Spot the species</h2>
 
         {error && (
           <div role="alert">
