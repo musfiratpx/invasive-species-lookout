@@ -684,8 +684,9 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
 .quiz-dots { display: flex; gap: 6px; list-style: none; padding: 0; margin: 8px 0; }
 .quiz-dot {
   width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); font-weight: 700; color: var(--bg);
+  display: flex; align-items: center; justify-content: center; color: var(--bg);
 }
+.quiz-dot svg { display: block; } /* no text baseline gap, so the mark sits dead center */
 .quiz-dot.current { border-color: var(--forest); }
 .quiz-dot.right { background: var(--good); border-color: var(--good); }
 .quiz-dot.wrong { background: var(--danger-4); border-color: var(--danger-4); }

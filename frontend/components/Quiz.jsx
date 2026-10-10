@@ -174,11 +174,23 @@ function ProgressDots({ results, current }) {
         const state = result ? (result.correct ? "right" : "wrong") : i + 1 === current ? "current" : "";
         return (
           <li key={i} className={`quiz-dot ${state}`} aria-hidden="true">
-            {result ? (result.correct ? "✓" : "✗") : ""}
+            {result && <DotMark correct={result.correct} />}
           </li>
         );
       })}
     </ol>
+  );
+}
+
+/**
+ * ✓ or ✗ drawn as a tiny shape rather than a text character: font characters sit a little
+ * off-center in a circle, a shape can be centered exactly.
+ */
+function DotMark({ correct }) {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d={correct ? "M2.5 6.2l2.3 2.3L9.5 3.8" : "M3 3l6 6M9 3l-6 6"} />
+    </svg>
   );
 }
 
