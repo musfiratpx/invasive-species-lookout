@@ -34,9 +34,8 @@
   --bad-tint: #fbeae7; /* warnings and wrong quiz answer */
   --bad-border: #e6b3ad;
   --serif: var(--font-serif), Georgia, "Times New Roman", serif; /* fonts are loaded in app/layout.js */
-  /* Welcome banner photo: common reed (Phragmites), CC BY, credited in the banner (Hero.jsx) */
-  --hero-photo: url("/images/hero.jpg");
-  --hero-blank: #4a6358; /* shown behind the green fade while the photo loads */
+  /* Welcome banner: photos rotate behind the green fade (list and credits in Hero.jsx) */
+  --hero-blank: #4a6358; /* shown while the photos load */
 
   /* Danger levels. No green: the map and parks are green, and green would read as "safe"
      (every species on this map is invasive). Low is violet so it stands apart from the map. */
@@ -148,10 +147,15 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .hero {
   position: relative; /* for the photo credit in the corner */
   min-height: 55vh; display: flex; align-items: center; padding: 60px 8%; /* short enough that the map peeks in below */
-  background: linear-gradient(90deg, rgba(9, 36, 29, 0.9), rgba(9, 36, 29, 0.2)), var(--hero-photo) center / cover;
-  background-color: var(--hero-blank);
+  background-color: var(--hero-blank); overflow: hidden;
   color: var(--on-forest);
 }
+/* Rotating photos: all stacked; the active one fades in over 1.5 s */
+.hero-slide { position: absolute; inset: 0; background: center / cover no-repeat; opacity: 0; transition: opacity 1.5s ease; }
+.hero-slide.active { opacity: 1; }
+/* Dark green fade from the left, so the white text stays readable on any photo */
+.hero-fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(9, 36, 29, 0.9), rgba(9, 36, 29, 0.25)); }
+.hero-content { position: relative; z-index: 1; } /* above the photos and fade */
 .hero-content { max-width: 760px; }
 .eyebrow { font-size: var(--text-xs); letter-spacing: 2px; margin: 0; }
 .hero .eyebrow { color: var(--lime); }
@@ -173,7 +177,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .hero-date { margin: 14px 0 0; font-size: var(--text-sm); color: var(--on-forest-muted); }
 /* Photo credit, small in the bottom-right corner (every photo is credited, CLAUDE.md rule 9) */
 .hero-credit {
-  position: absolute; right: 12px; bottom: 8px; max-width: calc(100% - 24px);
+  position: absolute; z-index: 1; right: 12px; bottom: 8px; max-width: calc(100% - 24px);
   font-size: var(--text-xs); color: var(--on-forest-muted); text-decoration: none; text-align: right;
   background: rgba(9, 36, 29, 0.55); padding: 2px 8px; border-radius: 4px;
 }

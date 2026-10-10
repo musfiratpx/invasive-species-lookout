@@ -261,14 +261,9 @@ export default function Home() {
   const closePark = useCallback(() => setParkPanelOpen(false), []);
   const inPark = focus?.kind === "park";
 
-  // Nav links: open the quiz or the parks list, then scroll down to the map app.
-  const scrollToMap = () => document.getElementById("explore")?.scrollIntoView({ behavior: "smooth" });
-  const openQuizFromNav = () => { setQuiz("open"); scrollToMap(); };
-  const openParksFromNav = () => { setSelectedSpeciesId(null); setParkPanelOpen(false); setBrowseTab("parks"); scrollToMap(); };
-
   return (
     <>
-    <Hero species={speciesList} parks={parks} updatedAt={updatedAt} onOpenQuiz={openQuizFromNav} onOpenParks={openParksFromNav} />
+    <Hero species={speciesList} parks={parks} updatedAt={updatedAt} />
     <section className="discovery" id="explore">
     <div className="section-heading">
       <p className="eyebrow">WHAT&apos;S GROWING NEAR YOU</p>
