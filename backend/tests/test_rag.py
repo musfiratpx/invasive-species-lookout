@@ -8,12 +8,12 @@ import json
 
 import pytest
 
-from app.rag.chunker import GENERAL, fact_sheet_reviews, load_chunks
+from app.rag.chunker import GENERAL, load_chunks
 from app import config
 from app.rag import generator as generator_module
 from app.rag.generator import CortexGenerator, ExtractiveGenerator
 from app.rag.insights import build_insights
-from app.rag.retriever import FallbackRetriever, KeywordRetriever
+from app.rag.retriever import KeywordRetriever
 
 EXAMPLE_SHEET = """---
 scientific_name: Celastrus orbiculatus
@@ -173,10 +173,17 @@ def test_report_for_species_without_sheet_uses_general_file(chunks):
 def test_report_and_handling_are_never_ai_written(chunks):
     insights = build_insights(SPECIES, KeywordRetriever(chunks), _fake_cortex("AI WROTE THIS"))
     assert insights["summary"] == "AI WROTE THIS"
-    assert insights["found_by"]["summary"]["word_for_word"] is False  # the UI then says it was reworded
-    assert insights["found_by"]["handling"]["word_for_word"] is True
     assert insights["report"] == "EXAMPLE TEXT: report sightings for testing."
     assert insights["handling"]["text"] == "EXAMPLE TEXT: pull it up for testing."  # safety text, word for word
+
+
+def test_lookalikes_are_word_for_word_and_null_without_a_section(tmp_path):
+    sheet = EXAMPLE_SHEET + "\n## Look-alikes\nEXAMPLE TEXT: looks like a made-up native vine.\n"
+    (tmp_path / "celastrus-orbiculatus.md").write_text(sheet)
+    insights = build_insights(SPECIES, KeywordRetriever(load_chunks(tmp_path)), _fake_cortex("AI WROTE THIS"))
+    assert insights["lookalikes"] == "EXAMPLE TEXT: looks like a made-up native vine."
+    (tmp_path / "celastrus-orbiculatus.md").write_text(EXAMPLE_SHEET)
+    assert build_insights(SPECIES, KeywordRetriever(load_chunks(tmp_path)), ExtractiveGenerator())["lookalikes"] is None
 
 
 def test_html_comments_are_dropped(tmp_path):
@@ -191,30 +198,3 @@ def test_broken_header_is_skipped_not_fatal(tmp_path, capsys):
     assert any(c.file == "good.md" for c in chunks)
     assert all(c.file != "bad.md" for c in chunks)
     assert "SKIPPED bad.md" in capsys.readouterr().out
-
-
-def test_found_by_names_the_search_and_the_file(chunks):
-    insights = build_insights(SPECIES, KeywordRetriever(chunks), ExtractiveGenerator())
-    assert insights["found_by"]["summary"] == {"retriever": "keyword", "files": ["celastrus-orbiculatus.md"],
-                                               "section": "Summary", "word_for_word": True}
-    assert insights["found_by"]["history"] is None  # empty section: nothing was found, so nothing is claimed
-    assert insights["found_by"]["report"]["files"] == ["how-to-report.md"]
-
-
-def test_fallback_reports_which_search_really_answered(chunks):
-    class Broken:
-        name = "snowflake"
-
-        def retrieve(self, *args):
-            raise ConnectionError("no wifi")
-
-    retriever = FallbackRetriever(Broken(), KeywordRetriever(chunks))
-    insights = build_insights(SPECIES, retriever, ExtractiveGenerator())
-    assert insights["found_by"]["summary"]["retriever"] == "keyword"  # never claims Snowflake when it fell back
-
-
-def test_review_status_comes_from_the_header(tmp_path):
-    (tmp_path / "draft.md").write_text(EXAMPLE_SHEET.replace("touch_safe: true", "touch_safe: true\nreviewed_by:"))
-    (tmp_path / "checked.md").write_text(EXAMPLE_SHEET.replace("touch_safe: true", "touch_safe: true\nreviewed_by: Example Reviewer"))
-    (tmp_path / "_TEMPLATE.md").write_text(EXAMPLE_SHEET)
-    assert fact_sheet_reviews(tmp_path) == {"checked.md": "Example Reviewer", "draft.md": None}

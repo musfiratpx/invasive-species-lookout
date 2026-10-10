@@ -24,6 +24,9 @@ The northern snakehead is native to China and possibly Korea and Russia. It is b
 Snakeheads breed in summer, from June to August, building nests by weaving water plants into a column to protect their eggs. Parents guard their young for up to four weeks and can become very aggressive toward other animals during this time.
 
 ## How to handle it
-NYIS advises that if you catch a snakehead, do not release it back into the water: kill it, freeze it in a double bag, and report the fish and its location to a natural resource agency. Note that NYC Parks rules say all fish caught in fresh water in city parks must be released immediately, so if you catch one in a city park, report it right away. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
+NYIS advises that if you catch a snakehead, do not release it back into the water: kill it, freeze it in a double bag, and report the fish and its location to a natural resource agency. Note that NYC Parks rules say all fish caught in fresh water in city parks must be released immediately, so if you catch one in a city park, report it right away.
+
+## Look-alikes
+It is easily confused with the native bowfin and burbot.
 
 ## How to report it

@@ -21,6 +21,6 @@ Yellow-groove bamboo is native to China. Bamboos in this group are among the mos
 
 
 ## How to handle it
-Small patches can be controlled by repeated cutting or mowing, several times each growing season for several years, until the underground stems run out of energy. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Small patches can be controlled by repeated cutting or mowing, several times each growing season for several years, until the underground stems run out of energy.
 
 ## How to report it

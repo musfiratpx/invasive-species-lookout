@@ -1,22 +1,18 @@
 "use client";
 /**
- * The one page of the app: header (search + music), map, legend/filters, the side
- * panel (species details or park profile) and a short footer (data date + Credits dialog).
+ * The one page of the app: header (search box that opens Browse + Quiz + music), map, legend/filters, the side
+ * panel (species details, park profile or Browse list) and a short footer (data date + Credits dialog).
  *
  * "Focus" narrows the map to one thing at a time:
  *   - { kind: "species", id }  only that species' sightings;
  *   - { kind: "park", id }     only sightings inside that park, with its outline drawn.
  *
- * What's open is kept in the address bar, so a link can be shared (or put in a QR code)
- * and the browser's Back button works:
- *   ?park=Q024          Kissena Park's profile
- *   ?only=6921          show only Mute Swan on the map
- *   ?species=6921       open Mute Swan's panel (can be combined with the two above)
- *   ?browse=near        open the Browse panel on a tab ("species", "recent" or "near")
+ * What's open is kept in the address bar (lib/urlState.js), so the browser's Back button
+ * closes panels one step at a time and a link like ?park=Q024 opens the same view.
  */
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import BrowsePanel from "@/components/BrowsePanel";
 import Credits from "@/components/Credits";
@@ -24,11 +20,14 @@ import Legend from "@/components/Legend";
 import MapStatus from "@/components/MapStatus";
 import MusicToggle from "@/components/MusicToggle";
 import ParkProfile from "@/components/ParkProfile";
-import SpeciesSearch from "@/components/SpeciesSearch";
+import Quiz from "@/components/Quiz";
+import SearchBox from "@/components/SearchBox";
 import SpeciesSidebar from "@/components/SpeciesSidebar";
 import { mergeNearbySightings } from "@/lib/aggregate";
-import { getHealth, getMapObservations, getPark, getParks, getSpeciesList } from "@/lib/api";
+import { getHealth, getMapObservations, getPark, getParkOutlines, getParks, getSpeciesList } from "@/lib/api";
+import { isoDateMonthsAgo } from "@/lib/dates";
 import { typeFilterOf } from "@/lib/taxa";
+import { stateFromUrl, urlFromState } from "@/lib/urlState";
 
 // Leaflet needs the browser's `window`, so the map must not render on the server.
 const MapView = dynamic(() => import("@/components/MapView"), {
@@ -37,30 +36,6 @@ const MapView = dynamic(() => import("@/components/MapView"), {
 });
 
 const MAX_ACCURACY_M = 1000;
-
-/** Read the address bar (see the comment at the top) into the page's state. */
-function stateFromUrl() {
-  const params = new URLSearchParams(window.location.search);
-  const park = params.get("park");
-  const only = params.get("only");
-  const browse = params.get("browse");
-  return {
-    focus: park ? { kind: "park", id: park } : only ? { kind: "species", id: only } : null,
-    selectedSpeciesId: params.get("species"),
-    browseTab: ["species", "recent", "near"].includes(browse) ? browse : null,
-  };
-}
-
-/** The address-bar query string for the current state ("" = nothing open). */
-function urlFromState(focus, selectedSpeciesId, browseTab) {
-  const params = new URLSearchParams();
-  if (focus?.kind === "park") params.set("park", focus.id);
-  if (focus?.kind === "species") params.set("only", focus.id);
-  if (selectedSpeciesId) params.set("species", selectedSpeciesId);
-  if (browseTab) params.set("browse", browseTab);
-  const query = params.toString();
-  return query ? `?${query}` : window.location.pathname;
-}
 
 /** Add or remove one value from a Set, returning a new Set (React needs a new object to notice). */
 function toggle(set, value) {
@@ -72,28 +47,43 @@ function toggle(set, value) {
 export default function Home() {
   const [observations, setObservations] = useState([]);
   const [parks, setParks] = useState([]);
-  const [speciesList, setSpeciesList] = useState([]); // for the search box
+  const [parkOutlines, setParkOutlines] = useState(null); // every park's boundary, for faint outlines on the map
+  const [speciesList, setSpeciesList] = useState([]); // for the search box and Browse
+  const [listsStatus, setListsStatus] = useState("loading"); // species + park lists: "loading", "error" or "done"
   const [loadStatus, setLoadStatus] = useState("loading"); // "loading", "error" or "done"
   const [loadProgress, setLoadProgress] = useState(0);
   const [expectedCount, setExpectedCount] = useState(null);
   const [updatedAt, setUpdatedAt] = useState(null); // when the sightings were last fetched from iNaturalist
   const [creditsOpen, setCreditsOpen] = useState(false);
-  const [browseTab, setBrowseTab] = useState(null); // null = Browse panel closed
-  const [userLocation, setUserLocation] = useState(null); // from "Find me" / "Near me"; stays in the browser
-  const [flyTarget, setFlyTarget] = useState(null);
-  const [urlReady, setUrlReady] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [quiz, setQuiz] = useState("closed"); // "closed", "open", or "paused" (hidden while you look at a species, progress kept)
+  const [browseTab, setBrowseTab] = useState(null); // null = Browse closed, else "species" or "parks"
+  const [searchText, setSearchText] = useState(""); // what's typed in the header box; filters Browse
   const [selectedSpeciesId, setSelectedSpeciesId] = useState(null);
   const [hiddenLevels, setHiddenLevels] = useState(new Set());
   const [hiddenTypes, setHiddenTypes] = useState(new Set());
+  const [period, setPeriod] = useState("all"); // "all", "24" or "12": how many months back to show
   const [legendOpen, setLegendOpen] = useState(true);
   const [view, setView] = useState("bubbles"); // "bubbles" or "heat"
   const [focus, setFocus] = useState(null); // null, { kind: "species", id } or { kind: "park", id }
   const [park, setPark] = useState(null); // loaded profile of the focused park
   const [parkError, setParkError] = useState(null);
   const [parkPanelOpen, setParkPanelOpen] = useState(false);
+  const [urlRead, setUrlRead] = useState(false); // don't write the address bar before reading it
+  const [sheetCollapsed, setSheetCollapsed] = useState(false); // phones: panel shrunk to a strip
 
-  // Load the sightings (and park list). Called again by the "Try again" button.
+  // Load the species and park lists (search box and Browse). Called again by Browse's "Try again".
+  const loadLists = useCallback(() => {
+    setListsStatus("loading");
+    Promise.all([getSpeciesList(), getParks()])
+      .then(([speciesRows, parkRows]) => {
+        setSpeciesList(speciesRows);
+        setParks(parkRows);
+        setListsStatus("done");
+      })
+      .catch(() => setListsStatus("error"));
+  }, []);
+
+  // Load the sightings and the lists. Called again by the map's "Try again" button.
   const loadData = useCallback(() => {
     setLoadStatus("loading");
     setLoadProgress(0);
@@ -107,15 +97,14 @@ export default function Home() {
       .then((all) => {
         // Left off the map (but still counted in the sidebar's totals, charts and status):
         //  - privacy-blurred sightings: iNaturalist moves them up to ~20 km, so they'd land in the wrong town;
-        //  - very imprecise sightings (over 1 km): e.g. ones only placed at "Queens", which iNaturalist
+        //  - very imprecise sightings (over 1 km): e.g. ones only placed at "Queens" or "Brooklyn", which iNaturalist
         //    puts at the borough's center point and which would create a fake hotspot there.
         setObservations(all.filter((obs) => !obs.obscured && !(obs.accuracy_m > MAX_ACCURACY_M)).map((obs) => ({ ...obs, type: typeFilterOf(obs.iconic_taxon) })));
         setLoadStatus("done");
       })
       .catch(() => setLoadStatus("error"));
-    getParks().then(setParks).catch(() => setParks([]));
-    getSpeciesList().then(setSpeciesList).catch(() => setSpeciesList([]));
-  }, []);
+    loadLists();
+  }, [loadLists]);
 
   useEffect(() => {
     // Start with the filter panel closed on phones, so the map isn't covered.
@@ -123,35 +112,55 @@ export default function Home() {
     loadData();
   }, [loadData]);
 
-  // Open whatever the link asks for, and follow the Back/Forward buttons.
+  // The faint park outlines are an extra, so they load after the sightings and a failure is
+  // simply ignored: the map works fine without them.
+  useEffect(() => {
+    if (loadStatus === "done" && !parkOutlines) getParkOutlines().then(setParkOutlines).catch(() => {});
+  }, [loadStatus, parkOutlines]);
+
+  // Open whatever the link asks for, and follow the browser's Back/Forward buttons.
   useEffect(() => {
     const apply = () => {
       const state = stateFromUrl();
       setFocus(state.focus);
-      setParkPanelOpen(state.focus?.kind === "park");
       setSelectedSpeciesId(state.selectedSpeciesId);
+      setParkPanelOpen(state.parkPanelOpen);
       setBrowseTab(state.browseTab);
+      // Back/Forward: a paused quiz (hidden while you look at a species) keeps its place.
+      setQuiz((current) => (state.quiz === "closed" ? "closed" : current === "paused" && state.selectedSpeciesId ? "paused" : "open"));
     };
     apply();
-    setUrlReady(true);
+    setUrlRead(true);
     window.addEventListener("popstate", apply);
     return () => window.removeEventListener("popstate", apply);
   }, []);
 
-  // Each change adds a history entry (so Back undoes it). Skipped until the link has been read.
+  // Each time what's open changes, add a step to the browser history. (After Back/Forward,
+  // the state already matches the address bar, so nothing is added.)
+  const url = urlRead ? urlFromState({ focus, selectedSpeciesId, browseTab, quiz }) : null;
   useEffect(() => {
-    if (!urlReady) return;
-    const next = urlFromState(focus, selectedSpeciesId, browseTab);
-    const current = window.location.search || window.location.pathname;
-    if (next !== current) window.history.pushState(null, "", next);
-  }, [urlReady, focus, selectedSpeciesId, browseTab]);
+    if (url && url !== (window.location.search || window.location.pathname)) {
+      window.history.pushState(null, "", url);
+    }
+  }, [url]);
 
-  const copyLink = useCallback(() => {
-    navigator.clipboard?.writeText(window.location.href).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  }, []);
+  // A newly opened panel always starts full size on phones.
+  const panelKey = selectedSpeciesId || (parkPanelOpen && focus?.id) || browseTab;
+  useEffect(() => setSheetCollapsed(false), [panelKey]);
+
+  // While one species or park is focused, the filters are paused and the banner already says
+  // what's shown, so fold the filter panel away. "Show all" brings it back as it was.
+  const focusKey = focus ? `${focus.kind}:${focus.id}` : null;
+  const legendWasOpen = useRef(null); // null = nothing remembered (not focused)
+  useEffect(() => {
+    if (focusKey && legendWasOpen.current === null) {
+      legendWasOpen.current = legendOpen;
+      setLegendOpen(false);
+    } else if (!focusKey && legendWasOpen.current !== null) {
+      setLegendOpen(legendWasOpen.current);
+      legendWasOpen.current = null;
+    }
+  }, [focusKey]); // eslint-disable-line react-hooks/exhaustive-deps -- only when the focus changes
 
   // Load the park profile whenever a park is focused.
   const focusedParkId = focus?.kind === "park" ? focus.id : null;
@@ -166,21 +175,29 @@ export default function Home() {
     return () => { cancelled = true; };
   }, [focusedParkId]);
 
-  // How many sightings each filter button covers (shown on the buttons).
+  // The time filter. A 2016 sighting may be long gone, so letting people see only recent ones
+  // gives the current picture. Dates are "2026-10-04" strings, so they compare as text.
+  const inPeriod = useMemo(() => {
+    if (period === "all") return observations;
+    const cutoff = isoDateMonthsAgo(Number(period));
+    return observations.filter((obs) => obs.observed_on >= cutoff);
+  }, [observations, period]);
+
+  // How many sightings each filter button covers within the chosen time period (shown on the buttons).
   const counts = useMemo(() => {
     const levels = {}, types = {};
-    for (const obs of observations) {
+    for (const obs of inPeriod) {
       levels[String(obs.danger_level)] = (levels[String(obs.danger_level)] || 0) + 1;
       types[obs.type] = (types[obs.type] || 0) + 1;
     }
     return { levels, types };
-  }, [observations]);
+  }, [inPeriod]);
 
   const visible = useMemo(() => {
     if (focus?.kind === "species") return observations.filter((obs) => obs.species_id === focus.id);
     if (focus?.kind === "park") return observations.filter((obs) => obs.park_id === focus.id);
-    return observations.filter((obs) => !hiddenLevels.has(obs.danger_level) && !hiddenTypes.has(obs.type));
-  }, [observations, hiddenLevels, hiddenTypes, focus]);
+    return inPeriod.filter((obs) => !hiddenLevels.has(obs.danger_level) && !hiddenTypes.has(obs.type));
+  }, [observations, inPeriod, hiddenLevels, hiddenTypes, focus]);
 
   const focusName = useMemo(() => {
     if (focus?.kind === "park") return parks.find((p) => p.park_id === focus.id)?.name || "this park";
@@ -213,7 +230,6 @@ export default function Home() {
   }, []);
   const pickPark = useCallback((id) => {
     setSelectedSpeciesId(null);
-    setBrowseTab(null);
     setFocus({ kind: "park", id });
     setParkPanelOpen(true);
   }, []);
@@ -225,17 +241,16 @@ export default function Home() {
   // One map point per species per ~100 m (with a count), instead of one per sighting.
   const points = useMemo(() => mergeNearbySightings(visible), [visible]);
 
+  // Browse stays open underneath a species or park you pick from it, so closing that returns to the list.
+  const openBrowse = useCallback(() => {
+    setSelectedSpeciesId(null);
+    setParkPanelOpen(false);
+    setBrowseTab((tab) => tab || "species");
+  }, []);
+  // Closing Browse also empties the search box, so the next search starts fresh.
+  const closeBrowse = useCallback(() => { setBrowseTab(null); setSearchText(""); }, []);
+
   const closeSidebar = useCallback(() => setSelectedSpeciesId(null), []);
-  const closeBrowse = useCallback(() => setBrowseTab(null), []);
-  // A sighting picked in Browse: fly to it and open its species.
-  const pickSighting = useCallback((obs) => {
-    setSelectedSpeciesId(obs.species_id);
-    setFlyTarget({ lat: obs.latitude, lng: obs.longitude, zoom: 18, key: Date.now() });
-  }, []);
-  const locate = useCallback((location) => {
-    setUserLocation(location);
-    setFlyTarget({ lat: location.lat, lng: location.lng, zoom: 16, key: Date.now() });
-  }, []);
   const closePark = useCallback(() => setParkPanelOpen(false), []);
   const inPark = focus?.kind === "park";
 
@@ -244,28 +259,35 @@ export default function Home() {
       <header className="header">
         <div className="title">
           <h1>Kissena Invasive Watch</h1>
-          <p className="subtitle">Invasive species across Queens, NYC</p>
+          <p className="subtitle">Invasive species across New York City</p>
         </div>
-        <SpeciesSearch species={speciesList} parks={parks} onPickSpecies={pickSpecies} onPickPark={pickPark} />
-        <button className="browse-button" onClick={() => { setSelectedSpeciesId(null); setParkPanelOpen(false); setBrowseTab((t) => (t ? null : "species")); }} aria-expanded={!!browseTab}>
-          ☰ <span className="browse-label">Browse</span>
+        <SearchBox
+          query={searchText}
+          onChangeQuery={setSearchText}
+          onOpen={openBrowse}
+          onClose={closeBrowse}
+          speciesCount={speciesList.length}
+          parkCount={parks.length}
+        />
+        {/* On phones only the icons show (CSS hides .button-label); aria-label keeps the name for screen readers. */}
+        <button className="header-button" onClick={() => setQuiz("open")} aria-label={quiz === "paused" ? "Back to the quiz" : "Quiz: spot the species"}>
+          🎯<span className="button-label"> Quiz</span>
         </button>
         <MusicToggle />
       </header>
 
-      <main className="main">
+      <main className={["main", panelKey && "panel-open", sheetCollapsed && "sheet-collapsed"].filter(Boolean).join(" ")}>
         <MapView
           points={points}
           sightings={visible}
           view={view}
-          focusKey={focus ? `${focus.kind}:${focus.id}` : null}
-          outline={inPark ? park?.outline : null}
+          focusKey={focusKey}
+          // Only the focused park's own outline: while a newly picked park loads, `park` is still the old one.
+          outline={inPark && park?.park_id === focus.id ? park.outline : null}
+          allOutlines={parkOutlines}
           parkNames={parkNames}
-          userLocation={userLocation}
-          flyTarget={flyTarget}
           onSelectSpecies={setSelectedSpeciesId}
           onSelectPark={pickPark}
-          onLocate={setUserLocation}
         />
         {focus && (
           <div className="focus-banner" role="status">
@@ -278,7 +300,6 @@ export default function Home() {
               </span>
             </span>
             {inPark && !parkPanelOpen && <button onClick={() => { setSelectedSpeciesId(null); setParkPanelOpen(true); }}>Park profile</button>}
-            <button onClick={copyLink} title="Copy a link to this view">{copied ? "Link copied" : "🔗 Copy link"}</button>
             <button onClick={clearFocus}>Show all</button>
           </div>
         )}
@@ -288,6 +309,8 @@ export default function Home() {
           focusName={focus ? focusName : null}
           view={view}
           onChangeView={setView}
+          period={period}
+          onChangePeriod={setPeriod}
           hiddenLevels={hiddenLevels}
           hiddenTypes={hiddenTypes}
           onToggleLevel={(level) => setHiddenLevels((s) => toggle(s, level))}
@@ -301,35 +324,46 @@ export default function Home() {
           expected={expectedCount}
           progress={loadProgress}
           onRetry={loadData}
-          onResetFilters={() => { setHiddenLevels(new Set()); setHiddenTypes(new Set()); }}
+          onResetFilters={() => { setHiddenLevels(new Set()); setHiddenTypes(new Set()); setPeriod("all"); }}
         />
+        {browseTab && (
+          <BrowsePanel
+            tab={browseTab}
+            onChangeTab={setBrowseTab}
+            query={searchText}
+            species={speciesList}
+            parks={parks}
+            status={listsStatus}
+            onRetry={loadLists}
+            covered={Boolean(selectedSpeciesId || (inPark && parkPanelOpen))}
+            onPickSpecies={pickSpecies}
+            onPickPark={pickPark}
+            onClose={closeBrowse}
+          />
+        )}
         {selectedSpeciesId ? (
           <SpeciesSidebar
             speciesId={selectedSpeciesId}
             mapCount={selectedMapCount}
             onClose={closeSidebar}
-            onBack={(inPark && parkPanelOpen) || browseTab ? closeSidebar : null}
-            backLabel={inPark && parkPanelOpen ? `Back to ${focusName}` : "Back to list"}
+            onBack={quiz === "paused" ? () => setQuiz("open") : (inPark && parkPanelOpen) || browseTab ? closeSidebar : null}
+            backLabel={quiz === "paused" ? "Back to the quiz" : inPark && parkPanelOpen ? `Back to ${focusName}` : "Back to Browse"}
             onShowOnMap={inPark ? null : () => setFocus({ kind: "species", id: selectedSpeciesId })}
             shownOnMap={focus?.kind === "species" && focus.id === selectedSpeciesId}
           />
-        ) : inPark && parkPanelOpen ? (
-          <ParkProfile park={park} error={parkError} onClose={closePark} onPickSpecies={setSelectedSpeciesId} />
         ) : (
-          browseTab && (
-            <BrowsePanel
-              tab={browseTab}
-              onChangeTab={setBrowseTab}
-              onClose={closeBrowse}
-              species={speciesList}
-              observations={observations}
-              parkNames={parkNames}
-              userLocation={userLocation}
-              onLocate={locate}
-              onPickSpecies={setSelectedSpeciesId}
-              onPickSighting={pickSighting}
-            />
-          )
+          inPark && parkPanelOpen && <ParkProfile park={park} error={parkError} onClose={closePark} onPickSpecies={setSelectedSpeciesId} />
+        )}
+        {panelKey && (
+          // Phones only (hidden by CSS on wider screens): shrink the bottom sheet to see the map.
+          <button
+            className="sheet-handle"
+            onClick={() => setSheetCollapsed((c) => !c)}
+            aria-expanded={!sheetCollapsed}
+            aria-label={sheetCollapsed ? "Show the panel" : "Shrink the panel to see the map"}
+          >
+            <span aria-hidden="true">{sheetCollapsed ? "▲" : "▼"}</span>
+          </button>
         )}
       </main>
 
@@ -342,6 +376,15 @@ export default function Home() {
         <button className="link-button" onClick={() => setCreditsOpen(true)}>Credits &amp; sources</button>
       </footer>
       {creditsOpen && <Credits onClose={() => setCreditsOpen(false)} />}
+      {quiz !== "closed" && (
+        <Quiz
+          hidden={quiz === "paused"}
+          onClose={() => setQuiz("closed")}
+          // "Learn more": hide the quiz (keeping its question and score) and open that species.
+          // The species panel's "Back to the quiz" button, or the header's 🎯 button, brings it back.
+          onLearnMore={(id) => { setQuiz("paused"); pickSpecies(id); }}
+        />
+      )}
     </div>
   );
 }

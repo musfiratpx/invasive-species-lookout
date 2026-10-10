@@ -24,6 +24,5 @@ Kudzu is native to China, Japan and the Indian subcontinent. It was introduced t
 Its fragrant red, purple or magenta flowers, with a grape-like smell, appear in mid- to late summer, but only on vines climbing upward in full sun, and usually not before the plant's third year. In winter, stems trailing along open ground tend to die back, while climbing vines grow thick bark and survive.
 
 ## How to handle it
-In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
 
 ## How to report it

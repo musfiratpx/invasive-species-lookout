@@ -104,24 +104,17 @@ class SnowflakeRetriever:
 
 
 class FallbackRetriever:
-    """
-    Try the main retriever; if it errors (no Wi-Fi, bad key...), use the keyword one instead.
-    last_used says which one actually answered the latest question, so the app can show it honestly.
-    """
+    """Try the main retriever; if it errors (no Wi-Fi, bad key...), use the keyword one instead."""
 
     def __init__(self, main, backup):
         self.main, self.backup = main, backup
         self.name = main.name
-        self.last_used = main.name
 
     def retrieve(self, query, scientific_name=None, k=5, section=None):
         try:
-            chunks = self.main.retrieve(query, scientific_name, k, section)
-            self.last_used = self.main.name
-            return chunks
+            return self.main.retrieve(query, scientific_name, k, section)
         except Exception as error:  # noqa: BLE001  (any failure should fall back, not crash)
             print(f"[retriever] {self.main.name} failed ({type(error).__name__}); using keyword search")
-            self.last_used = self.backup.name
             return self.backup.retrieve(query, scientific_name, k, section)
 
 

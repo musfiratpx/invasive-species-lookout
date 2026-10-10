@@ -1,8 +1,8 @@
 "use client";
 /**
- * Map legend that doubles as a filter: tap a danger level or a type to hide or
- * show it on the map. Each button shows how many sightings it covers;
- * options with no sightings (e.g. no "Low" species in Queens) are left out.
+ * Map legend that doubles as a filter: pick a time period, and tap a danger level
+ * or a type to hide or show it on the map. Each button shows how many sightings it covers;
+ * options with no sightings (e.g. no "Low" species in NYC) are left out.
  * It can be collapsed behind a "Filter" button to keep the map clear
  * (it starts collapsed on phones, see app/page.js).
  */
@@ -12,7 +12,7 @@ import { TYPE_FILTERS } from "@/lib/taxa";
 
 const LEVELS = [4, 3, 2, 1, null];
 
-export default function Legend({ open, onToggleOpen, focusName, view, onChangeView, hiddenLevels, hiddenTypes, onToggleLevel, onToggleType, counts, shown, total }) {
+export default function Legend({ open, onToggleOpen, focusName, view, onChangeView, period, onChangePeriod, hiddenLevels, hiddenTypes, onToggleLevel, onToggleType, counts, shown, total }) {
   if (!open) {
     return (
       <button className="legend-open-button" onClick={onToggleOpen} aria-expanded="false">
@@ -40,6 +40,14 @@ export default function Legend({ open, onToggleOpen, focusName, view, onChangeVi
       {focusName && (
         <p className="legend-paused">Showing only {focusName}, so these filters are paused. Use “Show all” to go back.</p>
       )}
+
+      <h2>When</h2>
+      <div className="segmented" role="group" aria-label="When it was seen">
+        <button aria-pressed={period === "all"} onClick={() => onChangePeriod("all")} disabled={!!focusName}>All years</button>
+        <button aria-pressed={period === "24"} onClick={() => onChangePeriod("24")} disabled={!!focusName}>Last 2 years</button>
+        <button aria-pressed={period === "12"} onClick={() => onChangePeriod("12")} disabled={!!focusName}>Last 12 months</button>
+      </div>
+      {period !== "all" && <p className="muted legend-note">Older sightings are hidden. A plant seen years ago may be gone now.</p>}
 
       <h2>Danger level</h2>
       <ul>

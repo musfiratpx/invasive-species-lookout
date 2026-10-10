@@ -21,6 +21,6 @@ Alder buckthorn is native to Eurasia. It was grown as an ornamental plant, thoug
 
 
 ## How to handle it
-It resprouts vigorously when cut back, and burning usually just leads to more resprouting. Its seeds can stay alive in the soil for at least three years. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+It resprouts vigorously when cut back, and burning usually just leads to more resprouting. Its seeds can stay alive in the soil for at least three years.
 
 ## How to report it

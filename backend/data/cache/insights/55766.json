@@ -3,10 +3,10 @@
   "history": "Cypress spurge is native to Eurasia. No one knows exactly how it reached the United States, but it was likely brought as a garden plant in the mid-1800s. It now grows in at least 42 states.",
   "seasons": "Its small, lime-green to yellow flower clusters turn orange-red to brown as they age. Each plant can produce up to 900 seeds, which may stay alive in the soil for up to 20 years.",
   "handling": {
-    "text": "The plant's sap is toxic to cattle and horses. Pulling or digging only works if the whole deep root system comes out, and mowing usually makes it resprout unless it is done at least monthly. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "The plant's sap is toxic to cattle and horses. Pulling or digging only works if the whole deep root system comes out, and mowing usually makes it resprout unless it is done at least monthly.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Cypress Spurge | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -71,5 +71,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:27.768848+00:00"
+  "generated_at": "2026-10-10T01:47:27.768848+00:00",
+  "lookalikes": null
 }

@@ -17,7 +17,7 @@ from app import config, snowflake_api
 
 NO_INFO = "NO_INFO"
 
-SYSTEM_PROMPT = f"""You write short texts for a public map of invasive species in Queens, New York.
+SYSTEM_PROMPT = f"""You write short texts for a public map of invasive species in New York City.
 Rules:
 - Use ONLY the numbered source excerpts you are given. Do not add any fact from your own knowledge.
 - Write 2 to 4 plain-English sentences for a general audience. No lists, no headings, no citations in the text.

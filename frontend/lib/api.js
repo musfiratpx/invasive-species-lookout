@@ -1,7 +1,10 @@
 /**
  * Every call to the backend lives in this file, and nowhere else.
  * The response shapes are documented in docs/API.md. Keep the two in sync.
+ * Every response passes through tidyCommonNames, so common names look the same everywhere.
  */
+
+import { tidyCommonNames } from "@/lib/names";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -10,7 +13,7 @@ async function getJson(path) {
   if (!response.ok) {
     throw new Error(`API ${path} failed with status ${response.status}`);
   }
-  return response.json();
+  return tidyCommonNames(await response.json());
 }
 
 /** Server status and which data/AI modes are on. */
@@ -19,7 +22,7 @@ export function getHealth() {
 }
 
 /**
- * Sightings for the map (~15,000 for Queens: ~4 MB of JSON, ~0.4 MB compressed), loaded once.
+ * Sightings for the map (~73,000 for all of NYC: ~21 MB of JSON, ~1.6 MB compressed), loaded once.
  * onProgress(fraction) is called as the download comes in (0 to 1), so the page
  * can show a progress bar. bbox is optional: [minLng, minLat, maxLng, maxLat].
  */
@@ -30,7 +33,7 @@ export async function getMapObservations({ bbox, onProgress } = {}) {
   // The server compresses the download, and the browser unpacks it as it arrives, so we
   // count unpacked bytes against X-Total-Bytes (the unpacked size the server sends).
   const total = Number(response.headers.get("X-Total-Bytes")) || Number(response.headers.get("Content-Length")) || 0;
-  if (!onProgress || !total || !response.body) return response.json();
+  if (!onProgress || !total || !response.body) return tidyCommonNames(await response.json());
 
   // Read the download in pieces so we can report how far along it is.
   const reader = response.body.getReader();
@@ -46,7 +49,7 @@ export async function getMapObservations({ bbox, onProgress } = {}) {
   const bytes = new Uint8Array(received);
   let offset = 0;
   for (const piece of pieces) { bytes.set(piece, offset); offset += piece.length; }
-  return JSON.parse(new TextDecoder().decode(bytes));
+  return tidyCommonNames(JSON.parse(new TextDecoder().decode(bytes)));
 }
 
 /** Every listed species seen in the area, most-sighted first. */
@@ -59,9 +62,24 @@ export function getSpecies(speciesId) {
   return getJson(`/api/species/${encodeURIComponent(speciesId)}`);
 }
 
-/** Every Queens park with at least one sighting, most sightings first. */
+/** Every NYC park with at least one sighting, most sightings first. */
 export function getParks() {
   return getJson("/api/parks");
+}
+
+/** Species with openly licensed photos, for the photo quiz. */
+export function getQuiz() {
+  return getJson("/api/quiz");
+}
+
+/** The general "How to report it" text, word for word from knowledge/how-to-report.md. */
+export function getHowToReport() {
+  return getJson("/api/how-to-report");
+}
+
+/** Every park with sightings as one GeoJSON FeatureCollection, for faint outlines on the map. */
+export function getParkOutlines() {
+  return getJson("/api/parks/outlines");
 }
 
 /** A park's profile: species, danger mix, months, recent sightings and outline. */

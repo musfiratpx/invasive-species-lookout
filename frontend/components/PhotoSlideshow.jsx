@@ -7,6 +7,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { photoAlt } from "@/lib/credits";
+
 const SWIPE_MIN_PX = 40;
 
 export default function PhotoSlideshow({ photos, speciesName }) {
@@ -35,9 +37,9 @@ export default function PhotoSlideshow({ photos, speciesName }) {
     <div className="slideshow" aria-roledescription="carousel" aria-label={`Photos of ${speciesName}`}>
       <div className="slide-frame" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {photo.license ? (
-          <img src={photo.url} alt={`${speciesName}, photo ${index + 1} of ${count}`} />
+          <img src={photo.url} alt={photoAlt(speciesName, photo.attribution, `photo ${index + 1} of ${count}`)} />
         ) : (
-          <a href={photo.observation_url} target="_blank" rel="noreferrer">View this photo on iNaturalist</a>
+          <a href={photo.observation_url} target="_blank" rel="noreferrer">View this photo of {speciesName} on iNaturalist</a>
         )}
       </div>
 
@@ -60,8 +62,7 @@ export default function PhotoSlideshow({ photos, speciesName }) {
       )}
 
       <p className="caption">
-        {photo.attribution}
-        {photo.license && ` · ${photo.license.toUpperCase()}`} ·{" "}
+        {photo.attribution} ·{" "}
         <a href={photo.observation_url} target="_blank" rel="noreferrer">iNaturalist observation</a>
       </p>
     </div>

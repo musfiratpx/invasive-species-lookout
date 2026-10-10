@@ -3,10 +3,10 @@
   "history": "Chinese yam is native to East Asia (northern China, Korea and Japan). It is rarely planted in gardens, and throwing out yard waste containing its tubers can spread it. In New York it is known from the Lower Hudson region and Long Island.",
   "seasons": null,
   "handling": {
-    "text": "Small, isolated patches can be controlled by digging out the entire underground tuber. Large infestations usually need herbicides and repeat treatments, because the deep tubers store food that lets the vine regrow. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Small, isolated patches can be controlled by digging out the entire underground tuber. Large infestations usually need herbicides and repeat treatments, because the deep tubers store food that lets the vine regrow.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "New York Non-Native Plant Invasiveness Ranking Form, Dioscorea polystachya",
@@ -60,5 +60,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:46:52.638410+00:00"
+  "generated_at": "2026-10-10T01:46:52.638410+00:00",
+  "lookalikes": null
 }

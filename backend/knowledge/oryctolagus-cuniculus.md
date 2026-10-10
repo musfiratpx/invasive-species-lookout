@@ -21,6 +21,5 @@ The European rabbit is on New York's list of regulated invasive species. That me
 
 
 ## How to handle it
-In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
 
 ## How to report it

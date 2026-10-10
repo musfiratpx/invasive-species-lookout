@@ -21,6 +21,9 @@ Rusty willow is native to Eurasia. It may have been sold under its own name or u
 
 
 ## How to handle it
-Once established it cannot be pulled by hand, and control is complicated because it grows in wetlands and is hard to tell apart from native willows. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Once established it cannot be pulled by hand, and control is complicated because it grows in wetlands and is hard to tell apart from native willows.
+
+## Look-alikes
+It is often mistaken for native willows and can cross-breed with them, which is why it has been called a "stealth invader".
 
 ## How to report it

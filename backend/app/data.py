@@ -15,7 +15,7 @@ from app import config
 from app.danger import find_danger
 from app.invasive_list import load_invasive_list
 from app.parks import load_parks
-from app.rag.chunker import fact_sheet_reviews
+from app.rag.chunker import chunk_file
 from app.status import status_for_all
 
 # Shown when we have no official handling guidance (ground rule 5: safety first).
@@ -48,14 +48,31 @@ def media():
 
 
 @lru_cache(maxsize=1)
-def seasonality():
-    return _read_json(config.SEASONALITY_JSON, {})
+def activity():
+    """All research-grade sightings (any species) per month, in our area and NYC (cache/activity_by_month.json)."""
+    return _read_json(config.ACTIVITY_JSON, {})
+
+
+def _per_10k(counts, totals):
+    """
+    Each month's count per 10,000 sightings of any species that month, or None without totals.
+    Raw counts mostly follow how many people are out posting (e.g. the City Nature Challenge
+    every late April); dividing by everyone's sightings that month removes most of that.
+    """
+    if not totals or len(totals) != 12:
+        return None
+    return [round(10000 * count / total, 1) if total else 0 for count, total in zip(counts, totals)]
 
 
 @lru_cache(maxsize=1)
-def reviews():
-    """Who has checked each fact sheet (read from its "reviewed_by:" header). Restart to see new reviews."""
-    return fact_sheet_reviews()
+def photo_order():
+    """Hand-picked photo choices per species (data/photo_order.json): which to show first, which the quiz skips."""
+    return _read_json(config.PHOTO_ORDER_JSON, {})
+
+
+@lru_cache(maxsize=1)
+def seasonality():
+    return _read_json(config.SEASONALITY_JSON, {})
 
 
 @lru_cache(maxsize=1)
@@ -118,7 +135,7 @@ def map_observations(bbox=None):
             "danger_level": levels[row.listed_name],
             "obscured": bool(row.obscured),  # location blurred by iNaturalist for privacy
             # How precise the location is, in meters (None if unknown). Some sightings are only
-            # placed at "Queens" (the borough's center point, ~12 km accuracy); the map hides those.
+            # placed at a borough like "Queens" (its center point, ~12 km accuracy); the map hides those.
             "accuracy_m": None if pd.isna(getattr(row, "accuracy_m", None)) else float(row.accuracy_m),
             "park_id": None if pd.isna(row.park_id) else row.park_id,  # NYC Parks property ID, e.g. "Q015"
         }
@@ -134,7 +151,7 @@ def parks_by_id():
 
 
 def park_list():
-    """Every Queens park with at least one sighting, most sightings first."""
+    """Every NYC park with at least one sighting, most sightings first."""
     df = observations().dropna(subset=["park_id"])
     result = []
     for park_id, group in df.groupby("park_id"):
@@ -145,6 +162,28 @@ def park_list():
                 "sightings": int(len(group)), "species": int(group["species_id"].nunique()),
             })
     return sorted(result, key=lambda p: p["sightings"], reverse=True)
+
+
+def _rounded(multipolygon, places=5):
+    """Coordinates rounded to 5 decimals (about 1 m), which keeps the download small."""
+    return [[[[round(x, places), round(y, places)] for x, y in ring] for ring in polygon] for polygon in multipolygon]
+
+
+@lru_cache(maxsize=1)
+def park_outlines():
+    """
+    The boundary of every park with at least one sighting, as one GeoJSON FeatureCollection,
+    so the map can draw them all faintly and let people tap a park to open its profile.
+    """
+    features = []
+    for park in park_list():
+        geometry = parks_by_id()[park["park_id"]]["geometry"]
+        features.append({
+            "type": "Feature",
+            "properties": {"park_id": park["park_id"], "name": park["name"], "sightings": park["sightings"]},
+            "geometry": {"type": "MultiPolygon", "coordinates": _rounded(geometry)},
+        })
+    return {"type": "FeatureCollection", "features": features}
 
 
 def park_detail(park_id):
@@ -193,7 +232,14 @@ def park_detail(park_id):
 
 
 def _photos(species_id):
-    """Photos for the slideshow. license None = all rights reserved: the UI links instead of embedding."""
+    """
+    Photos for the slideshow. license None = all rights reserved: the UI links instead of embedding.
+    Photos hand-picked in data/photo_order.json come first; the rest keep their order.
+    """
+    first = photo_order().get(species_id, {}).get("first", [])
+    # Python's sort keeps equal items in order, so only the picked photos move.
+    rank = lambda p: first.index(p["observation_url"]) if p["observation_url"] in first else len(first)
+    photos = sorted(media().get(species_id, {}).get("photos", []), key=rank)
     return [
         {
             "url": p["medium_url"],
@@ -202,8 +248,55 @@ def _photos(species_id):
             "license": p["license"],
             "observation_url": p["observation_url"],
         }
-        for p in media().get(species_id, {}).get("photos", [])
+        for p in photos
     ]
+
+
+def quiz_photos():
+    """
+    For the photo quiz: every species with at least one openly licensed photo, with those
+    photos. "All rights reserved" photos are left out, since we may only link to them, and so
+    are photos listed under "not_in_quiz" in data/photo_order.json (real, but misleading alone).
+    """
+    result = []
+    for summary in species_list():
+        skip = photo_order().get(summary["species_id"], {}).get("not_in_quiz", [])
+        photos = [
+            {"url": p["url"], "attribution": p["attribution"], "license": p["license"], "observation_url": p["observation_url"]}
+            for p in _photos(summary["species_id"])
+            if p["license"] and p["observation_url"] not in skip
+        ]
+        if photos:
+            result.append({
+                "species_id": summary["species_id"],
+                "scientific_name": summary["scientific_name"],
+                "common_name": summary["common_name"],
+                "iconic_taxon": summary["iconic_taxon"],
+                "danger_level": summary["danger_level"],
+                "danger_label": summary["danger_label"],
+                "photos": photos,
+            })
+    return result
+
+
+@lru_cache(maxsize=1)
+def general_report():
+    """
+    The general "How to report it" text from knowledge/how-to-report.md, word for word,
+    with its sources: {"text": ..., "sources": [...]}. text is None if the file has no such section.
+    """
+    path = config.KNOWLEDGE_DIR / "how-to-report.md"
+    chunks = [c for c in chunk_file(path) if c.section == "How to report it"] if path.exists() else []
+    if not chunks:
+        return {"text": None, "sources": []}
+    return {"text": chunks[0].text, "sources": chunks[0].sources}
+
+
+def _report_note(report):
+    """The species' own reporting note: the paragraphs of its report that aren't the general text."""
+    general = general_report()["text"] or ""
+    own = [p for p in (report or "").split("\n\n") if p.strip() and p not in general]
+    return "\n\n".join(own) or None
 
 
 def _insights(species_id):
@@ -214,14 +307,6 @@ def _insights(species_id):
     """
     cached = _read_json(config.INSIGHTS_DIR / f"{species_id}.json", {})
     handling = cached.get("handling") or {}
-    found_by = cached.get("found_by") or {}
-    # Review status is read live from the fact sheets (not the cache), so signing one off
-    # only needs a backend restart, not a rebuild.
-    for where in found_by.values():
-        if where:
-            where["reviewed_by"] = {f: reviews().get(f) for f in where["files"]}
-    species_files = [f for where in found_by.values() if where for f in where["files"] if f != "how-to-report.md"]
-    fact_sheet = species_files[0] if species_files else None
     return {
         "summary": cached.get("summary"),
         "history": cached.get("history"),
@@ -231,11 +316,10 @@ def _insights(species_id):
             "touch_safe": handling.get("touch_safe"),  # null unless a source explicitly says
             "is_default": not handling.get("text"),
         },
+        "lookalikes": cached.get("lookalikes"),  # native look-alikes and how to tell them apart; null = not in our sources
         "report": cached.get("report"),  # how to report a sighting; null = no reporting source yet
+        "report_note": _report_note(cached.get("report")),  # only this species' own reporting advice, or null
         "sources": cached.get("sources", []),
-        "found_by": found_by,
-        # The species' own fact sheet and who checked it (reviewed_by None = still a draft).
-        "fact_sheet": {"file": fact_sheet, "reviewed_by": reviews().get(fact_sheet)} if fact_sheet else None,
     }
 
 
@@ -263,6 +347,9 @@ def species_detail(species_id):
             "total": summary["sightings"],
             "by_month_of_year": season.get("kissena", [0] * 12),
             "nyc_by_month_of_year": season.get("nyc", [0] * 12),
+            # The same months adjusted for how busy each month is (see _per_10k).
+            "by_month_per_10k": _per_10k(season.get("kissena", [0] * 12), activity().get("area")),
+            "nyc_by_month_per_10k": _per_10k(season.get("nyc", [0] * 12), activity().get("nyc")),
             "first_seen": dates.iloc[0],
             "last_seen": dates.iloc[-1],
         },

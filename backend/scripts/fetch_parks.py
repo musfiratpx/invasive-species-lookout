@@ -1,6 +1,6 @@
 """
-Download the official boundaries of every park in Queens and save them to
-data/sources/queens_parks.geojson.
+Download the official boundaries of every park in New York City (all five
+boroughs) and save them to data/sources/nyc_parks.geojson.
 
 Source: NYC Parks "Parks Properties" dataset on NYC Open Data (published by the
 NYC Department of Parks and Recreation): https://data.cityofnewyork.us/d/enfh-gkve
@@ -18,7 +18,7 @@ import requests
 from app import config
 
 URL = "https://data.cityofnewyork.us/resource/enfh-gkve.geojson"
-OUT = config.DATA_DIR / "sources" / "queens_parks.geojson"
+OUT = config.DATA_DIR / "sources" / "nyc_parks.geojson"
 KEEP = {"gispropnum": "park_id", "signname": "name", "acres": "acres", "typecategory": "type", "address": "address"}
 
 
@@ -30,7 +30,7 @@ def rounded(coords):
 
 
 def main():
-    response = requests.get(URL, params={"borough": "Q", "$limit": 5000}, timeout=120,
+    response = requests.get(URL, params={"$limit": 50000}, timeout=120,
                             headers={"User-Agent": "KissenaInvasiveWatch/0.1 (HackKnight 2026 student project)"})
     response.raise_for_status()
     features = []
@@ -47,7 +47,7 @@ def main():
         })
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"type": "FeatureCollection", "features": features}, separators=(",", ":")))
-    print(f"Saved {len(features)} Queens parks to {OUT.relative_to(config.BACKEND_DIR)} ({OUT.stat().st_size // 1024} KB)")
+    print(f"Saved {len(features)} NYC parks to {OUT.relative_to(config.BACKEND_DIR)} ({OUT.stat().st_size // 1024} KB)")
 
 
 if __name__ == "__main__":

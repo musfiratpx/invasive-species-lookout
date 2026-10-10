@@ -21,6 +21,6 @@ Giant knotweed is native to Asia (China, Japan and Korea). It has been planted o
 It comes up early in the season and grows quickly; last year's dead stems stay standing through the winter.
 
 ## How to handle it
-Pieces of its stems and roots can grow into new plants, and it is extremely difficult to get rid of once established. Seeds and plant fragments can be carried in soil and compost. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Pieces of its stems and roots can grow into new plants, and it is extremely difficult to get rid of once established. Seeds and plant fragments can be carried in soil and compost.
 
 ## How to report it

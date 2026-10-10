@@ -3,10 +3,10 @@
   "history": "Nile tilapia is native to tropical and subtropical Africa and the Middle East, including the Nile and Niger rivers. It was brought to the U.S. for fish farming and reached open waters by escaping or being released from fish farms.",
   "seasons": null,
   "handling": {
-    "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
+    "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Oreochromis niloticus (Nile Tilapia) - Species Profile | USGS Nonindigenous Aquatic Species Database",
@@ -64,5 +64,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:46:53.709195+00:00"
+  "generated_at": "2026-10-10T01:46:53.709195+00:00",
+  "lookalikes": null
 }

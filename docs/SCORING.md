@@ -23,9 +23,9 @@ A species is **invasive** in this app only if it appears on New York's official 
 
 Built by `backend/scripts/build_danger_levels.py`. Matching code: `backend/app/danger.py`. A name matches by exact name or synonym first, then with the subspecies trimmed, then by a whole-genus entry such as *Amynthas* spp.
 
-## Status in Queens (`kissena_status` in the API)
+## Status in NYC (`kissena_status` in the API)
 
-Computed from research-grade iNaturalist sightings in our area, which is all of Queens by default (`backend/app/status.py`):
+Computed from research-grade iNaturalist sightings in our area, which is all of New York City by default (`backend/app/status.py`):
 
 | Tag | Rule |
 |---|---|

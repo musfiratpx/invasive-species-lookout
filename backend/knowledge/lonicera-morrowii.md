@@ -24,6 +24,6 @@ Morrow's honeysuckle is native to Japan. It was brought to Massachusetts in the 
 It flowers from May to June with small, very fragrant tube-shaped flowers, creamy white to pink. Its quarter-inch red berries appear from mid-summer through early fall.
 
 ## How to handle it
-Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year.
 
 ## How to report it

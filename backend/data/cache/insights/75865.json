@@ -3,10 +3,10 @@
   "history": "Slender false brome is native to Europe, Asia and North Africa. It is not clear how it was introduced; it spreads mainly by seed, carried on mowers, vehicles, hiking gear, boots and deer.",
   "seasons": "Its drooping flower stalks grow up to two feet high, and it flowers and sets seed between June and September.",
   "handling": {
-    "text": "Cleaning footwear, hiking gear and vehicles after visiting infested areas helps stop its spread. Small patches can be removed by hand in spring, before it flowers. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Cleaning footwear, hiking gear and vehicles after visiting infested areas helps stop its spread. Small patches can be removed by hand in spring, before it flowers.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Slender False Brome | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -71,5 +71,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:55.303001+00:00"
+  "generated_at": "2026-10-10T01:47:55.303001+00:00",
+  "lookalikes": null
 }

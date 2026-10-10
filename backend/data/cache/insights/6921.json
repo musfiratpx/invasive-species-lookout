@@ -3,10 +3,10 @@
   "history": "Mute swans are native to Europe and parts of Asia. They were first brought to the United States in the 1870s to decorate zoos and private estates. A few escaped into the wild in New Jersey in 1916 and in New York in 1919 and started wild breeding populations, which have since spread from southern Ontario to North Carolina. NYIS reports that New York's population has grown to about 3,000 birds.",
   "seasons": "A mated pair usually stays in the same territory all year, moving only if food runs short or the water freezes over. They build very large nests (4 to 5 feet across) in March or April, often in dense reeds or cattails, and the eggs hatch in early June. Swans are most aggressive while nesting and raising their young.",
   "handling": {
-    "text": "Do not handle or harm mute swans, their nests or their eggs without permission from the NYS Department of Environmental Conservation (DEC); mute swans are protected by New York State's Environmental Conservation Law. Contact the DEC if mute swans are causing a problem, and if you see a mute swan wearing a collar, report it to the DEC to help their tracking studies. NYC Parks rules also forbid chasing, harassing or harming any animal, nest or eggs in city parks.",
+    "text": "Do not handle or harm mute swans, their nests or their eggs without permission from the NYS Department of Environmental Conservation (DEC); mute swans are protected by New York State's Environmental Conservation Law. Contact the DEC if mute swans are causing a problem.",
     "touch_safe": false
   },
-  "report": "If you see a mute swan wearing a collar, report it to the NYS Department of Environmental Conservation (DEC) to help their tracking studies.\n\nNew York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "If you see a mute swan wearing a collar, report it to the NYS Department of Environmental Conservation (DEC) to help their tracking studies.\n\nNew York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Mute Swan | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -68,5 +68,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:53.201293+00:00"
+  "generated_at": "2026-10-10T01:47:53.201293+00:00",
+  "lookalikes": null
 }

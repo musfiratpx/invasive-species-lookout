@@ -12,6 +12,9 @@ sources:
   - title: "NYC Parks Rules, 56 RCNY §1-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)"
     url: https://www.nycgovparks.org/rules/section-1-04
     accessed: 2026-10-09
+  - title: "Invasive Plants and Biodiversity: A Targeted Management Guide for New York City Stewards (Natural Areas Conservancy, co-developed with the NYC Parks Stewardship Team, Dec 2023)"
+    url: https://fic.naturalareasnyc.org/docs/invasive-plants-guide-for-new-york-city-stewards
+    accessed: 2026-10-10
 ---
 
 ## Summary
@@ -24,6 +27,9 @@ Japanese honeysuckle is native to China, Japan and Korea. It was brought to Long
 Its leaves are semi-evergreen and can stay green through mild winters. It flowers from May to June with small, very fragrant tube-shaped flowers, creamy white to pink, and produces dark-purple or black berries in the fall.
 
 ## How to handle it
-Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year.
+
+## Look-alikes
+The native trumpet honeysuckle is a close relative. Its top pair of leaves is always joined around the stem, its leaves often have a bluish-white cast and are never lobed, its coral-pink or orange flowers grow only in clusters at the stem tips, and its berries are bright red. Japanese honeysuckle's leaves are opposite and sometimes lobed in early spring, its sweet-smelling white flowers turn yellow with age and grow where the leaf pairs meet the vine, and its berries are black.
 
 ## How to report it

@@ -3,10 +3,10 @@
   "history": "The hemlock woolly adelgid is native to Japan and possibly China. It was first found on the east coast of North America in Richmond, Virginia, in the mid-1950s, likely brought accidentally from southern Japan, and has since spread to 18 eastern states. It was first detected in New York in the early 1980s, starting on Long Island and in the Hudson Valley.",
   "seasons": "The white woolly masses appear in late winter and stay visible all year. Females lay eggs from March through May, and tiny reddish-brown crawlers hatch from April to June; crawlers are spread by wind, birds' feet and the fur of small mammals. A second generation lays eggs in June and July, and its young rest until late October before feeding again over the winter.",
   "handling": {
-    "text": "In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
+    "text": null,
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Hemlock Woolly Adelgid | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -67,5 +67,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:43.256543+00:00"
+  "generated_at": "2026-10-10T01:47:43.256543+00:00",
+  "lookalikes": null
 }

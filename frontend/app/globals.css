@@ -1,8 +1,16 @@
 /*
  * Global styles. Deliberately plain: the Designer will replace the look later.
  * Change colors and spacing through the tokens in :root, not in each component.
+ *
+ * Sections, in order (the later ones override earlier ones, so keep the order):
+ *   1. Tokens and base          6. Side panels (shared, species, park, Browse, report box)
+ *   2. Page layout              7. Dialogs (Credits, quiz)
+ *   3. Map and its overlays     8. Printable field guide
+ *   4. Map markers              9. Screen size, touch and motion
+ *   5. Filters (legend)        10. Printing
  */
 
+/* ---------- 1. Tokens and base ---------- */
 :root {
   /* Base */
   --bg: #ffffff;
@@ -51,36 +59,72 @@ button {
   padding: 4px 10px;
 }
 
-/* ---------- Page layout ---------- */
+/* Small shared pieces */
+.muted { color: var(--muted); font-size: 0.85rem; }
+.warning { background: #fdecea; border: 1px solid #f5c2c0; padding: 8px; border-radius: var(--radius); }
+.swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex: none; }
+.danger-cell { display: flex; align-items: center; gap: 4px; }
+.link-button {
+  border: none; background: none; padding: 0; font: inherit; color: inherit;
+  text-decoration: underline; cursor: pointer; white-space: nowrap;
+}
+/* Text only screen readers read (e.g. a label for an input that has a visible placeholder). */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+/* Two- to four-option switch (map style, Browse tabs and sorting) */
+.segmented { display: flex; gap: 0; margin-bottom: 4px; }
+.segmented button { flex: 1; border-radius: 0; font-size: 0.8rem; padding: 3px 6px; }
+.segmented button:first-child { border-radius: 999px 0 0 999px; }
+.segmented button:last-child { border-radius: 0 999px 999px 0; }
+.segmented button + button { border-left: none; }
+.segmented button[aria-pressed="true"] { background: var(--cluster); color: #fff; border-color: var(--cluster); }
+/* "Report a sighting" link-button, inside the "Report it, don't pull it" box */
+.act-box .report { margin: 8px 0; }
+.report-button {
+  display: inline-block; background: var(--cluster); color: #fff; text-decoration: none;
+  border-radius: 999px; padding: 5px 14px; font-weight: 600; font-size: 0.9rem;
+}
+.report-where { display: block; margin-top: 3px; font-size: 0.8rem; }
+.report-button:hover, .report-button:focus-visible { filter: brightness(1.2); }
+/* Loading skeleton */
+.skeleton { background: var(--surface); border-radius: var(--radius); margin: 8px 0; animation: pulse 1.2s infinite; }
+@keyframes pulse { 50% { opacity: 0.5; } }
+
+/* ---------- 2. Page layout: header, main area, footer ---------- */
 .app { display: flex; flex-direction: column; height: 100vh; }
 
 .header {
   height: var(--header-height);
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
   padding: 0 var(--gap);
   border-bottom: 1px solid var(--border);
 }
 .header h1 { font-size: 1.1rem; margin: 0; white-space: nowrap; }
 .title { min-width: 0; }
 .subtitle { margin: 0; font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
-.header { gap: var(--gap); }
+.header-button { white-space: nowrap; }
+.header-button[aria-pressed="true"] { background: var(--surface); }
 
-/* Species search in the header */
+/* Search box in the header (opens and filters Browse) */
 .search { position: relative; flex: 1; max-width: 360px; margin-left: auto; }
 .search input {
   width: 100%; font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px;
 }
-.search-results {
-  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 2000;
-  list-style: none; margin: 0; padding: 4px; background: var(--bg);
-  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  max-height: 60vh; overflow-y: auto;
-}
-.search-results li { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: var(--radius); cursor: pointer; }
-.search-results li.active { background: var(--surface); }
 .search-name { display: flex; flex-direction: column; line-height: 1.2; }
 .search-name em { color: var(--muted); font-size: 0.8rem; }
-.search-empty { padding: 8px; cursor: default; }
+
+.main { position: relative; flex: 1; min-height: 0; }
+
+.footer {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
+  font-size: 0.75rem; color: var(--muted);
+  padding: 6px var(--gap); border-top: 1px solid var(--border);
+}
+
+/* ---------- 3. Map and its overlays ---------- */
+.map { position: absolute; inset: 0; }
 
 /* "Showing only X" banner over the map */
 .focus-banner {
@@ -90,9 +134,7 @@ button {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2); font-size: 0.9rem; max-width: calc(100% - 2 * var(--gap));
 }
 .focus-banner button { border-radius: 999px; }
-.show-on-map { margin-top: 6px; }
-.sidebar-back { margin-bottom: 8px; }
-.meaning { font-size: 0.9rem; margin: 6px 0; }
+.focus-count { color: var(--muted); font-size: 0.85em; }
 
 /* Messages over the map: loading, can't connect, no results */
 .map-status {
@@ -110,33 +152,6 @@ button {
 @keyframes spin { to { transform: rotate(360deg); } }
 .progress { height: 6px; background: var(--surface); border-radius: 999px; overflow: hidden; margin: 8px 0 2px; }
 .progress span { display: block; height: 100%; background: var(--cluster); transition: width 0.2s; }
-@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } .progress span { transition: none; } }
-.report { margin: 8px 0 0; }
-.report-button {
-  display: inline-block; background: var(--cluster); color: #fff; text-decoration: none;
-  border-radius: 999px; padding: 6px 14px; font-weight: 600;
-}
-.report-button:hover, .report-button:focus-visible { filter: brightness(1.2); }
-
-/* Park profile */
-.park-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
-.stat-row { display: flex; gap: var(--gap); }
-.stat { flex: 1; background: var(--surface); border-radius: var(--radius); padding: 8px; display: flex; flex-direction: column; }
-.stat strong { font-size: 1.4rem; }
-.stat span { color: var(--muted); font-size: 0.8rem; }
-.danger-mix { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; }
-.danger-mix-legend { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.85rem; }
-.danger-mix-legend li { display: flex; align-items: center; gap: 4px; }
-.park-species { list-style: none; padding: 0; margin: 0; }
-.park-species button {
-  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
-  border: none; border-radius: var(--radius); padding: 6px; background: none;
-}
-.park-species button:hover, .park-species button:focus-visible { background: var(--surface); }
-.spot-park { display: block; width: 100%; margin: 6px 0 0; border-radius: var(--radius); text-align: left; font-weight: 600; }
-.search-results li.group-start { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 8px; }
-.legend-paused { background: var(--surface); border-radius: var(--radius); padding: 6px; margin: 6px 0 0; }
-.chip:disabled { cursor: default; }
 
 /* Find me / All of Queens buttons (styled like Leaflet's +/- buttons) */
 .map-buttons button {
@@ -146,41 +161,7 @@ button {
 .map-buttons button + button { border-top: 1px solid #ccc; }
 .map-buttons button:hover { background: #f4f4f4; }
 
-.main { position: relative; flex: 1; min-height: 0; }
-.map { position: absolute; inset: 0; }
-
-.banner {
-  position: absolute; top: var(--gap); left: 50%; transform: translateX(-50%);
-  z-index: 1000; background: #fff3cd; border: 1px solid #e0c36b;
-  padding: 8px 12px; border-radius: var(--radius); max-width: 90%;
-}
-
-.footer {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
-  font-size: 0.75rem; color: var(--muted);
-  padding: 6px var(--gap); border-top: 1px solid var(--border);
-}
-.link-button {
-  border: none; background: none; padding: 0; font: inherit; color: inherit;
-  text-decoration: underline; cursor: pointer; white-space: nowrap;
-}
-.focus-count { color: var(--muted); font-size: 0.85em; }
-
-/* Credits dialog */
-.dialog-backdrop {
-  position: fixed; inset: 0; z-index: 2000; background: rgba(0, 0, 0, 0.35);
-  display: flex; align-items: center; justify-content: center; padding: var(--gap);
-}
-.dialog {
-  background: var(--bg); border-radius: var(--radius); padding: 16px 20px;
-  width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
-.dialog h2 { margin: 0 0 8px; font-size: 1.15rem; }
-.dialog dt { font-weight: 600; margin-top: 10px; font-size: 0.9rem; }
-.dialog dd { margin: 2px 0 0; font-size: 0.85rem; }
-
-/* ---------- Map markers ---------- */
+/* ---------- 4. Map markers ---------- */
 .species-marker {
   position: relative; display: flex; align-items: center; justify-content: center;
   width: 24px; height: 24px; border-radius: 50%;
@@ -193,7 +174,6 @@ button {
   background: var(--cluster); color: #fff; border-radius: 999px;
   font-size: 9px; font-weight: 700; padding: 1px 4px; line-height: 1.3;
 }
-
 /* Cluster bubbles: one neutral color, so color on the map only ever means danger level */
 .cluster-bubble {
   display: flex; align-items: center; justify-content: center;
@@ -209,15 +189,9 @@ button {
 }
 .spot-list li button:hover, .spot-list li button:focus-visible { background: var(--surface); }
 .spot-list .muted { margin: 6px 0 0; }
+.spot-park { display: block; width: 100%; margin: 6px 0 0; border-radius: var(--radius); text-align: left; font-weight: 600; }
 
-/* Two-option switch (map style) */
-.segmented { display: flex; gap: 0; margin-bottom: 4px; }
-.segmented button { flex: 1; border-radius: 0; font-size: 0.8rem; padding: 3px 6px; }
-.segmented button:first-child { border-radius: 999px 0 0 999px; }
-.segmented button:last-child { border-radius: 0 999px 999px 0; border-left: none; }
-.segmented button[aria-pressed="true"] { background: var(--cluster); color: #fff; border-color: var(--cluster); }
-
-/* ---------- Legend ---------- */
+/* ---------- 5. Filters (legend) ---------- */
 .legend {
   position: absolute; bottom: var(--gap); left: var(--gap); z-index: 1000;
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
@@ -231,6 +205,7 @@ button {
 .legend-count { margin: 0; }
 .legend-close { border: none; padding: 2px 6px; }
 .legend-note { margin: 6px 0 0; }
+.legend-paused { background: var(--surface); border-radius: var(--radius); padding: 6px; margin: 6px 0 0; }
 .legend-help { margin-top: 6px; }
 .legend-help summary { cursor: pointer; color: var(--muted); }
 .legend-help ul { list-style: disc; padding-left: 16px; margin: 4px 0 0; font-size: 0.75rem; }
@@ -238,17 +213,17 @@ button {
   position: absolute; bottom: var(--gap); left: var(--gap); z-index: 1000;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2); padding: 6px 12px; font-weight: 600;
 }
-.swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex: none; }
-
 /* Filter chips: pressed = shown on the map, unpressed = hidden (faded, struck through) */
 .chip {
   display: flex; align-items: center; gap: 6px; width: 100%;
   padding: 3px 8px; border-radius: 999px; font-size: 0.8rem; text-align: left;
 }
 .chip[aria-pressed="false"] { opacity: 0.45; text-decoration: line-through; background: var(--surface); }
+.chip:disabled { cursor: default; }
 .chip-count { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-/* ---------- Sidebar ---------- */
+/* ---------- 6. Side panels ---------- */
+/* Shared: species details, park profile and Browse all use this panel (a bottom sheet on phones) */
 .sidebar {
   position: absolute; top: 0; right: 0; bottom: 0; z-index: 1001;
   width: var(--sidebar-width); max-width: 100%;
@@ -256,73 +231,33 @@ button {
   overflow-y: auto; padding: var(--gap);
 }
 .sidebar-close { position: sticky; top: 0; float: right; z-index: 1; }
+.sidebar-back { margin-bottom: 8px; }
 .sidebar section { margin: 16px 0; }
 .sidebar h2 { font-size: 1.3rem; margin: 8px 0 0; }
 .sidebar h3 { font-size: 1rem; margin: 0 0 6px; }
-.scientific-name { font-style: italic; color: var(--muted); margin: 2px 0; }
-.muted { color: var(--muted); font-size: 0.85rem; }
-.tag {
-  display: inline-block; border: 1px solid var(--border); border-radius: 999px;
-  padding: 2px 8px; margin: 0 4px 4px 0; font-size: 0.85rem;
-}
-/* "Found by Snowflake Cortex Search..." line under each text section, and the draft note */
-.found-by { font-size: 0.72rem; color: var(--muted); margin: -4px 0 8px; }
-.found-by code { font-size: 0.7rem; }
-.review-note { font-size: 0.8rem; padding: 6px 8px; border-radius: var(--radius); }
-.review-note.draft { background: #fff8e1; border: 1px solid #f0d78c; }
-
-/* Browse panel: tabs, sortable species table, sighting lists */
-.browse h2 { margin: 4px 0 8px; }
-.tabs { margin-bottom: 10px; }
-.species-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-.species-table caption { text-align: left; margin-bottom: 6px; }
-.species-table th { text-align: left; border-bottom: 1px solid var(--border); padding: 4px 2px; }
-.species-table td { border-bottom: 1px solid var(--border); padding: 4px 2px; vertical-align: middle; }
-.species-table .num { text-align: right; font-variant-numeric: tabular-nums; }
-.species-table th:last-child { text-align: right; }
-.sort-button { border: none; background: none; padding: 0; font: inherit; font-weight: 700; cursor: pointer; }
-.row-button {
-  display: flex; align-items: center; gap: 6px; width: 100%; text-align: left;
-  border: none; background: none; padding: 4px 2px; font: inherit; cursor: pointer; border-radius: 6px;
-}
-.row-button:hover, .row-button:focus-visible { background: var(--surface); }
-.danger-cell { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
-.row-list { list-style: none; margin: 0; padding: 0; }
-.row-list li { border-bottom: 1px solid var(--border); }
-.near-buttons { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
-.browse-button { white-space: nowrap; }
-
 /* Collapsible groups in the species panel ("What to do", "About this species", ...) */
 .sidebar details.group { border-top: 1px solid var(--border); padding: 10px 0; }
 .sidebar details.group > summary { cursor: pointer; font-weight: 700; font-size: 1rem; }
 .sidebar details.group h4 { font-size: 0.9rem; margin: 12px 0 4px; }
-.warning { background: #fdecea; border: 1px solid #f5c2c0; padding: 8px; border-radius: var(--radius); }
+/* Small fold-outs: the ⓘ under "In Queens", and "What does High mean?" under the danger meter */
+details.info { display: inline-block; margin: 0 0 4px; }
+details.info > summary { cursor: pointer; list-style: none; color: var(--muted); }
+details.info > summary::-webkit-details-marker { display: none; }
+details.info[open] { display: block; }
+.info-more { margin: 4px 0 0; }
+.info-more > summary { cursor: pointer; color: var(--link); font-size: 0.9rem; }
+/* Phones only: handle that shrinks the bottom sheet to a strip (shown in section 9) */
+.sheet-handle { display: none; }
 
-/* Mobile: the sidebar becomes a bottom sheet */
-@media (max-width: 640px) {
-  /* Phones: search gets its own row under the title; music button shrinks to its icon */
-  .header { flex-wrap: wrap; height: auto; padding: 6px var(--gap); row-gap: 6px; }
-  .header h1 { font-size: 1rem; flex: 1; }
-  .search { order: 3; flex-basis: 100%; max-width: none; margin-left: 0; }
-  .music-label { display: none; }
-  .browse-label { display: none; }
-  .subtitle { display: none; }
-  .footer { font-size: 0.7rem; }
-  .footer-extra { display: none; }
-  .focus-banner { top: auto; bottom: 56px; font-size: 0.8rem; }
-  .sidebar {
-    top: auto; left: 0; width: 100%; height: 65%;
-    border-left: none; border-top: 1px solid var(--border);
-    border-radius: 12px 12px 0 0;
-  }
-  .legend { width: calc(100% - 2 * var(--gap)); max-height: 60%; }
+/* Species details */
+.scientific-name { font-style: italic; color: var(--muted); margin: 2px 0; }
+.show-on-map { margin-top: 6px; }
+.tag {
+  display: inline-block; border: 1px solid var(--border); border-radius: 999px;
+  padding: 2px 8px; margin: 0 4px 4px 0; font-size: 0.85rem;
 }
-
-/* Loading skeleton */
-.skeleton { background: var(--surface); border-radius: var(--radius); margin: 8px 0; animation: pulse 1.2s infinite; }
-@keyframes pulse { 50% { opacity: 0.5; } }
-
-/* ---------- Slideshow ---------- */
+.meaning { font-size: 0.9rem; margin: 6px 0; }
+/* Photo slideshow */
 .slideshow { position: relative; }
 .slide-frame {
   aspect-ratio: 4 / 3; background: var(--surface); border-radius: var(--radius);
@@ -334,15 +269,204 @@ button {
 .dot { width: 10px; height: 10px; padding: 0; border-radius: 50%; background: var(--border); border: none; }
 .dot.active { background: var(--text); }
 .caption { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
-
-/* ---------- Danger badge ---------- */
+/* Danger meter and "How we score" table */
 .meter { display: flex; gap: 3px; margin: 6px 0; }
 .meter span { flex: 1; height: 10px; border-radius: 2px; background: var(--surface); border: 1px solid var(--border); }
 .popover { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; font-size: 0.85rem; margin-top: 6px; }
 .popover table { border-collapse: collapse; width: 100%; }
 .popover td, .popover th { border-bottom: 1px solid var(--border); padding: 2px 4px; text-align: left; }
-
-/* ---------- Season chart ---------- */
+/* Season chart */
 .season-chart svg { width: 100%; height: auto; }
 .season-chart .bar { fill: var(--danger-none); }
 .season-chart text { font-size: 9px; fill: var(--muted); }
+
+/* "Report it, don't pull it" box (species panel and park profile) */
+/* Species panel: the at-a-glance row under the name, items separated by dots */
+.glance { display: flex; flex-wrap: wrap; gap: 2px 0; margin: 4px 0 8px; font-size: 0.85rem; color: var(--muted); }
+.glance > span { white-space: nowrap; }
+.glance > span + span::before { content: "·"; margin: 0 6px; }
+.glance .swatch { margin-right: 4px; vertical-align: -1px; }
+
+.act-box { background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: var(--radius); padding: 8px 10px; margin: 8px 0; font-size: 0.9rem; }
+.act-box p { margin: 4px 0; }
+.act-box .act-title { font-weight: 700; font-size: 1rem; }
+.act-box .act-note { font-weight: 600; }
+.act-box ul { margin: 4px 0 0; padding-left: 18px; }
+.act-box li { margin: 3px 0; }
+.act-more { margin-top: 6px; border-top: 1px solid #a5d6a7; padding-top: 6px; }
+.act-more summary { cursor: pointer; font-weight: 600; }
+.act-more p { font-size: 0.85rem; }
+
+/* Park profile */
+.park-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+.guide-link { margin: 6px 0 0; }
+.stat-row { display: flex; gap: var(--gap); }
+.stat { flex: 1; background: var(--surface); border-radius: var(--radius); padding: 8px; display: flex; flex-direction: column; }
+.stat strong { font-size: 1.4rem; }
+.stat span { color: var(--muted); font-size: 0.8rem; }
+.danger-mix { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; }
+.danger-mix-legend { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.85rem; }
+.danger-mix-legend li { display: flex; align-items: center; gap: 4px; }
+.park-species { list-style: none; padding: 0; margin: 0; }
+.park-species button {
+  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+  border: none; border-radius: var(--radius); padding: 6px; background: none;
+}
+.park-species button:hover, .park-species button:focus-visible { background: var(--surface); }
+
+/* Browse: sortable lists of species and parks */
+/* Browse stays on the page under a species or park opened from it (keeps scroll position).
+   visibility: hidden also hides it from screen readers and the Tab key. */
+.browse.covered { visibility: hidden; }
+.browse-tabs { margin: 10px 0; }
+.row-list { list-style: none; padding: 0; margin: 8px 0 0; }
+.row-button {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  border: none; border-bottom: 1px solid var(--border); border-radius: 0;
+  padding: 8px 4px; text-align: left; background: none;
+}
+.row-button:hover, .row-button:focus-visible { background: var(--surface); }
+.row-button .search-name { flex: 1; min-width: 0; }
+.row-detail {
+  display: flex; flex-direction: column; align-items: flex-end;
+  font-size: 0.8rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 7. Dialogs ---------- */
+.dialog-backdrop {
+  position: fixed; inset: 0; z-index: 2000; background: rgba(0, 0, 0, 0.35);
+  display: flex; align-items: center; justify-content: center; padding: var(--gap);
+}
+.dialog-backdrop[hidden] { display: none; } /* the quiz hides itself this way while paused */
+.dialog {
+  background: var(--bg); border-radius: var(--radius); padding: 16px 20px;
+  width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dialog h2 { margin: 0 0 8px; font-size: 1.15rem; }
+/* Credits */
+.dialog dt { font-weight: 600; margin-top: 10px; font-size: 0.9rem; }
+.dialog dd { margin: 2px 0 0; font-size: 0.85rem; }
+
+/* Photo quiz ("Spot the species") */
+.quiz { position: relative; overflow-x: hidden; }
+.quiz-photo { margin: 6px 0; }
+.quiz-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); display: block; background: var(--surface); }
+.quiz-choices { display: flex; flex-direction: column; gap: 6px; }
+.quiz-choice { text-align: left; padding: 8px 10px; min-height: 44px; }
+.quiz-choice em { color: var(--muted); font-size: 0.8rem; margin-left: 4px; }
+.quiz-choice:disabled { cursor: default; color: var(--text); }
+/* Right/wrong also shown with ✓ and ✗, not only color. */
+.quiz-choice.right { border: 2px solid var(--danger-1); background: #e8f5e9; }
+.quiz-choice.wrong { border: 2px solid var(--danger-4); background: #fdecea; }
+.quiz-feedback { margin: 10px 0 4px; }
+.quiz-danger { display: inline-flex; font-size: 0.85rem; }
+.quiz-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+.quiz-next { font-weight: 700; }
+/* End of a round: score, Play again, Copy my score */
+.quiz-end { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 8px; }
+.quiz-end-actions { justify-content: flex-start; align-items: center; }
+.quiz-end-actions [role="status"] { flex-basis: 100%; }
+.quiz-end-actions [role="status"]:empty { display: none; }
+.quiz-share-text { width: 100%; min-height: 64px; font: inherit; font-size: 0.85rem; margin-top: 6px; }
+.quiz-share-note { flex-basis: 100%; font-size: 0.75rem; }
+/* Perfect round: emoji fall once. (The reduced-motion rule in section 9 turns this off.) */
+.confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.confetti span { position: absolute; top: -2rem; font-size: 1.4rem; animation: confetti-fall 1.8s ease-in forwards; }
+@keyframes confetti-fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
+/* ---------- 8. Printable park field guide (/guide/<park id>) ---------- */
+.guide { max-width: 900px; margin: 0 auto; padding: 16px; line-height: 1.4; }
+.guide h1 { margin: 2px 0; font-size: 1.6rem; }
+.guide h2 { font-size: 1.1rem; margin: 18px 0 8px; }
+.guide-toolbar { display: flex; justify-content: space-between; align-items: center; gap: var(--gap); margin-bottom: 12px; }
+.guide-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.guide-qr { margin: 0; flex: none; width: 104px; text-align: center; font-size: 0.7rem; color: var(--muted); }
+.guide-qr .qr-code { width: 104px; }
+.qr-code svg { display: block; width: 100%; height: auto; }
+.qr-small { flex: none; width: 52px; margin-top: 4px; }
+.guide-cards { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--gap); }
+.guide-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; break-inside: avoid; }
+.guide-card h3 { margin: 6px 0 0; font-size: 1rem; }
+.guide-card p { margin: 2px 0; font-size: 0.85rem; }
+.guide-card figure { margin: 0; }
+.guide-card img, .guide-no-photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; display: block; }
+.guide-no-photo { background: var(--surface); display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px; font-size: 0.8rem; }
+.guide-card figcaption { font-size: 0.65rem; color: var(--muted); margin-top: 2px; overflow-wrap: anywhere; }
+.guide-card-body { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+.guide-danger { display: flex; align-items: center; gap: 6px; }
+.guide-rest { font-size: 0.85rem; }
+.guide-report p { font-size: 0.85rem; margin: 4px 0; }
+.guide-footer { border-top: 1px solid var(--border); margin-top: 16px; font-size: 0.7rem; }
+
+/* ---------- 9. Screen size, touch and motion ---------- */
+/* Wider screens: with a side panel open, center the focus banner over the map you can still see,
+   so its "Show all" button isn't hidden behind the panel. */
+@media (min-width: 641px) {
+  .panel-open .focus-banner { left: calc((100% - var(--sidebar-width)) / 2); max-width: calc(100% - var(--sidebar-width) - 2 * var(--gap)); }
+}
+
+/* Phones: the side panel becomes a bottom sheet */
+@media (max-width: 640px) {
+  /* Search gets its own row under the title; header buttons shrink to their icons */
+  .header { flex-wrap: wrap; height: auto; padding: 6px var(--gap); row-gap: 6px; }
+  .header h1 { font-size: 1rem; flex: 1; }
+  .title { flex: 1; } /* push the icon buttons together on the right */
+  .search { order: 3; flex-basis: 100%; max-width: none; margin-left: 0; }
+  .music-label, .button-label { display: none; }
+  .subtitle { display: none; }
+  .footer { font-size: 0.7rem; }
+  .footer-extra { display: none; }
+  .focus-banner { top: auto; bottom: 56px; font-size: 0.8rem; }
+  .legend { width: calc(100% - 2 * var(--gap)); max-height: 60%; }
+  .sidebar {
+    top: auto; left: 0; width: 100%; height: 65%;
+    border-left: none; border-top: 1px solid var(--border);
+    border-radius: 12px 12px 0 0;
+    transition: height 0.2s;
+  }
+  /* The handle sits on the sheet's top edge; a collapsed sheet is a 96 px strip. */
+  .sheet-handle {
+    display: block; position: absolute; z-index: 1002; left: 50%; transform: translate(-50%, 50%);
+    bottom: 65%; width: 64px; min-height: 32px; padding: 0; border-radius: 999px; font-size: 0.8rem;
+  }
+  .sheet-collapsed .sidebar { height: 96px; }
+  .sheet-collapsed .sheet-handle { bottom: 96px; }
+}
+
+/* Touch screens: buttons at least 44 px tall, the size fingers can hit reliably. */
+@media (pointer: coarse) {
+  .segmented button, .row-button, .sidebar-close, .sidebar-back, .header-button, .chip, .focus-banner button { min-height: 44px; }
+  .sidebar-close { min-width: 44px; }
+}
+
+/* Less motion, for people who turned on "reduce motion" on their device. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- 10. Printing (the field guide; fits one page for almost every park) ---------- */
+@media print {
+  @page { margin: 10mm; }
+  html, body { height: auto; } /* 100% (needed for the map) adds a blank last page */
+  .no-print { display: none !important; }
+  .guide { max-width: none; padding: 0; font-size: 10pt; }
+  .guide h1 { font-size: 16pt; }
+  .guide h2 { font-size: 11pt; margin: 6px 0 3px; }
+  .guide header p { margin: 2px 0; }
+  .guide-qr, .guide-qr .qr-code { width: 20mm; }
+  .guide-qr { font-size: 6.5pt; }
+  .qr-small { width: 14mm; margin-top: 2mm; }
+  .guide-cards { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .guide-card { padding: 4px; }
+  .guide-card img, .guide-no-photo { aspect-ratio: 3 / 1; }
+  .guide-card h3 { font-size: 10pt; margin-top: 3px; }
+  .guide-card p, .guide-rest, .guide-report p, .guide .muted { font-size: 8pt; margin: 1px 0; }
+  .guide-card figcaption { font-size: 6pt; }
+  .guide-report { column-count: 2; column-gap: 16px; break-inside: avoid; } /* big parks: moves whole to page 2 */
+  .guide-report h2 { column-span: all; }
+  .guide .guide-footer, .guide .guide-footer p { font-size: 6.5pt; margin: 4px 0 0; }
+  .guide a { color: inherit; text-decoration: none; }
+  /* Keep the danger colors and photo backgrounds when printing. */
+  .guide * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

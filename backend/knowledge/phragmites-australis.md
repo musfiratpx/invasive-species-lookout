@@ -24,6 +24,9 @@ Common reed is native to Eurasia and Africa, and at least one strain is also nat
 Phragmites can grow over 15 feet tall. Its hollow stems are usually green with yellow joints during the growing season and turn yellow when dry in winter, and old dead stems stay standing in the stands. It blooms in late July and August with purple-to-gold, branching flower heads, followed by grayish, fluffy seeds.
 
 ## How to handle it
-Pulling Phragmites by hand does not work because of its tough, spreading root network, and small root pieces left in the soil grow into new plants. Mowing gives only short-term results. Because native and non-native Phragmites look alike, it should be properly identified before anyone manages it, and herbicides used in wetlands must be applied by a certified pesticide applicator. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Pulling Phragmites by hand does not work because of its tough, spreading root network, and small root pieces left in the soil grow into new plants. Mowing gives only short-term results. Because native and non-native Phragmites look alike, it should be properly identified before anyone manages it, and herbicides used in wetlands must be applied by a certified pesticide applicator.
+
+## Look-alikes
+Because native and non-native Phragmites look alike, it should be properly identified before anyone manages it.
 
 ## How to report it

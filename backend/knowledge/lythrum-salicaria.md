@@ -24,6 +24,6 @@ Purple loosestrife is native to Europe, Asia and northern Africa. It was probabl
 Shoots come up as early as late April, and flowering starts by mid-June. Seeds begin forming by late July and continue into autumn; one plant can make over 2 million seeds. The plant dies back at the first frost, but its dead stems stay standing through the winter.
 
 ## How to handle it
-Small patches can be pulled by hand, but the whole root crown must come out. Mowing or otherwise damaging the plants can spread pieces that regrow. Removing it takes several years to clear out the adult plants and the seeds in the soil. Four kinds of beetles have been released in the U.S. to feed on purple loosestrife, with some success. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Small patches can be pulled by hand, but the whole root crown must come out. Mowing or otherwise damaging the plants can spread pieces that regrow. Removing it takes several years to clear out the adult plants and the seeds in the soil. Four kinds of beetles have been released in the U.S. to feed on purple loosestrife, with some success.
 
 ## How to report it

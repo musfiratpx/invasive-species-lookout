@@ -34,7 +34,7 @@ OBSERVATION_COLUMNS = [
     "observation_id", "observed_on", "scientific_name", "common_name", "iconic_taxon",
     "taxon_id", "latitude", "longitude", "place_guess", "url", "license", "observer", "obscured",
     # How precise the public location is, in meters (blank if the observer didn't say).
-    # Some sightings are only placed at "Queens" (the borough's center point), so the map hides imprecise ones.
+    # Some sightings are only placed at a borough like "Queens" (its center point), so the map hides imprecise ones.
     "accuracy_m",
     # Extra columns: which list entry this sighting belongs to. A sighting of a
     # variety (taxon_id) is grouped under the listed species (species_id).

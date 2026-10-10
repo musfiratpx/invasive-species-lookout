@@ -24,6 +24,9 @@ Eurasian watermilfoil is native to Eurasia. It is now a major water invader acro
 
 
 ## How to handle it
-Cutting and harvesting only gives short-term relief and releases plant fragments that can spread it to new areas, and herbicides can harm other plants and fish. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Cutting and harvesting only gives short-term relief and releases plant fragments that can spread it to new areas, and herbicides can harm other plants and fish.
+
+## Look-alikes
+It looks so much like native watermilfoils that reports from before 1940 may have been mistaken identifications.
 
 ## How to report it

@@ -12,12 +12,13 @@
  *   it opens a list of the species there instead.
  * - Heat map (optional view): a soft glow shows where sightings are dense when zoomed
  *   out; icons take over from zoom 15.
- * - Extras: zoom down to level 20, a scale bar, "Find me" and "All of Queens" buttons,
+ * - Extras: zoom down to level 20, a scale bar, "Find me" and "All of NYC" buttons,
  *   and zooming to a species' sightings when one is picked in search.
- * - Parks: when a park is picked, its official boundary is outlined and the map zooms to
+ * - Parks: at mid zoom every park is outlined faintly and can be tapped (ParkOutlines.jsx).
+ *   When a park is picked, its official boundary is outlined boldly and the map zooms to
  *   it. The "what's here" list links to the profile of the park a crowded spot is in.
  *
- * Markers are plain Leaflet objects, not React components: Queens has ~15,000
+ * Markers are plain Leaflet objects, not React components: NYC has ~73,000
  * sightings, and one React component each froze phones for seconds.
  */
 
@@ -26,16 +27,18 @@ import "leaflet.markercluster";
 import { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
+import ParkOutlines from "@/components/ParkOutlines";
 import { makeMarkerIcon } from "@/components/SpeciesIcon";
+import { formatDay } from "@/lib/dates";
 import { DANGER_COLORS } from "@/lib/labels";
 
-const CENTER = (process.env.NEXT_PUBLIC_MAP_CENTER || "40.7282,-73.7949").split(",").map(Number);
-const ZOOM = Number(process.env.NEXT_PUBLIC_MAP_ZOOM || 12);
+const CENTER = (process.env.NEXT_PUBLIC_MAP_CENTER || "40.7000,-73.9500").split(",").map(Number);
+const ZOOM = Number(process.env.NEXT_PUBLIC_MAP_ZOOM || 11);
 const MAX_ZOOM = 20; // OpenStreetMap images stop at 19; level 20 enlarges them (slightly blurry, still useful)
 const LIST_FROM_ZOOM = 16; // clicking a bubble at this zoom or closer shows a list instead of zooming
 const DETAIL_FROM_ZOOM = 18; // from here, show every sighting at its own spot (no ×N merging)
 const HEAT_UNTIL_ZOOM = 15; // in heat-map view, the glow is shown below this zoom, icons from it
-const HEAT_INTENSITY = 0.08; // per sighting; low so only truly dense areas turn dark (Queens has ~14,000)
+const HEAT_INTENSITY = 0.03; // per sighting; low so only truly dense areas turn dark (NYC has ~73,000)
 
 // How far apart (in screen pixels) points can be and still share a bubble.
 // Always larger than the biggest bubble (46 px), so bubbles never sit on top of each other.
@@ -122,17 +125,60 @@ function toMarker(p) {
     name,
     dangerLevel: p.danger_level,
     count,
-    label: count > 1 ? `${name} · ${count} sightings here, latest ${p.observed_on}` : `${name} · ${p.observed_on}`,
+    observedOn: p.observed_on, // turned into the hover label only when someone hovers (see markerLabel)
     title: name,
   });
 }
 
+/** Hover text for one icon, e.g. "Mugwort · 12 sightings here, latest Oct 4, 2026". */
+function markerLabel({ name, count, observedOn }) {
+  return count > 1 ? `${name} · ${count} sightings here, latest ${formatDay(observedOn)}` : `${name} · ${formatDay(observedOn)}`;
+}
+
+/**
+ * Add markers to a cluster group a few thousand at a time, letting the browser draw
+ * and respond to clicks in between. Returns a function that stops adding.
+ *
+ * Why not MarkerCluster's own `chunkedLoading`? It can't be stopped: if the filters change
+ * while it's still adding, it keeps adding the OLD markers (so hidden sightings reappear),
+ * and it crashes ("getMinZoom of null") if the layer is taken off the map meanwhile.
+ */
+const BATCH_SIZE = 5000;
+function addInBatches(group, markers) {
+  let next = 0;
+  let timer = null;
+  function addBatch() {
+    group.addLayers(markers.slice(next, next + BATCH_SIZE));
+    next += BATCH_SIZE;
+    if (next < markers.length) timer = setTimeout(addBatch, 0);
+  }
+  addBatch();
+  return () => clearTimeout(timer);
+}
+
+/** True when the person asked their device for less motion (an accessibility setting). */
+const prefersLessMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Options for the map's moves: jump straight there instead of sliding, if they asked for less motion.
+const motion = () => (prefersLessMotion() ? { animate: false } : {});
+
+/**
+ * Padding for zooming to a park or species, leaving room for the side panel that opens with it,
+ * so the place isn't hidden behind the panel. Matches .sidebar in globals.css: 400 px wide on
+ * the right, or a bottom sheet 65% of the screen tall on phones (640 px wide or less).
+ */
+function roomForPanel(map) {
+  const { x: width, y: height } = map.getSize();
+  if (window.innerWidth <= 640) return { paddingTopLeft: [20, 20], paddingBottomRight: [20, height * 0.65 + 20] };
+  return { paddingTopLeft: [40, 40], paddingBottomRight: [Math.min(400, width / 2) + 40, 40] };
+}
+
 /** Adds the sightings (bubbles/icons, street-level detail, and optionally the heat map) to the map. */
-function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames, userLocation, flyTarget, onSelectSpecies, onSelectPark, onLocate }) {
+function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames, onSelectSpecies, onSelectPark }) {
   const map = useMap();
   const merged = useRef(null); // ×N points, used below street level
   const detail = useRef(null); // every sighting separately, used at street level
   const detailFor = useRef(null); // which sightings list the detail layer was built from
+  const stopAdding = useRef({ merged: () => {}, detail: () => {} }); // cancels markers still being added
   const heat = useRef(null);
   const latest = useRef({ sightings, view });
   latest.current = { sightings, view };
@@ -142,16 +188,15 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
   onPark.current = onSelectPark;
   const names = useRef(parkNames);
   names.current = parkNames;
-  const onLocateRef = useRef(onLocate);
-  onLocateRef.current = onLocate;
   const currentFocus = useRef(focusKey);
   currentFocus.current = focusKey;
 
   // Build the detail layer only when someone actually zooms to street level.
   function ensureDetail() {
     if (detailFor.current === latest.current.sightings) return;
+    stopAdding.current.detail();
     detail.current.clearLayers();
-    detail.current.addLayers(latest.current.sightings.map(toMarker));
+    stopAdding.current.detail = addInBatches(detail.current, latest.current.sightings.map(toMarker));
     detailFor.current = latest.current.sightings;
   }
 
@@ -173,7 +218,6 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
   useEffect(() => {
     function makeGroup() {
       const group = L.markerClusterGroup({
-        chunkedLoading: true, // add markers in small batches so the page never freezes for long
         maxClusterRadius: clusterRadius,
         iconCreateFunction: clusterIcon,
         showCoverageOnHover: false,
@@ -186,7 +230,7 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
       });
       group.on("mouseover", (event) => {
         const marker = event.layer;
-        if (!marker.getTooltip()) marker.bindTooltip(marker.options.label); // made on first hover only
+        if (!marker.getTooltip()) marker.bindTooltip(markerLabel(marker.options)); // made on first hover only
         marker.openTooltip();
       });
       group.on("clustermouseover", (event) => {
@@ -204,7 +248,7 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
         const cluster = event.layer;
         cluster.unbindTooltip();
         if (map.getZoom() < LIST_FROM_ZOOM) {
-          cluster.zoomToBounds({ padding: [40, 40] });
+          cluster.zoomToBounds({ padding: [40, 40], ...motion() });
           return;
         }
         const popup = L.popup({ maxWidth: 260, className: "spot-popup" })
@@ -227,25 +271,31 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
     // Scale bar (feet and meters), bottom right above the map credits.
     const scale = L.control.scale({ position: "bottomright" }).addTo(map);
 
-    // "Find me" and "All of Queens" buttons under the +/- zoom buttons.
+    // "Find me" and "All of NYC" buttons under the +/- zoom buttons.
+    let you = null;
     const Buttons = L.Control.extend({
       onAdd() {
         const box = L.DomUtil.create("div", "leaflet-bar map-buttons");
         box.innerHTML =
           '<button type="button" data-action="locate" title="Show where I am" aria-label="Show where I am">📍</button>' +
-          '<button type="button" data-action="home" title="Show all of Queens" aria-label="Show all of Queens">⌂</button>';
+          '<button type="button" data-action="home" title="Show all of New York City" aria-label="Show all of New York City">⌂</button>';
         L.DomEvent.disableClickPropagation(box);
         box.addEventListener("click", (e) => {
           const action = e.target.closest("[data-action]")?.dataset.action;
-          if (action === "home") map.setView(CENTER, ZOOM);
+          if (action === "home") map.setView(CENTER, ZOOM, motion());
           if (action === "locate") map.locate({ setView: true, maxZoom: 17 }); // location stays in the browser
         });
         return box;
       },
     });
     const buttons = new Buttons({ position: "topleft" }).addTo(map);
-    // The page keeps the location (the "Near me" list uses it too); the dot is drawn below.
-    const onFound = (e) => onLocateRef.current?.({ lat: e.latlng.lat, lng: e.latlng.lng, accuracy: e.accuracy, label: "You are here" });
+    const onFound = (e) => {
+      if (you) map.removeLayer(you);
+      you = L.layerGroup([
+        L.circle(e.latlng, { radius: e.accuracy, color: "#1a73e8", weight: 1, fillOpacity: 0.1 }),
+        L.circleMarker(e.latlng, { radius: 7, color: "#fff", weight: 2, fillColor: "#1a73e8", fillOpacity: 1 }).bindTooltip("You are here"),
+      ]).addTo(map);
+    };
     const onLocateError = () => {
       L.popup().setLatLng(map.getCenter()).setContent("Couldn't get your location. Check that location access is allowed.").openOn(map);
     };
@@ -258,7 +308,9 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
       map.off("zoomend", showRightLayer);
       map.off("locationfound", onFound);
       map.off("locationerror", onLocateError);
-      for (const layer of [merged.current, detail.current, heat.current]) if (layer) map.removeLayer(layer);
+      stopAdding.current.merged();
+      stopAdding.current.detail();
+      for (const layer of [merged.current, detail.current, heat.current, you]) if (layer) map.removeLayer(layer);
       scale.remove();
       buttons.remove();
     };
@@ -266,8 +318,9 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
 
   // Rebuild the merged markers whenever the (filtered) points change; refresh detail if it's showing.
   useEffect(() => {
+    stopAdding.current.merged(); // stop adding the previous filter's markers, if still going
     merged.current.clearLayers();
-    merged.current.addLayers(points.map(toMarker)); // one batch add is much faster than one by one
+    stopAdding.current.merged = addInBatches(merged.current, points.map(toMarker)); // batches, not one by one
     detailFor.current = null; // detail layer is now out of date; rebuilt when needed
     showRightLayer();
   }, [points]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -305,31 +358,8 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
       : null;
   }, [outline, map]);
 
-  // The blue "you are here" dot (or the example place picked in "Near me").
-  useEffect(() => {
-    if (!userLocation) return;
-    const at = [userLocation.lat, userLocation.lng];
-    const layer = L.layerGroup([
-      L.circle(at, { radius: userLocation.accuracy || 30, color: "#1a73e8", weight: 1, fillOpacity: 0.1, interactive: false }),
-      L.circleMarker(at, { radius: 7, color: "#fff", weight: 2, fillColor: "#1a73e8", fillOpacity: 1 }).bindTooltip(userLocation.label),
-    ]).addTo(map);
-    return () => map.removeLayer(layer);
-  }, [userLocation, map]);
-
-  // Fly to a spot picked from a list ("Recently seen", "Near me"). key makes repeat picks work.
-  // A side panel is open when this happens, so aim off-center to keep the spot in the visible
-  // part of the map: left of the panel on desktop, above the bottom sheet on phones.
-  useEffect(() => {
-    if (!flyTarget) return;
-    const size = map.getSize();
-    const phone = size.x < 640;
-    const shift = phone ? L.point(0, size.y * 0.3) : L.point(Math.min(195, size.x * 0.25), 0);
-    const spot = map.project([flyTarget.lat, flyTarget.lng], flyTarget.zoom).add(shift);
-    map.flyTo(map.unproject(spot, flyTarget.zoom), flyTarget.zoom, { duration: 0.8 });
-  }, [flyTarget, map]);
-
   // When something is focused, zoom to it once: a park to its outline, a species to its
-  // sightings. When focus is cleared, go back to all of Queens.
+  // sightings. When focus is cleared, go back to all of NYC.
   const lastFocus = useRef(null);
   useEffect(() => {
     if (focusKey && focusKey !== lastFocus.current) {
@@ -338,11 +368,11 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
         ? outline && L.geoJSON(outline).getBounds()
         : points.length && L.latLngBounds(points.map((p) => [p.latitude, p.longitude]));
       if (bounds) {
-        map.fitBounds(bounds, { padding: [40, 40], maxZoom: isPark ? 17 : 16 });
+        map.fitBounds(bounds, { ...roomForPanel(map), maxZoom: isPark ? 17 : 16, ...motion() });
         lastFocus.current = focusKey;
       }
     } else if (!focusKey && lastFocus.current) {
-      map.setView(CENTER, ZOOM);
+      map.setView(CENTER, ZOOM, motion());
       lastFocus.current = null;
     }
   }, [focusKey, points, outline, map]);
@@ -350,14 +380,20 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
   return null;
 }
 
-export default function MapView({ points, sightings, view, focusKey, outline, parkNames, userLocation, flyTarget, onSelectSpecies, onSelectPark, onLocate }) {
+export default function MapView({ points, sightings, view, focusKey, outline, allOutlines, parkNames, onSelectSpecies, onSelectPark }) {
+  const animate = !prefersLessMotion(); // also turns off the zoom and fade animations of the map itself
   return (
-    <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map">
+    <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map" zoomAnimation={animate} fadeAnimation={animate} markerZoomAnimation={animate}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         maxZoom={MAX_ZOOM}
         maxNativeZoom={19}
+      />
+      <ParkOutlines
+        outlines={allOutlines}
+        focusedParkId={focusKey?.startsWith("park:") ? focusKey.slice(5) : null}
+        onSelectPark={onSelectPark}
       />
       <SightingsLayer
         points={points}
@@ -366,11 +402,8 @@ export default function MapView({ points, sightings, view, focusKey, outline, pa
         focusKey={focusKey}
         outline={outline}
         parkNames={parkNames}
-        userLocation={userLocation}
-        flyTarget={flyTarget}
         onSelectSpecies={onSelectSpecies}
         onSelectPark={onSelectPark}
-        onLocate={onLocate}
       />
     </MapContainer>
   );

@@ -8,9 +8,9 @@ Everyone should read [CLAUDE.md](../CLAUDE.md) (the ground rules) and be able to
 
 ## Where we are (Oct 9, night)
 
-- ✅ Map covers **all of Queens** (iNaturalist place 675): 14,620 sightings of 76 listed species. Privacy-blurred sightings are counted but not drawn (they'd land in the wrong town).
+- ✅ Map covers **all of New York City** (iNaturalist place 674): 72,899 sightings of 83 listed species. Privacy-blurred sightings are counted but not drawn (they'd land in the wrong town).
 - ✅ Danger levels come from official NY data (151 species ranked). Tests pass.
-- ✅ Fact sheets drafted for **all 76 species** in `backend/knowledge/`, plus `how-to-report.md` with the verified NYC Parks rules. 278 sections loaded into Snowflake.
+- ✅ Fact sheets drafted for **all 83 species** in `backend/knowledge/`, plus `how-to-report.md` with the verified NYC Parks rules. 278 sections loaded into Snowflake.
 - ✅ Snowflake RAG is live: Cortex Search finds the right fact-sheet section for each species, and the sidebar shows that text **word for word** (Cortex rewriting is off; see the decision below).
 - ✅ Code is on GitHub: <https://github.com/musfiratpx/sail>.
 - ⏳ Not done: fact-sheet drafts need human review, real design, background music, and the latest local commits still need pushing.
@@ -24,11 +24,12 @@ Everyone should read [CLAUDE.md](../CLAUDE.md) (the ground rules) and be able to
 Owns: `backend/data/*.csv`, `backend/knowledge/`, `docs/DATA_SOURCES.md`
 
 - [x] Official NY invasive list (`ny_invasive_list.csv`) and danger levels (`danger_levels.csv`) built from DEC + nyis.info.
-- [x] Fact sheets drafted for all 76 Queens species (see the table in `DATA_SOURCES.md`).
+- [x] Fact sheets drafted for all 83 NYC species (see the table in `DATA_SOURCES.md`).
 - [x] `how-to-report.md` written; NYC Parks rule (56 RCNY §1-04) verified and added.
 - [ ] **Ask NYS DEC** what people should do if they catch a northern snakehead or Chinese mitten crab in a NYC park: NYIS says kill/destroy it, but NYC Parks rules say freshwater fish must be released (details in the `DATA_SOURCES.md` decisions log). Update `channa-argus.md` and `eriocheir-sinensis.md` with the answer.
-- [ ] **Review every fact sheet against its sources.** Use [REVIEW_CHECKLIST.md](REVIEW_CHECKLIST.md): every sentence as a checkbox, with its sources, most-sighted first (top 10 = 71% of sightings, top 20 = 90%). Split the groups between people. When a sheet is checked, put your name on its `reviewed_by:` line (top of the file) **and** in the "Written by" column of `DATA_SOURCES.md`. The app shows "📝 Draft" on every species until then; after that the note disappears (restart the backend to see it; no rebuild needed). Your name isn't shown in the app. Start with the most-sighted: mugwort, mute swan, lesser celandine, multiflora rose, garlic mustard, black locust, *Phragmites*, Norway maple.
+- [ ] **Review every fact sheet against its sources.** In `DATA_SOURCES.md`, change "Claude (draft), needs Researcher review" to your name when a sheet is checked. Start with the most-sighted: mugwort, mute swan, lesser celandine, multiflora rose, garlic mustard, black locust, *Phragmites*, Norway maple.
 - [ ] Fill the thinnest sheets if you find official sources: European rabbit (only its legal status), monk parakeet, green crab, rapa whelk, Asian shore crab, Japanese chaff flower, kudzu, and the plants with no "Seasonal differences".
+- [ ] Fill "## Look-alikes" where an official source names a species it's confused with (7 sheets have it so far), then run `python scripts/build_insights.py --only-lookalikes` and `python scripts/load_chunks.py`.
 - [ ] Replace the monk parakeet source (currently a *proposed* 2021 NY bill) with Cornell All About Birds or a DEC page. Open them in a browser; they block automated access.
 - [ ] Spot-check 5 rows of `danger_levels.csv` against their ranking-form PDFs (the `source_url` column).
 - [ ] Fill in `health_warning` in `danger_levels.csv` **only** where an official source says so. Rebuilding with `build_danger_levels.py` keeps your warnings.
@@ -55,7 +56,7 @@ Owns: `frontend/lib/api.js`, `docs/API.md`, `frontend/components/`
 - [x] Map → sidebar flow with loading skeleton, error message, Escape/✕ to close.
 - [x] "How to report it" section added to the sidebar.
 - [ ] Keep `lib/api.js` and `docs/API.md` in sync: every fetch goes through `api.js`.
-- [x] Map opens on all of Queens (zoom 12, clusters); icons appear from zoom 15. Only on-screen icons are drawn, so 14,620 points stay fast.
+- [x] Map opens on all of NYC (zoom 11, clusters); icons appear from zoom 15. Only on-screen icons are drawn, so 72,899 points stay fast.
 - [ ] Music toggle works once `background.mp3` exists (Backend runs `make_music.py`). Until then the button is hidden.
 - [ ] Optional: a species list / search panel using `getSpeciesList()` (see "Backend human discussion" below).
 - [ ] Optional: a "How we score" page built from `docs/SCORING.md`.
@@ -85,4 +86,4 @@ Owns: `backend/`
 - [ ] Pull before you start working (`git pull`), and push often. The repo is <https://github.com/musfiratpx/sail>.
 - [ ] Fresh clone → README quick start works.
 - [ ] Turn the Wi-Fi off and check: sightings, danger levels, status, charts and sidebar text still load (all cached). Map tiles, photos and sounds come from the internet, so pan around the map and open a few species *before* the demo to warm the browser cache, or bring a phone hotspot.
-- [ ] Each person can explain: where danger levels come from, why some species are "Not yet ranked", why most species have no sound, and what Snowflake does (Cortex Search finds the right fact-sheet section, and the app shows it word for word; Cortex doesn't reword it. The fact sheets themselves were drafted with an AI assistant from official sources and are marked "Draft" until a teammate checks them).
+- [ ] Each person can explain: where danger levels come from, why some species are "Not yet ranked", why most species have no sound, and what Snowflake does (Cortex Search finds the right fact-sheet section; the text itself is never AI-written).

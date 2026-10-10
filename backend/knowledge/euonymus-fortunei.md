@@ -21,6 +21,6 @@ Wintercreeper is native to temperate Asia. It is commonly planted as an ornament
 
 
 ## How to handle it
-If caught early, infestations can be pulled by hand. Its roots and stems can grow into new plants, so pieces should not be left behind. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+If caught early, infestations can be pulled by hand. Its roots and stems can grow into new plants, so pieces should not be left behind.
 
 ## How to report it

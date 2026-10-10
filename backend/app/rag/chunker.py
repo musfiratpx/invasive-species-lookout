@@ -75,25 +75,6 @@ def chunk_file(path):
     return chunks
 
 
-def fact_sheet_reviews(knowledge_dir=None):
-    """
-    {file name: reviewer's name, or None} for every fact sheet. A sheet counts as reviewed
-    only when a teammate has put their name in its "reviewed_by:" header line.
-    """
-    folder = Path(knowledge_dir or config.KNOWLEDGE_DIR)
-    reviews = {}
-    for path in sorted(folder.glob("*.md")):
-        if path.name.startswith("_"):
-            continue
-        try:
-            header, _ = _split_front_matter(path.read_text())
-        except yaml.YAMLError:
-            header = {}
-        name = header.get("reviewed_by")
-        reviews[path.name] = str(name).strip() if name else None
-    return reviews
-
-
 def load_chunks(knowledge_dir=None):
     """Chunks from every .md file in knowledge/, skipping files that start with "_" (like _TEMPLATE.md)."""
     folder = Path(knowledge_dir or config.KNOWLEDGE_DIR)

@@ -24,6 +24,6 @@ Amur honeysuckle is native to China, Japan and Korea. It was sent as seeds to ar
 It is one of the first shrubs to leaf out in spring. From May to June it has small, very fragrant tube-shaped flowers, white to pink, and its dark-red berries don't ripen until late fall.
 
 ## How to handle it
-Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year.
 
 ## How to report it

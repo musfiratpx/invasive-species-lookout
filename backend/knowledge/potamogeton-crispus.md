@@ -21,6 +21,6 @@ Curly pondweed is native to Eurasia. It spreads by underground stems, fragments 
 It grows early in the season, before most native water plants, and decomposes early in the season, while native plants are still growing.
 
 ## How to handle it
-Once established, it is very hard to get rid of. Cleaning boats and equipment helps stop it from spreading. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Once established, it is very hard to get rid of. Cleaning boats and equipment helps stop it from spreading.
 
 ## How to report it

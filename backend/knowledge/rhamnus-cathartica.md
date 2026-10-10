@@ -24,6 +24,6 @@ Common buckthorn is native to most of Europe and western Asia. It was brought to
 Small yellowish-green flowers bloom in late spring (May and June) while the leaves are coming out. Its dark purple to black berries ripen in August and September and can stay on the plant all winter. Birds and other wildlife spread the seeds, which can stay alive in the soil for up to five years.
 
 ## How to handle it
-Its branches end in a short, sharp thorn. Plants can be removed by hand or with machines depending on their size, and repeated mowing and cutting weakens them. Because seeds last in the soil for five years, cleared areas need follow-up. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Its branches end in a short, sharp thorn. Plants can be removed by hand or with machines depending on their size, and repeated mowing and cutting weakens them. Because seeds last in the soil for five years, cleared areas need follow-up.
 
 ## How to report it

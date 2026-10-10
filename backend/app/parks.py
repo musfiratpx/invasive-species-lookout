@@ -1,7 +1,7 @@
 """
-Queens park boundaries (official NYC Parks data) and "which park is this sighting in?".
+NYC park boundaries for all five boroughs (official NYC Parks data) and "which park is this sighting in?".
 
-Boundaries come from data/sources/queens_parks.geojson (made by scripts/fetch_parks.py).
+Boundaries come from data/sources/nyc_parks.geojson (made by scripts/fetch_parks.py).
 Each park is a MultiPolygon: one or more shapes, each with an outer edge and maybe holes.
 
 The point-in-polygon test is the classic "ray casting" method: draw a line from the
@@ -14,7 +14,7 @@ from functools import lru_cache
 
 from app import config
 
-PARKS_GEOJSON = config.DATA_DIR / "sources" / "queens_parks.geojson"
+PARKS_GEOJSON = config.DATA_DIR / "sources" / "nyc_parks.geojson"
 
 
 def _inside_ring(lng, lat, ring):
@@ -47,7 +47,7 @@ def _bbox(multipolygon):
 
 # Names NYC Parks uses for many unrelated little properties. These are never merged,
 # and get their address added so people can tell them apart.
-GENERIC_NAMES = {"park", "sitting area", "garden", "triangle", "plaza", "mall", "playground"}
+GENERIC_NAMES = {"park", "sitting area", "garden", "triangle", "plaza", "mall", "playground", "lot"}
 
 
 @lru_cache(maxsize=1)
@@ -58,6 +58,8 @@ def load_parks():
     Some parks are recorded as several properties with the same name (e.g. two
     "Kissena Corridor Park" pieces). People think of them as one park, so properties
     with the same specific name are merged into one, using the first property ID.
+    Only within one borough, though: Manhattan's and Brooklyn's "Columbus Park" are
+    different parks. (The first letter of the property ID is the borough: B, M, Q, R, X.)
     """
     if not PARKS_GEOJSON.exists():
         return []
@@ -70,7 +72,7 @@ def load_parks():
         generic = name.lower() in GENERIC_NAMES
         if generic and props.get("address"):
             name = f"{name} at {props['address'].title()}"
-        key = props["park_id"] if generic else name.lower()
+        key = props["park_id"] if generic else (props["park_id"][0], name.lower())
         if key in merged:
             park = merged[key]
             park["geometry"] = park["geometry"] + coords

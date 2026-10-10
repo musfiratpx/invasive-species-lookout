@@ -15,9 +15,9 @@ Checks that the server is up and shows which modes are active.
 ```json
 {
   "ok": true,
-  "area": {"name": "Queens, New York City", "inat_place_ids": [675],
+  "area": {"name": "New York City", "inat_place_ids": [674],
            "center": [40.741, -73.812], "radius_km": 2.0},
-  "observations": 14620,
+  "observations": 72899,
   "cache_updated_at": "2026-10-09T18:02:11+00:00",
   "rag_mode": "extractive",
   "retriever": "keyword"
@@ -53,7 +53,7 @@ Sightings to draw on the map. `bbox` is optional. Without it, you get every sigh
 - `scientific_name` is what the observer recorded, which may be a variety of the listed species.
 - `danger_level` is `1`–`4`, or `null` for "Not yet ranked".
 - `obscured: true` means iNaturalist blurred the location for privacy (moved up to ~20 km). The map doesn't draw these.
-- `accuracy_m` is how precise the location is, in meters, or `null` if unknown. The map doesn't draw sightings over 1,000 m: some are only placed at "Queens", which iNaturalist puts at the borough's center point.
+- `accuracy_m` is how precise the location is, in meters, or `null` if unknown. The map doesn't draw sightings over 1,000 m: some are only placed at a borough like "Queens", which iNaturalist puts at the borough's center point.
 - `iconic_taxon` is one of `Plantae, Insecta, Aves, Reptilia, Mammalia, Actinopterygii, Mollusca, Fungi, Amphibia, Arachnida, Animalia, Chromista, Protozoa`. The map icon is picked from this.
 
 ## `GET /api/species`
@@ -96,11 +96,13 @@ Everything the sidebar shows for one species. An unknown `species_id` returns `4
   },
   "kissena_status": ["common_here"],
   "sightings": {
-    "total": 27,
-    "by_month_of_year": [3, 0, 0, 10, 1, 1, 3, 0, 0, 1, 5, 3],
+    "total": 1182,
+    "by_month_of_year": [33, 18, 15, 205, 99, 66, 80, 65, 94, 63, 97, 347],
     "nyc_by_month_of_year": [159, 129, 54, 664, 334, 179, 186, 195, 227, 209, 433, 1792],
-    "first_seen": "2015-11-09",
-    "last_seen": "2026-07-06"
+    "by_month_per_10k": [60.7, 34.8, 14.6, 66.6, 41.4, 30.3, 36.1, 33.4, 46.0, 43.8, 112.8, 572.5],
+    "nyc_by_month_per_10k": [51.6, 45.0, 10.3, 43.0, 25.2, 15.9, 14.8, 16.8, 18.7, 19.8, 89.8, 601.8],
+    "first_seen": "2006-01-28",
+    "last_seen": "2026-10-09"
   },
   "photos": [
     {
@@ -122,18 +124,8 @@ Everything the sidebar shows for one species. An unknown `species_id` returns `4
       "is_default": true
     },
     "report": "New York's official database for invasive species sightings is iMapInvasives, ...",
-    "sources": [],
-    "found_by": {
-      "summary": null,
-      "report": {
-        "retriever": "snowflake",
-        "files": ["how-to-report.md"],
-        "section": "How to report it",
-        "word_for_word": true,
-        "reviewed_by": {"how-to-report.md": null}
-      }
-    },
-    "fact_sheet": null
+    "report_note": null,
+    "sources": []
   }
 }
 ```
@@ -143,6 +135,7 @@ Field notes:
 - **`ny_status`**: `"prohibited"` or `"regulated"`, from NYS DEC Part 575.
 - **`danger`**: comes only from `danger_levels.csv`. When `level` is `null`, `label` is `"Not yet ranked"`. `basis` is `"ny_plant_rank"` (plants, where `ny_rank` and `score` are filled) or `"ny_part575_status"` (everything else, where they are `null`). Show `health_warning` only when it isn't `null`.
 - **`sightings.by_month_of_year`**: sightings in our area, January first. `nyc_by_month_of_year` covers all of NYC, which shows the seasonal pattern better when local numbers are small. Label whichever one you show.
+- **`sightings.by_month_per_10k`** and **`nyc_by_month_per_10k`**: the same months **adjusted for how busy each month is**: this species' sightings per 10,000 research-grade sightings of *any* species that month (from `cache/activity_by_month.json`). Raw counts mostly follow how many people are out posting (the City Nature Challenge makes every April look huge); these show when the species makes up more of what people report. `null` if the totals file is missing.
 - **`photos`**: up to 8. `license: null` means all rights reserved. Show a "View on iNaturalist" link instead of embedding the image. Always show `attribution`.
 - **`sound`**: `null` for most species. Hide the section completely. When present, it looks like this:
   ```json
@@ -158,20 +151,31 @@ Field notes:
   - A `null` section means our sources don't cover it. Show "No information in our sources yet".
   - `handling.text` is never empty. When `is_default` is `true`, it's the cautious default message.
   - `touch_safe` is `true`, `false`, or `null`. It is only non-`null` when a source explicitly says so.
+  - `lookalikes` is the fact sheet's "Look-alikes" section **word for word** (never AI-rewritten): species it can be confused with, often a native one, and how the source says to tell them apart. `null` means our sources don't cover it. The sidebar hides the heading when it is `null`.
   - `report` is how to report a sighting, shown **word for word** from the sources (never AI-rewritten). It holds the species' own reporting note, if any, then the general instructions from `knowledge/how-to-report.md`. Paragraphs are separated by a blank line (`\n\n`). `null` means no reporting source yet.
+  - `report_note` is only the species' own reporting advice (the part of `report` that isn't the general text from `GET /api/how-to-report`), or `null`. Today only the mute swan has one.
   - `sources` lists `{title, url}` for every document used.
-  - `found_by` says, per section (`summary`, `history`, `seasons`, `handling`, `report`), how the text was found: `retriever` is `"snowflake"` (Cortex Search) or `"keyword"` (the offline backup, also used if Snowflake failed during the build), plus the fact-sheet `files` and `section` it came from, and `word_for_word` (`false` only if a Cortex model reworded it). `null` = nothing found. The UI shows this as a small "🔎 Found by …" line.
-  - `fact_sheet` is the species' own fact sheet `{file, reviewed_by}`. `reviewed_by` is `null` until a teammate puts their name in that file's `reviewed_by:` header line; the UI shows "Draft" until then. `fact_sheet` is `null` if the species has no sheet.
 
 ## `GET /api/parks`
 
-Every Queens park with at least one sighting, most sightings first. Boundaries are NYC Parks' official "Parks Properties" (NYC Open Data). Properties sharing a specific name (e.g. two pieces of "Kissena Corridor Park") are merged into one park; generic names like "Park" get their address added.
+Every NYC park (all five boroughs) with at least one sighting, most sightings first. Boundaries are NYC Parks' official "Parks Properties" (NYC Open Data). Properties sharing a specific name (e.g. two pieces of "Kissena Corridor Park") are merged into one park (only within the same borough: Manhattan's and Brooklyn's "Columbus Park" stay separate); generic names like "Park" get their address added.
 
 ```json
 [{"park_id": "Q001", "name": "Alley Pond Park", "acres": 635.514, "type": "Flagship Park", "sightings": 3138, "species": 49}]
 ```
 
 Only sightings with a trustworthy location (not privacy-blurred, accuracy within 1 km) are matched to parks.
+
+## `GET /api/parks/outlines`
+
+The boundary of every park in `GET /api/parks` (same order), as one GeoJSON FeatureCollection, so the map can draw them all faintly and open a park's profile when it's tapped. Coordinates are rounded to 5 decimals (about 1 m). About 700 KB, or 140 KB compressed.
+
+```json
+{"type": "FeatureCollection", "features": [
+  {"type": "Feature", "properties": {"park_id": "Q001", "name": "Alley Pond Park", "sightings": 3138},
+   "geometry": {"type": "MultiPolygon", "coordinates": [...]}}
+]}
+```
 
 ## `GET /api/parks/{park_id}`
 
@@ -197,6 +201,31 @@ A park's profile. Unknown `park_id` → `404`.
 - `outline` is GeoJSON for drawing the park boundary.
 
 The map endpoint also includes `park_id` (or `null`) on each sighting.
+
+## `GET /api/quiz`
+
+For the photo quiz: every species that has at least one **openly licensed** photo, with only those photos. "All rights reserved" photos are left out.
+
+```json
+[{"species_id": "52856", "scientific_name": "Artemisia vulgaris", "common_name": "common mugwort",
+  "iconic_taxon": "Plantae", "danger_level": 3, "danger_label": "High",
+  "photos": [{"url": "https://inaturalist-open-data.s3.amazonaws.com/photos/.../medium.jpg",
+              "attribution": "(c) pak2024, some rights reserved (CC BY-NC)", "license": "cc-by-nc",
+              "observation_url": "https://www.inaturalist.org/observations/214426506"}]}]
+```
+
+Always show `attribution` and link `observation_url` under the photo, as everywhere else.
+
+## `GET /api/how-to-report`
+
+The general "How to report it" instructions from `knowledge/how-to-report.md`, **word for word**, with its sources. The park field guide prints it once at the end.
+
+```json
+{"text": "New York's official database for invasive species sightings is iMapInvasives, ...",
+ "sources": [{"title": "Report an Invasive | NY iMapInvasives (...)", "url": "https://www.nyimapinvasives.org/report"}]}
+```
+
+`text` is `null` (and `sources` empty) if that file has no "How to report it" section. Paragraphs are separated by a blank line (`\n\n`).
 
 ## `POST /api/ask` (planned, optional)
 

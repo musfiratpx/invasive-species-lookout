@@ -1,6 +1,6 @@
 "use client";
 /**
- * Profile of one Queens park: which NY-listed invasive species have been seen there,
+ * Profile of one NYC park: which NY-listed invasive species have been seen there,
  * how dangerous they are, when people see them, and the latest sightings.
  * Uses the same slide-in panel as the species sidebar (a bottom sheet on phones).
  * Tapping a species opens its details; the park stays highlighted on the map.
@@ -9,15 +9,18 @@
 import { useEffect, useRef } from "react";
 
 import MonthChart from "@/components/MonthChart";
-import ReportButton from "@/components/ReportButton";
+import ReportDontPull from "@/components/ReportDontPull";
+import { formatDay, formatMonth } from "@/lib/dates";
 import { DANGER_COLORS } from "@/lib/labels";
 import { taxonIcon } from "@/lib/taxa";
+import { useReturnFocus } from "@/lib/useReturnFocus";
 
 const LEVEL_ORDER = ["Very High", "High", "Moderate", "Low", "Not yet ranked"];
 const LEVEL_NUMBER = { "Very High": 4, High: 3, Moderate: 2, Low: 1, "Not yet ranked": null };
 
 export default function ParkProfile({ park, error, onClose, onPickSpecies }) {
   const closeButton = useRef(null);
+  useReturnFocus();
 
   useEffect(() => {
     closeButton.current?.focus();
@@ -49,7 +52,11 @@ function Details({ park, onPickSpecies }) {
           {park.acres ? `${Math.round(park.acres).toLocaleString()} acres` : ""}
           {park.address ? ` · ${park.address}` : ""}
         </p>
-        <ReportButton />
+        <p className="guide-link">
+          <a href={`/guide/${encodeURIComponent(park.park_id)}`} target="_blank" rel="noreferrer">🖨️ Printable field guide</a>
+          <span className="muted"> for a walk with no signal</span>
+        </p>
+        <ReportDontPull kind="any" />
       </section>
 
       <section className="stat-row">
@@ -93,11 +100,12 @@ function Details({ park, onPickSpecies }) {
       </section>
 
       <section>
-        <h3>When people see them here</h3>
+        <h3>When people report them here</h3>
         <MonthChart counts={park.by_month_of_year} label="Sightings per month in this park" height={90} />
         <p className="muted">
-          Sightings per month, all years ({park.first_seen} to {park.last_seen}). Busy months partly reflect when people
-          visit and post, not only when species are present.
+          Sightings per month, all years ({formatMonth(park.first_seen)} to {formatMonth(park.last_seen)}). These follow when
+          people visit and post as much as when species are around. Events like late April&apos;s City Nature Challenge can
+          make one month look much busier.
         </p>
       </section>
 
@@ -106,7 +114,7 @@ function Details({ park, onPickSpecies }) {
         <ul>
           {park.recent.map((r) => (
             <li key={r.url}>
-              {r.observed_on}: {r.common_name} ·{" "}
+              {formatDay(r.observed_on)}: {r.common_name} ·{" "}
               <a href={r.url} target="_blank" rel="noreferrer">iNaturalist observation</a>
             </li>
           ))}

@@ -21,6 +21,6 @@ Yellow floating-heart is native to Asia and Europe. It is sometimes planted as a
 
 
 ## How to handle it
-Removing large stands is very difficult; any plant part left behind can grow back. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Removing large stands is very difficult; any plant part left behind can grow back.
 
 ## How to report it

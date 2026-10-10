@@ -25,6 +25,6 @@ Japanese hop is native to eastern Asia. It was brought to the United States in t
 Japanese hop is an annual vine, growing fresh each year. Its small green flowers grow where the leaves meet the stem, with male and female flowers on separate plants: the female flowers hang in cone-shaped clusters. The small seeds are spread by wind and water.
 
 ## How to handle it
-Do not buy, plant or transplant Japanese hop. The stems have prickles, so vines should only be hand-pulled while wearing gloves, long sleeves, long pants and shoes to avoid injury. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Do not buy, plant or transplant Japanese hop. The stems have prickles, so vines should only be hand-pulled while wearing gloves, long sleeves, long pants and shoes to avoid injury.
 
 ## How to report it

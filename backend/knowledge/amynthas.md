@@ -24,6 +24,6 @@ Jumping worms come from East Asia. They were brought to the southern United Stat
 
 
 ## How to handle it
-Prevention is the best tool. Don't buy or move jumping worms for composting, fishing or gardening, and avoid moving soil, mulch and plants from infested areas: their cocoons are smaller than a mustard seed and travel easily in soil and mulch. A single worm can start a new population, because they can reproduce without mating. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
+Prevention is the best tool. Don't buy or move jumping worms for composting, fishing or gardening, and avoid moving soil, mulch and plants from infested areas: their cocoons are smaller than a mustard seed and travel easily in soil and mulch. A single worm can start a new population, because they can reproduce without mating.
 
 ## How to report it

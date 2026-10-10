@@ -24,6 +24,6 @@ Border privet is native to Japan.
 It produces clusters of small, white, trumpet-shaped flowers at the tips of its branches. Its berries turn black when ripe and stay on the plant into winter.
 
 ## How to handle it
-Smaller shrubs can be pulled by hand; larger shrubs are treated with herbicide. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Smaller shrubs can be pulled by hand; larger shrubs are treated with herbicide.
 
 ## How to report it

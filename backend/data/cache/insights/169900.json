@@ -3,10 +3,10 @@
   "history": "Water chestnut is native to parts of Europe, Asia and Africa. It was planted in a Harvard botanical garden around 1877 and escaped into the Charles River by 1879. It reached Collins Lake near Scotia, New York, around 1884, was established in the Hudson River by the early 1900s, and is now found across New York, from the Niagara Frontier and the Finger Lakes to Lake Champlain and Long Island.",
   "seasons": "Water chestnut is an annual: it dies back each fall and regrows from seeds in spring. Each plant forms rosettes of floating triangular leaves with toothed edges. It starts producing fruit in July; each hard, nut-like fruit has four very sharp spines and ripens in about a month. The nuts sink and can stay alive in the mud for up to 12 years.",
   "handling": {
-    "text": "Be careful near infested water: the sharp, spiny nuts can cause puncture injuries if stepped on, both to people walking along the shore and to animals. Because it is an annual, it can be controlled by stopping it from making seeds; small populations can be hand-pulled from canoes or kayaks. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Be careful near infested water: the sharp, spiny nuts can cause puncture injuries if stepped on, both to people walking along the shore and to animals. Because it is an annual, it can be controlled by stopping it from making seeds; small populations can be hand-pulled from canoes or kayaks.",
     "touch_safe": false
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Water Chestnut | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -71,5 +71,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:08.892275+00:00"
+  "generated_at": "2026-10-10T01:47:08.892275+00:00",
+  "lookalikes": null
 }

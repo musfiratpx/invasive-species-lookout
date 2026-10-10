@@ -24,6 +24,6 @@ Wild chervil is native to Europe and Asia. It colonizes stream corridors, distur
 It is a spring-blooming perennial: its white flower clusters appear in late spring, then turn into small, dry, long fruits. Most seeds fall close to the parent plant and last in the soil for only one winter.
 
 ## How to handle it
-Young plants can be pulled or dug up, but the taproot must come out or the plant can resprout. Cutting it when it flowers can reduce its spread, but this must be finished before the fruits form, because mowing is one of the main ways it spreads. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Young plants can be pulled or dug up, but the taproot must come out or the plant can resprout. Cutting it when it flowers can reduce its spread, but this must be finished before the fruits form, because mowing is one of the main ways it spreads.
 
 ## How to report it

@@ -21,6 +21,6 @@ Cup-plant is native to the central United States and Canada, but most experts co
 
 
 ## How to handle it
-Large infestations take a major investment to control; managers along the Au Sable River have used cutting and spraying. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Large infestations take a major investment to control; managers along the Au Sable River have used cutting and spraying.
 
 ## How to report it

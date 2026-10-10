@@ -11,9 +11,6 @@
 # After editing, run (from backend/):  python scripts/build_insights.py
 scientific_name: Genus species
 touch_safe: null
-# Leave reviewed_by empty until a teammate has checked every sentence against the sources.
-# Then put your name here; the app stops showing "Draft, not yet reviewed".
-reviewed_by:
 sources:
   - title: <official page title>
     url: <url>
@@ -27,6 +24,10 @@ sources:
 ## Seasonal differences
 
 ## How to handle it
+
+## Look-alikes
+<!-- Only species a source says it can be confused with (often a native one), and how the
+     source says to tell them apart. Shown word for word under "Don't confuse it with". -->
 
 ## How to report it
 <!-- Only species-specific reporting notes go here (e.g. "report collared swans to DEC").

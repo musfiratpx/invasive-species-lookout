@@ -1,5 +1,5 @@
 """
-Work out which Queens park (if any) each sighting is in, and save it to
+Work out which NYC park (if any) each sighting is in, and save it to
 data/cache/observation_parks.csv (observation_id, park_id).
 
 Only sightings with a trustworthy location are matched: not privacy-blurred and

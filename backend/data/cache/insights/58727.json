@@ -3,10 +3,10 @@
   "history": "Japanese barberry is native to Asia. It was brought to the United States as an ornamental plant, and spreads both by seed and by growing new shoots.",
   "seasons": "In April and May it has umbrella-shaped clusters of white flowers on the undersides of its branches. Its oblong red berries appear in September.",
   "handling": {
-    "text": "The stems have thorns, single or in pairs. Smaller shrubs can be pulled up; larger shrubs and infestations are treated with herbicides, which are applied in early spring and late fall when native plants are dormant. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "The stems have thorns, single or in pairs. Smaller shrubs can be pulled up; larger shrubs and infestations are treated with herbicides, which are applied in early spring and late fall when native plants are dormant.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Japanese Barberry | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -71,5 +71,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:33.232349+00:00"
+  "generated_at": "2026-10-10T01:47:33.232349+00:00",
+  "lookalikes": null
 }

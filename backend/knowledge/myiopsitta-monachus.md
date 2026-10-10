@@ -24,6 +24,5 @@ According to the findings in a proposed 2021 New York State Assembly bill, the a
 
 
 ## How to handle it
-In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
 
 ## How to report it

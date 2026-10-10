@@ -19,8 +19,7 @@ export default function SoundPlayer({ sound }) {
       )}
       {sound.observer_note && <p className="muted">Observer&apos;s note: &ldquo;{sound.observer_note}&rdquo;</p>}
       <p className="caption">
-        {sound.attribution}
-        {sound.license && ` · ${sound.license.toUpperCase()}`} ·{" "}
+        {sound.attribution} ·{" "}
         <a href={sound.observation_url} target="_blank" rel="noreferrer">iNaturalist observation</a>
       </p>
     </section>

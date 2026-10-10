@@ -21,6 +21,6 @@ Floating primrose-willow is native to South America and the southeastern United 
 
 
 ## How to handle it
-No management method is known to control it well in the long term. Because it needs shallow water, restoring deeper water may help. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+No management method is known to control it well in the long term. Because it needs shallow water, restoring deeper water may help.
 
 ## How to report it

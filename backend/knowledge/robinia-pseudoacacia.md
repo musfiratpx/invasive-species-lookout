@@ -21,6 +21,6 @@ Black locust is native to the United States, in the central and southern Appalac
 
 
 ## How to handle it
-Black locust's bark, seeds and leaves can be fatal to livestock if eaten. It is hard to remove: taking out large trees takes major effort, and trees treated with herbicide can keep resprouting for several years. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Black locust's bark, seeds and leaves can be fatal to livestock if eaten. It is hard to remove: taking out large trees takes major effort, and trees treated with herbicide can keep resprouting for several years.
 
 ## How to report it

@@ -24,6 +24,6 @@ Hydrilla is native to Asia. One form was imported to the U.S. as an aquarium pla
 In New York, hydrilla plants have both male and female flowers, set some seed, and survive the winter as underground tubers.
 
 ## How to handle it
-Hydrilla spreads mainly by stem fragments, so even tiny pieces can start a new population. It is most often carried to new waters on boats, trailers and live wells, and as a hitchhiker on water-garden plants. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Hydrilla spreads mainly by stem fragments, so even tiny pieces can start a new population. It is most often carried to new waters on boats, trailers and live wells, and as a hitchhiker on water-garden plants.
 
 ## How to report it

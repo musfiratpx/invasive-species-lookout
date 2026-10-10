@@ -21,6 +21,6 @@ Pale swallow-wort is native to Ukraine and southeastern European Russia. It may 
 Shoots come up in spring, the plants flower in early summer, and seed pods 1.5 to 3 inches long form in late July and early August. The seeds are carried by the wind, and a square meter of swallow-wort can produce 1,000 to 2,000 seeds a year.
 
 ## How to handle it
-Its deep, fibrous roots make it hard to remove; if digging it up, get as much of the root crown as possible. For small patches, plants and seed pods can be bagged before they release seed. Mowing won't get rid of it, and mowing after seeds form can spread them. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Its deep, fibrous roots make it hard to remove; if digging it up, get as much of the root crown as possible. For small patches, plants and seed pods can be bagged before they release seed. Mowing won't get rid of it, and mowing after seeds form can spread them.
 
 ## How to report it

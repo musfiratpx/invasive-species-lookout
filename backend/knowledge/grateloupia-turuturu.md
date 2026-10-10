@@ -21,6 +21,6 @@ Devil's tongue weed is native to the Northwest Pacific. It was first seen on the
 
 
 ## How to handle it
-Do not release it alive. DEC asks people to take several photos from different angles, dispose of the specimen, and report it. Clean, drain and dry boats and equipment before visiting another waterbody, and never dump aquarium contents into waterbodies, ditches or sewers. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Do not release it alive. DEC asks people to take several photos from different angles, dispose of the specimen, and report it. Clean, drain and dry boats and equipment before visiting another waterbody, and never dump aquarium contents into waterbodies, ditches or sewers.
 
 ## How to report it

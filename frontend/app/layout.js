@@ -9,7 +9,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Kissena Invasive Watch",
-  description: "Invasive species sightings across Queens, New York City, starting from Kissena Park.",
+  description: "Invasive species sightings across New York City, starting from Kissena Park in Queens.",
 };
 
 export default function RootLayout({ children }) {

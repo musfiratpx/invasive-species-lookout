@@ -3,10 +3,10 @@
   "history": "The Chinese mitten crab is native to East Asia. The first one on the U.S. East Coast was found in Chesapeake Bay in 2006, and the first in New York was found in the Hudson River near the Tappan Zee Bridge in 2007. It has since been seen far up the Hudson and in Long Island Sound, and its importation and interstate transport are banned under the federal Lacey Act.",
   "seasons": "Young crabs spend two to five years in freshwater rivers and streams, sometimes more than 50 miles inland. Adults then migrate downstream to salty estuaries to mate and spawn.",
   "handling": {
-    "text": "Any sightings should be reported to iMapInvasives. NYIS says crabs that are collected should be destroyed and not returned live to the water. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
+    "text": "Any sightings should be reported to iMapInvasives. NYIS says crabs that are collected should be destroyed and not returned live to the water.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Chinese Mitten Crab | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -67,5 +67,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:46.561627+00:00"
+  "generated_at": "2026-10-10T01:47:46.561627+00:00",
+  "lookalikes": "Mitten crabs have equal-sized claws with white tips and furry \"mittens\" of hair; a crab without hairy claws is probably not a mitten crab. Small ones can be confused with the native Harris mud crab."
 }

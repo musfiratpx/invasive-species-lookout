@@ -24,6 +24,5 @@ Japanese chaff flower is native to East Asia, mainly Korea and Japan.
 It flowers from August to September with spikes of tiny green flowers at the ends of the stems and where the leaves join. The small bracts around the seeds easily stick to cloth.
 
 ## How to handle it
-In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
 
 ## How to report it

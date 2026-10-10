@@ -21,6 +21,9 @@ The Chinese mitten crab is native to East Asia. The first one on the U.S. East C
 Young crabs spend two to five years in freshwater rivers and streams, sometimes more than 50 miles inland. Adults then migrate downstream to salty estuaries to mate and spawn.
 
 ## How to handle it
-Any sightings should be reported to iMapInvasives. NYIS says crabs that are collected should be destroyed and not returned live to the water. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
+Any sightings should be reported to iMapInvasives. NYIS says crabs that are collected should be destroyed and not returned live to the water.
+
+## Look-alikes
+Mitten crabs have equal-sized claws with white tips and furry "mittens" of hair; a crab without hairy claws is probably not a mitten crab. Small ones can be confused with the native Harris mud crab.
 
 ## How to report it

@@ -21,6 +21,6 @@ The Asian clam is native to the fresh waters of eastern and southern Asia. It pr
 Adults usually reproduce twice a year, and a single clam, which can fertilize itself, can produce 1,000 to 100,000 young each year. Populations can crash after sudden temperature changes or low oxygen, but they recover quickly. It cannot survive water colder than about 2°C (36°F), and needs water around 15°C (59°F) or warmer to reproduce.
 
 ## How to handle it
-Because it spreads so easily, getting rid of the Asian clam is usually not possible, so the focus is on stopping its spread. It is likely spread by people: through bait buckets, released market clams, water in boats' bilges and livewells, and plants or mud on anchors and trailers. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
+Because it spreads so easily, getting rid of the Asian clam is usually not possible, so the focus is on stopping its spread. It is likely spread by people: through bait buckets, released market clams, water in boats' bilges and livewells, and plants or mud on anchors and trailers.
 
 ## How to report it

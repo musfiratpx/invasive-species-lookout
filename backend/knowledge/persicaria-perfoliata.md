@@ -25,6 +25,6 @@ Mile-a-minute weed is native to India and eastern Asia. It was accidentally brou
 Seeds sprout from early April through early July. It flowers and makes fruit over a long period, from June through October, producing spikes of blue, berry-like fruits. Frost kills the vines, and the seeds spend the winter in the soil, where they can stay alive for up to six years. Birds carry the seeds long distances, and the seeds can also float in water for a week or more.
 
 ## How to handle it
-The vines and leaf undersides are covered in backward-pointing barbs. Hand-pulling works best early in the season, before the barbs harden; after that, thicker gloves are needed. Later in the season, pull carefully so the fruit isn't knocked off and spread. A tiny weevil that feeds only on mile-a-minute has been released in the U.S. and is currently the most promising control. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+The vines and leaf undersides are covered in backward-pointing barbs. Hand-pulling works best early in the season, before the barbs harden; after that, thicker gloves are needed. Later in the season, pull carefully so the fruit isn't knocked off and spread. A tiny weevil that feeds only on mile-a-minute has been released in the U.S. and is currently the most promising control.
 
 ## How to report it

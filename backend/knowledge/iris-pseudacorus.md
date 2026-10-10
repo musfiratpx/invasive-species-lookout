@@ -24,6 +24,6 @@ Yellow flag iris is native to Europe, Asia and northern Africa. It was brought t
 Shoots come up in spring, and in mild winters they can stay green all year. It flowers from late May into early July, though plants usually don't flower until their third year. Seeds form from August through October and can float for more than a year, spreading along waterways.
 
 ## How to handle it
-All parts of yellow flag iris are toxic to livestock and other animals. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+All parts of yellow flag iris are toxic to livestock and other animals.
 
 ## How to report it

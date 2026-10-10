@@ -24,6 +24,6 @@ Fanwort is native to parts of North and South America, including areas just sout
 
 
 ## How to handle it
-Once established, fanwort is extremely difficult to remove from the bottom of a waterbody, and fragments can start new colonies. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Once established, fanwort is extremely difficult to remove from the bottom of a waterbody, and fragments can start new colonies.
 
 ## How to report it

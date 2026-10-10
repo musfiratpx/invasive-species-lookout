@@ -3,10 +3,10 @@
   "history": "Norway maple is native to Europe and western Asia. It came to the United States as an ornamental tree, and its seeds then escaped from planted trees. Its many winged seeds are spread by the wind and sprout quickly, and one study found it suffers less insect and fungus damage than native sugar maple, which may help it spread.",
   "seasons": "Norway maple leafs out earlier in spring than other maples. Clusters of small yellow or yellow-green flowers appear in April and May, and over the summer the fruits mature into helicopter-like seeds with wide-spreading wings. In fall the leaves usually turn pale yellow. A quick way to tell it from sugar maple: a broken leaf stalk oozes milky sap.",
   "handling": {
-    "text": "Seedlings can be pulled from moist soil while they are small; larger saplings can be dug out with their roots, and big trees cut down. Planting native maples, such as red, sugar or silver maple, instead of Norway maple helps prevent its spread. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Seedlings can be pulled from moist soil while they are small; larger saplings can be dug out with their roots, and big trees cut down. Planting native maples, such as red, sugar or silver maple, instead of Norway maple helps prevent its spread.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Norway Maple | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -71,5 +71,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:25.446550+00:00"
+  "generated_at": "2026-10-10T01:47:25.446550+00:00",
+  "lookalikes": null
 }

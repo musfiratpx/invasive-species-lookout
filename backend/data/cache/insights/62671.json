@@ -3,10 +3,10 @@
   "history": "Kudzu is native to China, Japan and the Indian subcontinent. It was introduced to North America in 1876 at the Japanese pavilion of the Philadelphia Centennial Exposition, then planted to shade porches in the South. In the early 1900s the government paid farmers to plant it for erosion control and livestock feed, and during the Great Depression the Civilian Conservation Corps planted thousands of acres on hillsides. It is now found in 30 states, most commonly in the South.",
   "seasons": "Its fragrant red, purple or magenta flowers, with a grape-like smell, appear in mid- to late summer, but only on vines climbing upward in full sun, and usually not before the plant's third year. In winter, stems trailing along open ground tend to die back, while climbing vines grow thick bark and survive.",
   "handling": {
-    "text": "In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": null,
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Kudzu | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -71,5 +71,6 @@
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-10T01:47:44.380204+00:00"
+  "generated_at": "2026-10-10T01:47:44.380204+00:00",
+  "lookalikes": null
 }
