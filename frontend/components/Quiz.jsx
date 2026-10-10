@@ -112,11 +112,16 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
 
         {question && (
           <>
-            <p className="muted">
-              Question {number} of {ROUND_LENGTH} · Score: {right} of {results.length}
-            </p>
-            <ProgressDots results={results} current={number} />
+            <div className="quiz-progress">
+              <p className="muted">
+                Question {number} of {ROUND_LENGTH} · Score: {right} of {results.length}
+              </p>
+              <ProgressDots results={results} current={number} />
+            </div>
+            {/* Photo on the left, answers on the right (stacked on phones), so nobody has to scroll to answer. */}
+            <div className="quiz-body">
             <QuizPhoto photo={question.photo} />
+            <div className="quiz-answers">
 
             <p><strong>Which invasive species is this?</strong> <span className="muted">(or press 1, 2 or 3)</span></p>
             <div className="quiz-choices" role="group" aria-label="Answer choices">
@@ -145,6 +150,9 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
                 {finished ? null : <button ref={nextButton} className="quiz-next" onClick={nextQuestion}>Next photo →</button>}
               </p>
             )}
+
+            </div>
+            </div>
 
             {finished && <RoundOver results={results} onPlayAgain={() => startRound()} onLearnMore={onLearnMore} nextButton={nextButton} />}
           </>
