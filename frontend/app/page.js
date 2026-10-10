@@ -308,11 +308,11 @@ export default function Home() {
           parkCount={parks.length}
         />
         <button className="header-button" onClick={() => setLocateRequest((n) => n + 1)} aria-label="Species seen near me">
-          📍<span className="button-label"> Near me</span>
+          <span className="symbol" aria-hidden="true">⌖</span><span className="button-label"> Near me</span>
         </button>
         {/* On phones only the icons show (CSS hides .button-label); aria-label keeps the name for screen readers. */}
         <button className="header-button" onClick={() => setQuiz("open")} aria-label={quiz === "paused" ? "Back to the quiz" : "Quiz: spot the species"}>
-          🎯<span className="button-label"> Quiz</span>
+          <span className="symbol" aria-hidden="true">◎</span><span className="button-label"> Quiz</span>
         </button>
         <MusicToggle />
       </header>
