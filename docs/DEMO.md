@@ -26,7 +26,7 @@ Check <http://localhost:8000/api/health>: `"observations": 14620` means the data
 | 0:30 | Tap **Mute Swan** in the park's species list | "Everyone knows the swans in the lake. They're actually prohibited in New York." |
 | 0:40 | Point at the danger box | "This danger level comes from New York's official legal list, explained in plain words. AI never decides it." |
 | 0:48 | Point at **📣 Report a sighting** | "One tap opens New York's official reporting site." |
-| 0:53 | Close the panel → **Show all** → in Filter, open **Types** and pick **Plants** | "Zoom out, and you can see where invasive plants cluster across the whole city." |
+| 0:53 | Close the panel → **Show all** → in Filter, open **Plants & animals** and pick **Plants** | "Zoom out, and you can see where invasive plants cluster across the whole city." |
 
 If something breaks mid-demo, keep talking and switch to `docs/screenshot.jpg`.
 

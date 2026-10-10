@@ -1,6 +1,7 @@
 "use client";
 /**
- * "Types: [All ›]" dropdown that picks which kinds of species the map shows.
+ * "Plants & animals: [All ›]" dropdown that picks which kinds of species the map shows
+ * (plants, birds, insects, ...). In the code these groups are called "types".
  * The menu slides out to the right of the legend (above the button on phones).
  * Selected types get a border.
  *
@@ -76,7 +77,7 @@ export default function TypeFilter({ types, counts, selected, onChange, disabled
 
   return (
     <div className="type-filter" ref={wrapper}>
-      <span className="type-filter-label" id="type-filter-label">Types:</span>
+      <span className="type-filter-label" id="type-filter-label">Plants &amp; animals:</span>
       <button
         type="button"
         id="type-filter-button"
@@ -97,10 +98,10 @@ export default function TypeFilter({ types, counts, selected, onChange, disabled
           className={`type-filter-menu${phone ? " phone" : ""}`}
           style={position}
           role="group"
-          aria-label="Species types to show"
+          aria-label="Plants and animals to show"
         >
           <p className="type-filter-heading">Show on map</p>
-          <OptionButton emoji="✨" label="All types" count={total} pressed={selected === null} onClick={() => onChange(null)} />
+          <OptionButton emoji="✨" label="All" count={total} pressed={selected === null} onClick={() => onChange(null)} />
           <hr className="type-filter-divider" />
           {types.map((type) => (
             <OptionButton
@@ -130,9 +131,9 @@ function OptionButton({ emoji, label, count, pressed, onClick }) {
   );
 }
 
-/** What the closed button says: "All", "Plants, Birds", or "3 types". */
+/** What the closed button says: "All", "Plants, Birds", or "3 groups". */
 function buttonText(selected, types) {
   if (selected === null) return "All";
   if (selected.length <= 2) return selected.map((id) => types.find((t) => t.id === id)?.label || id).join(", ");
-  return `${selected.length} types`;
+  return `${selected.length} groups`;
 }

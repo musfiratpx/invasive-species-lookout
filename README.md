@@ -15,7 +15,7 @@ Every fact links to its source. Danger levels come from official New York rankin
 - **Print a park field guide** (`/guide/Q024`): one page with the park's most-reported species, credited photos, danger levels, how to report, and QR codes back to the live map.
 - **Report it, don't pull it.** Every species and park explains NYC Parks' rule against removing plants or animals, links to NY iMapInvasives for reporting, and to official NYC Parks volunteer programs.
 - **Spot the species**: a 10-question photo quiz with real, credited iNaturalist photos and look-alike answers. "Copy my score" shares the result with a link to the quiz.
-- **Filter** by danger level or type (plants, birds, insects, fish and shellfish, other animals) from the **Types** dropdown.
+- **Filter** by danger level or type (plants, birds, insects, fish and shellfish, other animals) from the **Plants & animals** dropdown.
 - **Share any view**: links like `/?park=Q024` (Kissena Park), `/?species=6921` (Mute Swan) or `/?quiz=1` open the app on that view, and the browser's Back button closes panels one step at a time.
 - **Find me** shows where you are on the map; the location stays in your browser.
 - **Accessible**: works with a keyboard and screen readers, respects "reduce motion", and uses large tap targets on phones.

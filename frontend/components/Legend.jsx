@@ -1,7 +1,7 @@
 "use client";
 /**
  * Map legend that doubles as a filter: pick a time period, tap a danger level to hide or
- * show it, and pick which types to show from the "Types" dropdown (TypeFilter.jsx).
+ * show it, and pick which kinds to show from the "Plants & animals" dropdown (TypeFilter.jsx).
  * Each option shows how many sightings it covers;
  * options with no sightings (e.g. no "Low" species in NYC) are left out.
  * It can be collapsed behind a "Filter" button to keep the map clear
@@ -68,7 +68,7 @@ export default function Legend({ open, onToggleOpen, focusName, period, onChange
       <details className="legend-help">
         <summary>ⓘ How to read the map</summary>
         <ul className="muted">
-          <li>Tap a danger level to show or hide it. Pick types from the Types menu.</li>
+          <li>Tap a danger level to show or hide it. Pick plants, birds and more from the Plants &amp; animals menu.</li>
           <li>Numbered bubbles group nearby sightings. Tap one to zoom in, or to list what&apos;s there.</li>
           <li>Hover a bubble (or press and hold on a phone) to preview the species inside.</li>
           <li>&quot;×N&quot; on an icon = N sightings of that species within ~100 m.</li>

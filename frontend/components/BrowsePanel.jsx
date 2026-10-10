@@ -200,7 +200,7 @@ function BrowseChips({ species, levelChip, typeChip, onLevel, onType }) {
           </button>
         ))}
       </div>
-      <div role="group" aria-label="Show one type">
+      <div role="group" aria-label="Show one group of plants or animals">
         {types.map((t) => (
           <button key={t.id} className="browse-chip" aria-pressed={typeChip === t.id} onClick={() => onType(t.id)}>
             <span aria-hidden="true">{t.emoji}</span> {t.label}
