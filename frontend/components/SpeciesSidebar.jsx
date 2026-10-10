@@ -60,9 +60,12 @@ export default function SpeciesSidebar({ speciesId, mapCount, onClose, onBack, b
 
   return (
     <aside className="sidebar" aria-label="Species details">
-      <button ref={closeButton} className="sidebar-close" onClick={onClose} aria-label="Close species panel">
-        ✕
-      </button>
+      {/* The ✕ sits over the photo's corner without taking up any room (see .sidebar-close-wrap). */}
+      <div className="sidebar-close-wrap">
+        <button ref={closeButton} className="sidebar-close" onClick={onClose} aria-label="Close species panel">
+          ✕
+        </button>
+      </div>
 
       {onBack && (
         <button className="sidebar-back" onClick={onBack}>

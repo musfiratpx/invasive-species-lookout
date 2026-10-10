@@ -36,6 +36,10 @@ import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
 const CENTER = (process.env.NEXT_PUBLIC_MAP_CENTER || "40.7000,-73.9500").split(",").map(Number);
 const ZOOM = Number(process.env.NEXT_PUBLIC_MAP_ZOOM || 11);
 const MAX_ZOOM = 20; // street level; the background map is drawn as shapes, so it stays sharp
+// Keep people near New York City: no zooming out past the whole city, and no panning far away
+// (all our sightings are inside these bounds, with some room around the edges).
+const MIN_ZOOM = 10;
+const NYC_BOUNDS = [[40.35, -74.5], [41.05, -73.45]]; // [south-west], [north-east] corners
 const LIST_FROM_ZOOM = 16; // clicking a bubble at this zoom or closer shows a list instead of zooming
 const DETAIL_FROM_ZOOM = 18; // from here, show every sighting at its own spot (no ×N merging)
 
@@ -377,7 +381,8 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
 export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark }) {
   const animate = !prefersLessMotion(); // also turns off the zoom and fade animations of the map itself
   return (
-    <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map" zoomAnimation={animate} fadeAnimation={animate} markerZoomAnimation={animate}
+    <MapContainer center={CENTER} zoom={ZOOM} minZoom={MIN_ZOOM} maxZoom={MAX_ZOOM}
+      maxBounds={NYC_BOUNDS} maxBoundsViscosity={1.0} /* 1.0 = a firm edge, the map won't drag past it */ className="map" zoomAnimation={animate} fadeAnimation={animate} markerZoomAnimation={animate}
       scrollWheelZoom={false} /* turned on by a click, so the page can scroll past the map (ScrollZoomOnClick) */>
       <Basemap /> {/* simplified green background map (lib/basemapStyle.js) */}
       <ScrollZoomOnClick />

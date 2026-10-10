@@ -54,8 +54,8 @@
   --cluster-ring: var(--bg);
 
   /* Text sizes: use these instead of new numbers, so the type stays consistent */
-  --text-xs: 0.75rem;  /* credits, small labels */
-  --text-sm: 0.85rem;  /* secondary text, buttons in panels */
+  --text-xs: 0.8rem;   /* credits, small labels (about 13.5 px) */
+  --text-sm: 0.9rem;   /* secondary text, buttons in panels (about 15 px) */
   --text-md: 1rem;     /* body text */
   --text-lg: 1.15rem;  /* small headings */
   --text-xl: 1.5rem;   /* panel titles */
@@ -82,6 +82,9 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; background: var(--page); }
+/* 17 px base instead of the browser's 16: Source Sans runs a little small, and every rem size
+   (all the --text-* tokens) grows with it. */
+html { font-size: 106.25%; }
 /* Serif headings, as in the field-guide mockup. Small labels stay in the plain font. */
 h1, h2, .sidebar h3, .dialog h2 { font-family: var(--serif); font-weight: normal; }
 a { color: var(--link); }
@@ -92,6 +95,7 @@ a { color: var(--link); }
 button {
   font: inherit;
   cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s; /* smooth hover */
   border: 1px solid var(--border);
   background: var(--bg);
   border-radius: var(--radius);
@@ -152,7 +156,9 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 }
 /* Rotating photos: all stacked; the active one fades in over 1.5 s */
 .hero-slide { position: absolute; inset: 0; background: center / cover no-repeat; opacity: 0; transition: opacity 1.5s ease; }
-.hero-slide.active { opacity: 1; }
+/* The photo on screen also zooms in very slowly, so the banner feels alive (off with reduce motion) */
+.hero-slide.active { opacity: 1; animation: hero-zoom 10s ease-out forwards; }
+@keyframes hero-zoom { from { transform: scale(1); } to { transform: scale(1.06); } }
 /* Dark green fade from the left, so the white text stays readable on any photo */
 .hero-fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(9, 36, 29, 0.9), rgba(9, 36, 29, 0.25)); }
 .hero-content { position: relative; z-index: 1; } /* above the photos and fade */
@@ -165,6 +171,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
   display: inline-block; margin-top: 20px; padding: 14px 18px;
   background: var(--lime); color: var(--forest); text-decoration: none; border-radius: 3px;
 }
+.hero-button { transition: filter 0.15s, background-color 0.15s; }
 .hero-button:hover { filter: brightness(0.95); }
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
 .hero-buttons .hero-button { margin-top: 0; }
@@ -176,8 +183,21 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .hero-stats dd { margin: 4px 0 0; font-family: var(--serif); font-size: var(--text-2xl); color: var(--on-forest); }
 .hero-date { margin: 14px 0 0; font-size: var(--text-sm); color: var(--on-forest-muted); }
 /* Photo credit, small in the bottom-right corner (every photo is credited, CLAUDE.md rule 9) */
-.hero-credit {
+/* Bottom-right corner: ‹ dots › controls, with the photo credit under them */
+.hero-photo-bar {
   position: absolute; z-index: 1; right: 12px; bottom: 8px; max-width: calc(100% - 24px);
+  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+}
+.hero-photo-controls { display: flex; align-items: center; gap: 6px; }
+.hero-photo-controls button {
+  border: none; padding: 0; color: var(--on-forest); background: rgba(9, 36, 29, 0.55);
+}
+.hero-photo-controls button:not(.hero-dot) { width: 30px; height: 30px; border-radius: 50%; font-size: var(--text-lg); line-height: 1; }
+.hero-photo-controls button:not(.hero-dot):hover { background: rgba(9, 36, 29, 0.8); }
+.hero-dot { width: 9px; height: 9px; border-radius: 50%; opacity: 0.6; background: var(--on-forest) !important; transition: opacity 0.2s, transform 0.2s; }
+.hero-dot.active { opacity: 1; transform: scale(1.3); }
+.hero-dot:hover { opacity: 0.9; }
+.hero-credit {
   font-size: var(--text-xs); color: var(--on-forest-muted); text-decoration: none; text-align: right;
   background: rgba(9, 36, 29, 0.55); padding: 2px 8px; border-radius: 4px;
 }
@@ -239,7 +259,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 
 .footer {
   display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
-  font-size: var(--text-xs); color: var(--muted);
+  font-size: var(--text-sm); color: var(--muted);
   padding: 6px var(--gap); border-top: 1px solid var(--border); background: var(--page);
 }
 
@@ -255,6 +275,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2); font-size: var(--text-sm); max-width: calc(100% - 2 * var(--gap));
 }
 .focus-banner button { border-radius: 999px; }
+.focus-banner, .map-status, .legend, .type-filter-menu { animation-name: fade-in; animation-duration: 0.18s; animation-timing-function: ease-out; }
 .focus-count { color: var(--muted); font-size: 0.85em; }
 
 /* Messages over the map: loading, can't connect, no results */
@@ -441,6 +462,11 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
   background: rgba(255, 254, 247, 0.92); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 .sidebar-close:hover { background: var(--bg); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+/* Species panel: a zero-height sticky layer holds the ✕, so it hovers over the photo, the same
+   8 px from the photo's top and right edges, instead of floating (a float pushed the photo down
+   and left a blank band above it). */
+.sidebar-close-wrap { position: sticky; top: 0; height: 0; z-index: 3; display: flex; justify-content: flex-end; }
+.sidebar-close-wrap .sidebar-close { position: static; float: none; margin: var(--space-2) var(--space-2) 0 0; }
 .sidebar-back { margin-bottom: 8px; }
 .sidebar section { margin: var(--space-4) 0; }
 .sidebar h2 { font-size: var(--text-xl); line-height: 1.15; margin: 8px 0 0; }
@@ -448,13 +474,16 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 /* Collapsible groups in the species panel ("What to do", "About this species", ...) */
 .sidebar details.group { border-top: 1px solid var(--border); padding: var(--space-3) 0; }
 .sidebar details.group > summary { cursor: pointer; font-weight: 700; font-size: var(--text-md); }
-.sidebar details.group h4 { font-size: var(--text-sm); margin: var(--space-3) 0 var(--space-1); }
+.sidebar details.group h4 { font-size: var(--text-md); margin: var(--space-3) 0 var(--space-1); }
 /* Small fold-outs: the ⓘ under "In New York City", and "What does High mean?" under the danger meter */
 details.info { display: block; margin: 2px 0 0; }
 details.info > summary { cursor: pointer; list-style: none; color: var(--link); font-size: var(--text-sm); }
 details.info > summary::-webkit-details-marker { display: none; }
 .info-more { margin: 4px 0 0; }
 .info-more > summary { cursor: pointer; color: var(--link); font-size: var(--text-sm); }
+/* Panels slide in from the right (from below on phones, see section 9) */
+.sidebar { animation: panel-in 0.22s ease-out; }
+@keyframes panel-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 /* Phones only: handle that shrinks the bottom sheet to a strip (shown in section 9) */
 .sheet-handle { display: none; }
 
@@ -487,9 +516,11 @@ details.info > summary::-webkit-details-marker { display: none; }
 }
 /* Slim bar with the species name, pinned to the top of the panel once the big title scrolls away.
    The outer box has no height, so it takes no room while hidden. */
-.sticky-name { position: sticky; top: 0; height: 0; z-index: 2; }
+/* top is minus the panel's padding, so the bar sticks to the very top edge (sticky stops at the
+   padding otherwise, and text showed through above the bar). flow-root keeps the bar's margins inside. */
+.sticky-name { position: sticky; top: calc(-1 * var(--gap)); height: 0; z-index: 2; display: flow-root; }
 .sticky-name-bar {
-  margin: calc(-1 * var(--gap)) calc(-1 * var(--gap)) 0; padding: 10px 52px 10px var(--gap);
+  margin: 0 calc(-1 * var(--gap)); padding: 12px 52px 12px var(--gap);
   background: var(--bg); border-bottom: 1px solid var(--border); font-family: var(--serif); font-size: var(--text-lg);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   opacity: 0; pointer-events: none; transition: opacity 0.15s;
@@ -607,7 +638,12 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
   position: fixed; inset: 0; z-index: 2000; background: rgba(0, 0, 0, 0.35);
   display: flex; align-items: center; justify-content: center; padding: var(--gap);
 }
-.dialog-backdrop[hidden] { display: none; } /* the quiz hides itself this way while paused */
+.dialog-backdrop[hidden] { display: none; }
+/* Dialogs fade in and rise a little */
+.dialog-backdrop { animation: fade-in 0.18s ease-out; }
+.dialog { animation: dialog-in 0.22s ease-out; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dialog-in { from { transform: translateY(12px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } } /* the quiz hides itself this way while paused */
 .dialog {
   background: var(--bg); border-radius: var(--radius); padding: var(--space-4) var(--space-5);
   width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto;

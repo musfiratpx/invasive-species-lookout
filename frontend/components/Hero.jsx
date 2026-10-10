@@ -6,18 +6,20 @@
  * lists), never typed in by hand, so it stays true when the data is refreshed. While the
  * lists load, the banner simply leaves the numbers out.
  *
- * The banner background slowly fades between a few real iNaturalist photos of listed species
- * (HERO_PHOTOS below), all openly licensed (CC BY or CC0) and saved in public/images/ so the
- * offline demo shows them. The credit in the corner always matches the photo on screen.
- * People who turned on "reduce motion" just see the first photo.
+ * The banner background slowly fades between real iNaturalist photos of listed species
+ * (HERO_PHOTOS below), all openly licensed (CC BY, CC BY-NC or CC0) and saved in public/images/
+ * so the offline demo shows them. The credit in the corner always matches the photo on screen.
+ * ‹ › buttons and dots let people skip ahead or go back; that restarts the timer.
+ * People who turned on "reduce motion" get no automatic changes (the buttons still work).
  */
 
 import { useEffect, useState } from "react";
 
 import { REPORT_URL } from "@/lib/meanings";
 
-// Credits copied from backend/data/cache/media.json. To add a photo: pick an openly licensed
-// one there, save its large version in public/images/, and copy its credit here.
+// Credits copied from backend/data/cache/media.json. To add a photo: pick an openly licensed,
+// landscape one there at least 1024 px wide (smaller ones look blurry this big), save its
+// large version in public/images/, and copy its credit here.
 const HERO_PHOTOS = [
   {
     file: "/images/hero-common-reed.jpg",
@@ -43,6 +45,24 @@ const HERO_PHOTOS = [
     attribution: "(c) Steven Bodzin, some rights reserved (CC BY)",
     observation_url: "https://www.inaturalist.org/observations/74756892",
   },
+  {
+    file: "/images/hero-mute-swan.jpg",
+    species: "Mute swan (Cygnus olor) on its nest",
+    attribution: "(c) Mary Finch, some rights reserved (CC BY-NC)",
+    observation_url: "https://www.inaturalist.org/observations/111268771",
+  },
+  {
+    file: "/images/hero-parrot-s-feather.jpg",
+    species: "Parrot's feather (Myriophyllum aquaticum)",
+    attribution: "(c) leonphotography168, some rights reserved (CC BY-NC)",
+    observation_url: "https://www.inaturalist.org/observations/224228080",
+  },
+  {
+    file: "/images/hero-tatarian-honeysuckle.jpg",
+    species: "Tatarian honeysuckle (Lonicera tatarica)",
+    attribution: "(c) Dave Eib, some rights reserved (CC BY-NC)",
+    observation_url: "https://www.inaturalist.org/observations/341007320",
+  },
 ];
 const SECONDS_PER_PHOTO = 8;
 
@@ -58,13 +78,16 @@ export default function Hero({ species, parks, updatedAt }) {
   const sightings = species.reduce((sum, s) => sum + s.sightings, 0);
 
   // Which background photo is showing. Moves on every few seconds, unless the person asked
-  // their device for less motion.
+  // their device for less motion. Depending on `current` means any change (including a click
+  // on ‹ › or a dot) restarts the countdown, so a photo you picked gets its full time.
   const [current, setCurrent] = useState(0);
+  const count = HERO_PHOTOS.length;
+  const go = (step) => setCurrent((i) => (i + step + count) % count);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = setInterval(() => setCurrent((i) => (i + 1) % HERO_PHOTOS.length), SECONDS_PER_PHOTO * 1000);
-    return () => clearInterval(timer);
-  }, []);
+    const timer = setTimeout(() => go(1), SECONDS_PER_PHOTO * 1000);
+    return () => clearTimeout(timer);
+  }, [current]); // eslint-disable-line react-hooks/exhaustive-deps
   const photo = HERO_PHOTOS[current];
 
   return (
@@ -94,7 +117,7 @@ export default function Hero({ species, parks, updatedAt }) {
           </p>
           <div className="hero-buttons">
             <a className="hero-button" href="#explore">Explore the map ↓</a>
-            <a className="hero-button secondary" href={REPORT_URL} target="_blank" rel="noreferrer">Report a sighting ↗</a>
+            <a className="hero-button secondary" href={REPORT_URL} target="_blank" rel="noreferrer">Report a sighting</a>
           </div>
           {loaded && (
             <>
@@ -112,9 +135,20 @@ export default function Hero({ species, parks, updatedAt }) {
             </>
           )}
         </div>
-        <a className="hero-credit" href={photo.observation_url} target="_blank" rel="noreferrer">
-          Photo: {photo.species}, {photo.attribution}, on iNaturalist
-        </a>
+        {/* Bottom-right: photo controls, then the credit for the photo on screen. */}
+        <div className="hero-photo-bar">
+          <div className="hero-photo-controls" role="group" aria-label="Background photos">
+            <button onClick={() => go(-1)} aria-label="Previous photo">‹</button>
+            {HERO_PHOTOS.map((p, i) => (
+              <button key={p.file} className={i === current ? "hero-dot active" : "hero-dot"} onClick={() => setCurrent(i)}
+                      aria-label={`Photo ${i + 1} of ${count}: ${p.species}`} aria-current={i === current} />
+            ))}
+            <button onClick={() => go(1)} aria-label="Next photo">›</button>
+          </div>
+          <a className="hero-credit" href={photo.observation_url} target="_blank" rel="noreferrer">
+            Photo: {photo.species}, {photo.attribution}, on iNaturalist
+          </a>
+        </div>
       </section>
     </>
   );
