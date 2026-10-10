@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- The ♧ clover from the logo: one cream outline (three round leaves and a flared stem)
-       on the nav bar's forest green. -->
+  <!-- The same ♧ character as the logo in the nav bar (typed, not drawn), in the nav's cream
+       on its forest green. The browser draws it with a system font. -->
   <rect width="32" height="32" rx="7" fill="#18382f"/>
-  <path d="M13.63 19.40 A5.1 5.1 0 1 1 11.43 11.68 A5.2 5.2 0 1 1 20.57 11.68 A5.1 5.1 0 1 1 18.37 19.40 C17.77 22.40 19.17 26.20 20.8 26.8 H11.2 C12.83 26.20 14.23 22.40 13.63 19.40Z" fill="none" stroke="#f7f5e9" stroke-width="2" stroke-linejoin="round"/>
+  <text x="16" y="25" font-size="26" text-anchor="middle" fill="#f7f5e9"
+        font-family="Georgia, 'Times New Roman', serif">♧</text>
 </svg>
