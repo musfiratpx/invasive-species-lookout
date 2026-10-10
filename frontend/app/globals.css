@@ -426,7 +426,17 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
   background: var(--bg); border-left: 4px solid var(--olive); /* the field-notes accent line */
   overflow-y: auto; padding: var(--gap);
 }
-.sidebar-close { position: sticky; top: 0; float: right; z-index: 3; } /* above the sticky name bar */
+/* Round ✕ that floats over the top-right of the panel (and over the species photo), inset a
+   little from the corner, with a soft shadow so it reads on light and dark photos alike.
+   Sticky, so it stays reachable while scrolling; z-index puts it above the sticky name bar. */
+.sidebar-close {
+  position: sticky; top: var(--space-2); float: right; z-index: 3;
+  width: 32px; height: 32px; margin: var(--space-2) var(--space-2) 0 0; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 50%; font-size: var(--text-sm); color: var(--text);
+  background: rgba(255, 254, 247, 0.92); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.sidebar-close:hover { background: var(--bg); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
 .sidebar-back { margin-bottom: 8px; }
 .sidebar section { margin: var(--space-4) 0; }
 .sidebar h2 { font-size: var(--text-xl); line-height: 1.15; margin: 8px 0 0; }
@@ -723,7 +733,7 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
 /* Touch screens: buttons at least 44 px tall, the size fingers can hit reliably. */
 @media (pointer: coarse) {
   .segmented button, .row-button, .sidebar-close, .sidebar-back, .header-button, .chip, .focus-banner button { min-height: 44px; }
-  .sidebar-close { min-width: 44px; }
+  .sidebar-close { min-width: 44px; border-radius: 50%; }
 }
 
 /* Less motion, for people who turned on "reduce motion" on their device. */
