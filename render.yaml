@@ -1,0 +1,42 @@
+# Render Blueprint: puts the app online as two web services (https://render.com/docs/blueprint-spec).
+#   isl-api  = the FastAPI backend (reads the cached data committed in backend/data/cache)
+#   isl-web  = the Next.js frontend
+# In Render: New > Blueprint > pick this repo. Values marked "sync: false" are typed into
+# the Render dashboard, so they never go in this file. See README "Deploying to Render".
+# No Snowflake keys here on purpose: the server only reads cached files; Snowflake is
+# used by scripts/build_insights.py, which we run on our own computers.
+
+services:
+  - type: web
+    name: isl-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # Render tells the app which port to use through $PORT.
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      # The frontend's address (e.g. https://isl-web.onrender.com), so the browser may call the API.
+      - key: FRONTEND_ORIGIN
+        sync: false
+
+  - type: web
+    name: isl-web
+    runtime: node
+    rootDir: frontend
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start -- --port $PORT
+    envVars:
+      - key: NODE_VERSION
+        value: 24.15.0
+      # NEXT_PUBLIC_ values are baked in at build time, so redeploy after changing them.
+      # The backend's address, e.g. https://isl-api.onrender.com
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      # This site's own address (for QR codes and shared quiz links), e.g. https://isl-web.onrender.com
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false

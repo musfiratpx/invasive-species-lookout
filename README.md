@@ -109,6 +109,20 @@ Restart the backend afterwards. The iNaturalist scripts go through `pyinaturalis
 
 Without these keys, the app uses local keyword search and shows fact-sheet text word for word.
 
+## Deploying to Render
+
+`render.yaml` describes two free web services: `isl-api` (backend) and `isl-web` (frontend). The backend only reads the cached data committed in `backend/data/cache`, so it never calls iNaturalist or Snowflake live and needs no API keys.
+
+1. Push your branch to GitHub. In Render, choose **New > Blueprint** and pick this repo and branch.
+2. Render asks for the `sync: false` values. Use the addresses Render shows for each service:
+   - `isl-api` → `FRONTEND_ORIGIN` = `https://isl-web.onrender.com` (add `,http://localhost:3000` to keep local dev working)
+   - `isl-web` → `NEXT_PUBLIC_API_URL` = `https://isl-api.onrender.com`, `NEXT_PUBLIC_SITE_URL` = `https://isl-web.onrender.com`
+3. If Render gave the services different addresses, fix these values and redeploy the frontend (`NEXT_PUBLIC_` values are baked in at build time).
+
+After that, every push to the deployed branch redeploys automatically. When you change fact sheets, run `scripts/build_insights.py` locally and commit the updated cache; Render doesn't run the scripts.
+
+Free services sleep after ~15 minutes of no visits, so the first load after a break takes up to a minute. Open both URLs a few minutes before a demo.
+
 ## Repository layout
 
 ```
