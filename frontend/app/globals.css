@@ -36,6 +36,10 @@
   --serif: var(--font-serif), Georgia, "Times New Roman", serif; /* fonts are loaded in app/layout.js */
   /* Welcome banner: photos rotate behind the green fade (list and credits in Hero.jsx) */
   --hero-blank: #4a6358; /* shown while the photos load */
+  /* Very faint paper grain on the page background, for the field-guide feel. It's random
+     "noise" drawn by the browser from this small SVG (no image file, works offline).
+     Strength: the "0.35 0 0 0 -0.12" at the end. Bigger first number = stronger grain. */
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.2 0 0 0 0 0.15 0.35 0 0 0 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 
   /* Danger levels. No green: the map and parks are green, and green would read as "safe"
      (every species on this map is invasive). Low is violet so it stands apart from the map. */
@@ -82,6 +86,7 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; background: var(--page); }
+body { background-image: var(--paper-grain); } /* faint paper texture over the page color */
 /* 17 px base instead of the browser's 16: Source Sans runs a little small, and every rem size
    (all the --text-* tokens) grows with it. */
 html { font-size: 106.25%; }
@@ -223,7 +228,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .discovery { padding: 60px 4% 32px; }
 .section-heading { max-width: 600px; margin-bottom: 28px; }
 .section-heading .eyebrow { color: var(--olive-text); } /* the mockup's lime is unreadable on cream */
-.section-heading h2 { font-size: var(--text-2xl); margin: 10px 0 12px; }
+.section-heading h2 { font-size: var(--text-2xl); margin: 10px 0 12px; text-wrap: balance; } /* no single word left alone on the last line */
 .section-heading p { line-height: 1.7; color: var(--muted); margin: 0; }
 
 /* The map app: a big framed panel, nearly a full screen tall */
