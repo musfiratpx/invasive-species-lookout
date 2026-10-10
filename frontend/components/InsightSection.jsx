@@ -1,7 +1,7 @@
 /**
  * One text section written from our sources (summary, history, seasons, report).
  * If the sources don't cover it, the API sends null and we say so honestly.
- * A blank line in the text starts a new paragraph. Each paragraph ends with a small 🔊
+ * A blank line in the text starts a new paragraph. Each paragraph ends with a small ▶
  * button that reads just that paragraph aloud (ReadAloud.jsx).
  */
 

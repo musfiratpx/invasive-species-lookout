@@ -252,6 +252,14 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 }
 .toolbar-label { font-size: var(--text-sm); font-weight: 600; white-space: nowrap; }
 .header-button { white-space: nowrap; background: transparent; color: var(--on-forest); border-color: rgba(247, 245, 233, 0.5); border-radius: 999px; }
+/* Symbol and label sit on the same center line (a text symbol otherwise rides high or low) */
+.header-button { display: inline-flex; align-items: center; gap: 6px; }
+.header-button .symbol { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; line-height: 1; flex: none; }
+/* Each symbol comes from a different fallback font, with its own size and baseline, so each
+   gets its own size and nudge to look the same size and sit on the button's center line. */
+.sym-near { font-size: 22px; transform: translateY(-2px); }
+.sym-quiz { font-size: 17px; transform: translateY(2px); }
+.header-button .sym-music { font-size: 19px; width: 12px; justify-content: flex-start; } /* ♪ has extra blank space on its right */
 .header-button:hover { background: rgba(247, 245, 233, 0.12); }
 .header-button[aria-pressed="true"] { background: var(--lime); color: var(--forest); }
 
@@ -513,6 +521,8 @@ details.info > summary::-webkit-details-marker { display: none; }
   font-size: 0.8em; background: var(--surface); border-color: transparent; opacity: 0.75;
 }
 .read-aloud:hover, .read-aloud[aria-pressed="true"] { opacity: 1; border-color: var(--olive); }
+.read-aloud { color: var(--forest); }
+.read-aloud .symbol { font-size: 0.7rem; line-height: 1; margin-left: 1px; } /* ▶ looks centered with a hair of left nudge */
 .copy-link-status { display: block; margin-top: 4px; }
 .copy-link-status:empty { display: none; }
 

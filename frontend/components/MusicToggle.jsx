@@ -93,7 +93,7 @@ export default function MusicToggle() {
   if (!available || missing) return null; // run backend/scripts/make_music.py to create the music
   return (
     <button className="header-button music-button" onClick={toggle} aria-pressed={on} aria-label={on ? "Turn background music off" : "Turn background music on"}>
-      <span className="symbol" aria-hidden="true">♪</span>
+      <span className="symbol sym-music" aria-hidden="true">♪</span>
       <span className="music-label">{on ? " Music on" : " Music off"}</span>
     </button>
   );

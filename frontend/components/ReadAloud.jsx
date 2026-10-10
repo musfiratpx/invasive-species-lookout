@@ -1,7 +1,7 @@
 "use client";
 /**
- * A small 🔊 button that reads one paragraph out loud, placed next to each paragraph in the
- * species panel so people can listen at their own pace. Press it again (⏹) to stop.
+ * A small ▶ button that reads one paragraph out loud, placed next to each paragraph in the
+ * species panel so people can listen at their own pace. Press it again (■) to stop.
  *
  * It uses the browser's own built-in voice (speechSynthesis): free, works offline, and no
  * AI voice service (CLAUDE.md rule 4 keeps ElevenLabs for background music only).
@@ -9,7 +9,7 @@
  * Hidden in browsers without a built-in voice.
  *
  * Only one paragraph reads at a time: starting one tells the others (with a window event)
- * to switch their button back to 🔊.
+ * to switch their button back to ▶.
  */
 
 import { useEffect, useId, useRef, useState } from "react";
@@ -57,7 +57,7 @@ export default function ReadAloud({ text, label = "this paragraph" }) {
   return (
     <button className="read-aloud" onClick={toggle} aria-pressed={speaking}
             aria-label={speaking ? "Stop reading" : `Read ${label} aloud`} title={speaking ? "Stop reading" : "Read aloud"}>
-      <span aria-hidden="true">{speaking ? "⏹" : "🔊"}</span>
+      <span className="symbol" aria-hidden="true">{speaking ? "■" : "▶"}</span>
     </button>
   );
 }

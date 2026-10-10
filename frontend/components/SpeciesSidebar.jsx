@@ -2,7 +2,7 @@
 /**
  * Slide-in panel with everything about one species: a big photo with the name and danger
  * level laid over it, an at-a-glance row (legal status · sightings · last seen), "Copy link",
- * a small 🔊 "read aloud" button after each paragraph of text, danger level (with what it means),
+ * a small ▶ "read aloud" button after each paragraph of text, danger level (with what it means),
  * status in NYC, sound, then collapsible groups:
  * "What to do" (handling + reporting, open by default because it's safety info),
  * "About this species" (summary, history, look-alikes), "Through the year" (sourced seasons text, then
