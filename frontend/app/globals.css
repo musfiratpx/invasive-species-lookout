@@ -616,6 +616,8 @@ details.info > summary::-webkit-details-marker { display: none; }
    visibility: hidden also hides it from screen readers and the Tab key. */
 .browse.covered, .sidebar.covered { visibility: hidden; } /* also "Near you" under a species */
 .near-privacy { margin-top: var(--space-4); }
+.near-radius { margin: var(--space-2) 0; }
+.near-more { display: block; width: 100%; margin-top: var(--space-3); border-radius: 999px; padding: 6px 12px; }
 .browse-tabs { margin: 10px 0; }
 .row-list { list-style: none; padding: 0; margin: 8px 0 0; }
 .row-button {

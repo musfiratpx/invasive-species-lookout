@@ -28,11 +28,11 @@ import { MapContainer, useMap } from "react-leaflet";
 import Basemap from "@/components/Basemap";
 import ParkOutlines from "@/components/ParkOutlines";
 import ScrollZoomOnClick from "@/components/ScrollZoomOnClick";
-import { NEAR_RADIUS_M } from "@/components/NearMePanel";
 import { makeMarkerIcon } from "@/components/SpeciesIcon";
 import { cssColor } from "@/lib/cssColor";
 import { formatDay } from "@/lib/dates";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
+import { isInNyc } from "@/lib/nearby";
 
 const CENTER = (process.env.NEXT_PUBLIC_MAP_CENTER || "40.7000,-73.9500").split(",").map(Number);
 const ZOOM = Number(process.env.NEXT_PUBLIC_MAP_ZOOM || 11);
@@ -185,7 +185,7 @@ function roomForPanel(map) {
 }
 
 /** Adds the sightings (bubbles/icons, or street-level detail) to the map. */
-function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark, location, locateRequest, onLocated }) {
+function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark, location, nearRadius, locateRequest, onLocated }) {
   const map = useMap();
   const merged = useRef(null); // ×N points, used below street level
   const detail = useRef(null); // every sighting separately, used at street level
@@ -329,11 +329,12 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
   }, [locateRequest, map]);
 
   // Your spot: a blue dot, how precise the location is, and a dashed circle showing the
-  // "Near you" area. The map zooms to that circle, leaving room for the panel.
+  // "Near you" area (it follows the panel's 500 m / 1 km / 2 km switch). The map zooms to that
+  // circle, leaving room for the panel. Outside NYC there's nothing to show, so no zoom.
   useEffect(() => {
-    if (!location) return;
+    if (!location || !isInNyc(location)) return;
     const center = [location.lat, location.lng];
-    const area = L.circle(center, { radius: NEAR_RADIUS_M, color: cssColor("--you"), weight: 2, dashArray: "6 6", fill: false, interactive: false });
+    const area = L.circle(center, { radius: nearRadius, color: cssColor("--you"), weight: 2, dashArray: "6 6", fill: false, interactive: false });
     const you = L.layerGroup([
       area,
       L.circle(center, { radius: location.accuracy, color: cssColor("--you"), weight: 1, fillOpacity: 0.1, interactive: false }),
@@ -341,7 +342,7 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
     ]).addTo(map);
     map.fitBounds(area.getBounds(), { ...roomForPanel(map), ...motion() });
     return () => map.removeLayer(you);
-  }, [location, map]);
+  }, [location, nearRadius, map]);
 
   // Rebuild the merged markers whenever the (filtered) points change; refresh detail if it's showing.
   useEffect(() => {
@@ -395,7 +396,7 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
   return null;
 }
 
-export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark, location, locateRequest, onLocated }) {
+export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark, location, nearRadius, locateRequest, onLocated }) {
   const animate = !prefersLessMotion(); // also turns off the zoom and fade animations of the map itself
   return (
     <MapContainer center={CENTER} zoom={ZOOM} minZoom={MIN_ZOOM} maxZoom={MAX_ZOOM}
@@ -418,6 +419,7 @@ export default function MapView({ points, sightings, focusKey, outline, allOutli
         onSelectSpecies={onSelectSpecies}
         onSelectPark={onSelectPark}
         location={location}
+        nearRadius={nearRadius}
         locateRequest={locateRequest}
         onLocated={onLocated}
       />

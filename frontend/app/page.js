@@ -30,6 +30,7 @@ import SpeciesSidebar from "@/components/SpeciesSidebar";
 import { mergeNearbySightings } from "@/lib/aggregate";
 import { getHealth, getMapObservations, getPark, getParkOutlines, getParks, getSpeciesList } from "@/lib/api";
 import { isoDateMonthsAgo } from "@/lib/dates";
+import { DEFAULT_RADIUS_M, isInNyc } from "@/lib/nearby";
 import { typeFilterOf } from "@/lib/taxa";
 import { stateFromUrl, urlFromState } from "@/lib/urlState";
 
@@ -78,6 +79,7 @@ export default function Home() {
   const [location, setLocation] = useState(null);
   const [nearOpen, setNearOpen] = useState(false);
   const [locateRequest, setLocateRequest] = useState(0);
+  const [nearRadius, setNearRadius] = useState(DEFAULT_RADIUS_M); // how far "Near you" looks
 
   // Load the species and park lists (search box and Browse). Called again by Browse's "Try again".
   const loadLists = useCallback(() => {
@@ -325,6 +327,7 @@ export default function Home() {
           onSelectSpecies={setSelectedSpeciesId}
           onSelectPark={pickPark}
           location={location}
+          nearRadius={nearRadius}
           locateRequest={locateRequest}
           onLocated={showNearMe}
         />
@@ -381,6 +384,9 @@ export default function Home() {
         {nearOpen && location && (
           <NearMePanel
             location={location}
+            outside={!isInNyc(location)}
+            radius={nearRadius}
+            onChangeRadius={setNearRadius}
             sightings={observations}
             species={speciesList}
             covered={Boolean(selectedSpeciesId)}

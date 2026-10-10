@@ -1,8 +1,13 @@
 "use client";
 /**
- * "Near you": a photo grid of the listed species that people have reported within 1 km of
- * where you are, most-reported first. Opened by the 📍 button on the map or "Near me" in the
- * toolbar, once the browser shares your location.
+ * "Near you": a photo grid of the listed species that people have reported near where you
+ * are, most-reported first. Opened by the 📍 button on the map or "Near me" in the toolbar,
+ * once the browser shares your location.
+ *
+ * - A 500 m / 1 km / 2 km switch sets how far to look (the map's dashed circle follows it).
+ * - The 12 most-reported species show first; "Show all" reveals the rest.
+ * - Outside New York City we have no data, so it says that instead of an empty list
+ *   (an empty list would wrongly suggest there are no invasive species there).
  *
  * Privacy: your location is only used here, in your browser. It is never sent to our server
  * and never put in the page's address (so a shared link can't reveal where someone was).
@@ -12,33 +17,24 @@
  * list may still grow nearby; the panel says so.
  */
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import PhotoCredit from "@/components/PhotoCredit";
 import { formatDay } from "@/lib/dates";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
+import { RADII_M, distanceText, metersBetween, radiusText } from "@/lib/nearby";
 import { taxonIcon } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
 
-export const NEAR_RADIUS_M = 1000;
+const FIRST_SHOWN = 12;
 
-/** Distance in meters between two points on Earth (the "haversine" formula). */
-function metersBetween(lat1, lng1, lat2, lng2) {
-  const toRad = (d) => (d * Math.PI) / 180;
-  const dLat = toRad(lat2 - lat1);
-  const dLng = toRad(lng2 - lng1);
-  const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
-  return 6371000 * 2 * Math.asin(Math.sqrt(a));
-}
-
-/** "300 m" or "1.2 km" */
-const distanceText = (m) => (m < 950 ? `${Math.round(m / 50) * 50 || 50} m` : `${(m / 1000).toFixed(1)} km`);
-
-export default function NearMePanel({ location, sightings, species, covered, onPickSpecies, onClose }) {
+export default function NearMePanel({ location, outside, radius, onChangeRadius, sightings, species, covered, onPickSpecies, onClose }) {
   const closeButton = useRef(null);
+  const [showAll, setShowAll] = useState(false);
   useReturnFocus();
 
   useEffect(() => closeButton.current?.focus(), []);
+  useEffect(() => setShowAll(false), [radius, location]); // a new search starts short again
 
   // Escape closes the panel, but only while it's the one you can see.
   useEffect(() => {
@@ -50,10 +46,11 @@ export default function NearMePanel({ location, sightings, species, covered, onP
 
   // One row per species seen within the radius: how many times, how close, how recently.
   const nearby = useMemo(() => {
+    if (!location) return [];
     const bySpecies = new Map();
     for (const obs of sightings) {
       const m = metersBetween(location.lat, location.lng, obs.latitude, obs.longitude);
-      if (m > NEAR_RADIUS_M) continue;
+      if (m > radius) continue;
       const row = bySpecies.get(obs.species_id) || { id: obs.species_id, count: 0, closest: Infinity, latest: "" };
       row.count += 1;
       row.closest = Math.min(row.closest, m);
@@ -65,46 +62,69 @@ export default function NearMePanel({ location, sightings, species, covered, onP
       .filter((row) => info.has(row.id))
       .map((row) => ({ ...row, s: info.get(row.id) }))
       .sort((a, b) => b.count - a.count);
-  }, [location, sightings, species]);
+  }, [location, radius, sightings, species]);
 
   const total = nearby.reduce((sum, row) => sum + row.count, 0);
+  const shown = showAll ? nearby : nearby.slice(0, FIRST_SHOWN);
 
   return (
     <aside className={covered ? "sidebar covered" : "sidebar"} aria-label="Species near you">
       <button ref={closeButton} className="sidebar-close" onClick={onClose} aria-label="Close near you panel">✕</button>
-      <p className="park-kicker">Within {NEAR_RADIUS_M / 1000} km of you</p>
       <h2>Near you</h2>
-      {nearby.length === 0 ? (
+
+      {outside ? (
         <p>
-          No sightings of listed invasive species within {NEAR_RADIUS_M / 1000} km yet. That may just mean nobody has
-          posted one here. If you spot one, please report it.
+          Near you only works inside New York City, where our sightings are. Your location looks like it&apos;s
+          outside the city. Try searching for a park or species instead.
         </p>
       ) : (
         <>
-          <p className="muted">
-            {nearby.length} species, {total.toLocaleString()} sighting{total === 1 ? "" : "s"} reported nearby on
-            iNaturalist. These are past reports, not a survey: others may grow here too.
-          </p>
-          <ul className="park-species">
-            {nearby.map(({ id, s, count, closest, latest }) => (
-              <li key={id}>
-                <button onClick={() => onPickSpecies(id)}>
-                  {s.thumb
-                    ? <img src={s.thumb.url} alt="" loading="lazy" />
-                    : <span className="park-species-empty" aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>}
-                  <span className="park-species-name">{s.common_name || s.scientific_name}</span>
-                  <span className="park-species-detail">
-                    <span className="swatch" style={{ background: DANGER_COLORS[s.danger_level ?? null] }} aria-hidden="true" />
-                    {DANGER_LABELS[s.danger_level ?? null]}
-                  </span>
-                  <span className="park-species-detail">
-                    {count} seen · closest {distanceText(closest)} · last {formatDay(latest)}
-                  </span>
-                </button>
-                {s.thumb && <PhotoCredit photo={s.thumb} />}
-              </li>
+          <div className="segmented near-radius" role="group" aria-label="How far to look">
+            {RADII_M.map((m) => (
+              <button key={m} aria-pressed={radius === m} onClick={() => onChangeRadius(m)}>Within {radiusText(m)}</button>
             ))}
-          </ul>
+          </div>
+
+          {nearby.length === 0 ? (
+            <p>
+              No sightings of listed invasive species within {radiusText(radius)} yet.
+              {radius < RADII_M[RADII_M.length - 1] && " Try a bigger area above."} That may just mean nobody has posted
+              one here. If you spot one, please report it.
+            </p>
+          ) : (
+            <>
+              {/* Read out by screen readers when the radius changes. */}
+              <p className="muted" role="status">
+                {nearby.length} species, {total.toLocaleString()} sighting{total === 1 ? "" : "s"} reported within{" "}
+                {radiusText(radius)} on iNaturalist. These are past reports, not a survey: others may grow here too.
+              </p>
+              <ul className="park-species">
+                {shown.map(({ id, s, count, closest, latest }) => (
+                  <li key={id}>
+                    <button onClick={() => onPickSpecies(id)}>
+                      {s.thumb
+                        ? <img src={s.thumb.url} alt="" loading="lazy" />
+                        : <span className="park-species-empty" aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>}
+                      <span className="park-species-name">{s.common_name || s.scientific_name}</span>
+                      <span className="park-species-detail">
+                        <span className="swatch" style={{ background: DANGER_COLORS[s.danger_level ?? null] }} aria-hidden="true" />
+                        {DANGER_LABELS[s.danger_level ?? null]}
+                      </span>
+                      <span className="park-species-detail">
+                        {count} seen · closest {distanceText(closest)} · last {formatDay(latest)}
+                      </span>
+                    </button>
+                    {s.thumb && <PhotoCredit photo={s.thumb} />}
+                  </li>
+                ))}
+              </ul>
+              {nearby.length > FIRST_SHOWN && (
+                <button className="near-more" onClick={() => setShowAll((all) => !all)}>
+                  {showAll ? `Show the top ${FIRST_SHOWN}` : `Show all ${nearby.length} species`}
+                </button>
+              )}
+            </>
+          )}
         </>
       )}
       <p className="muted near-privacy">🔒 Your location stays in your browser. It isn&apos;t sent anywhere or saved.</p>
