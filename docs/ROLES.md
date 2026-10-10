@@ -85,4 +85,4 @@ Owns: `backend/`
 - [ ] Pull before you start working (`git pull`), and push often. The repo is <https://github.com/musfiratpx/sail>.
 - [ ] Fresh clone → README quick start works.
 - [ ] Turn the Wi-Fi off and check: sightings, danger levels, status, charts and sidebar text still load (all cached). Map tiles, photos and sounds come from the internet, so pan around the map and open a few species *before* the demo to warm the browser cache, or bring a phone hotspot.
-- [ ] Each person can explain: where danger levels come from, why some species are "Not yet ranked", why most species have no sound, and what Snowflake does (Cortex Search finds the right fact-sheet section; the text itself is never AI-written).
+- [ ] Each person can explain: where danger levels come from, why some species are "Not yet ranked", why most species have no sound, and what Snowflake does (Cortex Search finds the right fact-sheet section, and the app shows it word for word; Cortex doesn't reword it. The fact sheets themselves were drafted with an AI assistant from official sources and are marked "Draft" until a teammate checks them).

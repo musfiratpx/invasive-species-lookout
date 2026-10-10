@@ -60,7 +60,7 @@ The fact sheets were written from official sources, and each one stays marked "D
 - The **data** is real: iNaturalist sightings, the NYS DEC list, the official plant ranking forms, and NYC Parks boundaries.
 - **Danger levels and invasive status** are never set by AI. They come straight from official sources.
 - The **species text** comes from fact sheets built from official sources (NYIS, DEC, USGS…) and linked under "Sources". **Snowflake Cortex Search** finds the right section for each question, and we show that text word for word. We turned AI rewriting off because, in testing, it added small details the sources don't say.
-- We used AI coding assistants to help write the code, and every source is checked and linked.
+- We used an AI assistant (Claude) to help write the code and to draft the fact sheets from those official sources. Each fact sheet links its sources and shows "Draft" in the app until a teammate has checked it.
 - **ElevenLabs** is used only for the background music. Animal sounds are real recordings from iNaturalist, shown only when one exists.
 
 **"Where does the data come from, and how fresh is it?"**
