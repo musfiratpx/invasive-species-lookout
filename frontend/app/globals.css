@@ -1,10 +1,12 @@
 /*
- * Global styles. Deliberately plain: the Designer will replace the look later.
+ * Global styles. The look (forest green and cream, serif headings, pill buttons) comes
+ * from Moses's SAIL field-guide mockup (moses-panel branch).
  * Change colors and spacing through the tokens in :root, not in each component.
  *
  * Sections, in order (the later ones override earlier ones, so keep the order):
  *   1. Tokens and base          6. Side panels (shared, species, park, Browse, report box)
- *   2. Page layout              7. Dialogs (Credits, quiz)
+ *   2. Page layout (nav, hero,  7. Dialogs (Credits, quiz)
+ *      explore section, app)
  *   3. Map and its overlays     8. Printable field guide
  *   4. Map markers              9. Screen size, touch and motion
  *   5. Filters (legend)        10. Printing
@@ -12,14 +14,25 @@
 
 /* ---------- 1. Tokens and base ---------- */
 :root {
-  /* Base */
-  --bg: #ffffff;
-  --text: #1a1a1a;
-  --muted: #5c5c5c;
-  --border: #d0d0d0;
-  --surface: #f5f5f5;
-  --link: #0645ad;
-  --focus: #1a73e8;
+  /* Base (field-guide palette: forest green on cream) */
+  --bg: #fffef7; /* panels and cards */
+  --page: #d8dec6; /* behind everything: darker than the panels so the map frame stands out */
+  --text: #193b30;
+  --muted: #4a5d52; /* 7:1 on --bg, 5.1:1 on --page */
+  --border: #e1e3d5;
+  --surface: #e8eadb; /* hover and quiet backgrounds */
+  --link: #2e5b48;
+  --focus: #1a73e8; /* kept blue on purpose: a keyboard focus ring must stand out from the green */
+  --forest: #18382f; /* header, selected buttons, map bubbles */
+  --on-forest: #f7f5e9; /* text on --forest */
+  --lime: #d8e9a5; /* main call-to-action buttons */
+  --olive: #71834b; /* lines and outlines only (4.1:1 on cream: too faint for small text) */
+  --olive-text: #4f5d35; /* small uppercase labels (7:1 on --bg, 5.1:1 on --page) */
+  --serif: Georgia, "Times New Roman", serif;
+  /* Welcome banner photo: blank for now. To add one later, e.g.
+     --hero-photo: url("/images/hero.jpg");  (put the file in frontend/public/images/) */
+  --hero-photo: none;
+  --hero-blank: #4a6358; /* shown behind the green fade while there's no photo */
 
   /* Danger levels (placeholder palette) */
   --danger-4: #b00020;
@@ -29,8 +42,8 @@
   --danger-none: #757575;
 
   /* Map clusters (neutral, not a danger color) */
-  --cluster: #37474f;
-  --cluster-ring: rgba(255, 255, 255, 0.85);
+  --cluster: var(--forest);
+  --cluster-ring: var(--bg);
 
   /* Layout */
   --header-height: 48px;
@@ -40,11 +53,13 @@
 
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
-  background: var(--bg);
+  background: var(--page);
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
+html, body { margin: 0; height: 100%; background: var(--page); }
+/* Serif headings, as in the field-guide mockup. Small labels stay in the plain font. */
+h1, h2, .sidebar h3, .dialog h2 { font-family: var(--serif); font-weight: normal; }
 a { color: var(--link); }
 
 /* Visible keyboard focus everywhere (accessibility) */
@@ -75,42 +90,86 @@ button {
 }
 /* Two- to four-option switch (map style, Browse tabs and sorting) */
 .segmented { display: flex; gap: 0; margin-bottom: 4px; }
-.segmented button { flex: 1; border-radius: 0; font-size: 0.8rem; padding: 3px 6px; }
+.segmented button { flex: 1; border-radius: 0; font-size: 0.8rem; padding: 3px 6px; border-color: var(--olive); background: transparent; color: var(--text); }
+.segmented button:hover { background: var(--surface); }
 .segmented button:first-child { border-radius: 999px 0 0 999px; }
 .segmented button:last-child { border-radius: 0 999px 999px 0; }
 .segmented button + button { border-left: none; }
-.segmented button[aria-pressed="true"] { background: var(--cluster); color: #fff; border-color: var(--cluster); }
+.segmented button[aria-pressed="true"] { background: var(--forest); color: var(--on-forest); border-color: var(--forest); }
 /* "Report a sighting" link-button, inside the "Report it, don't pull it" box */
 .act-box .report { margin: 8px 0; }
 .report-button {
-  display: inline-block; background: var(--cluster); color: #fff; text-decoration: none;
+  display: inline-block; background: var(--lime); color: var(--forest); text-decoration: none;
   border-radius: 999px; padding: 5px 14px; font-weight: 600; font-size: 0.9rem;
 }
 .report-where { display: block; margin-top: 3px; font-size: 0.8rem; }
-.report-button:hover, .report-button:focus-visible { filter: brightness(1.2); }
+.report-button:hover, .report-button:focus-visible { filter: brightness(0.95); }
 /* Loading skeleton */
 .skeleton { background: var(--surface); border-radius: var(--radius); margin: 8px 0; animation: pulse 1.2s infinite; }
 @keyframes pulse { 50% { opacity: 0.5; } }
 
-/* ---------- 2. Page layout: header, main area, footer ---------- */
-.app { display: flex; flex-direction: column; height: 100vh; }
+/* ---------- 2. Page layout: nav, hero, explore section, then the map app ---------- */
+html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map */
+
+/* Nav bar and welcome banner (Hero.jsx), as in the SAIL mockup */
+.site-nav {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--gap);
+  padding: 20px 5%; background: var(--forest); color: var(--on-forest);
+}
+.site-nav a { color: inherit; text-decoration: none; }
+.site-nav a:hover { text-decoration: underline; }
+.logo { font-family: var(--serif); font-size: 24px; }
+.site-nav-links { display: flex; gap: 24px; }
+.hero {
+  min-height: 75vh; display: flex; align-items: center; padding: 60px 8%;
+  background: linear-gradient(90deg, rgba(9, 36, 29, 0.9), rgba(9, 36, 29, 0.2)), var(--hero-photo) center / cover;
+  background-color: var(--hero-blank);
+  color: var(--on-forest);
+}
+.hero-content { max-width: 650px; }
+.eyebrow { font-size: 12px; letter-spacing: 2px; margin: 0; }
+.hero .eyebrow { color: var(--lime); }
+.hero h1 { font-size: clamp(44px, 7vw, 76px); line-height: 1; margin: 20px 0; }
+.hero-description { max-width: 430px; line-height: 1.8; color: #e3e5d9; }
+.hero-button {
+  display: inline-block; margin-top: 20px; padding: 14px 18px;
+  background: var(--lime); color: var(--forest); text-decoration: none; border-radius: 3px;
+}
+.hero-button:hover { filter: brightness(0.95); }
+
+/* "Explore your environment" section around the map app. Less side padding than the
+   mockup (8%) so the map gets more room. */
+.discovery { padding: 60px 4% 32px; }
+.section-heading { max-width: 600px; margin-bottom: 28px; }
+.section-heading .eyebrow { color: var(--olive-text); } /* the mockup's lime is unreadable on cream */
+.section-heading h2 { font-size: 42px; margin: 10px 0 12px; }
+.section-heading p { line-height: 1.7; color: var(--muted); margin: 0; }
+
+/* The map app: a big framed panel, nearly a full screen tall */
+.app {
+  position: relative; display: flex; flex-direction: column;
+  height: calc(100vh - 32px); min-height: 560px;
+  background: var(--bg); border-radius: 12px; overflow: hidden;
+  border: 1px solid rgba(25, 59, 48, 0.25); /* a crisp edge against the page */
+  box-shadow: 0 4px 16px rgba(25, 59, 48, 0.18);
+}
 
 .header {
   height: var(--header-height);
   display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
   padding: 0 var(--gap);
-  border-bottom: 1px solid var(--border);
+  background: var(--forest); color: var(--on-forest);
 }
-.header h1 { font-size: 1.1rem; margin: 0; white-space: nowrap; }
-.title { min-width: 0; }
-.subtitle { margin: 0; font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
-.header-button { white-space: nowrap; }
-.header-button[aria-pressed="true"] { background: var(--surface); }
+.toolbar-label { font-size: 14px; font-weight: 600; white-space: nowrap; }
+.header-button { white-space: nowrap; background: transparent; color: var(--on-forest); border-color: rgba(247, 245, 233, 0.5); border-radius: 999px; }
+.header-button:hover { background: rgba(247, 245, 233, 0.12); }
+.header-button[aria-pressed="true"] { background: var(--lime); color: var(--forest); }
 
 /* Search box in the header (opens and filters Browse) */
-.search { position: relative; flex: 1; max-width: 360px; margin-left: auto; }
+.search { position: relative; flex: 1; max-width: 460px; margin-right: auto; }
 .search input {
-  width: 100%; font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px;
+  width: 100%; font: inherit; padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px;
+  background: var(--bg); color: var(--text);
 }
 .search-name { display: flex; flex-direction: column; line-height: 1.2; }
 .search-name em { color: var(--muted); font-size: 0.8rem; }
@@ -120,11 +179,12 @@ button {
 .footer {
   display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
   font-size: 0.75rem; color: var(--muted);
-  padding: 6px var(--gap); border-top: 1px solid var(--border);
+  padding: 6px var(--gap); border-top: 1px solid var(--border); background: var(--page);
 }
 
 /* ---------- 3. Map and its overlays ---------- */
-.map { position: absolute; inset: 0; }
+.map { position: absolute; inset: 0; background: #e6eadb; } /* shown while map images load */
+/* The background map's colors and simplification are in lib/basemapStyle.js. */
 
 /* "Showing only X" banner over the map */
 .focus-banner {
@@ -153,13 +213,13 @@ button {
 .progress { height: 6px; background: var(--surface); border-radius: 999px; overflow: hidden; margin: 8px 0 2px; }
 .progress span { display: block; height: 100%; background: var(--cluster); transition: width 0.2s; }
 
-/* Find me / All of Queens buttons (styled like Leaflet's +/- buttons) */
+/* Find me / All of NYC buttons (styled like Leaflet's +/- buttons) */
 .map-buttons button {
   display: block; width: 30px; height: 30px; border: none; border-radius: 0; padding: 0;
-  background: #fff; font-size: 16px; line-height: 30px; text-align: center;
+  background: var(--bg); font-size: 16px; line-height: 30px; text-align: center;
 }
-.map-buttons button + button { border-top: 1px solid #ccc; }
-.map-buttons button:hover { background: #f4f4f4; }
+.map-buttons button + button { border-top: 1px solid var(--border); }
+.map-buttons button:hover { background: var(--surface); }
 
 /* ---------- 4. Map markers ---------- */
 .species-marker {
@@ -198,7 +258,11 @@ button {
   padding: 8px 10px; font-size: 0.8rem; width: 230px; max-height: calc(100% - 190px); overflow-y: auto; /* leaves room for the map buttons at the top left */
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
 }
-.legend h2 { font-size: 0.85rem; margin: 6px 0 4px; }
+/* Small uppercase section labels, like the mockup's "SPECIES FIELD NOTES" */
+.legend h2 {
+  font-family: inherit; font-weight: 600; font-size: 0.68rem; margin: 8px 0 4px;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--olive-text);
+}
 .legend ul { list-style: none; margin: 0 0 4px; padding: 0; }
 .legend li { margin: 2px 0; }
 .legend-header { display: flex; align-items: center; justify-content: space-between; }
@@ -290,13 +354,13 @@ button {
 .sidebar {
   position: absolute; top: 0; right: 0; bottom: 0; z-index: 1001;
   width: var(--sidebar-width); max-width: 100%;
-  background: var(--bg); border-left: 1px solid var(--border);
+  background: var(--bg); border-left: 4px solid var(--olive); /* the field-notes accent line */
   overflow-y: auto; padding: var(--gap);
 }
 .sidebar-close { position: sticky; top: 0; float: right; z-index: 1; }
 .sidebar-back { margin-bottom: 8px; }
 .sidebar section { margin: 16px 0; }
-.sidebar h2 { font-size: 1.3rem; margin: 8px 0 0; }
+.sidebar h2 { font-size: 1.6rem; line-height: 1.15; margin: 8px 0 0; }
 .sidebar h3 { font-size: 1rem; margin: 0 0 6px; }
 /* Collapsible groups in the species panel ("What to do", "About this species", ...) */
 .sidebar details.group { border-top: 1px solid var(--border); padding: 10px 0; }
@@ -361,7 +425,7 @@ details.info[open] { display: block; }
 .act-more p { font-size: 0.85rem; }
 
 /* Park profile */
-.park-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+.park-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.7rem; color: var(--olive-text); }
 .guide-link { margin: 6px 0 0; }
 .stat-row { display: flex; gap: var(--gap); }
 .stat { flex: 1; background: var(--surface); border-radius: var(--radius); padding: 8px; display: flex; flex-direction: column; }
@@ -471,13 +535,21 @@ details.info[open] { display: block; }
 
 /* Phones: the side panel becomes a bottom sheet */
 @media (max-width: 640px) {
-  /* Search gets its own row under the title; header buttons shrink to their icons */
-  .header { flex-wrap: wrap; height: auto; padding: 6px var(--gap); row-gap: 6px; }
-  .header h1 { font-size: 1rem; flex: 1; }
-  .title { flex: 1; } /* push the icon buttons together on the right */
-  .search { order: 3; flex-basis: 100%; max-width: none; margin-left: 0; }
+  /* Banner and section: tighter padding; the map frame fills the phone screen */
+  .site-nav { padding: 14px 16px; }
+  .logo { font-size: 18px; }
+  .site-nav-links { gap: 14px; font-size: 0.9rem; }
+  .site-nav-links a:first-child { display: none; } /* "Meet the species" does the same */
+  .hero { min-height: 70svh; padding: 40px 20px; }
+  .discovery { padding: 36px 8px 8px; }
+  .section-heading { padding: 0 8px; }
+  .section-heading h2 { font-size: 32px; }
+  .app { height: calc(100svh - 16px); min-height: 480px; border-radius: 10px; }
+  /* Toolbar: search on the left, header buttons shrink to their icons */
+  .toolbar-label { display: none; }
+  .header { height: auto; padding: 6px var(--gap); }
+  .search { max-width: none; }
   .music-label, .button-label { display: none; }
-  .subtitle { display: none; }
   .footer { font-size: 0.7rem; }
   .footer-extra { display: none; }
   .focus-banner { top: auto; bottom: 56px; font-size: 0.8rem; }

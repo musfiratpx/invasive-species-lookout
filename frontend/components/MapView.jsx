@@ -23,8 +23,9 @@
 import L from "leaflet";
 import "leaflet.markercluster";
 import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, useMap } from "react-leaflet";
 
+import Basemap from "@/components/Basemap";
 import ParkOutlines from "@/components/ParkOutlines";
 import { makeMarkerIcon } from "@/components/SpeciesIcon";
 import { formatDay } from "@/lib/dates";
@@ -32,7 +33,7 @@ import { DANGER_COLORS } from "@/lib/labels";
 
 const CENTER = (process.env.NEXT_PUBLIC_MAP_CENTER || "40.7000,-73.9500").split(",").map(Number);
 const ZOOM = Number(process.env.NEXT_PUBLIC_MAP_ZOOM || 11);
-const MAX_ZOOM = 20; // OpenStreetMap images stop at 19; level 20 enlarges them (slightly blurry, still useful)
+const MAX_ZOOM = 20; // street level; the background map is drawn as shapes, so it stays sharp
 const LIST_FROM_ZOOM = 16; // clicking a bubble at this zoom or closer shows a list instead of zooming
 const DETAIL_FROM_ZOOM = 18; // from here, show every sighting at its own spot (no ×N merging)
 
@@ -353,12 +354,7 @@ export default function MapView({ points, sightings, focusKey, outline, allOutli
   const animate = !prefersLessMotion(); // also turns off the zoom and fade animations of the map itself
   return (
     <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map" zoomAnimation={animate} fadeAnimation={animate} markerZoomAnimation={animate}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        maxZoom={MAX_ZOOM}
-        maxNativeZoom={19}
-      />
+      <Basemap /> {/* simplified green background map (lib/basemapStyle.js) */}
       <ParkOutlines
         outlines={allOutlines}
         focusedParkId={focusKey?.startsWith("park:") ? focusKey.slice(5) : null}

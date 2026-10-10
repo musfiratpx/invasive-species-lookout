@@ -5,6 +5,7 @@
 
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css"; // cluster animations; bubble colors are ours (globals.css)
+import "maplibre-gl/dist/maplibre-gl.css"; // the background map (components/Basemap.jsx)
 import "./globals.css";
 
 export const metadata = {

@@ -1,7 +1,9 @@
 "use client";
 /**
- * The one page of the app: header (search box that opens Browse, music + Quiz), map, legend/filters, the side
- * panel (species details, park profile or Browse list) and a short footer (data date + Credits dialog).
+ * The one page of the app. From the top: the nav bar and welcome banner (Hero.jsx, from the
+ * SAIL mockup), then the "Explore" section with the map app in a large frame: a toolbar (search
+ * box that opens Browse, music + Quiz), map, legend/filters, the side panel (species details,
+ * park profile or Browse list) and a short footer (data date + Credits dialog).
  *
  * "Focus" narrows the map to one thing at a time:
  *   - { kind: "species", id }  only that species' sightings;
@@ -16,6 +18,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import BrowsePanel from "@/components/BrowsePanel";
 import Credits from "@/components/Credits";
+import Hero from "@/components/Hero";
 import Legend from "@/components/Legend";
 import MapStatus from "@/components/MapStatus";
 import MusicToggle from "@/components/MusicToggle";
@@ -130,6 +133,9 @@ export default function Home() {
     };
     apply();
     setUrlRead(true);
+    // A shared link to a species, park, Browse or the quiz should land on the map, not the banner.
+    // (Instant, not smooth: a panel moving focus to its close button would stop a smooth scroll halfway.)
+    if (window.location.search) document.getElementById("explore")?.scrollIntoView({ behavior: "instant" });
     window.addEventListener("popstate", apply);
     return () => window.removeEventListener("popstate", apply);
   }, []);
@@ -256,12 +262,17 @@ export default function Home() {
   const inPark = focus?.kind === "park";
 
   return (
+    <>
+    <Hero />
+    <section className="discovery" id="explore">
+    <div className="section-heading">
+      <p className="eyebrow">LOOK A LITTLE CLOSER</p>
+      <h2>Explore your environment.</h2>
+      <p>Discover wildlife and explore the species that share our landscape.</p>
+    </div>
     <div className="app">
       <header className="header">
-        <div className="title">
-          <h1>Kissena Invasive Watch</h1>
-          <p className="subtitle">Invasive species across New York City</p>
-        </div>
+        <label className="toolbar-label" htmlFor="search-box">Find a species</label>
         <SearchBox
           query={searchText}
           onChangeQuery={setSearchText}
@@ -384,5 +395,7 @@ export default function Home() {
         />
       )}
     </div>
+    </section>
+    </>
   );
 }

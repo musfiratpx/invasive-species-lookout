@@ -35,8 +35,8 @@ export default function TypeFilter({ types, counts, selected, onChange, disabled
     );
   }
 
-  // Close when clicking outside, pressing Escape, scrolling the legend or resizing the window
-  // (the last two would leave the fixed menu in the wrong place).
+  // Close when clicking outside, pressing Escape, scrolling (the legend or the page) or
+  // resizing the window (those would leave the fixed menu in the wrong place).
   useEffect(() => {
     if (!open) return;
     const close = () => setMenuStyle(null);
@@ -48,11 +48,13 @@ export default function TypeFilter({ types, counts, selected, onChange, disabled
     document.addEventListener("pointerdown", onClick);
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", close);
+    window.addEventListener("scroll", close);
     legend?.addEventListener("scroll", close);
     return () => {
       document.removeEventListener("pointerdown", onClick);
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", close);
+      window.removeEventListener("scroll", close);
       legend?.removeEventListener("scroll", close);
     };
   }, [open]);

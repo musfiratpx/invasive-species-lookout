@@ -27,13 +27,14 @@ export default function SearchBox({ query, onChangeQuery, onOpen, onClose, speci
         id="search-box"
         type="search"
         placeholder={`Search or browse ${speciesCount || ""} species and ${parkCount || ""} parks…`}
-        aria-label="Search species and parks"
+        aria-describedby="search-box-hint"
         aria-controls="browse-panel"
         value={query}
         onClick={onOpen}
         onChange={(e) => { onChangeQuery(e.target.value); onOpen(); }}
         onKeyDown={onKeyDown}
       />
+      <span id="search-box-hint" className="visually-hidden">Search or browse species and parks</span>
     </div>
   );
 }
