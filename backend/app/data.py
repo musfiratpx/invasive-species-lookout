@@ -103,7 +103,19 @@ def _species_summary(species_id, group):
         "danger_label": danger["label"],
         "nyc_status": statuses().get(species_id, []),
         "sightings": int(len(group)),
+        "thumb": _thumb(species_id),
     }
+
+
+def _thumb(species_id):
+    """
+    A small photo for list rows and grids: the first openly licensed photo (same order as the
+    slideshow), or None. "All rights reserved" photos are skipped, since we may only link to them.
+    """
+    for p in _photos(species_id):
+        if p["license"]:
+            return {k: p[k] for k in ("url", "attribution", "license", "observation_url")}
+    return None
 
 
 def species_list():
@@ -197,7 +209,7 @@ def park_detail(park_id):
     for species_id, rows in group.groupby("species_id"):
         summary = _species_summary(species_id, rows)  # "sightings" here = sightings in this park
         species.append({k: summary[k] for k in ("species_id", "scientific_name", "common_name", "iconic_taxon",
-                                                "danger_level", "danger_label", "sightings")})
+                                                "danger_level", "danger_label", "sightings", "thumb")})
     species.sort(key=lambda s: s["sightings"], reverse=True)
 
     # How many listed species of each danger level are in the park.

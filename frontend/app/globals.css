@@ -33,11 +33,10 @@
   --good: #2f6b3a; /* right quiz answer */
   --bad-tint: #fbeae7; /* warnings and wrong quiz answer */
   --bad-border: #e6b3ad;
-  --serif: Georgia, "Times New Roman", serif;
-  /* Welcome banner photo: blank for now. To add one later, e.g.
-     --hero-photo: url("/images/hero.jpg");  (put the file in frontend/public/images/) */
-  --hero-photo: none;
-  --hero-blank: #4a6358; /* shown behind the green fade while there's no photo */
+  --serif: var(--font-serif), Georgia, "Times New Roman", serif; /* fonts are loaded in app/layout.js */
+  /* Welcome banner photo: common reed (Phragmites), CC BY, credited in the banner (Hero.jsx) */
+  --hero-photo: url("/images/hero.jpg");
+  --hero-blank: #4a6358; /* shown behind the green fade while the photo loads */
 
   /* Danger levels. No green: the map and parks are green, and green would read as "safe"
      (every species on this map is invasive). Low is violet so it stands apart from the map. */
@@ -46,6 +45,10 @@
   --danger-2: #c38f00; /* Moderate: dark amber (plain yellow vanished as a thin ring on the pale map) */
   --danger-1: #7a5195; /* Low: violet */
   --danger-none: #757575; /* Not yet ranked: gray */
+
+  /* Map shapes drawn by Leaflet (read with lib/cssColor.js) */
+  --park-line: #3f6b4f; /* faint outlines of every park */
+  --you: #1a73e8; /* "you are here" dot: map apps' usual blue */
 
   /* Map clusters (neutral, not a danger color) */
   --cluster: var(--forest);
@@ -57,7 +60,7 @@
   --gap: 12px;
   --radius: 6px;
 
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
   background: var(--page);
 }
@@ -127,7 +130,8 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .logo { font-family: var(--serif); font-size: 24px; }
 .site-nav-links { display: flex; gap: 24px; }
 .hero {
-  min-height: 75vh; display: flex; align-items: center; padding: 60px 8%;
+  position: relative; /* for the photo credit in the corner */
+  min-height: 55vh; display: flex; align-items: center; padding: 60px 8%; /* short enough that the map peeks in below */
   background: linear-gradient(90deg, rgba(9, 36, 29, 0.9), rgba(9, 36, 29, 0.2)), var(--hero-photo) center / cover;
   background-color: var(--hero-blank);
   color: var(--on-forest);
@@ -150,8 +154,16 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .hero-stats { display: flex; flex-wrap: wrap; gap: 16px 44px; margin: 40px 0 0; }
 .hero-stats dt { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--lime); }
 .hero-stats dd { margin: 4px 0 0; font-family: var(--serif); font-size: 34px; color: var(--on-forest); }
+.hero-date { margin: 14px 0 0; font-size: 13px; color: var(--on-forest-muted); }
+/* Photo credit, small in the bottom-right corner (every photo is credited, CLAUDE.md rule 9) */
+.hero-credit {
+  position: absolute; right: 12px; bottom: 8px; max-width: calc(100% - 24px);
+  font-size: 11px; color: var(--on-forest-muted); text-decoration: none; text-align: right;
+  background: rgba(9, 36, 29, 0.55); padding: 2px 8px; border-radius: 4px;
+}
+.hero-credit:hover { text-decoration: underline; }
 
-/* "How it works" (HowItWorks.jsx, not shown right now): dark band at the bottom, matching the banner */
+/* "How it works" (HowItWorks.jsx): dark band at the bottom, matching the banner */
 .approach { padding: 70px 8%; background: var(--forest); color: var(--on-forest); }
 .approach .section-heading .eyebrow { color: var(--lime); }
 .approach .section-heading h2 { color: var(--on-forest); }
@@ -249,12 +261,20 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 }
 .map-buttons button + button { border-top: 1px solid var(--border); }
 .map-buttons button:hover { background: var(--surface); }
+/* "Click the map to zoom with the scroll wheel" (ScrollZoomOnClick.jsx) */
+.scroll-hint {
+  position: absolute; inset: 0; z-index: 1000; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(24, 56, 47, 0.35); color: var(--on-forest); font-weight: 600; font-size: 1.1rem;
+  opacity: 0; transition: opacity 0.2s;
+}
+.scroll-hint.show { opacity: 1; }
 
 /* ---------- 4. Map markers ---------- */
 .species-marker {
   position: relative; display: flex; align-items: center; justify-content: center;
   width: 24px; height: 24px; border-radius: 50%;
-  background: #fff; border: 3px solid; font-size: 13px; line-height: 1;
+  background: var(--bg); border: 3px solid; font-size: 13px; line-height: 1;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 /* "×N" badge: several sightings of this species within ~100 m */
@@ -409,6 +429,7 @@ details.info[open] { display: block; }
 /* Species details */
 .scientific-name { font-style: italic; color: var(--muted); margin: 2px 0; }
 .show-on-map { margin-top: 6px; }
+.read-aloud { margin: 6px 6px 0 0; }
 .tag {
   display: inline-block; border: 1px solid var(--border); border-radius: 999px;
   padding: 2px 8px; margin: 0 4px 4px 0; font-size: 0.85rem;
@@ -464,12 +485,18 @@ details.info[open] { display: block; }
 .danger-mix { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; }
 .danger-mix-legend { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.85rem; }
 .danger-mix-legend li { display: flex; align-items: center; gap: 4px; }
-.park-species { list-style: none; padding: 0; margin: 0; }
+/* Species in a park: a grid of photo cards, two across */
+.park-species { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .park-species button {
-  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
-  border: none; border-radius: var(--radius); padding: 6px; background: none;
+  display: flex; flex-direction: column; gap: 2px; width: 100%; text-align: left;
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 0 0 6px; background: var(--bg); overflow: hidden;
 }
 .park-species button:hover, .park-species button:focus-visible { background: var(--surface); }
+.park-species img, .park-species-empty { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: var(--surface); }
+.park-species-empty { display: flex; align-items: center; justify-content: center; font-size: 32px; }
+.park-species-name { padding: 4px 8px 0; font-weight: 600; line-height: 1.2; }
+.park-species-detail { padding: 0 8px; font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.park-species .photo-credit { display: block; margin-top: 2px; }
 
 /* Browse: sortable lists of species and parks */
 /* Browse stays on the page under a species or park opened from it (keeps scroll position).
@@ -484,6 +511,12 @@ details.info[open] { display: block; }
 }
 .row-button:hover, .row-button:focus-visible { background: var(--surface); }
 .row-button .search-name { flex: 1; min-width: 0; }
+/* Small photo at the start of each species row, with its credit line under the row */
+.row-thumb { flex: none; width: 44px; height: 44px; border-radius: var(--radius); object-fit: cover; background: var(--surface); }
+.row-thumb-empty { display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.row-list .photo-credit { display: block; padding: 0 4px 6px 56px; margin-top: -4px; }
+.photo-credit { font-size: 0.7rem; color: var(--muted); text-decoration: none; overflow-wrap: anywhere; }
+.photo-credit:hover { text-decoration: underline; }
 .row-detail {
   display: flex; flex-direction: column; align-items: flex-end;
   font-size: 0.8rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums;

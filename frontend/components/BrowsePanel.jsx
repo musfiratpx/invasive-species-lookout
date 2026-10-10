@@ -10,6 +10,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import PhotoCredit from "@/components/PhotoCredit";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
 import { taxonIcon } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
@@ -140,6 +141,8 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
                   <button className="row-button" data-row-id={config.idOf(item)} onClick={() => pick(item)}>
                     {tab === "species" ? <SpeciesRow s={item} /> : <ParkRow p={item} />}
                   </button>
+                  {/* The photo's credit sits outside the button, since a link can't go inside a button. */}
+                  {tab === "species" && item.thumb && <PhotoCredit photo={item.thumb} />}
                 </li>
               ))}
             </ol>
@@ -153,7 +156,10 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
 function SpeciesRow({ s }) {
   return (
     <>
-      <span aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>
+      {/* A small photo makes the list easier to scan. Only openly licensed photos (see `thumb` in docs/API.md). */}
+      {s.thumb
+        ? <img className="row-thumb" src={s.thumb.url} alt="" loading="lazy" />
+        : <span className="row-thumb row-thumb-empty" aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>}
       <span className="search-name">
         {speciesName(s)}
         <em>{s.scientific_name}</em>

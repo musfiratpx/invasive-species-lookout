@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import DangerBadge from "@/components/DangerBadge";
 import InsightSection from "@/components/InsightSection";
 import PhotoSlideshow from "@/components/PhotoSlideshow";
+import ReadAloud from "@/components/ReadAloud";
 import ReportDontPull from "@/components/ReportDontPull";
 import SeasonChart from "@/components/SeasonChart";
 import SoundPlayer from "@/components/SoundPlayer";
@@ -82,6 +83,7 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         <h2>{species.common_name}</h2>
         <p className="scientific-name">{species.scientific_name}</p>
         <AtAGlance species={species} />
+        <ReadAloud text={readAloudText(species)} />
         {onShowOnMap && (
           <button className="show-on-map" onClick={onShowOnMap} disabled={shownOnMap}>
             {shownOnMap ? "Showing only this species on the map" : "Show only this species on the map"}
@@ -185,6 +187,22 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
       </details>
     </>
   );
+}
+
+/**
+ * What "Read aloud" reads: the name, danger level, summary and how to handle it, exactly as
+ * the panel shows them (including the "no information" and cautious default texts).
+ */
+function readAloudText(species) {
+  const { danger, insights } = species;
+  return [
+    species.common_name || species.scientific_name,
+    danger.level ? `Danger level: ${danger.label}.` : "Danger level: not yet ranked.",
+    "Summary.",
+    insights.summary || "No information in our sources yet.",
+    "How to handle it.",
+    insights.handling.text,
+  ].join(" ");
 }
 
 /** One line under the name: danger · legal status · sightings · last seen. Details are further down. */

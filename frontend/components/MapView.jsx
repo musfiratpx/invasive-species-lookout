@@ -27,9 +27,11 @@ import { MapContainer, useMap } from "react-leaflet";
 
 import Basemap from "@/components/Basemap";
 import ParkOutlines from "@/components/ParkOutlines";
+import ScrollZoomOnClick from "@/components/ScrollZoomOnClick";
 import { makeMarkerIcon } from "@/components/SpeciesIcon";
+import { cssColor } from "@/lib/cssColor";
 import { formatDay } from "@/lib/dates";
-import { DANGER_COLORS } from "@/lib/labels";
+import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
 
 const CENTER = (process.env.NEXT_PUBLIC_MAP_CENTER || "40.7000,-73.9500").split(",").map(Number);
 const ZOOM = Number(process.env.NEXT_PUBLIC_MAP_ZOOM || 11);
@@ -127,9 +129,10 @@ function toMarker(p) {
   });
 }
 
-/** Hover text for one icon, e.g. "Mugwort · 12 sightings here, latest Oct 4, 2026". */
-function markerLabel({ name, count, observedOn }) {
-  return count > 1 ? `${name} · ${count} sightings here, latest ${formatDay(observedOn)}` : `${name} · ${formatDay(observedOn)}`;
+/** Hover text for one icon, e.g. "Mugwort (High) · 12 sightings here, latest Oct 4, 2026". */
+function markerLabel({ name, dangerLevel, count, observedOn }) {
+  const title = `${name} (${DANGER_LABELS[dangerLevel ?? null]})`;
+  return count > 1 ? `${title} · ${count} sightings here, latest ${formatDay(observedOn)}` : `${title} · ${formatDay(observedOn)}`;
 }
 
 /**
@@ -286,8 +289,8 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSel
     const onFound = (e) => {
       if (you) map.removeLayer(you);
       you = L.layerGroup([
-        L.circle(e.latlng, { radius: e.accuracy, color: "#1a73e8", weight: 1, fillOpacity: 0.1 }),
-        L.circleMarker(e.latlng, { radius: 7, color: "#fff", weight: 2, fillColor: "#1a73e8", fillOpacity: 1 }).bindTooltip("You are here"),
+        L.circle(e.latlng, { radius: e.accuracy, color: cssColor("--you"), weight: 1, fillOpacity: 0.1 }),
+        L.circleMarker(e.latlng, { radius: 7, color: cssColor("--bg"), weight: 2, fillColor: cssColor("--you"), fillOpacity: 1 }).bindTooltip("You are here"),
       ]).addTo(map);
     };
     const onLocateError = () => {
@@ -324,7 +327,7 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSel
   useEffect(() => {
     if (outlineLayer.current) map.removeLayer(outlineLayer.current);
     outlineLayer.current = outline
-      ? L.geoJSON(outline, { style: { color: "#18382f", weight: 3, fillColor: "#18382f", fillOpacity: 0.06, dashArray: "6 4" }, interactive: false }).addTo(map)
+      ? L.geoJSON(outline, { style: { color: cssColor("--forest"), weight: 3, fillColor: cssColor("--forest"), fillOpacity: 0.06, dashArray: "6 4" }, interactive: false }).addTo(map)
       : null;
   }, [outline, map]);
 
@@ -353,8 +356,10 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSel
 export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, onSelectSpecies, onSelectPark }) {
   const animate = !prefersLessMotion(); // also turns off the zoom and fade animations of the map itself
   return (
-    <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map" zoomAnimation={animate} fadeAnimation={animate} markerZoomAnimation={animate}>
+    <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map" zoomAnimation={animate} fadeAnimation={animate} markerZoomAnimation={animate}
+      scrollWheelZoom={false} /* turned on by a click, so the page can scroll past the map (ScrollZoomOnClick) */>
       <Basemap /> {/* simplified green background map (lib/basemapStyle.js) */}
+      <ScrollZoomOnClick />
       <ParkOutlines
         outlines={allOutlines}
         focusedParkId={focusKey?.startsWith("park:") ? focusKey.slice(5) : null}

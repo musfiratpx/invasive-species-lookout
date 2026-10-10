@@ -72,6 +72,7 @@ export default function Legend({ open, onToggleOpen, focusName, period, onChange
           <li>Numbered bubbles group nearby sightings. Tap one to zoom in, or to list what&apos;s there.</li>
           <li>Hover a bubble (or press and hold on a phone) to preview the species inside.</li>
           <li>&quot;×N&quot; on an icon = N sightings of that species within ~100 m.</li>
+          <li>Click the map before zooming with the scroll wheel, so the page can scroll past it.</li>
           <li>Sightings with a private or imprecise (over 1 km) location are counted but not drawn.</li>
         </ul>
       </details>

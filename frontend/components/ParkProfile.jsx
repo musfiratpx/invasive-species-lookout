@@ -9,9 +9,10 @@
 import { useEffect, useRef } from "react";
 
 import MonthChart from "@/components/MonthChart";
+import PhotoCredit from "@/components/PhotoCredit";
 import ReportDontPull from "@/components/ReportDontPull";
 import { formatDay, formatMonth } from "@/lib/dates";
-import { DANGER_COLORS } from "@/lib/labels";
+import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
 import { taxonIcon } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
 
@@ -85,15 +86,21 @@ function Details({ park, onPickSpecies }) {
 
       <section>
         <h3>Species seen here</h3>
+        {/* A photo grid: easier to recognize what you saw than a list of names. */}
         <ul className="park-species">
           {park.species.map((s) => (
             <li key={s.species_id}>
               <button onClick={() => onPickSpecies(s.species_id)}>
-                <span className="swatch" style={{ background: DANGER_COLORS[s.danger_level ?? null] }} aria-hidden="true" />
-                <span aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>
-                <span className="search-name">{s.common_name}<em>{s.scientific_name}</em></span>
-                <span className="chip-count">{s.sightings.toLocaleString()}</span>
+                {s.thumb
+                  ? <img src={s.thumb.url} alt="" loading="lazy" />
+                  : <span className="park-species-empty" aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>}
+                <span className="park-species-name">{s.common_name}</span>
+                <span className="park-species-detail">
+                  <span className="swatch" style={{ background: DANGER_COLORS[s.danger_level ?? null] }} aria-hidden="true" />
+                  {DANGER_LABELS[s.danger_level ?? null]} · {s.sightings.toLocaleString()} seen
+                </span>
               </button>
+              {s.thumb && <PhotoCredit photo={s.thumb} />}
             </li>
           ))}
         </ul>

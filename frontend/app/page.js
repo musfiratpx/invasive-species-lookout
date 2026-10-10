@@ -3,7 +3,8 @@
  * The one page of the app. From the top: the nav bar and welcome banner (Hero.jsx, from the
  * SAIL mockup); the "Explore" section with the map app in a large frame: a toolbar (search
  * box that opens Browse, music + Quiz), map, legend/filters, the side panel (species details,
- * park profile or Browse list) and a short footer (data date + Credits dialog).
+ * park profile or Browse list) and a short footer (data date + Credits dialog); then
+ * "How it works" (HowItWorks.jsx) at the bottom.
  *
  * "Focus" narrows the map to one thing at a time:
  *   - { kind: "species", id }  only that species' sightings;
@@ -19,6 +20,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import BrowsePanel from "@/components/BrowsePanel";
 import Credits from "@/components/Credits";
 import Hero from "@/components/Hero";
+import HowItWorks from "@/components/HowItWorks";
 import Legend from "@/components/Legend";
 import MapStatus from "@/components/MapStatus";
 import MusicToggle from "@/components/MusicToggle";
@@ -261,9 +263,14 @@ export default function Home() {
   const closePark = useCallback(() => setParkPanelOpen(false), []);
   const inPark = focus?.kind === "park";
 
+  // Nav links: open the quiz or the parks list, then scroll down to the map app.
+  const scrollToMap = () => document.getElementById("explore")?.scrollIntoView({ behavior: "smooth" });
+  const openQuizFromNav = () => { setQuiz("open"); scrollToMap(); };
+  const openParksFromNav = () => { setSelectedSpeciesId(null); setParkPanelOpen(false); setBrowseTab("parks"); scrollToMap(); };
+
   return (
     <>
-    <Hero species={speciesList} parks={parks} />
+    <Hero species={speciesList} parks={parks} updatedAt={updatedAt} onOpenQuiz={openQuizFromNav} onOpenParks={openParksFromNav} />
     <section className="discovery" id="explore">
     <div className="section-heading">
       <p className="eyebrow">WHAT&apos;S GROWING NEAR YOU</p>
@@ -399,6 +406,7 @@ export default function Home() {
       )}
     </div>
     </section>
+    <HowItWorks />
     </>
   );
 }

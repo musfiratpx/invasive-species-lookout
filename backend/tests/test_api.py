@@ -49,6 +49,15 @@ def test_every_photo_has_credit():
             assert photo["observation_url"].startswith("https://www.inaturalist.org/observations/")
 
 
+def test_thumbnails_are_openly_licensed_and_credited():
+    # "All rights reserved" photos may only be linked, never shown as a thumbnail.
+    for s in client.get("/api/species").json():
+        if s["thumb"]:
+            assert s["thumb"]["license"]
+            assert s["thumb"]["attribution"]
+            assert s["thumb"]["observation_url"].startswith("https://www.inaturalist.org/observations/")
+
+
 def test_unknown_species_is_404():
     assert client.get("/api/species/0").status_code == 404
 

@@ -15,10 +15,11 @@ import L from "leaflet";
 import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 
+import { cssColor } from "@/lib/cssColor";
+
 const FROM_ZOOM = 13;
 const UNTIL_ZOOM = 18; // street level, where every sighting is shown separately
 
-const FAINT = { color: "#2e7d32", weight: 1, opacity: 0.45, fillColor: "#2e7d32", fillOpacity: 0.04 };
 const HOVER = { weight: 2, opacity: 0.8, fillOpacity: 0.1 };
 
 export default function ParkOutlines({ outlines, focusedParkId, onSelectPark }) {
@@ -28,6 +29,8 @@ export default function ParkOutlines({ outlines, focusedParkId, onSelectPark }) 
 
   useEffect(() => {
     if (!outlines) return;
+    // Park line color from the palette (--park-line in globals.css), read once the page has its styles.
+    const FAINT = { color: cssColor("--park-line"), weight: 1, opacity: 0.45, fillColor: cssColor("--park-line"), fillOpacity: 0.04 };
     const layer = L.geoJSON(outlines, {
       filter: (feature) => feature.properties.park_id !== focusedParkId,
       style: FAINT,

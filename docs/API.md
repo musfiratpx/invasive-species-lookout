@@ -69,13 +69,15 @@ Every listed species seen in the area, most-sighted first.
     "danger_level": 3,
     "danger_label": "High",
     "nyc_status": ["common_here"],
-    "sightings": 166
+    "sightings": 166,
+    "thumb": {"url": "…", "attribution": "…", "license": "cc-by", "observation_url": "…"}
   }
 ]
 ```
 
 - `danger_label` is `"Very High" | "High" | "Moderate" | "Low" | "Not yet ranked"`.
 - `nyc_status` contains zero or more of `"common_here" | "spreading" | "new_arrival"`. See [SCORING.md](SCORING.md).
+- `thumb` is the species' first openly licensed photo (same order as the slideshow), for list rows and photo grids. `null` if every photo is "all rights reserved".
 
 ## `GET /api/species/{species_id}`
 
@@ -186,7 +188,7 @@ A park's profile. Unknown `park_id` → `404`.
   "sightings": 498, "species_count": 31,
   "species_by_danger": {"Very High": 16, "High": 12, "Moderate": 2, "Not yet ranked": 1},
   "species": [{"species_id": "52856", "scientific_name": "Artemisia vulgaris", "common_name": "common mugwort",
-               "iconic_taxon": "Plantae", "danger_level": 3, "danger_label": "High", "sightings": 88}],
+               "iconic_taxon": "Plantae", "danger_level": 3, "danger_label": "High", "sightings": 88, "thumb": {…}}],
   "by_month_of_year": [8, 7, 19, 167, 65, 39, 61, 24, 28, 45, 24, 11],
   "first_seen": "...", "last_seen": "2026-10-08",
   "recent": [{"observed_on": "2026-10-08", "species_id": "52856", "common_name": "common mugwort", "url": "https://www.inaturalist.org/observations/..."}],
