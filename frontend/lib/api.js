@@ -19,7 +19,7 @@ export function getHealth() {
 }
 
 /**
- * Sightings for the map (~15,000 for Queens, about 4 MB), loaded once.
+ * Sightings for the map (~15,000 for Queens: ~4 MB of JSON, ~0.4 MB compressed), loaded once.
  * onProgress(fraction) is called as the download comes in (0 to 1), so the page
  * can show a progress bar. bbox is optional: [minLng, minLat, maxLng, maxLat].
  */
@@ -27,7 +27,9 @@ export async function getMapObservations({ bbox, onProgress } = {}) {
   const query = bbox ? `?bbox=${bbox.join(",")}` : "";
   const response = await fetch(`${API_URL}/api/map/observations${query}`);
   if (!response.ok) throw new Error(`API /api/map/observations failed with status ${response.status}`);
-  const total = Number(response.headers.get("Content-Length")) || 0;
+  // The server compresses the download, and the browser unpacks it as it arrives, so we
+  // count unpacked bytes against X-Total-Bytes (the unpacked size the server sends).
+  const total = Number(response.headers.get("X-Total-Bytes")) || Number(response.headers.get("Content-Length")) || 0;
   if (!onProgress || !total || !response.body) return response.json();
 
   // Read the download in pieces so we can report how far along it is.

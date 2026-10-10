@@ -166,7 +166,7 @@ def park_detail(park_id):
         "name": park["name"],
         "acres": park["acres"],
         "type": park["type"],
-        "address": park["address"],
+        "address": park["address"].title() if park["address"] else None,  # the city data is ALL CAPS
         "sightings": int(len(group)),
         "species_count": len(species),
         "species_by_danger": by_level,

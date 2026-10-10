@@ -5,10 +5,12 @@ Run it from backend/:   uvicorn app.main:app --reload
 Then open http://localhost:8000/docs to try every endpoint in the browser.
 """
 
+import json
 from datetime import datetime, timezone
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 
 from app import config, data
 
@@ -23,7 +25,12 @@ app.add_middleware(
     allow_origins=[config.FRONTEND_ORIGIN],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
+    expose_headers=["X-Total-Bytes"],  # lets the browser read our download-size header (progress bar)
 )
+
+# Compress responses. The map's sightings are ~3.7 MB of JSON but only ~0.5 MB
+# compressed, which makes a big difference on phones.
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 
 def _count_cached_observations():
@@ -75,7 +82,10 @@ def map_observations(
             box = []
         if len(box) != 4:
             raise HTTPException(400, "bbox must be four numbers: minLng,minLat,maxLng,maxLat")
-    return data.map_observations(box)
+    # Send the uncompressed size too: with compression on, the browser can't otherwise
+    # tell how big the download will be once unpacked, which the progress bar needs.
+    body = json.dumps(data.map_observations(box), separators=(",", ":")).encode()
+    return Response(content=body, media_type="application/json", headers={"X-Total-Bytes": str(len(body))})
 
 
 @app.get("/api/species")

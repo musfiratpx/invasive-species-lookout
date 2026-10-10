@@ -33,7 +33,7 @@ export function dangerMeaning(danger) {
     );
   }
   if (danger.basis === "ny_part575_status") {
-    return "New York has no 0–100 rank for this kind of species, so its level comes from its legal category (below).";
+    return "Its level comes from its legal status in New York (below).";
   }
   return "No official New York rank found yet, so we don't guess.";
 }

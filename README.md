@@ -66,7 +66,7 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-Open <http://localhost:3000>.
+Open <http://localhost:3000>. For the demo, use the faster production build: `npm run demo` (see [docs/DEMO.md](docs/DEMO.md)).
 
 **3. Tests**
 
@@ -112,6 +112,7 @@ docs/
   SCORING.md        how danger level and status are computed
   DATA_SOURCES.md   every source with URL and date, plus a decisions log
   ROLES.md          team checklist
+  DEMO.md           demo script, venue prep, judge Q&A
 backend/
   app/              FastAPI app: data.py (responses), danger.py, status.py, parks.py, rag/ (search + text)
   scripts/          data refresh scripts (see the table above)
@@ -127,6 +128,7 @@ frontend/
 
 ## Team docs
 
+- [docs/DEMO.md](docs/DEMO.md): how to run the demo, the 60-second script, venue prep, and answers to likely judge questions
 - [docs/ROLES.md](docs/ROLES.md): who does what (Researcher, Designer, Middle, Backend)
 - [docs/API.md](docs/API.md): the backend ↔ frontend contract
 - [docs/SCORING.md](docs/SCORING.md): how danger level and status in Queens are computed

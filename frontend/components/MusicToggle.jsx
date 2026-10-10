@@ -2,7 +2,8 @@
 /**
  * Background music on/off. OFF by default, and it only starts after a click
  * (browsers block sound that plays by itself). The choice is remembered in
- * localStorage. If the music file hasn't been generated yet, the button says so.
+ * localStorage. If the music file hasn't been generated yet, the button is hidden
+ * (a disabled "Music not available" button looked broken).
  * Music file: public/audio/background.mp3, made by backend/scripts/make_music.py.
  */
 
@@ -16,6 +17,14 @@ export default function MusicToggle() {
   const audio = useRef(null);
   const [on, setOn] = useState(false);
   const [missing, setMissing] = useState(false);
+  const [available, setAvailable] = useState(false); // only show the button once we know the file exists
+
+  // Check once (without downloading the whole file) whether the music has been generated.
+  useEffect(() => {
+    fetch(MUSIC_URL, { method: "HEAD" })
+      .then((r) => setAvailable(r.ok))
+      .catch(() => setAvailable(false));
+  }, []);
 
   useEffect(() => {
     const el = new Audio();
@@ -57,13 +66,7 @@ export default function MusicToggle() {
     }
   };
 
-  if (missing) {
-    return (
-      <button className="music-button" disabled title="Run backend/scripts/make_music.py to create it">
-        <span aria-hidden="true">🔇</span><span className="music-label"> Music not available</span>
-      </button>
-    );
-  }
+  if (!available || missing) return null; // run backend/scripts/make_music.py to create the music
   return (
     <button className="music-button" onClick={toggle} aria-pressed={on} aria-label={on ? "Turn background music off" : "Turn background music on"}>
       <span aria-hidden="true">{on ? "🔊" : "🔈"}</span>

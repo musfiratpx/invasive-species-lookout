@@ -191,6 +191,13 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
         event.layer.bindTooltip(previewText(event.layer), { direction: "top", offset: [0, -14] }).openTooltip();
       });
       group.on("clustermouseout", (event) => event.layer.unbindTooltip());
+      // Phones have no hover, so press and hold a bubble to see the same preview (for 3 seconds).
+      group.on("clustercontextmenu", (event) => {
+        event.originalEvent?.preventDefault(); // no browser menu
+        const cluster = event.layer;
+        cluster.bindTooltip(previewText(cluster), { direction: "top", offset: [0, -14] }).openTooltip();
+        setTimeout(() => cluster.unbindTooltip(), 3000);
+      });
       group.on("clusterclick", (event) => {
         const cluster = event.layer;
         cluster.unbindTooltip();

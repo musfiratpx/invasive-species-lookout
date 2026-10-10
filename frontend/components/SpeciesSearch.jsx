@@ -93,13 +93,13 @@ export default function SpeciesSearch({ species, parks, onPickSpecies, onPickPar
                   <span className="swatch" style={{ background: DANGER_COLORS[r.item.danger_level ?? null] }} aria-hidden="true" />
                   <span aria-hidden="true">{taxonIcon(r.item.iconic_taxon).emoji}</span>
                   <span className="search-name">{r.item.common_name}<em>{r.item.scientific_name}</em></span>
-                  <span className="chip-count">{r.item.sightings.toLocaleString()}</span>
+                  <span className="chip-count" title="Sightings in total (including ones not drawn on the map)">{r.item.sightings.toLocaleString()}</span>
                 </>
               ) : (
                 <>
                   <span aria-hidden="true">🌳</span>
                   <span className="search-name">{r.item.name}<em>Park · {r.item.species} species</em></span>
-                  <span className="chip-count">{r.item.sightings.toLocaleString()}</span>
+                  <span className="chip-count" title="Sightings in total (including ones not drawn on the map)">{r.item.sightings.toLocaleString()}</span>
                 </>
               )}
             </li>

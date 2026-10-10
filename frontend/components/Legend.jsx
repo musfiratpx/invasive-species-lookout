@@ -66,10 +66,16 @@ export default function Legend({ open, onToggleOpen, focusName, view, onChangeVi
         ))}
       </ul>
 
-      <p className="muted legend-note">
-        Tap to show or hide. Tap a bubble to zoom in or list what&apos;s there. &quot;×N&quot; = N sightings within ~100 m.
-        Sightings with a private or imprecise (&gt;1 km) location are counted but not drawn.
-      </p>
+      <details className="legend-help">
+        <summary>ⓘ How to read the map</summary>
+        <ul className="muted">
+          <li>Tap a filter to show or hide it.</li>
+          <li>Numbered bubbles group nearby sightings. Tap one to zoom in, or to list what&apos;s there.</li>
+          <li>Hover a bubble (or press and hold on a phone) to preview the species inside.</li>
+          <li>&quot;×N&quot; on an icon = N sightings of that species within ~100 m.</li>
+          <li>Sightings with a private or imprecise (over 1 km) location are counted but not drawn.</li>
+        </ul>
+      </details>
     </aside>
   );
 }

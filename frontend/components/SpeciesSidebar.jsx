@@ -1,8 +1,10 @@
 "use client";
 /**
- * Slide-in panel with everything about one species, in this order:
- * photos, names, danger level, status in Queens, sound, seasons, summary,
- * history, how to handle it, how to report it, sources. Closes with the X button or Escape.
+ * Slide-in panel with everything about one species: photos, name, report button,
+ * danger level (with what it means), status in Queens, sound, then collapsible groups:
+ * "What to do" (handling + reporting, open by default because it's safety info),
+ * "About this species" (summary, history), "When to see it" (chart, seasons), "Sources".
+ * Closes with the X button or Escape.
  * (On phones, CSS turns it into a bottom sheet.)
  */
 
@@ -15,9 +17,9 @@ import ReportButton from "@/components/ReportButton";
 import SeasonChart from "@/components/SeasonChart";
 import SoundPlayer from "@/components/SoundPlayer";
 import { getSpecies } from "@/lib/api";
-import { NY_STATUS_LABELS, STATUS_LABELS } from "@/lib/labels";
+import { STATUS_LABELS } from "@/lib/labels";
 
-export default function SpeciesSidebar({ speciesId, onClose, onBack, backLabel, onShowOnMap, shownOnMap }) {
+export default function SpeciesSidebar({ speciesId, mapCount, onClose, onBack, backLabel, onShowOnMap, shownOnMap }) {
   const [species, setSpecies] = useState(null);
   const [error, setError] = useState(null);
   const closeButton = useRef(null);
@@ -56,13 +58,14 @@ export default function SpeciesSidebar({ speciesId, onClose, onBack, backLabel, 
       )}
       {error && <p role="alert">{error}</p>}
       {!species && !error && <Skeleton />}
-      {species && <SpeciesDetails species={species} onShowOnMap={onShowOnMap} shownOnMap={shownOnMap} />}
+      {species && <SpeciesDetails species={species} mapCount={mapCount} onShowOnMap={onShowOnMap} shownOnMap={shownOnMap} />}
     </aside>
   );
 }
 
-function SpeciesDetails({ species, onShowOnMap, shownOnMap }) {
+function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
   const { insights, sightings } = species;
+  const hidden = mapCount != null ? sightings.total - mapCount : 0;
   return (
     <>
       <PhotoSlideshow photos={species.photos} speciesName={species.common_name || species.scientific_name} />
@@ -70,7 +73,6 @@ function SpeciesDetails({ species, onShowOnMap, shownOnMap }) {
       <section>
         <h2>{species.common_name}</h2>
         <p className="scientific-name">{species.scientific_name}</p>
-        <p className="muted">{NY_STATUS_LABELS[species.ny_status]}</p>
         <ReportButton />
         {onShowOnMap && (
           <button className="show-on-map" onClick={onShowOnMap} disabled={shownOnMap}>
@@ -90,33 +92,41 @@ function SpeciesDetails({ species, onShowOnMap, shownOnMap }) {
           <span key={tag} className="tag">{STATUS_LABELS[tag]}</span>
         ))}
         <p className="muted">
-          {sightings.total} research-grade sighting{sightings.total === 1 ? "" : "s"} in Queens, from{" "}
-          {sightings.first_seen} to {sightings.last_seen}.
+          {sightings.total.toLocaleString()} research-grade sighting{sightings.total === 1 ? "" : "s"}, {sightings.first_seen} to{" "}
+          {sightings.last_seen}
+          {hidden > 0 && ` · ${mapCount.toLocaleString()} shown on the map (the other ${hidden.toLocaleString()} have a private or imprecise location)`}.
         </p>
       </section>
 
       <SoundPlayer sound={species.sound} />
 
-      <section>
-        <h3>Seasonal differences</h3>
-        <SeasonChart kissena={sightings.by_month_of_year} nyc={sightings.nyc_by_month_of_year} />
-        <InsightSection text={insights.seasons} />
-      </section>
-
-      <InsightSection title="Summary" text={insights.summary} />
-      <InsightSection title="History" text={insights.history} />
-
-      <section>
-        <h3>How to handle it</h3>
+      {/* Grouped so the panel is shorter. "What to do" is safety information, so it starts open. */}
+      <details className="group" open>
+        <summary>What to do</summary>
         {insights.handling.touch_safe === false && <p className="warning">Sources say: do not touch.</p>}
         {insights.handling.touch_safe === true && <p className="muted">Sources say it is safe to touch.</p>}
+        <h4>How to handle it</h4>
         <p className={insights.handling.is_default ? "warning" : undefined}>{insights.handling.text}</p>
-      </section>
+        <h4>How to report it</h4>
+        <InsightSection text={insights.report} />
+      </details>
 
-      <InsightSection title="How to report it" text={insights.report} />
+      <details className="group" open>
+        <summary>About this species</summary>
+        <h4>Summary</h4>
+        <InsightSection text={insights.summary} />
+        <h4>History</h4>
+        <InsightSection text={insights.history} />
+      </details>
 
-      <section>
-        <h3>Sources</h3>
+      <details className="group">
+        <summary>When to see it</summary>
+        <SeasonChart kissena={sightings.by_month_of_year} nyc={sightings.nyc_by_month_of_year} />
+        <InsightSection text={insights.seasons} />
+      </details>
+
+      <details className="group">
+        <summary>Sources</summary>
         <ul>
           {insights.sources.map((source) => (
             <li key={source.url}>
@@ -137,7 +147,7 @@ function SpeciesDetails({ species, onShowOnMap, shownOnMap }) {
         <p className="muted">
           Sightings, photos and sounds: iNaturalist and its observers (research-grade observations only).
         </p>
-      </section>
+      </details>
     </>
   );
 }

@@ -61,6 +61,8 @@ button {
   border-bottom: 1px solid var(--border);
 }
 .header h1 { font-size: 1.1rem; margin: 0; white-space: nowrap; }
+.title { min-width: 0; }
+.subtitle { margin: 0; font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
 .header { gap: var(--gap); }
 
 /* Species search in the header */
@@ -154,9 +156,29 @@ button {
 }
 
 .footer {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
   font-size: 0.75rem; color: var(--muted);
   padding: 6px var(--gap); border-top: 1px solid var(--border);
 }
+.link-button {
+  border: none; background: none; padding: 0; font: inherit; color: inherit;
+  text-decoration: underline; cursor: pointer; white-space: nowrap;
+}
+.focus-count { color: var(--muted); font-size: 0.85em; }
+
+/* Credits dialog */
+.dialog-backdrop {
+  position: fixed; inset: 0; z-index: 2000; background: rgba(0, 0, 0, 0.35);
+  display: flex; align-items: center; justify-content: center; padding: var(--gap);
+}
+.dialog {
+  background: var(--bg); border-radius: var(--radius); padding: 16px 20px;
+  width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dialog h2 { margin: 0 0 8px; font-size: 1.15rem; }
+.dialog dt { font-weight: 600; margin-top: 10px; font-size: 0.9rem; }
+.dialog dd { margin: 2px 0 0; font-size: 0.85rem; }
 
 /* ---------- Map markers ---------- */
 .species-marker {
@@ -209,6 +231,9 @@ button {
 .legend-count { margin: 0; }
 .legend-close { border: none; padding: 2px 6px; }
 .legend-note { margin: 6px 0 0; }
+.legend-help { margin-top: 6px; }
+.legend-help summary { cursor: pointer; color: var(--muted); }
+.legend-help ul { list-style: disc; padding-left: 16px; margin: 4px 0 0; font-size: 0.75rem; }
 .legend-open-button {
   position: absolute; bottom: var(--gap); left: var(--gap); z-index: 1000;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2); padding: 6px 12px; font-weight: 600;
@@ -240,6 +265,10 @@ button {
   display: inline-block; border: 1px solid var(--border); border-radius: 999px;
   padding: 2px 8px; margin: 0 4px 4px 0; font-size: 0.85rem;
 }
+/* Collapsible groups in the species panel ("What to do", "About this species", ...) */
+.sidebar details.group { border-top: 1px solid var(--border); padding: 10px 0; }
+.sidebar details.group > summary { cursor: pointer; font-weight: 700; font-size: 1rem; }
+.sidebar details.group h4 { font-size: 0.9rem; margin: 12px 0 4px; }
 .warning { background: #fdecea; border: 1px solid #f5c2c0; padding: 8px; border-radius: var(--radius); }
 
 /* Mobile: the sidebar becomes a bottom sheet */
@@ -249,6 +278,9 @@ button {
   .header h1 { font-size: 1rem; flex: 1; }
   .search { order: 3; flex-basis: 100%; max-width: none; margin-left: 0; }
   .music-label { display: none; }
+  .subtitle { display: none; }
+  .footer { font-size: 0.7rem; }
+  .footer-extra { display: none; }
   .focus-banner { top: auto; bottom: 56px; font-size: 0.8rem; }
   .sidebar {
     top: auto; left: 0; width: 100%; height: 65%;

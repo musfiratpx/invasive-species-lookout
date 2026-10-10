@@ -1,7 +1,7 @@
 "use client";
 /**
  * The one page of the app: header (search + music), map, legend/filters, the side
- * panel (species details or park profile) and footer credits.
+ * panel (species details or park profile) and a short footer (data date + Credits dialog).
  *
  * "Focus" narrows the map to one thing at a time:
  *   - { kind: "species", id }  only that species' sightings;
@@ -11,6 +11,7 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import Credits from "@/components/Credits";
 import Legend from "@/components/Legend";
 import MapStatus from "@/components/MapStatus";
 import MusicToggle from "@/components/MusicToggle";
@@ -43,6 +44,8 @@ export default function Home() {
   const [loadStatus, setLoadStatus] = useState("loading"); // "loading", "error" or "done"
   const [loadProgress, setLoadProgress] = useState(0);
   const [expectedCount, setExpectedCount] = useState(null);
+  const [updatedAt, setUpdatedAt] = useState(null); // when the sightings were last fetched from iNaturalist
+  const [creditsOpen, setCreditsOpen] = useState(false);
   const [selectedSpeciesId, setSelectedSpeciesId] = useState(null);
   const [hiddenLevels, setHiddenLevels] = useState(new Set());
   const [hiddenTypes, setHiddenTypes] = useState(new Set());
@@ -57,7 +60,12 @@ export default function Home() {
   const loadData = useCallback(() => {
     setLoadStatus("loading");
     setLoadProgress(0);
-    getHealth().then((h) => setExpectedCount(h.observations)).catch(() => {});
+    getHealth()
+      .then((h) => {
+        setExpectedCount(h.observations);
+        setUpdatedAt(h.cache_updated_at);
+      })
+      .catch(() => {});
     getMapObservations({ onProgress: setLoadProgress })
       .then((all) => {
         // Left off the map (but still counted in the sidebar's totals, charts and status):
@@ -116,6 +124,19 @@ export default function Home() {
     return null;
   }, [focus, observations, parks]);
 
+  // All sightings (including ones not drawn on the map) of the focused species or park, for the banner.
+  const focusTotal = useMemo(() => {
+    if (focus?.kind === "species") return speciesList.find((s) => s.species_id === focus.id)?.sightings ?? null;
+    if (focus?.kind === "park") return parks.find((p) => p.park_id === focus.id)?.sightings ?? null;
+    return null;
+  }, [focus, speciesList, parks]);
+
+  // How many sightings of the open species are drawn on the map (the sidebar compares it with the total).
+  const selectedMapCount = useMemo(
+    () => (selectedSpeciesId && loadStatus === "done" ? observations.filter((obs) => obs.species_id === selectedSpeciesId).length : null),
+    [selectedSpeciesId, observations, loadStatus]
+  );
+
   const parkNames = useMemo(() => Object.fromEntries(parks.map((p) => [p.park_id, p.name])), [parks]);
 
   // Search: a species opens its sidebar and shows only it; a park opens its profile and shows only it.
@@ -143,7 +164,10 @@ export default function Home() {
   return (
     <div className="app">
       <header className="header">
-        <h1>Kissena Invasive Watch</h1>
+        <div className="title">
+          <h1>Kissena Invasive Watch</h1>
+          <p className="subtitle">Invasive species across Queens, NYC</p>
+        </div>
         <SpeciesSearch species={speciesList} parks={parks} onPickSpecies={pickSpecies} onPickPark={pickPark} />
         <MusicToggle />
       </header>
@@ -163,7 +187,11 @@ export default function Home() {
           <div className="focus-banner" role="status">
             <span>
               {inPark ? "🌳 " : "Showing only "}
-              <strong>{focusName}</strong> ({visible.length.toLocaleString()} sightings)
+              <strong>{focusName}</strong>{" "}
+              <span className="focus-count">
+                {visible.length.toLocaleString()} on the map
+                {focusTotal != null && focusTotal !== visible.length && ` · ${focusTotal.toLocaleString()} total`}
+              </span>
             </span>
             {inPark && !parkPanelOpen && <button onClick={() => { setSelectedSpeciesId(null); setParkPanelOpen(true); }}>Park profile</button>}
             <button onClick={clearFocus}>Show all</button>
@@ -193,6 +221,7 @@ export default function Home() {
         {selectedSpeciesId ? (
           <SpeciesSidebar
             speciesId={selectedSpeciesId}
+            mapCount={selectedMapCount}
             onClose={closeSidebar}
             onBack={inPark && parkPanelOpen ? closeSidebar : null}
             backLabel={inPark ? `Back to ${focusName}` : null}
@@ -205,10 +234,14 @@ export default function Home() {
       </main>
 
       <footer className="footer">
-        Sightings, photos and sounds from iNaturalist and its observers · Invasive status: NYS DEC 6 NYCRR Part 575 ·
-        Plant ranks: New York Non-Native Plant Invasiveness Ranking · Park boundaries: NYC Parks · Music generated with
-        ElevenLabs · Map © OpenStreetMap contributors
+        <span>
+          Sightings from iNaturalist
+          {updatedAt && `, updated ${new Date(updatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`}
+          <span className="footer-extra"> · Danger levels from official New York rankings, never AI</span>
+        </span>
+        <button className="link-button" onClick={() => setCreditsOpen(true)}>Credits &amp; sources</button>
       </footer>
+      {creditsOpen && <Credits onClose={() => setCreditsOpen(false)} />}
     </div>
   );
 }

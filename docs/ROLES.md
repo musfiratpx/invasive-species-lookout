@@ -4,6 +4,8 @@ Tick items off as you go. Hacking ends **Sunday Oct 11, 12:00 PM ET**.
 
 Everyone should read [CLAUDE.md](../CLAUDE.md) (the ground rules) and be able to explain [SCORING.md](SCORING.md) to a judge.
 
+**Presenting?** Follow [DEMO.md](DEMO.md): run `npm run demo`, practice the 60-second script, and learn the Q&A answers.
+
 ## Where we are (Oct 9, night)
 
 - ✅ Map covers **all of Queens** (iNaturalist place 675): 14,620 sightings of 76 listed species. Privacy-blurred sightings are counted but not drawn (they'd land in the wrong town).
@@ -54,7 +56,7 @@ Owns: `frontend/lib/api.js`, `docs/API.md`, `frontend/components/`
 - [x] "How to report it" section added to the sidebar.
 - [ ] Keep `lib/api.js` and `docs/API.md` in sync: every fetch goes through `api.js`.
 - [x] Map opens on all of Queens (zoom 12, clusters); icons appear from zoom 15. Only on-screen icons are drawn, so 14,620 points stay fast.
-- [ ] Music toggle works once `background.mp3` exists (Backend runs `make_music.py`).
+- [ ] Music toggle works once `background.mp3` exists (Backend runs `make_music.py`). Until then the button is hidden.
 - [ ] Optional: a species list / search panel using `getSpeciesList()` (see "Backend human discussion" below).
 - [ ] Optional: a "How we score" page built from `docs/SCORING.md`.
 
