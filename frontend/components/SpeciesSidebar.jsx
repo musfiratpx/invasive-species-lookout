@@ -1,5 +1,14 @@
 "use client";
-
+/**
+ * Slide-in panel with everything about one species: photos, name, an at-a-glance row
+ * (danger · legal status · sightings · last seen), danger level (with what it means),
+ * status in NYC, sound, then collapsible groups:
+ * "What to do" (handling + reporting, open by default because it's safety info),
+ * "About this species" (summary, history, look-alikes), "Through the year" (sourced seasons text, then
+ * the chart of when people report it), "Sources".
+ * Closes with the X button or Escape.
+ * (On phones, CSS turns it into a bottom sheet.)
+ */
 
 import { useEffect, useRef, useState } from "react";
 

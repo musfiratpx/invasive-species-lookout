@@ -1,16 +1,28 @@
 "use client";
 /**
- * Map legend: what the icon border colors and the icons mean.
+ * Map legend that doubles as a filter: pick a time period, tap a danger level to hide or
+ * show it, and pick which types to show from the "Types" dropdown (TypeFilter.jsx).
+ * Each option shows how many sightings it covers;
+ * options with no sightings (e.g. no "Low" species in NYC) are left out.
+ * It can be collapsed behind a "Filter" button to keep the map clear
+ * (it starts collapsed on phones, see app/page.js).
  */
 
 import TypeFilter from "@/components/TypeFilter";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
-import { TAXON_ICONS } from "@/lib/taxa";
+import { TYPE_FILTERS } from "@/lib/taxa";
 
 const LEVELS = [4, 3, 2, 1, null];
-const SHOWN_GROUPS = ["Plantae", "Aves", "Insecta", "Actinopterygii", "Mollusca", "Animalia"];
 
-export default function Legend() {
+export default function Legend({ open, onToggleOpen, focusName, period, onChangePeriod, hiddenLevels, onToggleLevel, selectedTypes, onChangeTypes, counts, shown, total }) {
+  if (!open) {
+    return (
+      <button className="legend-open-button" onClick={onToggleOpen} aria-expanded="false">
+        Filter · {shown.toLocaleString()} sightings
+      </button>
+    );
+  }
+
   return (
     <aside className="legend" aria-label="Map legend and filters">
       <div className="legend-header">
@@ -19,13 +31,6 @@ export default function Legend() {
         </p>
         <button className="legend-close" onClick={onToggleOpen} aria-expanded="true" aria-label="Hide filters">✕</button>
       </div>
-
-      <h2>Map style</h2>
-      <div className="segmented" role="group" aria-label="Map style">
-        <button aria-pressed={view === "bubbles"} onClick={() => onChangeView("bubbles")}>Bubbles</button>
-        <button aria-pressed={view === "heat"} onClick={() => onChangeView("heat")}>Heat map</button>
-      </div>
-      {view === "heat" && <p className="muted legend-note">The glow shows where sightings are dense. Zoom in to see icons.</p>}
 
       {focusName && (
         <p className="legend-paused">Showing only {focusName}, so these filters are paused. Use “Show all” to go back.</p>
@@ -51,18 +56,25 @@ export default function Legend() {
           </li>
         ))}
       </ul>
-      <h2>Type</h2>
-      <ul>
-        {SHOWN_GROUPS.map((group) => (
-          <li key={group}>
-            <span aria-hidden="true">{TAXON_ICONS[group].emoji}</span> {TAXON_ICONS[group].label}
-          </li>
-        ))}
-      </ul>
-      <p className="muted" style={{ margin: 0 }}>
-        Zoom in to see each sighting. Sightings whose exact location is hidden for privacy are counted in each
-        species&apos; totals but not shown on the map.
-      </p>
+
+      <TypeFilter
+        types={TYPE_FILTERS.filter((type) => counts.types[type.id])}
+        counts={counts.types}
+        selected={selectedTypes}
+        onChange={onChangeTypes}
+        disabled={!!focusName}
+      />
+
+      <details className="legend-help">
+        <summary>ⓘ How to read the map</summary>
+        <ul className="muted">
+          <li>Tap a danger level to show or hide it. Pick types from the Types menu.</li>
+          <li>Numbered bubbles group nearby sightings. Tap one to zoom in, or to list what&apos;s there.</li>
+          <li>Hover a bubble (or press and hold on a phone) to preview the species inside.</li>
+          <li>&quot;×N&quot; on an icon = N sightings of that species within ~100 m.</li>
+          <li>Sightings with a private or imprecise (over 1 km) location are counted but not drawn.</li>
+        </ul>
+      </details>
     </aside>
   );
 }
