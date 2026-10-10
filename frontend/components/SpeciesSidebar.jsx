@@ -1,17 +1,20 @@
 "use client";
 /**
- * Slide-in panel with everything about one species: photos, name, an at-a-glance row
- * (danger · legal status · sightings · last seen), danger level (with what it means),
+ * Slide-in panel with everything about one species: a big photo with the name and danger
+ * level laid over it, an at-a-glance row (legal status · sightings · last seen), "Read aloud"
+ * and "Copy link", danger level (with what it means),
  * status in NYC, sound, then collapsible groups:
  * "What to do" (handling + reporting, open by default because it's safety info),
  * "About this species" (summary, history, look-alikes), "Through the year" (sourced seasons text, then
  * the chart of when people report it), "Sources".
+ * Once the name scrolls out of view, a slim bar with the name stays at the top of the panel.
  * Closes with the X button or Escape.
  * (On phones, CSS turns it into a bottom sheet.)
  */
 
 import { useEffect, useRef, useState } from "react";
 
+import CopyLink from "@/components/CopyLink";
 import DangerBadge from "@/components/DangerBadge";
 import InsightSection from "@/components/InsightSection";
 import PhotoSlideshow from "@/components/PhotoSlideshow";
@@ -19,6 +22,7 @@ import ReadAloud from "@/components/ReadAloud";
 import ReportDontPull from "@/components/ReportDontPull";
 import SeasonChart from "@/components/SeasonChart";
 import SoundPlayer from "@/components/SoundPlayer";
+import YearChart from "@/components/YearChart";
 import { getSpecies } from "@/lib/api";
 import { formatDay, formatMonth } from "@/lib/dates";
 import { DANGER_COLORS, NY_STATUS_LABELS, STATUS_LABELS } from "@/lib/labels";
@@ -73,17 +77,44 @@ export default function SpeciesSidebar({ speciesId, mapCount, onClose, onBack, b
 }
 
 function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
-  const { insights, sightings } = species;
+  const { insights, sightings, danger } = species;
   const hidden = mapCount != null ? sightings.total - mapCount : 0;
+  const name = species.common_name || species.scientific_name;
+
+  // Show the slim name bar once the big title has scrolled out of view.
+  const title = useRef(null);
+  const [titleHidden, setTitleHidden] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => setTitleHidden(!entry.isIntersecting));
+    if (title.current) observer.observe(title.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
-      <PhotoSlideshow photos={species.photos} speciesName={species.common_name || species.scientific_name} />
+      <div className="sticky-name" aria-hidden="true">
+        <div className={titleHidden ? "sticky-name-bar show" : "sticky-name-bar"}>{name}</div>
+      </div>
+
+      <PhotoSlideshow
+        photos={species.photos}
+        speciesName={name}
+        overlay={
+          <div className="species-title" ref={title}>
+            <h2>{species.common_name}</h2>
+            <p className="scientific-name">{species.scientific_name}</p>
+            <p className="danger-pill">
+              <span className="swatch" style={{ background: DANGER_COLORS[danger.level ?? null] }} aria-hidden="true" />
+              {danger.level ? `${danger.label} danger` : danger.label}
+            </p>
+          </div>
+        }
+      />
 
       <section>
-        <h2>{species.common_name}</h2>
-        <p className="scientific-name">{species.scientific_name}</p>
         <AtAGlance species={species} />
         <ReadAloud text={readAloudText(species)} />
+        <CopyLink speciesId={species.species_id} />
         {onShowOnMap && (
           <button className="show-on-map" onClick={onShowOnMap} disabled={shownOnMap}>
             {shownOnMap ? "Showing only this species on the map" : "Show only this species on the map"}
@@ -159,7 +190,9 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         <h4>What changes by season</h4>
         <InsightSection text={insights.seasons} />
         <h4>When people report it</h4>
-        <SeasonChart sightings={sightings} speciesName={species.common_name || species.scientific_name} />
+        <SeasonChart sightings={sightings} speciesName={name} />
+        <h4>Reports per year</h4>
+        <YearChart byYear={sightings.by_year} speciesName={name} />
       </details>
 
       <details className="group">
@@ -205,16 +238,12 @@ function readAloudText(species) {
   ].join(" ");
 }
 
-/** One line under the name: danger · legal status · sightings · last seen. Details are further down. */
+/** One line under the photo: legal status · sightings · last seen. (Danger is on the photo.) */
 function AtAGlance({ species }) {
-  const { danger, sightings } = species;
+  const { sightings } = species;
   const legal = NY_STATUS_LABELS[species.ny_status];
   return (
     <p className="glance">
-      <span>
-        <span className="swatch" style={{ background: DANGER_COLORS[danger.level ?? null] }} aria-hidden="true" />
-        {danger.level ? `${danger.label} danger` : danger.label}
-      </span>
       {legal && <span>{legal}</span>}
       <span>{sightings.total.toLocaleString()} sighting{sightings.total === 1 ? "" : "s"}</span>
       <span>Last seen {formatDay(sightings.last_seen)}</span>

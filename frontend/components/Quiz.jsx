@@ -3,8 +3,10 @@
  * "Spot the species": a 10-question photo quiz (opened from the 🎯 Quiz button in the header).
  * Each question shows a real, openly licensed iNaturalist photo with its credit, and three
  * species to choose from. After each answer: the right name, its danger level, and a
- * "Learn more" button that opens that species on the map. Nothing is saved; at the end,
- * "Copy my score" copies a short message with a link that opens this quiz (?quiz=1).
+ * "Learn more" button that opens that species on the map. Dots at the top show how far
+ * along you are and which you got right. Keys 1, 2 and 3 pick an answer. At the end: the
+ * species you missed (each with "Learn more"), and "Copy my score", which copies a short
+ * message with a link that opens this quiz (?quiz=1). Nothing is saved.
  * While you look at that species the page hides the quiz ("hidden") instead of closing it,
  * so the question and score are still there when you come back.
  */
@@ -26,7 +28,7 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
   const [question, setQuestion] = useState(null);
   const [chosenId, setChosenId] = useState(null); // null until this question is answered
   const [asked, setAsked] = useState(new Set()); // species asked this round
-  const [right, setRight] = useState(0);
+  const [results, setResults] = useState([]); // one { species, correct } per answered question this round
   const firstChoice = useRef(null);
   const nextButton = useRef(null);
   const closeButton = useRef(null);
@@ -48,7 +50,7 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function startRound(rows = species) {
-    setRight(0);
+    setResults([]);
     setChosenId(null);
     const first = makeQuestion(rows, new Set());
     setAsked(new Set([first.answer.species_id]));
@@ -63,8 +65,9 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
   }
 
   function answer(id) {
+    if (chosenId !== null) return; // already answered (e.g. a key pressed twice)
     setChosenId(id);
-    if (id === question.answer.species_id) setRight((r) => r + 1);
+    setResults((r) => [...r, { species: question.answer, correct: id === question.answer.species_id }]);
   }
 
   // Keyboard flow: a new question focuses the first choice; an answer focuses "Next".
@@ -76,13 +79,20 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
   }, [question, chosenId, hidden]);
 
   // Escape closes only this dialog (stopPropagation keeps a side panel behind it open).
+  // Keys 1, 2 and 3 pick that answer.
   function onKeyDown(event) {
+    const choice = question && chosenId === null && question.choices[Number(event.key) - 1];
+    if (choice && event.target.tagName !== "TEXTAREA") {
+      answer(choice.species_id);
+      return;
+    }
     if (event.key !== "Escape") return;
     event.stopPropagation();
     onClose();
   }
 
   const answered = chosenId !== null;
+  const right = results.filter((r) => r.correct).length;
   const number = asked.size; // which question this is
   const finished = answered && number >= ROUND_LENGTH;
 
@@ -103,11 +113,12 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
         {question && (
           <>
             <p className="muted">
-              Question {number} of {ROUND_LENGTH} · Score: {right} of {number - (answered ? 0 : 1)}
+              Question {number} of {ROUND_LENGTH} · Score: {right} of {results.length}
             </p>
+            <ProgressDots results={results} current={number} />
             <QuizPhoto photo={question.photo} />
 
-            <p><strong>Which invasive species is this?</strong></p>
+            <p><strong>Which invasive species is this?</strong> <span className="muted">(or press 1, 2 or 3)</span></p>
             <div className="quiz-choices" role="group" aria-label="Answer choices">
               {question.choices.map((s, i) => {
                 const isAnswer = s.species_id === question.answer.species_id;
@@ -116,6 +127,7 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
                 return (
                   <button key={s.species_id} ref={i === 0 ? firstChoice : null} className={`quiz-choice${state}`}
                           onClick={() => answer(s.species_id)} disabled={answered}>
+                    <span className="quiz-key" aria-hidden="true">{i + 1}</span>
                     {mark}{nameOf(s)} <em>{s.scientific_name}</em>
                   </button>
                 );
@@ -134,11 +146,31 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
               </p>
             )}
 
-            {finished && <RoundOver right={right} onPlayAgain={() => startRound()} nextButton={nextButton} />}
+            {finished && <RoundOver results={results} onPlayAgain={() => startRound()} onLearnMore={onLearnMore} nextButton={nextButton} />}
           </>
         )}
       </div>
     </div>
+  );
+}
+
+/**
+ * One dot per question: ✓ green when right, ✗ red when wrong, outlined for the current
+ * question, empty for the ones still to come. Marks as well as color, for color-blind players.
+ */
+function ProgressDots({ results, current }) {
+  return (
+    <ol className="quiz-dots" aria-label={`Question ${current} of ${ROUND_LENGTH}, ${results.filter((r) => r.correct).length} right so far`}>
+      {Array.from({ length: ROUND_LENGTH }, (_, i) => {
+        const result = results[i];
+        const state = result ? (result.correct ? "right" : "wrong") : i + 1 === current ? "current" : "";
+        return (
+          <li key={i} className={`quiz-dot ${state}`} aria-hidden="true">
+            {result ? (result.correct ? "✓" : "✗") : ""}
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -170,14 +202,29 @@ function Feedback({ answer, correct }) {
   );
 }
 
-function RoundOver({ right, onPlayAgain, nextButton }) {
+function RoundOver({ results, onPlayAgain, onLearnMore, nextButton }) {
+  const right = results.filter((r) => r.correct).length;
   const perfect = right === ROUND_LENGTH;
+  const missed = results.filter((r) => !r.correct).map((r) => r.species);
   return (
     <div className="quiz-end">
       <p>
         <strong>You got {right} of {ROUND_LENGTH}.</strong>{" "}
         {perfect ? "Perfect! You'd make a great invasive species spotter." : "Every photo you study makes the next sighting easier to spot."}
       </p>
+      {missed.length > 0 && (
+        <>
+          <p><strong>Ones to study:</strong></p>
+          <ul className="quiz-missed">
+            {missed.map((s) => (
+              <li key={s.species_id}>
+                {nameOf(s)} <em className="muted">{s.scientific_name}</em>{" "}
+                <button className="link-button" onClick={() => onLearnMore(s.species_id)}>Learn more</button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
       <p className="quiz-actions quiz-end-actions">
         <button ref={nextButton} className="quiz-next" onClick={onPlayAgain}>Play again</button>
         <CopyScore right={right} />

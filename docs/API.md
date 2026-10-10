@@ -135,6 +135,7 @@ Field notes:
 
 - **`ny_status`**: `"prohibited"` or `"regulated"`, from NYS DEC Part 575.
 - **`danger`**: comes only from `danger_levels.csv`. When `level` is `null`, `label` is `"Not yet ranked"`. `basis` is `"ny_plant_rank"` (plants, where `ny_rank` and `score` are filled) or `"ny_part575_status"` (everything else, where they are `null`). Show `health_warning` only when it isn't `null`.
+- **`sightings.by_year`**: sightings per calendar year for the last 10 years, oldest first: `[{"year": 2017, "count": 12}, ...]`. The newest year is only partly over (it ends on the day the data was fetched). These count reports, so a rise can mean more people posting.
 - **`sightings.by_month_of_year`**: sightings in our area, January first. `nyc_by_month_of_year` covers all of NYC, which shows the seasonal pattern better when local numbers are small. Label whichever one you show.
 - **`sightings.by_month_per_10k`** and **`nyc_by_month_per_10k`**: the same months **adjusted for how busy each month is**: this species' sightings per 10,000 research-grade sightings of *any* species that month (from `cache/activity_by_month.json`). Raw counts mostly follow how many people are out posting (the City Nature Challenge makes every April look huge); these show when the species makes up more of what people report. `null` if the totals file is missing.
 - **`photos`**: up to 8. `license: null` means all rights reserved. Show a "View on iNaturalist" link instead of embedding the image. Always show `attribution`.

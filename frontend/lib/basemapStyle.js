@@ -59,6 +59,29 @@ const LABEL_TEXT = "#18382f"; // forest green place names
 const WATER_LABEL_TEXT = "#3b6275";
 const LABEL_HALO = "#f5f5e9"; // cream outline so names stay readable
 
+// The five boroughs get their own big, bold labels (BOROUGH_LABELS below), so at the opening
+// city-wide view people can tell at a glance which borough they're looking at.
+const BOROUGHS = ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Bronx", "Staten Island"];
+const isBorough = ["match", ["coalesce", ["get", "name_en"], ["get", "name"]], BOROUGHS, true, false];
+
+const BOROUGH_LABELS = {
+  id: "label_borough",
+  type: "symbol",
+  source: "openmaptiles",
+  "source-layer": "place",
+  minzoom: 9,
+  maxzoom: 14, // closer in, neighborhood names matter more
+  filter: isBorough,
+  layout: {
+    "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
+    "text-font": ["Noto Sans Bold"],
+    "text-size": ["interpolate", ["linear"], ["zoom"], 9, 13, 12, 18],
+    "text-transform": "uppercase",
+    "text-letter-spacing": 0.15,
+  },
+  paint: { "text-color": "#18382f", "text-halo-color": "#f5f5e9", "text-halo-width": 2, "text-opacity": 0.85 },
+};
+
 /** Returns a copy of the Positron style with busy layers hidden and our colors applied. */
 export function simplifyStyle(style) {
   const layers = style.layers
@@ -70,7 +93,9 @@ export function simplifyStyle(style) {
         paint["text-halo-color"] = LABEL_HALO;
       }
       const minzoom = SIDE_STREET_LAYERS.includes(layer.id) ? Math.max(layer.minzoom || 0, SIDE_STREETS_FROM_ZOOM) : layer.minzoom;
-      return { ...layer, paint, ...(minzoom !== undefined && { minzoom }) };
+      // Place labels leave the boroughs out, since BOROUGH_LABELS draws them bigger.
+      const filter = layer["source-layer"] === "place" && layer.filter ? ["all", layer.filter, ["!", isBorough]] : layer.filter;
+      return { ...layer, paint, ...(filter && { filter }), ...(minzoom !== undefined && { minzoom }) };
     });
-  return { ...style, layers };
+  return { ...style, layers: [...layers, BOROUGH_LABELS] };
 }

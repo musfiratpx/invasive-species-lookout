@@ -335,6 +335,20 @@ def _insights(species_id):
     }
 
 
+YEARS_SHOWN = 10
+
+
+def _by_year(dates):
+    """
+    Sightings per calendar year for the last YEARS_SHOWN years (oldest first), e.g.
+    [{"year": 2017, "count": 12}, ...]. The newest year is the one the data was last fetched in,
+    so it is only part of a year.
+    """
+    newest = int(observations()["observed_on"].max()[:4])
+    counts = dates.str[:4].astype(int).value_counts()
+    return [{"year": y, "count": int(counts.get(y, 0))} for y in range(newest - YEARS_SHOWN + 1, newest + 1)]
+
+
 def species_detail(species_id):
     """Everything the sidebar needs for one species, or None if it isn't in our data."""
     df = observations()
@@ -364,6 +378,7 @@ def species_detail(species_id):
             "nyc_by_month_per_10k": _per_10k(season.get("nyc", [0] * 12), activity().get("nyc")),
             "first_seen": dates.iloc[0],
             "last_seen": dates.iloc[-1],
+            "by_year": _by_year(dates),
         },
         "photos": _photos(species_id),
         "sound": media().get(species_id, {}).get("sound"),  # null when no real recording exists

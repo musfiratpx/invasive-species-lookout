@@ -38,6 +38,8 @@ def test_species_detail_has_every_sidebar_section():
                 "sightings", "photos", "sound", "insights"):
         assert key in body
     assert len(body["sightings"]["by_month_of_year"]) == 12
+    years = [row["year"] for row in body["sightings"]["by_year"]]
+    assert years == sorted(years) and len(years) == 10
     # Handling is safety information: it always has text (the cautious default if no source)
     assert body["insights"]["handling"]["text"]
 

@@ -10,14 +10,18 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import Highlight from "@/components/Highlight";
 import PhotoCredit from "@/components/PhotoCredit";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
-import { taxonIcon } from "@/lib/taxa";
+import { TYPE_FILTERS, taxonIcon, typeFilterOf } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
 
 /** A–Z by the name people see (common name, or scientific name when there is none). */
 const byName = (a, b) => a.localeCompare(b, "en", { sensitivity: "base" });
 const speciesName = (s) => s.common_name || s.scientific_name;
+
+// Danger chips in the Species tab, most dangerous first. null = "Not yet ranked".
+const LEVELS = [4, 3, 2, 1, null];
 
 // Everything that differs between the two tabs. Each sort is a label plus a compare
 // function; ties fall back to most sightings.
@@ -53,6 +57,9 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
   const closeButton = useRef(null);
   const [sortBy, setSortBy] = useState({ species: "sightings", parks: "sightings" });
   const [lastPicked, setLastPicked] = useState(null); // id of the row that was tapped, to return focus to it
+  // Species tab chips: show one danger level and/or one type. undefined = no chip picked (show all).
+  const [levelChip, setLevelChip] = useState(undefined);
+  const [typeChip, setTypeChip] = useState(undefined);
   useReturnFocus();
 
   // Move focus into the panel, unless someone is typing in the search box that opened it.
@@ -79,9 +86,16 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
   const items = tab === "species" ? species : parks;
   const sort = config.sorts.find((s) => s.id === sortBy[tab]);
   const query = typed.trim().toLowerCase();
+  const chipsOn = tab === "species" && (levelChip !== undefined || typeChip !== undefined);
+  const passesChips = (s) =>
+    (levelChip === undefined || (s.danger_level ?? null) === levelChip) &&
+    (typeChip === undefined || typeFilterOf(s.iconic_taxon) === typeChip);
   const rows = useMemo(
-    () => items.filter((item) => !query || config.matches(item, query)).sort(sort.compare),
-    [items, query, config, sort]
+    () => items
+      .filter((item) => !query || config.matches(item, query))
+      .filter((item) => tab !== "species" || passesChips(item))
+      .sort(sort.compare),
+    [items, query, config, sort, tab, levelChip, typeChip] // eslint-disable-line react-hooks/exhaustive-deps
   );
   // How many match in each tab, shown on the tab buttons while searching.
   const matchCount = {
@@ -128,18 +142,32 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
               <button key={s.id} aria-pressed={sort.id === s.id} onClick={() => setSortBy({ ...sortBy, [tab]: s.id })}>{s.label}</button>
             ))}
           </div>
+          {tab === "species" && (
+            <BrowseChips
+              species={species}
+              levelChip={levelChip}
+              typeChip={typeChip}
+              onLevel={(level) => setLevelChip(level === levelChip ? undefined : level)}
+              onType={(type) => setTypeChip(type === typeChip ? undefined : type)}
+            />
+          )}
           {/* Screen readers read this out whenever it changes (a new sort, filter or tab). */}
           <p className="muted" role="status">
-            {rows.length === items.length ? `${items.length} ${config.noun}` : `${rows.length} of ${items.length} ${config.noun} match “${typed.trim()}”`}, sorted by {sort.label}.
+            {rows.length === items.length
+              ? `${items.length} ${config.noun}`
+              : `${rows.length} of ${items.length} ${config.noun}${query ? ` match “${typed.trim()}”` : chipsOn ? " match the chips" : ""}`}, sorted by {sort.label}.
           </p>
           {rows.length === 0 ? (
-            <p className="muted">No species or parks match “{typed.trim()}”.</p>
+            <p className="muted">
+              {query ? `No ${config.noun} match “${typed.trim()}”` : `No ${config.noun} match`}
+              {chipsOn && <> with these chips. <button className="link-button" onClick={() => { setLevelChip(undefined); setTypeChip(undefined); }}>Clear chips</button></>}
+            </p>
           ) : (
             <ol className="row-list">
               {rows.map((item) => (
                 <li key={config.idOf(item)}>
                   <button className="row-button" data-row-id={config.idOf(item)} onClick={() => pick(item)}>
-                    {tab === "species" ? <SpeciesRow s={item} /> : <ParkRow p={item} />}
+                    {tab === "species" ? <SpeciesRow s={item} query={query} /> : <ParkRow p={item} query={query} />}
                   </button>
                   {/* The photo's credit sits outside the button, since a link can't go inside a button. */}
                   {tab === "species" && item.thumb && <PhotoCredit photo={item.thumb} />}
@@ -153,7 +181,35 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
   );
 }
 
-function SpeciesRow({ s }) {
+/**
+ * Chips above the species list: tap one to show only that danger level or type, tap it again
+ * to show all. Only levels and types that some species has are shown.
+ */
+function BrowseChips({ species, levelChip, typeChip, onLevel, onType }) {
+  const levels = LEVELS.filter((level) => species.some((s) => (s.danger_level ?? null) === level));
+  const types = TYPE_FILTERS.filter((t) => species.some((s) => typeFilterOf(s.iconic_taxon) === t.id));
+  return (
+    <div className="browse-chips">
+      <div role="group" aria-label="Show one danger level">
+        {levels.map((level) => (
+          <button key={String(level)} className="browse-chip" aria-pressed={levelChip === level} onClick={() => onLevel(level)}>
+            <span className="swatch" style={{ background: DANGER_COLORS[level] }} aria-hidden="true" />
+            {DANGER_LABELS[level]}
+          </button>
+        ))}
+      </div>
+      <div role="group" aria-label="Show one type">
+        {types.map((t) => (
+          <button key={t.id} className="browse-chip" aria-pressed={typeChip === t.id} onClick={() => onType(t.id)}>
+            <span aria-hidden="true">{t.emoji}</span> {t.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SpeciesRow({ s, query }) {
   return (
     <>
       {/* A small photo makes the list easier to scan. Only openly licensed photos (see `thumb` in docs/API.md). */}
@@ -161,8 +217,8 @@ function SpeciesRow({ s }) {
         ? <img className="row-thumb" src={s.thumb.url} alt="" loading="lazy" />
         : <span className="row-thumb row-thumb-empty" aria-hidden="true">{taxonIcon(s.iconic_taxon).emoji}</span>}
       <span className="search-name">
-        {speciesName(s)}
-        <em>{s.scientific_name}</em>
+        <Highlight text={speciesName(s)} query={query} />
+        <em><Highlight text={s.scientific_name} query={query} /></em>
       </span>
       <span className="row-detail">
         <span className="danger-cell">
@@ -175,12 +231,12 @@ function SpeciesRow({ s }) {
   );
 }
 
-function ParkRow({ p }) {
+function ParkRow({ p, query }) {
   return (
     <>
       <span aria-hidden="true">🌳</span>
       <span className="search-name">
-        {p.name}
+        <Highlight text={p.name} query={query} />
         <em>{p.type} · {Math.round(p.acres).toLocaleString()} acres</em>
       </span>
       <span className="row-detail">

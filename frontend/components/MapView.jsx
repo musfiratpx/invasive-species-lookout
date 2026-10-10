@@ -113,12 +113,19 @@ function speciesListHtml(cluster, parkNames, currentFocus) {
   return `<div class="spot-list"><strong>${sightingsIn(cluster)} sightings here</strong>${parkLink}<ul>${items}</ul>${more}</div>`;
 }
 
-function toMarker(p) {
+/** Faded icons for other species while one species' panel is open (selectedId), so its own stand out. */
+const FADED = 0.3;
+
+function toMarker(p, selectedId) {
   const name = p.common_name || p.scientific_name;
   const count = p.count || 1;
+  const isOpen = !selectedId || p.species_id === selectedId;
   return L.marker([p.latitude, p.longitude], {
+    opacity: isOpen ? 1 : FADED,
+    zIndexOffset: selectedId && isOpen ? 1000 : 0, // the open species' icons sit on top
     icon: makeMarkerIcon({ iconicTaxon: p.iconic_taxon, dangerLevel: p.danger_level, count }),
     keyboard: false, // thousands of tab stops would make keyboard use impossible (use the search box instead)
+    riseOnHover: true, // the hovered icon comes to the front (CSS also makes it a bit bigger)
     speciesId: p.species_id,
     parkId: p.park_id,
     name,
@@ -173,7 +180,7 @@ function roomForPanel(map) {
 }
 
 /** Adds the sightings (bubbles/icons, or street-level detail) to the map. */
-function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSelectSpecies, onSelectPark }) {
+function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark }) {
   const map = useMap();
   const merged = useRef(null); // ×N points, used below street level
   const detail = useRef(null); // every sighting separately, used at street level
@@ -189,13 +196,15 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSel
   names.current = parkNames;
   const currentFocus = useRef(focusKey);
   currentFocus.current = focusKey;
+  const selected = useRef(selectedSpeciesId);
+  selected.current = selectedSpeciesId;
 
   // Build the detail layer only when someone actually zooms to street level.
   function ensureDetail() {
     if (detailFor.current === latest.current.sightings) return;
     stopAdding.current.detail();
     detail.current.clearLayers();
-    stopAdding.current.detail = addInBatches(detail.current, latest.current.sightings.map(toMarker));
+    stopAdding.current.detail = addInBatches(detail.current, latest.current.sightings.map((p) => toMarker(p, selected.current)));
     detailFor.current = latest.current.sightings;
   }
 
@@ -317,10 +326,22 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSel
   useEffect(() => {
     stopAdding.current.merged(); // stop adding the previous filter's markers, if still going
     merged.current.clearLayers();
-    stopAdding.current.merged = addInBatches(merged.current, points.map(toMarker)); // batches, not one by one
+    stopAdding.current.merged = addInBatches(merged.current, points.map((p) => toMarker(p, selected.current))); // batches, not one by one
     detailFor.current = null; // detail layer is now out of date; rebuilt when needed
     showRightLayer();
   }, [points]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // When a species panel opens or closes, update the fading on icons already on the map.
+  // (New icons get it in toMarker.)
+  useEffect(() => {
+    for (const group of [merged.current, detail.current]) {
+      for (const marker of group.getLayers()) {
+        const isOpen = !selectedSpeciesId || marker.options.speciesId === selectedSpeciesId;
+        marker.setOpacity(isOpen ? 1 : FADED);
+        marker.setZIndexOffset(selectedSpeciesId && isOpen ? 1000 : 0);
+      }
+    }
+  }, [selectedSpeciesId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Draw the focused park's official boundary, in dark forest green so it stands out from the light green park fill.
   const outlineLayer = useRef(null);
@@ -353,7 +374,7 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, onSel
   return null;
 }
 
-export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, onSelectSpecies, onSelectPark }) {
+export default function MapView({ points, sightings, focusKey, outline, allOutlines, parkNames, selectedSpeciesId, onSelectSpecies, onSelectPark }) {
   const animate = !prefersLessMotion(); // also turns off the zoom and fade animations of the map itself
   return (
     <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map" zoomAnimation={animate} fadeAnimation={animate} markerZoomAnimation={animate}
@@ -371,6 +392,7 @@ export default function MapView({ points, sightings, focusKey, outline, allOutli
         focusKey={focusKey}
         outline={outline}
         parkNames={parkNames}
+        selectedSpeciesId={selectedSpeciesId}
         onSelectSpecies={onSelectSpecies}
         onSelectPark={onSelectPark}
       />

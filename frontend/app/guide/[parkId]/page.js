@@ -3,7 +3,8 @@
  * Printable field guide for one park (/guide/Q024), to take on a walk with no signal.
  * Shows the park's most-reported listed species as cards (openly licensed photo with
  * credit, danger level, sightings here), the rest as a short list, and how to report,
- * word for word from our sources. Print it, or "Save as PDF" from the print dialog.
+ * word for word from our sources. Each card has a "Spotted it" box to tick on your walk.
+ * Print it, or "Save as PDF" from the print dialog.
  * Opened from the "Printable field guide" link in a park's profile.
  * QR codes (the park, and each species card) open the same thing on the live map.
  */
@@ -171,6 +172,10 @@ function SpeciesCard({ summary, detail, site }) {
       {/* Text on the left, the QR code beside it, so the code doesn't make the card taller. */}
       <div className="guide-card-body">
         <div>
+          {/* A box to tick on paper (or on screen) when you spot this species on your walk. */}
+          <label className="guide-spotted">
+            <input type="checkbox" /> Spotted it
+          </label>
           <h3>{summary.common_name || summary.scientific_name}</h3>
           <p className="scientific-name">{summary.scientific_name}</p>
           <p className="guide-danger">

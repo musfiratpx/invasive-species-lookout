@@ -3,6 +3,10 @@
  * Photo slideshow: arrow buttons, dots, swipe on phones, and a credit under every photo.
  * Photos with no license ("all rights reserved") are not embedded. We link to
  * iNaturalist instead, as the photographer hasn't allowed reuse.
+ *
+ * `overlay` (optional) is laid over the bottom of the photo, on a dark fade so it stays
+ * readable: the species panel puts the name and danger level there. When there's no photo
+ * to lay it on, it's shown under the frame instead.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -11,14 +15,19 @@ import { photoAlt } from "@/lib/credits";
 
 const SWIPE_MIN_PX = 40;
 
-export default function PhotoSlideshow({ photos, speciesName }) {
+export default function PhotoSlideshow({ photos, speciesName, overlay }) {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef(null);
 
   useEffect(() => setIndex(0), [photos]); // start at the first photo for each new species
 
   if (!photos || photos.length === 0) {
-    return <div className="slide-frame muted">No photos yet</div>;
+    return (
+      <>
+        <div className="slide-frame muted">No photos yet</div>
+        {overlay}
+      </>
+    );
   }
 
   const count = photos.length;
@@ -41,7 +50,9 @@ export default function PhotoSlideshow({ photos, speciesName }) {
         ) : (
           <a href={photo.observation_url} target="_blank" rel="noreferrer">View this photo of {speciesName} on iNaturalist</a>
         )}
+        {overlay && photo.license && <div className="slide-overlay">{overlay}</div>}
       </div>
+      {overlay && !photo.license && overlay}
 
       {count > 1 && (
         <div className="slide-controls">

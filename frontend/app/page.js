@@ -307,6 +307,7 @@ export default function Home() {
           outline={inPark && park?.park_id === focus.id ? park.outline : null}
           allOutlines={parkOutlines}
           parkNames={parkNames}
+          selectedSpeciesId={selectedSpeciesId}
           onSelectSpecies={setSelectedSpeciesId}
           onSelectPark={pickPark}
         />
