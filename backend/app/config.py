@@ -46,6 +46,7 @@ PHOTO_ORDER_JSON = DATA_DIR / "photo_order.json"  # hand-picked first photos (se
 SEASONALITY_JSON = CACHE_DIR / "seasonality.json"
 ACTIVITY_JSON = CACHE_DIR / "activity_by_month.json"  # all sightings per month, to adjust seasonality for activity
 INSIGHTS_DIR = CACHE_DIR / "insights"
+EARLY_WARNING_JSON = CACHE_DIR / "early_warning.json"  # species first recorded in a borough recently (scripts/build_early_warning.py)
 
 # --- Optional services --------------------------------------------------------
 SNOWFLAKE = {

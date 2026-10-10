@@ -17,7 +17,7 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.7
-      # The frontend's address (e.g. https://kissena-web.onrender.com), so the browser may call the API.
+      # The frontend's address, so the browser may call the API.
       - key: FRONTEND_ORIGIN
         sync: false
       - key: SNOWFLAKE_ACCOUNT
@@ -41,10 +41,10 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 24.15.0
-      # NEXT_PUBLIC_ values are baked in at build time, so redeploy after changing them.
-      # The backend's address, e.g. https://kissena-api.onrender.com
+      # redeploy after changing them.
+      # The backend's api address
       - key: NEXT_PUBLIC_API_URL
         sync: false
-      # This site's own address (for QR codes and shared quiz links), e.g. https://kissena-web.onrender.com
+      # This site's own web address
       - key: NEXT_PUBLIC_SITE_URL
         sync: false

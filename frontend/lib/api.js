@@ -62,6 +62,11 @@ export function getSpecies(speciesId) {
   return getJson(`/api/species/${encodeURIComponent(speciesId)}`);
 }
 
+/** "New arrivals": species first recorded in a borough in the last two years (backend/scripts/build_early_warning.py). */
+export function getEarlyWarning() {
+  return getJson("/api/early-warning");
+}
+
 /** Every NYC park with at least one sighting, most sightings first. */
 export function getParks() {
   return getJson("/api/parks");

@@ -1,5 +1,5 @@
 -- One-time Tiger Cloud setup for the "New arrivals" early-warning list (run in the console's SQL editor).
--- Creates two tables: every sighting (a TimescaleDB hypertable, split by year) and the five borough
+-- Creates tables for every sighting (a TimescaleDB hypertable, split by year) and the five borough
 -- outlines (PostGIS shapes). scripts/load_tiger.py fills them from our cached files, and
 -- scripts/build_early_warning.py asks: which species were first recorded in a borough recently?
 -- Safe to run again: nothing is created twice.
@@ -24,9 +24,13 @@ CREATE TABLE IF NOT EXISTS sightings (
     accuracy_m       DOUBLE PRECISION,            -- empty = the observer didn't record it
     url              TEXT,
     geom             GEOMETRY(Point, 4326),       -- longitude/latitude as a map point
+    borough          TEXT,                        -- filled in by scripts/load_tiger.py
     -- A hypertable's primary key must include the time column.
     PRIMARY KEY (observation_id, observed_on)
 );
+
+-- For tables made before the borough column existed.
+ALTER TABLE sightings ADD COLUMN IF NOT EXISTS borough TEXT;
 
 -- Turn it into a hypertable: TimescaleDB stores it in one chunk per year, which keeps
 -- "earliest sighting" and "sightings per year" queries fast.
@@ -43,6 +47,15 @@ CREATE TABLE IF NOT EXISTS boroughs (
 
 CREATE INDEX IF NOT EXISTS boroughs_geom_idx ON boroughs USING GIST (geom);
 
+-- The same outlines cut into small pieces (ST_Subdivide). The coastlines are very detailed,
+-- so testing 73,000 points against whole boroughs takes minutes; small pieces take seconds.
+CREATE TABLE IF NOT EXISTS borough_pieces (
+    borough  TEXT NOT NULL,
+    geom     GEOMETRY(Polygon, 4326) NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS borough_pieces_geom_idx ON borough_pieces USING GIST (geom);
+
 -- Check: both tables should be listed, and sightings should show as a hypertable.
 SELECT hypertable_name, num_chunks FROM timescaledb_information.hypertables;
-SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name IN ('sightings', 'boroughs');
+SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name IN ('sightings', 'boroughs', 'borough_pieces');

@@ -27,7 +27,7 @@ import Quiz from "@/components/Quiz";
 import SearchBox from "@/components/SearchBox";
 import SpeciesSidebar from "@/components/SpeciesSidebar";
 import { mergeNearbySightings } from "@/lib/aggregate";
-import { getHealth, getMapObservations, getPark, getParkOutlines, getParks, getSpeciesList } from "@/lib/api";
+import { getEarlyWarning, getHealth, getMapObservations, getPark, getParkOutlines, getParks, getSpeciesList } from "@/lib/api";
 import { isoDateMonthsAgo } from "@/lib/dates";
 import { typeFilterOf } from "@/lib/taxa";
 import { stateFromUrl, urlFromState } from "@/lib/urlState";
@@ -52,6 +52,7 @@ export default function Home() {
   const [parks, setParks] = useState([]);
   const [parkOutlines, setParkOutlines] = useState(null); // every park's boundary, for faint outlines on the map
   const [speciesList, setSpeciesList] = useState([]); // for the search box and Browse
+  const [arrivals, setArrivals] = useState({ items: [] }); // Browse's "New" tab (early-warning list)
   const [listsStatus, setListsStatus] = useState("loading"); // species + park lists: "loading", "error" or "done"
   const [loadStatus, setLoadStatus] = useState("loading"); // "loading", "error" or "done"
   const [loadProgress, setLoadProgress] = useState(0);
@@ -59,7 +60,7 @@ export default function Home() {
   const [updatedAt, setUpdatedAt] = useState(null); // when the sightings were last fetched from iNaturalist
   const [creditsOpen, setCreditsOpen] = useState(false);
   const [quiz, setQuiz] = useState("closed"); // "closed", "open", or "paused" (hidden while you look at a species, progress kept)
-  const [browseTab, setBrowseTab] = useState(null); // null = Browse closed, else "species" or "parks"
+  const [browseTab, setBrowseTab] = useState(null); // null = Browse closed, else "species", "parks" or "new"
   const [searchText, setSearchText] = useState(""); // what's typed in the header box; filters Browse
   const [selectedSpeciesId, setSelectedSpeciesId] = useState(null);
   const [hiddenLevels, setHiddenLevels] = useState(new Set());
@@ -76,10 +77,12 @@ export default function Home() {
   // Load the species and park lists (search box and Browse). Called again by Browse's "Try again".
   const loadLists = useCallback(() => {
     setListsStatus("loading");
-    Promise.all([getSpeciesList(), getParks()])
-      .then(([speciesRows, parkRows]) => {
+    // The "New" list is extra: if it fails, Browse still works with that tab empty.
+    Promise.all([getSpeciesList(), getParks(), getEarlyWarning().catch(() => ({ items: [] }))])
+      .then(([speciesRows, parkRows, arrivalList]) => {
         setSpeciesList(speciesRows);
         setParks(parkRows);
+        setArrivals(arrivalList);
         setListsStatus("done");
       })
       .catch(() => setListsStatus("error"));
@@ -345,6 +348,7 @@ export default function Home() {
             query={searchText}
             species={speciesList}
             parks={parks}
+            arrivals={arrivals}
             status={listsStatus}
             onRetry={loadLists}
             covered={Boolean(selectedSpeciesId || (inPark && parkPanelOpen))}

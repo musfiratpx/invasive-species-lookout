@@ -155,6 +155,24 @@ Field notes:
   - `report_note` is only the species' own reporting advice (the part of `report` that isn't the general text from `GET /api/how-to-report`), or `null`. Today only the mute swan has one.
   - `sources` lists `{title, url}` for every document used.
 
+## `GET /api/early-warning`
+
+"New arrivals": species recorded in a borough for the first time in the last two years, newest first. Built offline by `scripts/build_early_warning.py` with Tiger Cloud (TimescaleDB + PostGIS) and read from `data/cache/early_warning.json`; the server never connects to Tiger. Boroughs are NYC Department of City Planning's outlines.
+
+```json
+{"since": "2024-10-09", "newest_sighting": "2026-10-09", "window_days": 730, "built_at": "...", "source": "...",
+ "items": [{"species_id": "59115", "scientific_name": "Gambusia affinis", "common_name": "Western Mosquitofish",
+            "iconic_taxon": "Actinopterygii", "danger_level": 3, "danger_label": "High",
+            "borough": "Queens", "first_seen": "2026-09-16", "first_observation_id": 400772439,
+            "first_observation_url": "https://www.inaturalist.org/observations/400772439", "sightings_since": 1,
+            "already_in": [{"borough": "Staten Island", "first_seen": "2019-03-31"}]}]}
+```
+
+- "First recorded" means first in our research-grade iNaturalist data, not the day the species arrived.
+- Only precise sightings count (not privacy-blurred, accuracy within 1 km), like the map.
+- The two years end at `newest_sighting`, not today. `already_in` lists boroughs where the species was recorded earlier.
+- Names and danger level match `GET /api/species`. Before the script has run, `items` is empty.
+
 ## `GET /api/parks`
 
 Every NYC park (all five boroughs) with at least one sighting, most sightings first. Boundaries are NYC Parks' official "Parks Properties" (NYC Open Data). Properties sharing a specific name (e.g. two pieces of "Kissena Corridor Park") are merged into one park (only within the same borough: Manhattan's and Brooklyn's "Columbus Park" stay separate); generic names like "Park" get their address added.

@@ -113,6 +113,23 @@ def species_list():
     return sorted(result, key=lambda s: s["sightings"], reverse=True)
 
 
+def early_warning():
+    """
+    Species recorded in a borough for the first time recently ("New arrivals"), from the cache
+    built by scripts/build_early_warning.py with Tiger Cloud. Each item gets the same names and
+    danger level as the species list. Before the script has run there are simply no items.
+    """
+    cached = _read_json(config.EARLY_WARNING_JSON, {"items": []})
+    summaries = {s["species_id"]: s for s in species_list()}
+    shared = ("scientific_name", "common_name", "iconic_taxon", "danger_level", "danger_label")
+    cached["items"] = [
+        {**{key: summaries[item["species_id"]][key] for key in shared}, **item}
+        for item in cached["items"]
+        if item["species_id"] in summaries  # skip species no longer in our sightings
+    ]
+    return cached
+
+
 def map_observations(bbox=None):
     """Sightings for the map, optionally only those inside bbox = (min_lng, min_lat, max_lng, max_lat)."""
     df = observations()

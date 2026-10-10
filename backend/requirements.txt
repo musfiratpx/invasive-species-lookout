@@ -19,6 +19,9 @@ pyyaml==6.0.3           # reads the header of each knowledge/ fact sheet
 # Cortex Search and Cortex chat use plain HTTPS (requests); the connector is only for load_chunks.py.
 snowflake-connector-python==4.8.0
 
+# Tiger Cloud (Postgres): only for scripts/load_tiger.py and build_early_warning.py, never the server.
+psycopg[binary]==3.2.13
+
 # Tests
 pytest==9.1.1
 httpx==0.28.1           # needed by FastAPI's TestClient

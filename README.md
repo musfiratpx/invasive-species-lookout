@@ -104,6 +104,7 @@ Restart the backend afterwards. The iNaturalist scripts go through `pyinaturalis
 |---|---|
 | `SNOWFLAKE_*` | Retrieval through Snowflake Cortex Search. Run `backend/snowflake/setup.sql` once, then `python scripts/load_chunks.py`. |
 | `SNOWFLAKE_CORTEX_MODEL` | Optional: a Cortex model rewrites Summary/History/Seasons into short plain-English text, grounded only on our sources. Leave empty (the team's choice) to show the fact sheets word for word. Safety and reporting text is never rewritten. |
+| `TIGER_DATABASE_URL` | Rebuilds the "New" early-warning list (species first recorded in a borough recently) with Tiger Cloud (TimescaleDB + PostGIS). Run `backend/tiger/setup.sql` once, then `python scripts/load_tiger.py` and `python scripts/build_early_warning.py`. The app reads the saved `data/cache/early_warning.json`, never Tiger. Some campus Wi-Fi blocks database ports; use a hotspot if it hangs. |
 | `ELEVENLABS_API_KEY` | Lets `make_music.py` generate the background music. |
 | `INAT_PLACE_IDS` | Which iNaturalist place(s) to cover. Default `674` = all of NYC; `675` = Queens only; empty = a 2 km circle around Kissena Park + QC. Rerun the fetch scripts after changing it. |
 
