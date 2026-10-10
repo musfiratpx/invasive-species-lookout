@@ -2,6 +2,7 @@
 scientific_name: Lymantria dispar
 # false because the source says: "Spongy moth caterpillar hairs can cause skin irritation, so be careful not to touch them without protection."
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Spongy Moth (NYS Department of Environmental Conservation)"
     url: https://dec.ny.gov/nature/animals-fish-plants/insects-and-other-species/spongy-moth

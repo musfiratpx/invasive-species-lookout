@@ -11,6 +11,9 @@
 # After editing, run (from backend/):  python scripts/build_insights.py
 scientific_name: Genus species
 touch_safe: null
+# Leave reviewed_by empty until a teammate has checked every sentence against the sources.
+# Then put your name here; the app stops showing "Draft, not yet reviewed".
+reviewed_by:
 sources:
   - title: <official page title>
     url: <url>

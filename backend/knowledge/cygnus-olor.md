@@ -2,6 +2,7 @@
 scientific_name: Cygnus olor
 # false because the source says: "Do not handle or harm the swans, their nests, or any eggs without DEC authorization."
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: Mute Swan | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)
     url: https://nyis.info/species/mute-swan/

@@ -2,6 +2,7 @@
 scientific_name: Rubus phoenicolasius
 # false because the source says: "As wineberry is armed with thorns and hairs, minimizing exposed skin during mechanical control is advisable."
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Wineberry | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/wineberry/

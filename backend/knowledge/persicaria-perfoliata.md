@@ -2,6 +2,7 @@
 scientific_name: Persicaria perfoliata
 # false because the source says hand-pulling is best "before the barbs harden, afterwards thicker gloves are needed."
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Mile-a-Minute | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/mile-a-minute/

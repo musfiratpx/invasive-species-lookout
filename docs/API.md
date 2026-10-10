@@ -122,7 +122,18 @@ Everything the sidebar shows for one species. An unknown `species_id` returns `4
       "is_default": true
     },
     "report": "New York's official database for invasive species sightings is iMapInvasives, ...",
-    "sources": []
+    "sources": [],
+    "found_by": {
+      "summary": null,
+      "report": {
+        "retriever": "snowflake",
+        "files": ["how-to-report.md"],
+        "section": "How to report it",
+        "word_for_word": true,
+        "reviewed_by": {"how-to-report.md": null}
+      }
+    },
+    "fact_sheet": null
   }
 }
 ```
@@ -149,6 +160,8 @@ Field notes:
   - `touch_safe` is `true`, `false`, or `null`. It is only non-`null` when a source explicitly says so.
   - `report` is how to report a sighting, shown **word for word** from the sources (never AI-rewritten). It holds the species' own reporting note, if any, then the general instructions from `knowledge/how-to-report.md`. Paragraphs are separated by a blank line (`\n\n`). `null` means no reporting source yet.
   - `sources` lists `{title, url}` for every document used.
+  - `found_by` says, per section (`summary`, `history`, `seasons`, `handling`, `report`), how the text was found: `retriever` is `"snowflake"` (Cortex Search) or `"keyword"` (the offline backup, also used if Snowflake failed during the build), plus the fact-sheet `files` and `section` it came from, and `word_for_word` (`false` only if a Cortex model reworded it). `null` = nothing found. The UI shows this as a small "🔎 Found by …" line.
+  - `fact_sheet` is the species' own fact sheet `{file, reviewed_by}`. `reviewed_by` is `null` until a teammate puts their name in that file's `reviewed_by:` header line; the UI shows "Draft" until then. `fact_sheet` is `null` if the species has no sheet.
 
 ## `GET /api/parks`
 

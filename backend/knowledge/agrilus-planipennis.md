@@ -1,6 +1,7 @@
 ---
 scientific_name: Agrilus planipennis
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Emerald Ash Borer (EAB) (NYS Department of Environmental Conservation)"
     url: https://dec.ny.gov/nature/animals-fish-plants/emerald-ash-borer-eab

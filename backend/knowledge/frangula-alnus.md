@@ -1,6 +1,7 @@
 ---
 scientific_name: Frangula alnus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Frangula alnus"
     url: https://nyis.info/wp-content/uploads/2024/10/540b7_Frangula.alnus_.NYS_.pdf

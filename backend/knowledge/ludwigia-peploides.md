@@ -1,6 +1,7 @@
 ---
 scientific_name: Ludwigia peploides
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Ludwigia peploides"
     url: https://nyis.info/wp-content/uploads/2024/10/4dbbf_Ludwigia.peploides.NYS_.pdf

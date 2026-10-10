@@ -11,6 +11,9 @@ Every fact links to its source. Danger levels come from official New York rankin
 - **Explore the map.** Sightings are grouped into numbered bubbles that split as you zoom in. Hover a bubble to preview the species inside; zoom to street level to see every sighting at its own spot.
 - **Learn about a species.** Tap an icon to see photos, its danger level explained in plain words, its legal status in New York, when it shows up during the year, its history, how to handle it, and its sources. A real recording plays only for the few species that have one.
 - **Search** any of the 76 species or 99 parks by name.
+- **Browse** the same data as lists: a sortable table of **all species**, the **recently seen** sightings, and **near me** (species seen within 250 m – 1 km of you, or of an example place).
+- **Share a link** to any view, like `/?park=Q024` (Kissena Park) or `/?species=6921` (Mute Swan). The browser's Back button works too.
+- **See where each text came from**: every section says it was found by Snowflake Cortex Search in which fact sheet, and shown word for word. Fact sheets not yet checked by the team are marked "Draft".
 - **Open a park profile**, for example Kissena Park: its official boundary, which listed species have been seen there, how dangerous they are, when people see them, and the latest sightings.
 - **Filter** by danger level or type (plants, birds, insects, fish and shellfish, other animals), or switch to a **heat map**.
 - **Report a sighting** to New York's official database (NY iMapInvasives) from any species or park.

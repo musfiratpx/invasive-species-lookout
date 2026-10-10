@@ -1,6 +1,7 @@
 ---
 scientific_name: Grateloupia turuturu
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Devil's Tongue Weed (NYS Department of Environmental Conservation)"
     url: https://dec.ny.gov/nature/animals-fish-plants/devils-tongue-weed

@@ -1,6 +1,7 @@
 ---
 scientific_name: Cabomba caroliniana
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Cabomba caroliniana"
     url: https://nyis.info/wp-content/uploads/2024/10/69673_Cabomba.caroliniana.NYS_.pdf

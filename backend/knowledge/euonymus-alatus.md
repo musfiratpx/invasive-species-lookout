@@ -1,6 +1,7 @@
 ---
 scientific_name: Euonymus alatus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Euonymus alatus"
     url: https://nyis.info/wp-content/uploads/2024/10/c77f1_Euonymus.alatus.NYS_.pdf

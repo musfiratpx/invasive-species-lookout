@@ -265,6 +265,34 @@ button {
   display: inline-block; border: 1px solid var(--border); border-radius: 999px;
   padding: 2px 8px; margin: 0 4px 4px 0; font-size: 0.85rem;
 }
+/* "Found by Snowflake Cortex Search..." line under each text section, and the draft note */
+.found-by { font-size: 0.72rem; color: var(--muted); margin: -4px 0 8px; }
+.found-by code { font-size: 0.7rem; }
+.review-note { font-size: 0.8rem; padding: 6px 8px; border-radius: var(--radius); }
+.review-note.draft { background: #fff8e1; border: 1px solid #f0d78c; }
+.review-note.reviewed { background: #e8f5e9; border: 1px solid #b7dfb9; }
+
+/* Browse panel: tabs, sortable species table, sighting lists */
+.browse h2 { margin: 4px 0 8px; }
+.tabs { margin-bottom: 10px; }
+.species-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.species-table caption { text-align: left; margin-bottom: 6px; }
+.species-table th { text-align: left; border-bottom: 1px solid var(--border); padding: 4px 2px; }
+.species-table td { border-bottom: 1px solid var(--border); padding: 4px 2px; vertical-align: middle; }
+.species-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.species-table th:last-child { text-align: right; }
+.sort-button { border: none; background: none; padding: 0; font: inherit; font-weight: 700; cursor: pointer; }
+.row-button {
+  display: flex; align-items: center; gap: 6px; width: 100%; text-align: left;
+  border: none; background: none; padding: 4px 2px; font: inherit; cursor: pointer; border-radius: 6px;
+}
+.row-button:hover, .row-button:focus-visible { background: var(--surface); }
+.danger-cell { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.row-list { list-style: none; margin: 0; padding: 0; }
+.row-list li { border-bottom: 1px solid var(--border); }
+.near-buttons { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.browse-button { white-space: nowrap; }
+
 /* Collapsible groups in the species panel ("What to do", "About this species", ...) */
 .sidebar details.group { border-top: 1px solid var(--border); padding: 10px 0; }
 .sidebar details.group > summary { cursor: pointer; font-weight: 700; font-size: 1rem; }
@@ -278,6 +306,7 @@ button {
   .header h1 { font-size: 1rem; flex: 1; }
   .search { order: 3; flex-basis: 100%; max-width: none; margin-left: 0; }
   .music-label { display: none; }
+  .browse-label { display: none; }
   .subtitle { display: none; }
   .footer { font-size: 0.7rem; }
   .footer-extra { display: none; }

@@ -1,6 +1,7 @@
 ---
 scientific_name: Amynthas
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Jumping Worms | WNY PRISM (Western New York PRISM, SUNY Buffalo State University)"
     url: https://www.wnyprism.org/invasive_species/jumping-worms/

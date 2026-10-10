@@ -1,6 +1,7 @@
 ---
 scientific_name: Myiopsitta monachus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York State Assembly Bill A1783 (2021), proposed \"Monk Parakeet Protection Act\" - legislative findings"
     url: https://legislation.nysenate.gov/pdf/bills/2021/A1783

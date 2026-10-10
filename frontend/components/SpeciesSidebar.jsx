@@ -11,6 +11,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import DangerBadge from "@/components/DangerBadge";
+import FoundBy from "@/components/FoundBy";
 import InsightSection from "@/components/InsightSection";
 import PhotoSlideshow from "@/components/PhotoSlideshow";
 import ReportButton from "@/components/ReportButton";
@@ -100,6 +101,8 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
 
       <SoundPlayer sound={species.sound} />
 
+      <ReviewNote factSheet={insights.fact_sheet} />
+
       {/* Grouped so the panel is shorter. "What to do" is safety information, so it starts open. */}
       <details className="group" open>
         <summary>What to do</summary>
@@ -107,22 +110,23 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         {insights.handling.touch_safe === true && <p className="muted">Sources say it is safe to touch.</p>}
         <h4>How to handle it</h4>
         <p className={insights.handling.is_default ? "warning" : undefined}>{insights.handling.text}</p>
+        {!insights.handling.is_default && <FoundBy where={insights.found_by?.handling} />}
         <h4>How to report it</h4>
-        <InsightSection text={insights.report} />
+        <InsightSection text={insights.report} foundBy={insights.found_by?.report} />
       </details>
 
       <details className="group" open>
         <summary>About this species</summary>
         <h4>Summary</h4>
-        <InsightSection text={insights.summary} />
+        <InsightSection text={insights.summary} foundBy={insights.found_by?.summary} />
         <h4>History</h4>
-        <InsightSection text={insights.history} />
+        <InsightSection text={insights.history} foundBy={insights.found_by?.history} />
       </details>
 
       <details className="group">
         <summary>When to see it</summary>
         <SeasonChart kissena={sightings.by_month_of_year} nyc={sightings.nyc_by_month_of_year} />
-        <InsightSection text={insights.seasons} />
+        <InsightSection text={insights.seasons} foundBy={insights.found_by?.seasons} />
       </details>
 
       <details className="group">
@@ -149,6 +153,23 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         </p>
       </details>
     </>
+  );
+}
+
+/**
+ * Whether a teammate has checked this species' fact sheet against its sources yet
+ * (the "reviewed_by:" line in backend/knowledge/<file>.md).
+ */
+function ReviewNote({ factSheet }) {
+  if (!factSheet) return null;
+  if (factSheet.reviewed_by) {
+    return <p className="review-note reviewed">✓ Checked against its sources by {factSheet.reviewed_by}.</p>;
+  }
+  return (
+    <p className="review-note draft">
+      📝 <strong>Draft:</strong> these notes are written from the sources listed under “Sources”, but our team
+      hasn&apos;t finished checking them yet.
+    </p>
   );
 }
 

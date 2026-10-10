@@ -1,6 +1,7 @@
 ---
 scientific_name: Pueraria montana
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Kudzu | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/kudzu/

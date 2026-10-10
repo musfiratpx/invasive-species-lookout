@@ -21,9 +21,37 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "oryctolagus-cuniculus.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": null,
+    "seasons": null,
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "oryctolagus-cuniculus.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:30.250137+00:00"
+  "generated_at": "2026-10-10T01:47:16.022749+00:00"
 }

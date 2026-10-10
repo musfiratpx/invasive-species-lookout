@@ -2,6 +2,7 @@
 scientific_name: Trapa natans
 # false because the source says the nuts "can lead to injuries if stepped on" and "can result in puncture injuries".
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Water Chestnut | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/water-chestnut/

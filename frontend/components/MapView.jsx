@@ -128,7 +128,7 @@ function toMarker(p) {
 }
 
 /** Adds the sightings (bubbles/icons, street-level detail, and optionally the heat map) to the map. */
-function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames, onSelectSpecies, onSelectPark }) {
+function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames, userLocation, flyTarget, onSelectSpecies, onSelectPark, onLocate }) {
   const map = useMap();
   const merged = useRef(null); // ×N points, used below street level
   const detail = useRef(null); // every sighting separately, used at street level
@@ -142,6 +142,8 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
   onPark.current = onSelectPark;
   const names = useRef(parkNames);
   names.current = parkNames;
+  const onLocateRef = useRef(onLocate);
+  onLocateRef.current = onLocate;
   const currentFocus = useRef(focusKey);
   currentFocus.current = focusKey;
 
@@ -226,7 +228,6 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
     const scale = L.control.scale({ position: "bottomright" }).addTo(map);
 
     // "Find me" and "All of Queens" buttons under the +/- zoom buttons.
-    let you = null;
     const Buttons = L.Control.extend({
       onAdd() {
         const box = L.DomUtil.create("div", "leaflet-bar map-buttons");
@@ -243,13 +244,8 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
       },
     });
     const buttons = new Buttons({ position: "topleft" }).addTo(map);
-    const onFound = (e) => {
-      if (you) map.removeLayer(you);
-      you = L.layerGroup([
-        L.circle(e.latlng, { radius: e.accuracy, color: "#1a73e8", weight: 1, fillOpacity: 0.1 }),
-        L.circleMarker(e.latlng, { radius: 7, color: "#fff", weight: 2, fillColor: "#1a73e8", fillOpacity: 1 }).bindTooltip("You are here"),
-      ]).addTo(map);
-    };
+    // The page keeps the location (the "Near me" list uses it too); the dot is drawn below.
+    const onFound = (e) => onLocateRef.current?.({ lat: e.latlng.lat, lng: e.latlng.lng, accuracy: e.accuracy, label: "You are here" });
     const onLocateError = () => {
       L.popup().setLatLng(map.getCenter()).setContent("Couldn't get your location. Check that location access is allowed.").openOn(map);
     };
@@ -262,7 +258,7 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
       map.off("zoomend", showRightLayer);
       map.off("locationfound", onFound);
       map.off("locationerror", onLocateError);
-      for (const layer of [merged.current, detail.current, heat.current, you]) if (layer) map.removeLayer(layer);
+      for (const layer of [merged.current, detail.current, heat.current]) if (layer) map.removeLayer(layer);
       scale.remove();
       buttons.remove();
     };
@@ -309,6 +305,29 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
       : null;
   }, [outline, map]);
 
+  // The blue "you are here" dot (or the example place picked in "Near me").
+  useEffect(() => {
+    if (!userLocation) return;
+    const at = [userLocation.lat, userLocation.lng];
+    const layer = L.layerGroup([
+      L.circle(at, { radius: userLocation.accuracy || 30, color: "#1a73e8", weight: 1, fillOpacity: 0.1, interactive: false }),
+      L.circleMarker(at, { radius: 7, color: "#fff", weight: 2, fillColor: "#1a73e8", fillOpacity: 1 }).bindTooltip(userLocation.label),
+    ]).addTo(map);
+    return () => map.removeLayer(layer);
+  }, [userLocation, map]);
+
+  // Fly to a spot picked from a list ("Recently seen", "Near me"). key makes repeat picks work.
+  // A side panel is open when this happens, so aim off-center to keep the spot in the visible
+  // part of the map: left of the panel on desktop, above the bottom sheet on phones.
+  useEffect(() => {
+    if (!flyTarget) return;
+    const size = map.getSize();
+    const phone = size.x < 640;
+    const shift = phone ? L.point(0, size.y * 0.3) : L.point(Math.min(195, size.x * 0.25), 0);
+    const spot = map.project([flyTarget.lat, flyTarget.lng], flyTarget.zoom).add(shift);
+    map.flyTo(map.unproject(spot, flyTarget.zoom), flyTarget.zoom, { duration: 0.8 });
+  }, [flyTarget, map]);
+
   // When something is focused, zoom to it once: a park to its outline, a species to its
   // sightings. When focus is cleared, go back to all of Queens.
   const lastFocus = useRef(null);
@@ -331,7 +350,7 @@ function SightingsLayer({ points, sightings, view, focusKey, outline, parkNames,
   return null;
 }
 
-export default function MapView({ points, sightings, view, focusKey, outline, parkNames, onSelectSpecies, onSelectPark }) {
+export default function MapView({ points, sightings, view, focusKey, outline, parkNames, userLocation, flyTarget, onSelectSpecies, onSelectPark, onLocate }) {
   return (
     <MapContainer center={CENTER} zoom={ZOOM} maxZoom={MAX_ZOOM} className="map">
       <TileLayer
@@ -347,8 +366,11 @@ export default function MapView({ points, sightings, view, focusKey, outline, pa
         focusKey={focusKey}
         outline={outline}
         parkNames={parkNames}
+        userLocation={userLocation}
+        flyTarget={flyTarget}
         onSelectSpecies={onSelectSpecies}
         onSelectPark={onSelectPark}
+        onLocate={onLocate}
       />
     </MapContainer>
   );

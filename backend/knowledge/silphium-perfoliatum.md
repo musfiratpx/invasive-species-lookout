@@ -1,6 +1,7 @@
 ---
 scientific_name: Silphium perfoliatum
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Silphium perfoliatum"
     url: https://nyis.info/wp-content/uploads/2024/10/d8be1_Silphium.perforatum.NYS_.pdf

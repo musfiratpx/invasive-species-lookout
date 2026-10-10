@@ -1,6 +1,7 @@
 ---
 scientific_name: Robinia pseudoacacia
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Robinia pseudoacacia"
     url: https://nyis.info/wp-content/uploads/2024/10/97fa0_Robinia.pseudoacacia.NYS_.pdf

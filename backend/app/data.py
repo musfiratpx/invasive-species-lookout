@@ -15,6 +15,7 @@ from app import config
 from app.danger import find_danger
 from app.invasive_list import load_invasive_list
 from app.parks import load_parks
+from app.rag.chunker import fact_sheet_reviews
 from app.status import status_for_all
 
 # Shown when we have no official handling guidance (ground rule 5: safety first).
@@ -49,6 +50,12 @@ def media():
 @lru_cache(maxsize=1)
 def seasonality():
     return _read_json(config.SEASONALITY_JSON, {})
+
+
+@lru_cache(maxsize=1)
+def reviews():
+    """Who has checked each fact sheet (read from its "reviewed_by:" header). Restart to see new reviews."""
+    return fact_sheet_reviews()
 
 
 @lru_cache(maxsize=1)
@@ -207,6 +214,14 @@ def _insights(species_id):
     """
     cached = _read_json(config.INSIGHTS_DIR / f"{species_id}.json", {})
     handling = cached.get("handling") or {}
+    found_by = cached.get("found_by") or {}
+    # Review status is read live from the fact sheets (not the cache), so signing one off
+    # only needs a backend restart, not a rebuild.
+    for where in found_by.values():
+        if where:
+            where["reviewed_by"] = {f: reviews().get(f) for f in where["files"]}
+    species_files = [f for where in found_by.values() if where for f in where["files"] if f != "how-to-report.md"]
+    fact_sheet = species_files[0] if species_files else None
     return {
         "summary": cached.get("summary"),
         "history": cached.get("history"),
@@ -218,6 +233,9 @@ def _insights(species_id):
         },
         "report": cached.get("report"),  # how to report a sighting; null = no reporting source yet
         "sources": cached.get("sources", []),
+        "found_by": found_by,
+        # The species' own fact sheet and who checked it (reviewed_by None = still a draft).
+        "fact_sheet": {"file": fact_sheet, "reviewed_by": reviews().get(fact_sheet)} if fact_sheet else None,
     }
 
 

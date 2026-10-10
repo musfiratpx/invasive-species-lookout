@@ -6,11 +6,19 @@
  * "Focus" narrows the map to one thing at a time:
  *   - { kind: "species", id }  only that species' sightings;
  *   - { kind: "park", id }     only sightings inside that park, with its outline drawn.
+ *
+ * What's open is kept in the address bar, so a link can be shared (or put in a QR code)
+ * and the browser's Back button works:
+ *   ?park=Q024          Kissena Park's profile
+ *   ?only=6921          show only Mute Swan on the map
+ *   ?species=6921       open Mute Swan's panel (can be combined with the two above)
+ *   ?browse=near        open the Browse panel on a tab ("species", "recent" or "near")
  */
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import BrowsePanel from "@/components/BrowsePanel";
 import Credits from "@/components/Credits";
 import Legend from "@/components/Legend";
 import MapStatus from "@/components/MapStatus";
@@ -30,6 +38,30 @@ const MapView = dynamic(() => import("@/components/MapView"), {
 
 const MAX_ACCURACY_M = 1000;
 
+/** Read the address bar (see the comment at the top) into the page's state. */
+function stateFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const park = params.get("park");
+  const only = params.get("only");
+  const browse = params.get("browse");
+  return {
+    focus: park ? { kind: "park", id: park } : only ? { kind: "species", id: only } : null,
+    selectedSpeciesId: params.get("species"),
+    browseTab: ["species", "recent", "near"].includes(browse) ? browse : null,
+  };
+}
+
+/** The address-bar query string for the current state ("" = nothing open). */
+function urlFromState(focus, selectedSpeciesId, browseTab) {
+  const params = new URLSearchParams();
+  if (focus?.kind === "park") params.set("park", focus.id);
+  if (focus?.kind === "species") params.set("only", focus.id);
+  if (selectedSpeciesId) params.set("species", selectedSpeciesId);
+  if (browseTab) params.set("browse", browseTab);
+  const query = params.toString();
+  return query ? `?${query}` : window.location.pathname;
+}
+
 /** Add or remove one value from a Set, returning a new Set (React needs a new object to notice). */
 function toggle(set, value) {
   const next = new Set(set);
@@ -46,6 +78,11 @@ export default function Home() {
   const [expectedCount, setExpectedCount] = useState(null);
   const [updatedAt, setUpdatedAt] = useState(null); // when the sightings were last fetched from iNaturalist
   const [creditsOpen, setCreditsOpen] = useState(false);
+  const [browseTab, setBrowseTab] = useState(null); // null = Browse panel closed
+  const [userLocation, setUserLocation] = useState(null); // from "Find me" / "Near me"; stays in the browser
+  const [flyTarget, setFlyTarget] = useState(null);
+  const [urlReady, setUrlReady] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [selectedSpeciesId, setSelectedSpeciesId] = useState(null);
   const [hiddenLevels, setHiddenLevels] = useState(new Set());
   const [hiddenTypes, setHiddenTypes] = useState(new Set());
@@ -85,6 +122,36 @@ export default function Home() {
     if (window.innerWidth < 640) setLegendOpen(false);
     loadData();
   }, [loadData]);
+
+  // Open whatever the link asks for, and follow the Back/Forward buttons.
+  useEffect(() => {
+    const apply = () => {
+      const state = stateFromUrl();
+      setFocus(state.focus);
+      setParkPanelOpen(state.focus?.kind === "park");
+      setSelectedSpeciesId(state.selectedSpeciesId);
+      setBrowseTab(state.browseTab);
+    };
+    apply();
+    setUrlReady(true);
+    window.addEventListener("popstate", apply);
+    return () => window.removeEventListener("popstate", apply);
+  }, []);
+
+  // Each change adds a history entry (so Back undoes it). Skipped until the link has been read.
+  useEffect(() => {
+    if (!urlReady) return;
+    const next = urlFromState(focus, selectedSpeciesId, browseTab);
+    const current = window.location.search || window.location.pathname;
+    if (next !== current) window.history.pushState(null, "", next);
+  }, [urlReady, focus, selectedSpeciesId, browseTab]);
+
+  const copyLink = useCallback(() => {
+    navigator.clipboard?.writeText(window.location.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, []);
 
   // Load the park profile whenever a park is focused.
   const focusedParkId = focus?.kind === "park" ? focus.id : null;
@@ -146,6 +213,7 @@ export default function Home() {
   }, []);
   const pickPark = useCallback((id) => {
     setSelectedSpeciesId(null);
+    setBrowseTab(null);
     setFocus({ kind: "park", id });
     setParkPanelOpen(true);
   }, []);
@@ -158,6 +226,16 @@ export default function Home() {
   const points = useMemo(() => mergeNearbySightings(visible), [visible]);
 
   const closeSidebar = useCallback(() => setSelectedSpeciesId(null), []);
+  const closeBrowse = useCallback(() => setBrowseTab(null), []);
+  // A sighting picked in Browse: fly to it and open its species.
+  const pickSighting = useCallback((obs) => {
+    setSelectedSpeciesId(obs.species_id);
+    setFlyTarget({ lat: obs.latitude, lng: obs.longitude, zoom: 18, key: Date.now() });
+  }, []);
+  const locate = useCallback((location) => {
+    setUserLocation(location);
+    setFlyTarget({ lat: location.lat, lng: location.lng, zoom: 16, key: Date.now() });
+  }, []);
   const closePark = useCallback(() => setParkPanelOpen(false), []);
   const inPark = focus?.kind === "park";
 
@@ -169,6 +247,9 @@ export default function Home() {
           <p className="subtitle">Invasive species across Queens, NYC</p>
         </div>
         <SpeciesSearch species={speciesList} parks={parks} onPickSpecies={pickSpecies} onPickPark={pickPark} />
+        <button className="browse-button" onClick={() => { setSelectedSpeciesId(null); setParkPanelOpen(false); setBrowseTab((t) => (t ? null : "species")); }} aria-expanded={!!browseTab}>
+          ☰ <span className="browse-label">Browse</span>
+        </button>
         <MusicToggle />
       </header>
 
@@ -180,8 +261,11 @@ export default function Home() {
           focusKey={focus ? `${focus.kind}:${focus.id}` : null}
           outline={inPark ? park?.outline : null}
           parkNames={parkNames}
+          userLocation={userLocation}
+          flyTarget={flyTarget}
           onSelectSpecies={setSelectedSpeciesId}
           onSelectPark={pickPark}
+          onLocate={setUserLocation}
         />
         {focus && (
           <div className="focus-banner" role="status">
@@ -194,6 +278,7 @@ export default function Home() {
               </span>
             </span>
             {inPark && !parkPanelOpen && <button onClick={() => { setSelectedSpeciesId(null); setParkPanelOpen(true); }}>Park profile</button>}
+            <button onClick={copyLink} title="Copy a link to this view">{copied ? "Link copied" : "🔗 Copy link"}</button>
             <button onClick={clearFocus}>Show all</button>
           </div>
         )}
@@ -223,13 +308,28 @@ export default function Home() {
             speciesId={selectedSpeciesId}
             mapCount={selectedMapCount}
             onClose={closeSidebar}
-            onBack={inPark && parkPanelOpen ? closeSidebar : null}
-            backLabel={inPark ? `Back to ${focusName}` : null}
+            onBack={(inPark && parkPanelOpen) || browseTab ? closeSidebar : null}
+            backLabel={inPark && parkPanelOpen ? `Back to ${focusName}` : "Back to list"}
             onShowOnMap={inPark ? null : () => setFocus({ kind: "species", id: selectedSpeciesId })}
             shownOnMap={focus?.kind === "species" && focus.id === selectedSpeciesId}
           />
+        ) : inPark && parkPanelOpen ? (
+          <ParkProfile park={park} error={parkError} onClose={closePark} onPickSpecies={setSelectedSpeciesId} />
         ) : (
-          inPark && parkPanelOpen && <ParkProfile park={park} error={parkError} onClose={closePark} onPickSpecies={setSelectedSpeciesId} />
+          browseTab && (
+            <BrowsePanel
+              tab={browseTab}
+              onChangeTab={setBrowseTab}
+              onClose={closeBrowse}
+              species={speciesList}
+              observations={observations}
+              parkNames={parkNames}
+              userLocation={userLocation}
+              onLocate={locate}
+              onPickSpecies={setSelectedSpeciesId}
+              onPickSighting={pickSighting}
+            />
+          )
         )}
       </main>
 

@@ -30,8 +30,16 @@ Check <http://localhost:8000/api/health>: `"observations": 14620` means the data
 
 If something breaks mid-demo, keep talking and switch to `docs/screenshot.jpg`.
 
+**If there's extra time** (or a judge asks):
+- Point at the small **"🔎 Found by Snowflake Cortex Search in our fact sheet … · shown word for word"** line under any text. That is the RAG step, made visible.
+- **☰ Browse → Near me → Try an example place: Queens College**: "15 listed species within 500 m of this campus." (Use the real "Use my location" only if the browser already has permission.)
+- **☰ Browse → Recently seen**: what people found this month.
+
+**Start from a link.** Open the demo straight to a view with `http://localhost:3000/?park=Q024` (Kissena Park). A QR code only works for judges' phones if the app is reachable from them. A laptop on venue Wi-Fi usually isn't, so keep QR codes for a deployed version.
+
 ## 3. Venue prep (the morning of judging)
 
+- **Load fresh data before judging.** The Near me / Recently seen numbers above are from the Oct 9 data. If you rerun the fetch scripts, check them again.
 - **Pre-warm map tiles and photos.** Map tiles and species photos come from the internet. Before judging, open the app on the demo laptop and run through the script once, zooming into Kissena Park, so the tiles and photos are in the browser cache.
 - **Have a phone hotspot ready** in case the venue Wi-Fi is slow. The app's own data (sightings, species text, parks) is served from the laptop, so it works without internet; only tiles and photos need it.
 - Close other tabs, turn off notifications, set the browser zoom to 100%, and plug in the charger.
@@ -44,6 +52,9 @@ We only show official danger levels. Plants use New York's invasiveness ranking 
 
 **"Why does the map show fewer sightings than the total?"** (e.g. Mute Swan: 879 on the map, 984 total)
 Some iNaturalist observers hide their exact location (iNaturalist then moves the point up to ~20 km), and some sightings are only placed at "Queens" in general. Drawing those would put species in the wrong place, so we count them in totals and charts but don't draw them.
+
+**"Why does it say 'Draft'?"**
+The fact sheets were written from official sources, and each one stays marked "Draft" until a teammate has checked every sentence against those sources. We'd rather say so than claim more than we've checked.
 
 **"Did AI write this?"**
 - The **data** is real: iNaturalist sightings, the NYS DEC list, the official plant ranking forms, and NYC Parks boundaries.

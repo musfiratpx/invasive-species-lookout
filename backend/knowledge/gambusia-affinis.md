@@ -1,6 +1,7 @@
 ---
 scientific_name: Gambusia affinis
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Gambusia affinis (Western Mosquitofish) - Species Profile | USGS Nonindigenous Aquatic Species Database"
     url: https://nas.er.usgs.gov/queries/FactSheet.aspx?speciesID=846

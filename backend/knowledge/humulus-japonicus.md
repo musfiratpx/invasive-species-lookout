@@ -2,6 +2,7 @@
 scientific_name: Humulus japonicus
 # false because the source says to hand-pull "wearing gloves, long-sleeves and long pants and shoes to avoid injury from the prickles."
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Japanese Hops | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/japanese-hops/

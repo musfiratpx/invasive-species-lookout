@@ -1,6 +1,7 @@
 ---
 scientific_name: Dioscorea polystachya
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Dioscorea polystachya"
     url: https://nyis.info/wp-content/uploads/2024/10/d971e_Dioscorea.polystachya.NYS_.pdf
