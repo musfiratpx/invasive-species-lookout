@@ -38,3 +38,34 @@ export function typeFilterOf(iconicTaxon) {
   const match = TYPE_FILTERS.find((f) => f.taxa && f.taxa.includes(iconicTaxon));
   return match ? match.id : "other";
 }
+
+/**
+ * Words people might type to find a whole group, e.g. "bird" or "plants", for the search box.
+ * Keyed by iNaturalist iconic taxon. Only words that fit every species in the group: "tree"
+ * isn't here, since most of our plants aren't trees. ("crab", "snail" and so on already match
+ * the species' own names.)
+ */
+const GROUP_WORDS = {
+  Plantae: ["plant", "plants"],
+  Aves: ["bird", "birds"],
+  Insecta: ["insect", "insects", "bug", "bugs"],
+  Arachnida: ["spider", "spiders", "arachnid", "arachnids"],
+  Actinopterygii: ["fish", "fishes"],
+  Mollusca: ["mollusk", "mollusks", "mollusc", "molluscs", "shellfish"],
+  Mammalia: ["mammal", "mammals"],
+  Reptilia: ["reptile", "reptiles"],
+  Amphibia: ["amphibian", "amphibians"],
+  Fungi: ["fungus", "fungi"],
+};
+const ANIMAL_WORDS = ["animal", "animals"]; // every group except plants and fungi
+
+/**
+ * True if the search text names this species' group, e.g. "bird" for a swan. Partial words
+ * count from 3 letters ("bir" finds birds as you type). query is already lowercase.
+ */
+export function matchesGroupWord(iconicTaxon, query) {
+  if (query.length < 3) return false;
+  const words = [...(GROUP_WORDS[iconicTaxon] || [])];
+  if (iconicTaxon !== "Plantae" && iconicTaxon !== "Fungi") words.push(...ANIMAL_WORDS);
+  return words.some((word) => word.startsWith(query));
+}

@@ -26,7 +26,7 @@ export default function SearchBox({ query, onChangeQuery, onOpen, onClose, speci
       <input
         id="search-box"
         type="search"
-        placeholder={`Search or browse ${speciesCount || ""} species and ${parkCount || ""} parks…`}
+        placeholder={`Search ${speciesCount || ""} species and ${parkCount || ""} parks, or try “birds”…`}
         aria-describedby="search-box-hint"
         aria-controls="browse-panel"
         value={query}

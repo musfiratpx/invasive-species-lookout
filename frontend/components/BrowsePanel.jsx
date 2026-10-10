@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Highlight from "@/components/Highlight";
 import PhotoCredit from "@/components/PhotoCredit";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
-import { TYPE_FILTERS, taxonIcon, typeFilterOf } from "@/lib/taxa";
+import { TYPE_FILTERS, matchesGroupWord, taxonIcon, typeFilterOf } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
 
 /** A–Z by the name people see (common name, or scientific name when there is none). */
@@ -30,7 +30,9 @@ const TABS = {
     label: "Species",
     noun: "species",
     idOf: (s) => s.species_id,
-    matches: (s, q) => speciesName(s).toLowerCase().includes(q) || s.scientific_name.toLowerCase().includes(q),
+    // By name, or by group: "bird" shows every bird, "plants" every plant (lib/taxa.js).
+    matches: (s, q) =>
+      speciesName(s).toLowerCase().includes(q) || s.scientific_name.toLowerCase().includes(q) || matchesGroupWord(s.iconic_taxon, q),
     sorts: [
       { id: "sightings", label: "Most seen", compare: (a, b) => b.sightings - a.sightings },
       // "Not yet ranked" (null) goes last: it means no official ranking, not "harmless".
