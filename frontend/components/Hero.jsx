@@ -50,7 +50,6 @@ export default function Hero({ species, parks, updatedAt, onOpenQuiz, onOpenPark
           <AppLink href="?quiz=1" onOpen={onOpenQuiz}>Quiz</AppLink>
           {/* Each park's profile has a "Printable field guide" link, so this opens the parks list. */}
           <AppLink href="?browse=parks" onOpen={onOpenParks}>Field guides</AppLink>
-          <a href="#approach">How it works</a>
           <a href={REPORT_URL} target="_blank" rel="noreferrer">Report ↗</a>
         </div>
       </nav>

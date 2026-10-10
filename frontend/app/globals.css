@@ -179,7 +179,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 }
 .hero-credit:hover { text-decoration: underline; }
 
-/* "How it works" (HowItWorks.jsx): dark band at the bottom, matching the banner */
+/* "How it works" (HowItWorks.jsx, not shown right now): dark band at the bottom, matching the banner */
 .approach { padding: 70px 8%; background: var(--forest); color: var(--on-forest); }
 .approach .section-heading .eyebrow { color: var(--lime); }
 .approach .section-heading h2 { color: var(--on-forest); }
