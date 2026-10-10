@@ -337,7 +337,7 @@ export default function Home() {
         <span>
           Sightings from iNaturalist
           {updatedAt && `, updated ${new Date(updatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`}
-          <span className="footer-extra"> · Danger levels from official New York rankings, never AI</span>
+          <span className="footer-extra"> · Danger levels from official New York rankings</span>
         </span>
         <button className="link-button" onClick={() => setCreditsOpen(true)}>Credits &amp; sources</button>
       </footer>
