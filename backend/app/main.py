@@ -21,10 +21,10 @@ app = FastAPI(
     description="Invasive species sightings across New York City (all five boroughs).",
 )
 
-# Let the Next.js dev server (a different port) call this API from the browser.
+# Let the frontend (a different port locally, a different address online) call this API from the browser.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[config.FRONTEND_ORIGIN],
+    allow_origins=config.FRONTEND_ORIGINS,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
     expose_headers=["X-Total-Bytes"],  # lets the browser read our download-size header (progress bar)

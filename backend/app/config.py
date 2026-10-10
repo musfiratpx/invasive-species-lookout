@@ -63,7 +63,9 @@ SNOWFLAKE = {
 
 ELEVENLABS_API_KEY = _env("ELEVENLABS_API_KEY")
 
-FRONTEND_ORIGIN = _env("FRONTEND_ORIGIN", "http://localhost:3000")
+# Which websites may call this API from the browser. Comma-separated, so the deployed
+# site and local development can both work, e.g. "https://x.onrender.com,http://localhost:3000".
+FRONTEND_ORIGINS = [o.strip().rstrip("/") for o in _env("FRONTEND_ORIGIN", "http://localhost:3000").split(",") if o.strip()]
 
 
 def snowflake_enabled():
