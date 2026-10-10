@@ -1,0 +1,708 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIL | Wildlife Field Guide</title>
+
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5e9;
+      color: #193b30;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background: #18382f;
+      color: #f7f5e9;
+    }
+
+    .logo {
+      font-family: Georgia, serif;
+      font-size: 24px;
+    }
+
+    nav a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hero {
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      padding: 60px 8%;
+      background:
+        linear-gradient(90deg, rgba(9,36,29,.9), rgba(9,36,29,.2)),
+        url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=2000&q=85")
+        center / cover;
+      color: #f7f5e9;
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .eyebrow {
+      color: #d8e9a5;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(44px, 7vw, 76px);
+      font-weight: normal;
+      line-height: 1;
+    }
+
+    .description {
+      max-width: 430px;
+      line-height: 1.8;
+      color: #e3e5d9;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: #d8e9a5;
+      color: #18382f;
+      text-decoration: none;
+      border-radius: 3px;
+    }
+
+    
+/* Wildlife discovery section */
+.discovery {
+  padding: 70px 8%;
+}
+
+.section-heading {
+  max-width: 600px;
+  margin-bottom: 35px;
+}
+
+.section-heading h2 {
+  font-family: Georgia, serif;
+  font-size: 42px;
+  font-weight: normal;
+  margin-bottom: 12px;
+}
+
+.section-heading p {
+  line-height: 1.7;
+  color: #53675c;
+}
+
+.species-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.species-card {
+  padding: 25px;
+  background: #fffef7;
+  border: 1px solid #e1e3d5;
+  border-radius: 6px;
+}
+
+.species-card .category {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #71834b;
+  text-transform: uppercase;
+}
+
+.species-card h3 {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.species-card p {
+  line-height: 1.6;
+  color: #53675c;
+}
+
+@media (max-width: 700px) {
+  .species-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Wildlife map */
+.map-section {
+  padding: 60px 8%;
+  background: #e8eadb;
+}
+
+
+
+#map {
+  height: 500px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.map-label {
+  padding: 12px 18px;
+  background: #fffef7;
+  border-radius: 5px;
+  color: #193b30;
+  text-align: center;
+  box-shadow: 0 3px 12px #193b3020;
+}
+
+.map-label p {
+  margin: 5px 0 0;
+  font-size: 13px;
+}
+
+.species-info {
+  margin-top: 20px;
+  background: #dce5d0;
+  border-left: 4px solid #71834b;
+  line-height: 1.7;
+  border-radius: 4px;
+  position: sticky;
+  top: 20px;
+  max-height: 560px;
+  overflow-y: auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+
+.map-marker {
+  position: absolute;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border: 2px solid #fffef7;
+  border-radius: 50%;
+  background: #18382f;
+  font-size: 23px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px #193b3040;
+  transition: transform 0.2s;
+}
+
+.map-marker:hover {
+  transform: scale(1.15);
+}
+
+
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(230px, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.map-layout .map-container {
+  margin-top: 0;
+  min-height: 400px;
+}
+
+.map-layout .species-info {
+  margin-top: 0;
+  padding: 28px;
+  background: #fffef7;
+  border-left: 4px solid #71834b;
+  border-radius: 6px;
+  align-self: stretch;
+}
+
+.map-layout .species-info h3 {
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: normal;
+}
+
+@media (max-width: 700px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-layout .map-container {
+    min-height: 300px;
+  }
+}
+
+
+.species-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.filter-button {
+  padding: 10px 16px;
+  border: 1px solid #71834b;
+  border-radius: 20px;
+  background: transparent;
+  color: #193b30;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.filter-button:hover,
+.filter-button.active {
+  background: #18382f;
+  color: #f7f5e9;
+}
+
+
+.species-search {
+  margin-bottom: 20px;
+}
+
+.species-search label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.species-search input {
+  width: 100%;
+  max-width: 450px;
+  padding: 12px 14px;
+  border: 1px solid #aab49b;
+  border-radius: 5px;
+  font: inherit;
+  background: #fffef7;
+  color: #193b30;
+}
+
+
+.sort-button {
+  background-color: #18382f;
+  color: #fffef7;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sort-button:hover {
+  background-color: #2e5b48;
+}
+
+
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(320px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+#map {
+  height: 600px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.species-panel {
+  min-width: 0;
+}
+
+@media (max-width: 800px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #map {
+    height: 400px;
+  }
+}
+
+
+.reset-button {
+  background-color: transparent;
+  color: #193b30;
+  border: 1px solid #71834b;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-button:hover {
+  background-color: #e8ecdf;
+}
+
+
+.species-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.species-controls-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.species-controls-top label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  margin: 0;
+  padding: 11px 0;
+}
+
+.species-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.species-controls input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #d5dccd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+@media (max-width: 500px) {
+  .species-controls-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a class="logo" href="#">♧ SAIL</a>
+    <a href="#about">Our approach</a>
+  </nav>
+
+  <section class="hero" id="about">
+    <div class="hero-content">
+      <p class="eyebrow">A LIVING FIELD GUIDE · QUEENS COLLEGE, NEW YORK</p>
+
+      <h1>The wild is closer<br>than you think.</h1>
+
+      <p class="description">
+        Discover the environment around you: the species,
+        sounds and seasonal stories of a remarkable living landscape.
+      </p>
+
+      <a class="button" href="#species">Meet the species ↗</a>
+    </div>
+  </section>
+  
+
+<section class="discovery-area" id="species">
+  <div class="section-heading">
+    <p class="eyebrow">LOOK A LITTLE CLOSER</p>
+    <h2>Explore your environment.</h2>
+    <p>Discover wildlife and explore the species that share our landscape.</p>
+  </div>
+
+  <div class="map-layout">
+    <div id="map"></div>
+
+    <div class="species-panel">
+      
+<div class="species-controls">
+  <div class="species-controls-top">
+    <label for="species-search">Find a species</label>
+
+    <div class="species-filters">
+      <button class="filter-button active" onclick="filterSpecies('all', this)">
+        All species
+      </button>
+      <button class="filter-button" onclick="filterSpecies('bird', this)">
+        Birds
+      </button>
+      <button class="filter-button" onclick="filterSpecies('mammal', this)">
+        Mammals
+      </button>
+      <button class="filter-button" onclick="filterSpecies('insect', this)">
+        Insects
+      </button>
+    </div>
+  </div>
+
+  <input
+    type="text"
+    id="species-search"
+    placeholder="Try Robin, Squirrel, or Butterfly..."
+    oninput="searchSpecies()"
+  >
+</div>
+
+      <button class="sort-button" onclick="sortSpecies()">Sort A–Z</button>
+      <button class="reset-button" onclick="resetSpecies()">Reset</button>
+
+      <div class="species-grid" id="species-grid"></div>
+
+      <aside id="species-info" class="species-info">
+        <p class="eyebrow">SPECIES FIELD NOTES</p>
+        <h3>Select a species</h3>
+        <p>Choose a card or map marker to learn more about the wildlife.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+<script>
+
+    
+const species = [
+  {
+    name: "American Robin",
+    category: "bird",
+    habitat: "Parks, lawns, and gardens",
+    description: "A familiar bird with an orange-red breast.",
+    observation: "Look for robins searching for worms on lawns.",
+    latitude: 40.7128,
+    longitude: -74.0060,
+  },
+  {
+    name: "Eastern Gray Squirrel",
+    category: "mammal",
+    habitat: "Woodlands and urban parks",
+    description: "A common tree-dwelling squirrel.",
+    observation: "Look for squirrels climbing trees or gathering food.",
+    latitude: 40.7306,
+    longitude: -73.9972,
+  },
+  {
+    name: "Monarch Butterfly",
+    category: "insect",
+    habitat: "Gardens and meadows",
+    description: "A butterfly known for its orange-and-black wings.",
+    observation: "Look for monarchs visiting flowering plants.",
+    latitude: 40.7829,
+    longitude: -73.9654,
+  },
+  {
+  name: "Northern Cardinal",
+  category: "bird",
+  latitude: 40.7580,
+  longitude: -73.9855,
+  habitat: "Woodlands, parks, and backyards",
+  description: "A songbird known for its bright red plumage.",
+  observation: "Listen for its clear whistles and look for it in shrubs."
+}
+];
+
+
+function displaySpecies() {
+  const grid = document.getElementById("species-grid");
+
+  grid.innerHTML = "";
+
+  species.forEach(function(animal) {
+    const card = document.createElement("article");
+
+    card.className = "species-card";
+    card.dataset.category = animal.category;
+    card.dataset.name = animal.name;
+
+    card.innerHTML =
+      "<h3>" + animal.name + "</h3>" +
+      "<p>" + animal.description + "</p>" +
+      "<p><strong>Habitat:</strong> " + animal.habitat + "</p>";
+
+    card.onclick = function() {
+      showSpecies(
+        animal.name,
+        animal.description,
+        animal.habitat,
+        animal.observation
+      );
+    };
+
+    grid.appendChild(card);
+  });
+}
+
+displaySpecies();
+
+
+
+
+const mapMarkers = [];
+
+function displayMapMarkers() {
+  species.forEach(function(animal) {
+    const marker = L.marker([
+      animal.latitude,
+      animal.longitude
+    ]).addTo(map);
+
+    marker.bindPopup(
+      "<strong>" + animal.name + "</strong><br>" +
+      animal.description
+    );
+
+    marker.on("click", function() {
+      showSpecies(
+        animal.name,
+        animal.description,
+        animal.habitat,
+        animal.observation
+      );
+    });
+
+    mapMarkers.push({
+      marker: marker,
+      animal: animal
+    });
+  });
+}
+
+
+
+
+
+
+    let selectedCategory = "all";
+  
+    function showSpecies(name, description, habitat, observation) {
+    document.getElementById("species-info").innerHTML =
+        "<p class='eyebrow'>SPECIES FIELD NOTES</p>" +
+        "<h3>" + name + "</h3>" +
+        "<p><strong>Habitat</strong><br>" + habitat + "</p>" +
+        "<p><strong>Observation note</strong><br>" + observation + "</p>";
+    }
+
+    
+
+function filterSpecies(category, button) {
+  selectedCategory = category;
+
+  document.querySelectorAll(".filter-button").forEach(function(btn) {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  updateSpeciesVisibility();
+}
+  
+
+
+
+function searchSpecies() {
+  updateSpeciesVisibility();
+}
+
+
+function updateSpeciesVisibility() {
+  const searchInput = document.getElementById("species-search");
+  const searchText = searchInput.value.toLowerCase();
+
+  const activeFilter = document.querySelector(".filter-button.active");
+  const selectedCategory = activeFilter.textContent.trim() === "All species"
+    ? "all"
+    : activeFilter.textContent.trim().slice(0, -1).toLowerCase();
+
+  species.forEach(function(animal) {
+    const matchesSearch = animal.name.toLowerCase().includes(searchText);
+    const matchesCategory =
+      selectedCategory === "all" || animal.category === selectedCategory;
+
+    const visible = matchesSearch && matchesCategory;
+
+    const card = document.querySelector(
+      '.species-card[data-name="' + animal.name + '"]'
+    );
+
+    if (card) {
+      card.style.display = visible ? "" : "none";
+    }
+  });
+
+  mapMarkers.forEach(function(item) {
+    const matchesSearch = item.animal.name.toLowerCase().includes(searchText);
+    const matchesCategory =
+      selectedCategory === "all" ||
+      item.animal.category === selectedCategory;
+
+    if (matchesSearch && matchesCategory) {
+      item.marker.addTo(map);
+    } else {
+      map.removeLayer(item.marker);
+    }
+  });
+}
+
+
+function sortSpecies() {
+  species.sort(function(a, b) {
+    return a.name.localeCompare(b.name);
+  });
+
+  displaySpecies();
+}
+
+// 1. Create the map first
+const map = L.map("map").setView([40.7128, -74.0060], 11);
+
+// 2. Add the map tiles
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+displayMapMarkers();
+
+function resetSpecies() {
+  document.getElementById("species-search").value = "";
+
+  document.querySelectorAll(".filter-button").forEach(function(button) {
+    button.classList.remove("active");
+  });
+
+  document.querySelector(".filter-button").classList.add("active");
+
+  updateSpeciesVisibility();
+
+  document.getElementById("species-info").innerHTML = `
+    <p class="eyebrow">SPECIES FIELD NOTES</p>
+    <h3>Select a species</h3>
+    <p>Choose a card or map marker to learn more about the wildlife.</p>
+  `;
+}
+</script>
+</body>
+</html>
