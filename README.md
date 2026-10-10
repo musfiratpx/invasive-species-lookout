@@ -4,21 +4,22 @@ An interactive map of **invasive species across New York City**, built at **Hack
 
 Every fact links to its source. Danger levels come from official New York rankings, never from AI.
 
-![Kissena Park profile: the park's outline on the map with its sightings, and a panel listing 31 listed invasive species, 16 of them Very High risk](docs/screenshot.jpg)
+![The home page: a welcome banner over a credited iNaturalist photo with live totals (72,899 sightings, 83 listed species, 460 parks), then the map of all five boroughs with numbered sighting bubbles and the danger-level filter](docs/screenshot.jpg)
 
 ## What you can do
 
-- **Explore the map.** Sightings are grouped into numbered bubbles that split as you zoom in. Hover a bubble to preview the species inside; zoom to street level to see every sighting at its own spot.
-- **Learn about a species.** Tap an icon to see photos, its danger level explained in plain words, its legal status in New York, when it shows up during the year, its history, how to handle it, and its sources. A real recording plays only for the few species that have one.
-- **Search and browse** from one box: click it to see every species or park as a list you can sort (most seen, most dangerous, biggest park, A–Z), and type to narrow it down. Enter opens the top match.
-- **Open a park profile**, for example Kissena Park: its official boundary, which listed species have been seen there, how dangerous they are, when people see them, and the latest sightings.
-- **Print a park field guide** (`/guide/Q024`): one page with the park's most-reported species, credited photos, danger levels, how to report, and QR codes back to the live map.
+- **Explore the map.** Sightings are grouped into numbered bubbles that split as you zoom in. Hover a bubble to preview the species inside; zoom to street level to see every sighting at its own spot. The map stays around New York City, and scrolling over it moves the page until you click the map (so you never get stuck in it).
+- **See what's near you.** Press **📍 Near me**: the map zooms to you and a photo grid lists the listed species reported within 500 m, 1 km or 2 km, most-reported first, with how close and how recently. Your location stays in your browser; it is never sent anywhere or put in a link. Outside NYC it says we have no data there instead of showing an empty list.
+- **Learn about a species.** Tap an icon to open a big credited photo with the name and danger level on it, then the danger level explained in plain words, its legal status in New York, when it shows up during the year, reports per year (with a note that these are reports, not a survey), its history, look-alikes, how to handle it, and its sources. A real recording plays only for the few species that have one. **Copy link** shares that species.
+- **Listen instead of reading.** A small 🔊 after each paragraph reads just that paragraph aloud with the browser's built-in voice (free, offline, no AI voice).
+- **Search and browse** from one box: click it to see every species (with a photo on each row) or park as a list you can sort (most seen, most dangerous, biggest park, A–Z), filter species with danger and plants & animals chips, and type to narrow it down, with the matching letters highlighted. Type a group like "birds", "plants", "fish" or "animals" to see that whole group. Enter opens the top match.
+- **Open a park profile**, for example Kissena Park: its official boundary, a photo grid of the listed species seen there, how dangerous they are, when people see them, and the latest sightings.
+- **Print a park field guide** (`/guide/Q024`): one page with the park's most-reported species, credited photos, danger levels, a "Spotted it" box to tick on your walk, how to report, and QR codes back to the live map.
 - **Report it, don't pull it.** Every species and park explains NYC Parks' rule against removing plants or animals, links to NY iMapInvasives for reporting, and to official NYC Parks volunteer programs.
-- **Spot the species**: a 10-question photo quiz with real, credited iNaturalist photos and look-alike answers. "Copy my score" shares the result with a link to the quiz.
-- **Filter** by danger level or type (plants, birds, insects, fish and shellfish, other animals) from the **Plants & animals** dropdown.
+- **Spot the species**: a 10-question photo quiz with real, credited iNaturalist photos and look-alike answers. Progress dots show how you're doing, keys 1–3 pick an answer, and the end of a round lists the species you missed with a "Learn more" link for each. "Copy my score" shares the result with a link to the quiz.
+- **Filter** the map by when it was seen (all years, last 2 years, last 12 months), danger level, and kind (plants, birds, insects, fish and shellfish, other animals) from the **Plants & animals** dropdown.
 - **Share any view**: links like `/?park=Q024` (Kissena Park), `/?species=6921` (Mute Swan) or `/?quiz=1` open the app on that view, and the browser's Back button closes panels one step at a time.
-- **Find me** shows where you are on the map; the location stays in your browser.
-- **Accessible**: works with a keyboard and screen readers, respects "reduce motion", and uses large tap targets on phones.
+- **Accessible**: works with a keyboard and screen readers, reads paragraphs aloud, uses easy-to-read fonts, respects "reduce motion" (no animations or rotating photos), and uses large tap targets on phones.
 
 ## How it works
 
@@ -37,7 +38,7 @@ Every fact links to its source. Danger levels come from official New York rankin
                     map · search · Browse · species panel · park profiles · quiz · field guide
 ```
 
-- **The app reads only cached files.** It never calls iNaturalist or an AI service while running, so the demo works even if the Wi-Fi drops. (Map tiles and photos still need internet.)
+- **The app reads only cached files.** It never calls iNaturalist or an AI service while running, so the demo works even if the Wi-Fi drops. The banner photos and fonts are saved in the app too. (Map tiles and species photos still need internet.)
 - **Invasive status** comes only from the NYS DEC 6 NYCRR Part 575 list.
 - **Danger level** comes only from official NY ranks. See [docs/SCORING.md](docs/SCORING.md).
 - **Species text** comes only from our sourced fact sheets in `backend/knowledge/`, shown word for word. Snowflake Cortex Search finds the right section; AI rewriting is available but turned off by team decision.
@@ -142,8 +143,9 @@ backend/
   tests/            pytest
 frontend/
   app/              page.js (the map page), guide/[parkId]/ (printable field guide), layout.js, globals.css (design tokens)
-  components/       MapView, SpeciesSidebar, ParkProfile, BrowsePanel, SearchBox, Quiz, Legend, ReportDontPull, ...
-  lib/              api.js (every backend call), urlState.js (links), quiz.js, labels.js, meanings.js, dates.js, ...
+  components/       MapView, SpeciesSidebar, ParkProfile, BrowsePanel, NearMePanel, SearchBox, Quiz, Legend, ReadAloud, ...
+  lib/              api.js (every backend call), urlState.js (links), nearby.js (Near you), quiz.js, labels.js, taxa.js, ...
+  public/images/    banner photos (openly licensed iNaturalist photos, credited in Hero.jsx)
 ```
 
 ## Team docs
@@ -157,4 +159,4 @@ frontend/
 
 ## Credits
 
-Sightings, photos and sounds from [iNaturalist](https://www.inaturalist.org) and its observers · Invasive status: NYS DEC 6 NYCRR Part 575 · Plant ranks: New York Non-Native Plant Invasiveness Ranking ([nyis.info](https://nyis.info)) · Park boundaries: [NYC Parks Properties](https://data.cityofnewyork.us/d/enfh-gkve) (NYC Department of Parks and Recreation) · Species fact sheets: NYIS (Cornell / NY Sea Grant), NYS DEC, USGS, WNY PRISM, NY iMapInvasives · Park rules and volunteering: [NYC Parks](https://www.nycgovparks.org/reg/stewardship) · Music generated with ElevenLabs · Map © OpenStreetMap contributors.
+Sightings, photos (including the banner photos, each credited on screen) and sounds from [iNaturalist](https://www.inaturalist.org) and its observers · Invasive status: NYS DEC 6 NYCRR Part 575 · Plant ranks: New York Non-Native Plant Invasiveness Ranking ([nyis.info](https://nyis.info)) · Park boundaries: [NYC Parks Properties](https://data.cityofnewyork.us/d/enfh-gkve) (NYC Department of Parks and Recreation) · Species fact sheets: NYIS (Cornell / NY Sea Grant), NYS DEC, USGS, WNY PRISM, NY iMapInvasives · Park rules and volunteering: [NYC Parks](https://www.nycgovparks.org/reg/stewardship) · Music generated with ElevenLabs · Map © OpenStreetMap contributors, via [OpenFreeMap](https://openfreemap.org) · Fonts: Source Sans 3 and Source Serif 4 (SIL Open Font License).

@@ -84,9 +84,12 @@
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
-/* Page color + faint paper texture, on <html> so it covers the whole page. (On <body> it stopped
-   after one screen height, leaving a hard line where the texture ended.) */
+/* No fixed height: the page grows with its content, so the background (and its texture)
+   covers all of it. (A fixed 100% height cut the texture off after one screen.) The map
+   app sets its own height (.app). */
+html, body { margin: 0; }
+html { min-height: 100%; }
+/* Page color + faint paper texture, on <html> so it covers the whole page. */
 html { background: var(--paper-grain), var(--page); }
 /* 17 px base instead of the browser's 16: Source Sans runs a little small, and every rem size
    (all the --text-* tokens) grows with it. */
@@ -811,7 +814,6 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
 /* ---------- 10. Printing (the field guide; fits one page for almost every park) ---------- */
 @media print {
   @page { margin: 10mm; }
-  html, body { height: auto; } /* 100% (needed for the map) adds a blank last page */
   .no-print { display: none !important; }
   .guide { max-width: none; padding: 0; font-size: 10pt; }
   .guide h1 { font-size: 16pt; }
