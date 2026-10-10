@@ -31,7 +31,7 @@ def _count_cached_observations():
     path = config.OBSERVATIONS_CSV
     if not path.exists():
         return 0
-    with path.open() as f:
+    with path.open(encoding="utf-8") as f:
         return max(sum(1 for _ in f) - 1, 0)  # minus the header row
 
 
