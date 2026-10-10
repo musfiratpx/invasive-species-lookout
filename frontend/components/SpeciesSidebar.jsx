@@ -1,10 +1,5 @@
 "use client";
-/**
- * Slide-in panel with everything about one species, in this order:
- * photos, names, danger level, status in Queens, sound, seasons, summary,
- * history, how to handle it, how to report it, sources. Closes with the X button or Escape.
- * (On phones, CSS turns it into a bottom sheet.)
- */
+
 
 import { useEffect, useRef, useState } from "react";
 

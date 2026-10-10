@@ -1,14 +1,14 @@
 /**
- * Map legend: what the icon border colors and the icons mean.
+ * Map legend: what the icon border colors mean, plus the "Types" dropdown
+ * that picks which kinds of species the map shows.
  */
 
+import TypeFilter from "@/components/TypeFilter";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
-import { TAXON_ICONS } from "@/lib/taxa";
 
 const LEVELS = [4, 3, 2, 1, null];
-const SHOWN_GROUPS = ["Plantae", "Aves", "Insecta", "Actinopterygii", "Mollusca", "Animalia"];
 
-export default function Legend() {
+export default function Legend({ types, typeCounts, selectedTypes, onChangeTypes }) {
   return (
     <aside className="legend" aria-label="Map legend">
       <h2>Danger level</h2>
@@ -20,14 +20,7 @@ export default function Legend() {
           </li>
         ))}
       </ul>
-      <h2>Type</h2>
-      <ul>
-        {SHOWN_GROUPS.map((group) => (
-          <li key={group}>
-            <span aria-hidden="true">{TAXON_ICONS[group].emoji}</span> {TAXON_ICONS[group].label}
-          </li>
-        ))}
-      </ul>
+      <TypeFilter types={types} counts={typeCounts} selected={selectedTypes} onChange={onChangeTypes} />
       <p className="muted" style={{ margin: 0 }}>
         Zoom in to see each sighting. Sightings whose exact location is hidden for privacy are counted in each
         species&apos; totals but not shown on the map.

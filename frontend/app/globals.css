@@ -91,6 +91,65 @@ button {
 .legend li { display: flex; align-items: center; gap: 6px; margin: 2px 0; }
 .swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 
+/* "Types: [All ›]" dropdown. The legend sits in the bottom-left corner of the map,
+   so the menu slides out to its right, lined up with the button. */
+.type-filter { position: relative; display: flex; align-items: center; gap: 8px; margin: 0 0 8px; }
+.type-filter-label { font-weight: 600; font-size: 0.85rem; }
+.type-filter-button {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: inherit; font-weight: 500; padding: 4px 10px; cursor: pointer;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: 999px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.type-filter-button:hover,
+.type-filter-button[aria-expanded="true"] { border-color: var(--focus); background: var(--bg); }
+.type-filter-caret { color: var(--muted); font-size: 1rem; line-height: 1; transition: transform 0.15s; }
+.type-filter-caret.open { transform: translateX(2px); color: var(--focus); }
+
+.type-filter-menu {
+  position: absolute; left: calc(100% + 22px); bottom: -10px; z-index: 1001;
+  width: 210px; padding: 10px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  animation: type-filter-slide 0.15s ease-out;
+}
+/* Small arrow on the menu's left edge, pointing back at the button. */
+.type-filter-menu::before {
+  content: ""; position: absolute; left: -6px; bottom: 20px;
+  width: 10px; height: 10px; background: var(--bg);
+  border-left: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+@keyframes type-filter-slide {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .type-filter-menu { animation: none; }
+}
+.type-filter-heading {
+  margin: 0 0 6px; font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
+}
+.type-filter-divider { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+
+/* Each type is a row-shaped button. The 2px border is always there (transparent
+   when not selected) so selecting a row doesn't make the menu jump. */
+.type-filter-option {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  margin: 2px 0; padding: 5px 8px;
+  font: inherit; text-align: left; color: var(--text); cursor: pointer;
+  background: none; border: 2px solid transparent; border-radius: 8px;
+  transition: background 0.12s, border-color 0.12s;
+}
+.type-filter-option:hover { background: var(--surface); }
+.type-filter-option[aria-pressed="true"] { border-color: var(--focus); background: #e8f0fe; }
+.type-filter-emoji { width: 20px; text-align: center; }
+.type-filter-name { flex: 1; }
+.type-filter-count { font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.type-filter-hint { margin: 6px 0 0; font-size: 0.7rem; color: var(--muted); }
+
 /* ---------- Sidebar ---------- */
 .sidebar {
   position: absolute; top: 0; right: 0; bottom: 0; z-index: 1001;
