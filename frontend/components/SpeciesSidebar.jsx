@@ -167,8 +167,8 @@ function ReviewNote({ factSheet }) {
   }
   return (
     <p className="review-note draft">
-      📝 <strong>Draft:</strong> these notes are written from the sources listed under “Sources”, but our team
-      hasn&apos;t finished checking them yet.
+      📝 <strong>Draft:</strong> the text below was drafted by an AI assistant using only the sources listed under
+      “Sources”. Our team hasn&apos;t checked it against those sources yet. (The danger level above is official data.)
     </p>
   );
 }
