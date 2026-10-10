@@ -105,6 +105,7 @@ Restart the backend afterwards. The iNaturalist scripts go through `pyinaturalis
 |---|---|
 | `SNOWFLAKE_*` | Retrieval through Snowflake Cortex Search. Run `backend/snowflake/setup.sql` once, then `python scripts/load_chunks.py`. |
 | `SNOWFLAKE_CORTEX_MODEL` | Optional: a Cortex model rewrites Summary/History/Seasons into short plain-English text, grounded only on our sources. Leave empty (the team's choice) to show the fact sheets word for word. Safety and reporting text is never rewritten. |
+| `TIGER_DATABASE_URL` | Rebuilds the "New" early-warning list (species first recorded in a borough recently) with Tiger Cloud (TimescaleDB + PostGIS). Run `backend/tiger/setup.sql` once, then `python scripts/load_tiger.py` and `python scripts/build_early_warning.py`. The app reads the saved `data/cache/early_warning.json`, never Tiger. Some campus Wi-Fi blocks database ports; use a hotspot if it hangs. |
 | `ELEVENLABS_API_KEY` | Lets `make_music.py` generate the background music. |
 | `INAT_PLACE_IDS` | Which iNaturalist place(s) to cover. Default `674` = all of NYC; `675` = Queens only; empty = a 2 km circle around Kissena Park + QC. Rerun the fetch scripts after changing it. |
 
@@ -112,12 +113,12 @@ Without these keys, the app uses local keyword search and shows fact-sheet text 
 
 ## Deploying to Render
 
-`render.yaml` describes two free web services: `isl-api` (backend) and `isl-web` (frontend). The backend only reads the cached data committed in `backend/data/cache`, so it never calls iNaturalist or Snowflake live and needs no API keys.
+`render.yaml` describes two free web services: `kissena-api` (backend) and `kissena-web` (frontend). The backend only reads the cached data committed in `backend/data/cache`, so it never calls iNaturalist or Snowflake live and needs no API keys.
 
 1. Push your branch to GitHub. In Render, choose **New > Blueprint** and pick this repo and branch.
 2. Render asks for the `sync: false` values. Use the addresses Render shows for each service:
-   - `isl-api` → `FRONTEND_ORIGIN` = `https://isl-web.onrender.com` (add `,http://localhost:3000` to keep local dev working)
-   - `isl-web` → `NEXT_PUBLIC_API_URL` = `https://isl-api.onrender.com`, `NEXT_PUBLIC_SITE_URL` = `https://isl-web.onrender.com`
+   - `kissena-api` → `FRONTEND_ORIGIN` = `https://kissena-web.onrender.com` (add `,http://localhost:3000` to keep local dev working)
+   - `kissena-web` → `NEXT_PUBLIC_API_URL` = `https://kissena-api.onrender.com`, `NEXT_PUBLIC_SITE_URL` = `https://kissena-web.onrender.com`
 3. If Render gave the services different addresses, fix these values and redeploy the frontend (`NEXT_PUBLIC_` values are baked in at build time).
 
 After that, every push to the deployed branch redeploys automatically. When you change fact sheets, run `scripts/build_insights.py` locally and commit the updated cache; Render doesn't run the scripts.

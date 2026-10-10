@@ -19,7 +19,7 @@ export function stateFromUrl() {
     focus: park ? { kind: "park", id: park } : species ? { kind: "species", id: species } : null,
     selectedSpeciesId: species,
     parkPanelOpen: Boolean(park && !species), // a species opened from a park sits on top of the profile
-    browseTab: ["species", "parks"].includes(browse) ? browse : null,
+    browseTab: ["species", "parks", "new"].includes(browse) ? browse : null,
     quiz: params.has("quiz") ? "open" : "closed",
   };
 }

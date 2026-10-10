@@ -118,6 +118,12 @@ def species_list():
     return data.species_list()
 
 
+@app.get("/api/early-warning")
+def early_warning():
+    """Species first recorded in a borough in the last two years, newest first (built with Tiger Cloud)."""
+    return data.early_warning()
+
+
 @app.get("/api/parks")
 def park_list():
     """Every NYC park with at least one sighting (official NYC Parks boundaries), most sightings first."""

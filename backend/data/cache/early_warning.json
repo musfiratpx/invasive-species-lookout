@@ -1,0 +1,286 @@
+{
+ "built_at": "2026-10-10T21:12:45+00:00",
+ "window_days": 730,
+ "since": "2024-10-09",
+ "newest_sighting": "2026-10-09",
+ "source": "Research-grade iNaturalist sightings; boroughs from NYC Department of City Planning",
+ "items": [
+  {
+   "species_id": "59115",
+   "borough": "Queens",
+   "first_seen": "2026-09-16",
+   "first_observation_id": 400772439,
+   "first_observation_url": "https://www.inaturalist.org/observations/400772439",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Staten Island",
+     "first_seen": "2019-03-31"
+    },
+    {
+     "borough": "Manhattan",
+     "first_seen": "2025-08-04"
+    },
+    {
+     "borough": "Bronx",
+     "first_seen": "2025-10-21"
+    }
+   ]
+  },
+  {
+   "species_id": "196397",
+   "borough": "Manhattan",
+   "first_seen": "2026-05-21",
+   "first_observation_id": 363892967,
+   "first_observation_url": "https://www.inaturalist.org/observations/363892967",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Bronx",
+     "first_seen": "2022-09-29"
+    },
+    {
+     "borough": "Brooklyn",
+     "first_seen": "2025-04-01"
+    }
+   ]
+  },
+  {
+   "species_id": "78707",
+   "borough": "Queens",
+   "first_seen": "2026-04-28",
+   "first_observation_id": 356270861,
+   "first_observation_url": "https://www.inaturalist.org/observations/356270861",
+   "sightings_since": 3,
+   "already_in": [
+    {
+     "borough": "Manhattan",
+     "first_seen": "2018-04-30"
+    },
+    {
+     "borough": "Bronx",
+     "first_seen": "2019-07-11"
+    },
+    {
+     "borough": "Brooklyn",
+     "first_seen": "2020-05-16"
+    }
+   ]
+  },
+  {
+   "species_id": "77836",
+   "borough": "Queens",
+   "first_seen": "2026-04-25",
+   "first_observation_id": 356547430,
+   "first_observation_url": "https://www.inaturalist.org/observations/356547430",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Bronx",
+     "first_seen": "2019-04-29"
+    },
+    {
+     "borough": "Staten Island",
+     "first_seen": "2019-05-01"
+    },
+    {
+     "borough": "Brooklyn",
+     "first_seen": "2023-04-17"
+    }
+   ]
+  },
+  {
+   "species_id": "59115",
+   "borough": "Bronx",
+   "first_seen": "2025-10-21",
+   "first_observation_id": 322287465,
+   "first_observation_url": "https://www.inaturalist.org/observations/322287465",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Staten Island",
+     "first_seen": "2019-03-31"
+    },
+    {
+     "borough": "Manhattan",
+     "first_seen": "2025-08-04"
+    }
+   ]
+  },
+  {
+   "species_id": "447071",
+   "borough": "Manhattan",
+   "first_seen": "2025-09-09",
+   "first_observation_id": 312791885,
+   "first_observation_url": "https://www.inaturalist.org/observations/312791885",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Brooklyn",
+     "first_seen": "2025-07-20"
+    }
+   ]
+  },
+  {
+   "species_id": "59115",
+   "borough": "Manhattan",
+   "first_seen": "2025-08-04",
+   "first_observation_id": 303778842,
+   "first_observation_url": "https://www.inaturalist.org/observations/303778842",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Staten Island",
+     "first_seen": "2019-03-31"
+    }
+   ]
+  },
+  {
+   "species_id": "64006",
+   "borough": "Queens",
+   "first_seen": "2025-07-28",
+   "first_observation_id": 301870138,
+   "first_observation_url": "https://www.inaturalist.org/observations/301870138",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Staten Island",
+     "first_seen": "2006-12-12"
+    },
+    {
+     "borough": "Bronx",
+     "first_seen": "2013-01-17"
+    },
+    {
+     "borough": "Brooklyn",
+     "first_seen": "2020-03-17"
+    }
+   ]
+  },
+  {
+   "species_id": "447071",
+   "borough": "Brooklyn",
+   "first_seen": "2025-07-20",
+   "first_observation_id": 299660978,
+   "first_observation_url": "https://www.inaturalist.org/observations/299660978",
+   "sightings_since": 4,
+   "already_in": []
+  },
+  {
+   "species_id": "75865",
+   "borough": "Queens",
+   "first_seen": "2025-07-02",
+   "first_observation_id": 294609852,
+   "first_observation_url": "https://www.inaturalist.org/observations/294609852",
+   "sightings_since": 1,
+   "already_in": []
+  },
+  {
+   "species_id": "77468",
+   "borough": "Queens",
+   "first_seen": "2025-06-17",
+   "first_observation_id": 302247508,
+   "first_observation_url": "https://www.inaturalist.org/observations/302247508",
+   "sightings_since": 2,
+   "already_in": []
+  },
+  {
+   "species_id": "632667",
+   "borough": "Brooklyn",
+   "first_seen": "2025-05-30",
+   "first_observation_id": 285343506,
+   "first_observation_url": "https://www.inaturalist.org/observations/285343506",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Bronx",
+     "first_seen": "2019-06-10"
+    },
+    {
+     "borough": "Queens",
+     "first_seen": "2023-06-03"
+    }
+   ]
+  },
+  {
+   "species_id": "170851",
+   "borough": "Queens",
+   "first_seen": "2025-05-04",
+   "first_observation_id": 278458569,
+   "first_observation_url": "https://www.inaturalist.org/observations/278458569",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Bronx",
+     "first_seen": "2021-06-25"
+    },
+    {
+     "borough": "Staten Island",
+     "first_seen": "2022-05-11"
+    }
+   ]
+  },
+  {
+   "species_id": "196397",
+   "borough": "Brooklyn",
+   "first_seen": "2025-04-01",
+   "first_observation_id": 268051316,
+   "first_observation_url": "https://www.inaturalist.org/observations/268051316",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Bronx",
+     "first_seen": "2022-09-29"
+    }
+   ]
+  },
+  {
+   "species_id": "62671",
+   "borough": "Manhattan",
+   "first_seen": "2024-10-19",
+   "first_observation_id": 248120531,
+   "first_observation_url": "https://www.inaturalist.org/observations/248120531",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Bronx",
+     "first_seen": "2011-08-23"
+    },
+    {
+     "borough": "Queens",
+     "first_seen": "2018-08-05"
+    },
+    {
+     "borough": "Brooklyn",
+     "first_seen": "2018-09-15"
+    },
+    {
+     "borough": "Staten Island",
+     "first_seen": "2023-08-04"
+    }
+   ]
+  },
+  {
+   "species_id": "166762",
+   "borough": "Staten Island",
+   "first_seen": "2024-10-10",
+   "first_observation_id": 246688531,
+   "first_observation_url": "https://www.inaturalist.org/observations/246688531",
+   "sightings_since": 1,
+   "already_in": [
+    {
+     "borough": "Bronx",
+     "first_seen": "2018-08-05"
+    },
+    {
+     "borough": "Queens",
+     "first_seen": "2021-01-02"
+    },
+    {
+     "borough": "Brooklyn",
+     "first_seen": "2021-04-18"
+    }
+   ]
+  }
+ ]
+}

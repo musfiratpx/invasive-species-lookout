@@ -1,6 +1,7 @@
 "use client";
 /**
- * "Browse" panel: every listed species, or every park, as a list you can sort.
+ * "Browse" panel: every listed species, every park, or the "New" early-warning list
+ * (species first recorded in a borough recently), as a list you can sort.
  * The header search box (SearchBox.jsx) opens it and filters it: `query` is what's typed there.
  * Uses the same slide-in panel as the species sidebar (a bottom sheet on phones).
  * Tapping a row opens that species or park on top of this panel ("covered"). The panel
@@ -12,6 +13,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import Highlight from "@/components/Highlight";
 import PhotoCredit from "@/components/PhotoCredit";
+import { formatDay, formatMonth } from "@/lib/dates";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
 import { TYPE_FILTERS, matchesGroupWord, taxonIcon, typeFilterOf } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
@@ -23,7 +25,7 @@ const speciesName = (s) => s.common_name || s.scientific_name;
 // Danger chips in the Species tab, most dangerous first. null = "Not yet ranked".
 const LEVELS = [4, 3, 2, 1, null];
 
-// Everything that differs between the two tabs. Each sort is a label plus a compare
+// Everything that differs between the tabs. Each sort is a label plus a compare
 // function; ties fall back to most sightings.
 const TABS = {
   species: {
@@ -52,12 +54,24 @@ const TABS = {
       { id: "name", label: "A–Z", compare: (a, b) => byName(a.name, b.name) },
     ],
   },
+  // One row per species + borough, built by backend/scripts/build_early_warning.py.
+  new: {
+    label: "New",
+    noun: "new arrivals",
+    idOf: (a) => `${a.species_id}-${a.borough}`,
+    matches: (a, q) => TABS.species.matches(a, q) || a.borough.toLowerCase().includes(q),
+    sorts: [
+      { id: "newest", label: "Newest", compare: (a, b) => b.first_seen.localeCompare(a.first_seen) },
+      { id: "danger", label: "Most dangerous", compare: (a, b) => (b.danger_level ?? 0) - (a.danger_level ?? 0) || b.first_seen.localeCompare(a.first_seen) },
+      { id: "borough", label: "Borough", compare: (a, b) => byName(a.borough, b.borough) || b.first_seen.localeCompare(a.first_seen) },
+    ],
+  },
 };
 
-export default function BrowsePanel({ tab, onChangeTab, query: typed = "", species, parks, status, onRetry, covered, onPickSpecies, onPickPark, onClose }) {
+export default function BrowsePanel({ tab, onChangeTab, query: typed = "", species, parks, arrivals, status, onRetry, covered, onPickSpecies, onPickPark, onClose }) {
   const panel = useRef(null);
   const closeButton = useRef(null);
-  const [sortBy, setSortBy] = useState({ species: "sightings", parks: "sightings" });
+  const [sortBy, setSortBy] = useState({ species: "sightings", parks: "sightings", new: "newest" });
   const [lastPicked, setLastPicked] = useState(null); // id of the row that was tapped, to return focus to it
   // Species tab chips: show one danger level and/or one type. undefined = no chip picked (show all).
   const [levelChip, setLevelChip] = useState(undefined);
@@ -85,7 +99,7 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
   }, [covered, onClose]);
 
   const config = TABS[tab];
-  const items = tab === "species" ? species : parks;
+  const items = { species, parks, new: arrivals.items }[tab];
   const sort = config.sorts.find((s) => s.id === sortBy[tab]);
   const query = typed.trim().toLowerCase();
   const chipsOn = tab === "species" && (levelChip !== undefined || typeChip !== undefined);
@@ -103,19 +117,20 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
   const matchCount = {
     species: species.filter((s) => !query || TABS.species.matches(s, query)).length,
     parks: parks.filter((p) => !query || TABS.parks.matches(p, query)).length,
+    new: arrivals.items.filter((a) => !query || TABS.new.matches(a, query)).length,
   };
 
   // Typing a park name while on Species (or the other way round) switches tabs by itself.
-  const otherTab = tab === "species" ? "parks" : "species";
+  const otherTab = { species: "parks", parks: "species" }[tab]; // "New" never switches by itself
   useEffect(() => {
-    if (query && matchCount[tab] === 0 && matchCount[otherTab] > 0) onChangeTab(otherTab);
+    if (otherTab && query && matchCount[tab] === 0 && matchCount[otherTab] > 0) onChangeTab(otherTab);
   }, [query, tab, otherTab, matchCount.species, matchCount.parks, onChangeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function pick(item) {
     const id = config.idOf(item);
     setLastPicked(id);
-    if (tab === "species") onPickSpecies(id);
-    else onPickPark(id);
+    if (tab === "parks") onPickPark(id);
+    else onPickSpecies(item.species_id);
   }
 
   return (
@@ -153,6 +168,12 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
               onType={(type) => setTypeChip(type === typeChip ? undefined : type)}
             />
           )}
+          {tab === "new" && (
+            <p className="muted">
+              Species first recorded in a borough{arrivals.since && ` since ${formatMonth(arrivals.since)}`}, in research-grade
+              iNaturalist sightings. That&apos;s when someone first reported it there, not necessarily when it arrived.
+            </p>
+          )}
           {/* Screen readers read this out whenever it changes (a new sort, filter or tab). */}
           <p className="muted" role="status">
             {rows.length === items.length
@@ -161,7 +182,9 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
           </p>
           {rows.length === 0 ? (
             <p className="muted">
-              {query ? `No ${config.noun} match “${typed.trim()}”` : `No ${config.noun} match`}
+              {tab === "new" && !query
+                ? "No species were first recorded in a borough recently."
+                : query ? `No ${config.noun} match “${typed.trim()}”` : `No ${config.noun} match`}
               {chipsOn && <> with these chips. <button className="link-button" onClick={() => { setLevelChip(undefined); setTypeChip(undefined); }}>Clear chips</button></>}
             </p>
           ) : (
@@ -169,10 +192,16 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
               {rows.map((item) => (
                 <li key={config.idOf(item)}>
                   <button className="row-button" data-row-id={config.idOf(item)} onClick={() => pick(item)}>
-                    {tab === "species" ? <SpeciesRow s={item} query={query} /> : <ParkRow p={item} query={query} />}
+                    {tab === "species" ? <SpeciesRow s={item} query={query} /> : tab === "parks" ? <ParkRow p={item} query={query} /> : <ArrivalRow a={item} />}
                   </button>
-                  {/* The photo's credit sits outside the button, since a link can't go inside a button. */}
+                  {/* Links can't go inside a button, so the photo credit and the first-sighting link sit under it. */}
                   {tab === "species" && item.thumb && <PhotoCredit photo={item.thumb} />}
+                  {tab === "new" && (
+                    // The evidence: the actual first sighting.
+                    <a className="row-link" href={item.first_observation_url} target="_blank" rel="noreferrer">
+                      View the first sighting on iNaturalist ↗
+                    </a>
+                  )}
                 </li>
               ))}
             </ol>
@@ -244,6 +273,26 @@ function ParkRow({ p, query }) {
       <span className="row-detail">
         <span>{p.species} species</span>
         <span>{p.sightings.toLocaleString()} seen</span>
+      </span>
+    </>
+  );
+}
+
+function ArrivalRow({ a }) {
+  const before = a.already_in.length;
+  return (
+    <>
+      <span aria-hidden="true">{taxonIcon(a.iconic_taxon).emoji}</span>
+      <span className="search-name">
+        {speciesName(a)}
+        <em>First recorded in {a.borough} · {formatDay(a.first_seen)}</em>
+      </span>
+      <span className="row-detail">
+        <span className="danger-cell">
+          <span className="swatch" style={{ background: DANGER_COLORS[a.danger_level ?? null] }} aria-hidden="true" />
+          {DANGER_LABELS[a.danger_level ?? null]}
+        </span>
+        <span>{before ? `Already in ${before} other borough${before > 1 ? "s" : ""}` : "First in NYC"}</span>
       </span>
     </>
   );

@@ -31,6 +31,19 @@ def test_species_list_is_sorted_and_ranked_from_data():
             assert s["danger_label"] == "Not yet ranked"
 
 
+def test_early_warning_items_are_recent_and_linked():
+    body = client.get("/api/early-warning").json()
+    species_ids = {s["species_id"] for s in client.get("/api/species").json()}
+    for item in body["items"]:
+        assert item["species_id"] in species_ids
+        assert item["first_seen"] >= body["since"]
+        assert item["borough"] in {"Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"}
+        # Every "first" links to the real iNaturalist observation (ground rule 6: real data only).
+        assert item["first_observation_url"].startswith("https://www.inaturalist.org/observations/")
+        # Boroughs listed as "already in" were reached before this one.
+        assert all(e["first_seen"] < item["first_seen"] for e in item["already_in"])
+
+
 def test_species_detail_has_every_sidebar_section():
     species_id = client.get("/api/species").json()[0]["species_id"]
     body = client.get(f"/api/species/{species_id}").json()
