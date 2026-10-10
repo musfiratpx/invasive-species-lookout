@@ -1,28 +1,46 @@
 "use client";
 /**
- * "Read aloud" button for the species panel, for people who find reading hard or have low vision.
+ * A small 🔊 button that reads one paragraph out loud, placed next to each paragraph in the
+ * species panel so people can listen at their own pace. Press it again (⏹) to stop.
+ *
  * It uses the browser's own built-in voice (speechSynthesis): free, works offline, and no
  * AI voice service (CLAUDE.md rule 4 keeps ElevenLabs for background music only).
- * It reads only text already shown in the panel, word for word. It is not a species sound.
+ * It reads only the text already on screen, word for word. It is not a species sound.
  * Hidden in browsers without a built-in voice.
+ *
+ * Only one paragraph reads at a time: starting one tells the others (with a window event)
+ * to switch their button back to 🔊.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
-export default function ReadAloud({ text }) {
+const STARTED = "read-aloud-started";
+
+export default function ReadAloud({ text, label = "this paragraph" }) {
+  const id = useId();
   const [supported, setSupported] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const speakingNow = useRef(false); // the same, readable when the paragraph goes away
+  speakingNow.current = speaking;
 
   // Checked after the page loads, since the server has no browser voice to check.
   useEffect(() => setSupported("speechSynthesis" in window), []);
 
-  // Stop talking when the panel closes or shows a different species.
-  useEffect(() => () => window.speechSynthesis?.cancel(), [text]);
+  // Another paragraph started reading: this one has stopped.
+  useEffect(() => {
+    const onStarted = (e) => e.detail !== id && setSpeaking(false);
+    window.addEventListener(STARTED, onStarted);
+    return () => window.removeEventListener(STARTED, onStarted);
+  }, [id]);
 
-  if (!supported) return null;
+  // Stop talking if this paragraph goes away (panel closed, another species opened).
+  // Only on the way out: running on every change would also stop a paragraph that just started.
+  useEffect(() => () => { if (speakingNow.current) window.speechSynthesis.cancel(); }, []);
+
+  if (!supported || !text) return null;
 
   function toggle() {
-    window.speechSynthesis.cancel(); // also clears anything left over from another panel
+    window.speechSynthesis.cancel(); // stops whatever was reading, here or in another paragraph
     if (speaking) {
       setSpeaking(false);
       return;
@@ -31,13 +49,15 @@ export default function ReadAloud({ text }) {
     utterance.lang = "en-US";
     utterance.onend = () => setSpeaking(false);
     utterance.onerror = () => setSpeaking(false);
+    window.dispatchEvent(new CustomEvent(STARTED, { detail: id }));
     window.speechSynthesis.speak(utterance);
     setSpeaking(true);
   }
 
   return (
-    <button className="read-aloud" onClick={toggle} aria-pressed={speaking}>
-      <span aria-hidden="true">{speaking ? "⏹" : "🔊"}</span> {speaking ? "Stop reading" : "Read aloud"}
+    <button className="read-aloud" onClick={toggle} aria-pressed={speaking}
+            aria-label={speaking ? "Stop reading" : `Read ${label} aloud`} title={speaking ? "Stop reading" : "Read aloud"}>
+      <span aria-hidden="true">{speaking ? "⏹" : "🔊"}</span>
     </button>
   );
 }

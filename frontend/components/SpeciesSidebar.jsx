@@ -1,8 +1,8 @@
 "use client";
 /**
  * Slide-in panel with everything about one species: a big photo with the name and danger
- * level laid over it, an at-a-glance row (legal status · sightings · last seen), "Read aloud"
- * and "Copy link", danger level (with what it means),
+ * level laid over it, an at-a-glance row (legal status · sightings · last seen), "Copy link",
+ * a small 🔊 "read aloud" button after each paragraph of text, danger level (with what it means),
  * status in NYC, sound, then collapsible groups:
  * "What to do" (handling + reporting, open by default because it's safety info),
  * "About this species" (summary, history, look-alikes), "Through the year" (sourced seasons text, then
@@ -116,7 +116,6 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
 
       <section>
         <AtAGlance species={species} />
-        <ReadAloud text={readAloudText(species)} />
         <CopyLink speciesId={species.species_id} />
         {onShowOnMap && (
           <button className="show-on-map" onClick={onShowOnMap} disabled={shownOnMap}>
@@ -166,7 +165,9 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         {insights.handling.touch_safe === false && <p className="warning">Sources say: do not touch.</p>}
         {insights.handling.touch_safe === true && <p className="muted">Sources say it is safe to touch.</p>}
         <h4>How to handle it</h4>
-        <p className={insights.handling.is_default ? "warning" : undefined}>{insights.handling.text}</p>
+        <p className={insights.handling.is_default ? "warning" : undefined}>
+          {insights.handling.text} <ReadAloud text={insights.handling.text} />
+        </p>
       </details>
 
       <details className="group" open>
@@ -223,22 +224,6 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
       </details>
     </>
   );
-}
-
-/**
- * What "Read aloud" reads: the name, danger level, summary and how to handle it, exactly as
- * the panel shows them (including the "no information" and cautious default texts).
- */
-function readAloudText(species) {
-  const { danger, insights } = species;
-  return [
-    species.common_name || species.scientific_name,
-    danger.level ? `Danger level: ${danger.label}.` : "Danger level: not yet ranked.",
-    "Summary.",
-    insights.summary || "No information in our sources yet.",
-    "How to handle it.",
-    insights.handling.text,
-  ].join(" ");
 }
 
 /** One line under the photo: legal status · sightings · last seen. (Danger is on the photo.) */

@@ -81,12 +81,13 @@
 
   font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
-  background: var(--page);
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; background: var(--page); }
-body { background-image: var(--paper-grain); } /* faint paper texture over the page color */
+html, body { margin: 0; height: 100%; }
+/* Page color + faint paper texture, on <html> so it covers the whole page. (On <body> it stopped
+   after one screen height, leaving a hard line where the texture ended.) */
+html { background: var(--paper-grain), var(--page); }
 /* 17 px base instead of the browser's 16: Source Sans runs a little small, and every rem size
    (all the --text-* tokens) grows with it. */
 html { font-size: 106.25%; }
@@ -279,7 +280,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
   border: 1px solid var(--border); border-radius: 999px; padding: 6px 8px 6px 14px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2); font-size: var(--text-sm); max-width: calc(100% - 2 * var(--gap));
 }
-.focus-banner button { border-radius: 999px; }
+.focus-banner button { border-radius: 999px; white-space: nowrap; } /* "Show all" stays on one line */
 .focus-banner, .map-status, .legend, .type-filter-menu { animation-name: fade-in; animation-duration: 0.18s; animation-timing-function: ease-out; }
 .focus-count { color: var(--muted); font-size: 0.85em; }
 
@@ -496,11 +497,19 @@ details.info > summary::-webkit-details-marker { display: none; }
 .scientific-name { font-style: italic; color: var(--muted); margin: 2px 0; }
 .show-on-map { display: block; margin-top: 8px; }
 /* Read aloud and Copy link: small, quiet pills, so "Show only this species" stays the main button */
-.read-aloud, .copy-link {
+/* Copy link: a small, quiet pill, so "Show only this species" stays the main button */
+.copy-link {
   margin: 0 6px 0 0; padding: 2px 10px; border-radius: 999px; font-size: var(--text-sm);
   background: var(--surface); border-color: transparent;
 }
-.read-aloud:hover, .copy-link:hover { border-color: var(--olive); }
+.copy-link:hover { border-color: var(--olive); }
+/* 🔊 at the end of each paragraph: a small round icon button that sits in the line of text */
+.read-aloud {
+  display: inline-flex; align-items: center; justify-content: center; vertical-align: -3px;
+  width: 24px; height: 24px; padding: 0; margin-left: 2px; border-radius: 50%;
+  font-size: 0.8em; background: var(--surface); border-color: transparent; opacity: 0.75;
+}
+.read-aloud:hover, .read-aloud[aria-pressed="true"] { opacity: 1; border-color: var(--olive); }
 .copy-link-status { display: block; margin-top: 4px; }
 .copy-link-status:empty { display: none; }
 
