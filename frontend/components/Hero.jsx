@@ -93,7 +93,7 @@ export default function Hero({ species, parks, updatedAt }) {
   return (
     <>
       <nav className="site-nav" aria-label="Site">
-        <a className="logo" href="#about"><span aria-hidden="true">♧</span> Invasive Species Lookout</a>
+        <a className="logo" href="#about">{/* Same picture as the browser tab icon (app/icon.png); its green is the nav green. */}<img className="logo-mark" src="/images/logo.png" alt="" /> Invasive Species Lookout</a>
         {/* Just the map: Report and Quiz already have buttons in the banner and the map toolbar. */}
         <div className="site-nav-links">
           <a href="#explore">Map</a>

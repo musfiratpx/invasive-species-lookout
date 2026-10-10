@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- The same ♧ character as the logo in the nav bar (typed, not drawn), in the nav's cream
-       on its forest green. The browser draws it with a system font. -->
-  <rect width="32" height="32" rx="7" fill="#18382f"/>
-  <text x="16" y="25" font-size="26" text-anchor="middle" fill="#f7f5e9"
-        font-family="Georgia, 'Times New Roman', serif">♧</text>
-</svg>
