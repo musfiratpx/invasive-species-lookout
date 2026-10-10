@@ -178,7 +178,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .hero-description { max-width: 520px; line-height: 1.8; color: var(--on-forest-muted); }
 .hero-button {
   display: inline-block; margin-top: 20px; padding: 14px 18px;
-  background: var(--lime); color: var(--forest); text-decoration: none; border-radius: 3px;
+  background: var(--lime); color: var(--forest); text-decoration: none; border-radius: 999px; /* pill, like every other button */
 }
 .hero-button { transition: filter 0.15s, background-color 0.15s; }
 .hero-button:hover { filter: brightness(0.95); }
@@ -313,6 +313,11 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .progress span { display: block; height: 100%; background: var(--cluster); transition: width 0.2s; }
 
 /* "All of NYC" button (styled like Leaflet's +/- buttons) */
+/* Leaflet's +/− and our ⌂: cream, rounded and softly shadowed like the legend, not stock gray squares */
+.leaflet-bar { border: 1px solid var(--border) !important; border-radius: 10px !important; overflow: hidden; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15) !important; }
+.leaflet-bar a, .leaflet-bar a:hover { background: var(--bg); color: var(--forest); border-bottom-color: var(--border); }
+.leaflet-bar a:hover { background: var(--surface); }
+.leaflet-bar a.leaflet-disabled { background: var(--bg); color: var(--border); }
 .map-buttons button {
   display: block; width: 30px; height: 30px; border: none; border-radius: 0; padding: 0;
   background: var(--bg); font-size: var(--text-md); line-height: 30px; text-align: center;
@@ -485,6 +490,10 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .sidebar-close-wrap { position: sticky; top: 0; height: 0; z-index: 3; display: flex; justify-content: flex-end; }
 .sidebar-close-wrap .sidebar-close { position: static; float: none; margin: var(--space-2) var(--space-2) 0 0; }
 .sidebar-back { margin-bottom: 8px; }
+/* Panel and page action buttons: rounded pills, matching the toolbar, chips and Copy link */
+.sidebar-back, .show-on-map, .guide-toolbar button, .quiz-actions button, .map-status button, .focus-banner button {
+  border-radius: 999px; padding: 5px 14px;
+}
 .sidebar section { margin: var(--space-4) 0; }
 .sidebar h2 { font-size: var(--text-xl); line-height: 1.15; margin: 8px 0 0; }
 .sidebar h3 { font-size: var(--text-md); margin: 0 0 6px; }
@@ -568,6 +577,11 @@ details.info > summary::-webkit-details-marker { display: none; }
 .slide-frame > a { display: block; padding: var(--space-6) var(--space-4); text-align: center; } /* "View this photo on iNaturalist" */
 .slide-frame.muted { display: flex; align-items: center; justify-content: center; } /* "No photos yet" */
 .slide-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+/* ‹ › photo arrows: small round buttons, like the panel's ✕ */
+.slide-controls > button {
+  width: 30px; height: 30px; padding: 0; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center; font-size: var(--text-lg); line-height: 1;
+}
 .dots { display: flex; gap: 4px; }
 .dot { width: 10px; height: 10px; padding: 0; border-radius: 50%; background: var(--border); border: none; }
 .dot.active { background: var(--text); }
@@ -781,7 +795,7 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
   .site-nav { padding: 14px 16px; }
   .logo { font-size: var(--text-lg); }
   .site-nav-links { gap: 14px; font-size: var(--text-sm); }
-  .hero { min-height: 70svh; padding: 40px 20px; }
+  .hero { min-height: 70svh; padding: 40px 20px 104px; } /* bottom room for the photo arrows + credit, so they never cover the stats */
   .discovery { padding: 36px 8px 8px; }
   .section-heading { padding: 0 8px; }
   .section-heading h2 { font-size: 32px; }

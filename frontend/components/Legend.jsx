@@ -39,8 +39,8 @@ export default function Legend({ open, onToggleOpen, focusName, period, onChange
       <h2>When</h2>
       <div className="segmented" role="group" aria-label="When it was seen">
         <button aria-pressed={period === "all"} onClick={() => onChangePeriod("all")} disabled={!!focusName}>All years</button>
-        <button aria-pressed={period === "24"} onClick={() => onChangePeriod("24")} disabled={!!focusName}>Last 2 years</button>
-        <button aria-pressed={period === "12"} onClick={() => onChangePeriod("12")} disabled={!!focusName}>Last 12 months</button>
+        <button aria-pressed={period === "24"} onClick={() => onChangePeriod("24")} disabled={!!focusName} aria-label="Last 2 years">2 years</button>
+        <button aria-pressed={period === "12"} onClick={() => onChangePeriod("12")} disabled={!!focusName} aria-label="Last 12 months">1 year</button>
       </div>
       {period !== "all" && <p className="muted legend-note">Older sightings are hidden. A plant seen years ago may be gone now.</p>}
 
@@ -66,7 +66,7 @@ export default function Legend({ open, onToggleOpen, focusName, period, onChange
       />
 
       <details className="legend-help">
-        <summary>ⓘ How to read the map</summary>
+        <summary>How to read the map</summary>
         <ul className="muted">
           <li>Tap a danger level to show or hide it. Pick plants, birds and more from the Plants &amp; animals menu.</li>
           <li>Numbered bubbles group nearby sightings. Tap one to zoom in, or to list what&apos;s there.</li>
