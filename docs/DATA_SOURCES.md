@@ -39,7 +39,7 @@ Each photo and sound carries its own attribution, license and observation link i
 
 ## Fact sheets (`backend/knowledge/`)
 
-Every listed species seen in Queens (76) has a draft. A sheet counts as reviewed once a teammate's name is on its `reviewed_by:` header line; until then the app labels it "Draft". Keep the "Written by" column below in step with that line. Each one also cites the NYC Parks Rules (56 RCNY §1-04, and §1-05 where fishing applies), verified against the official text of Title 56 Chapter 1 (amended through Mar 30, 2025).
+Every listed species seen in Queens (76) has a draft. A sheet counts as reviewed once a teammate's name is on its `reviewed_by:` header line; until then the app labels it "Draft" (the name itself is never shown in the app). Keep the "Written by" column below in step with that line. Each one also cites the NYC Parks Rules (56 RCNY §1-04, and §1-05 where fishing applies), verified against the official text of Title 56 Chapter 1 (amended through Mar 30, 2025).
 
 | File | Species | Sources used | Accessed | Written by |
 |---|---|---|---|---|

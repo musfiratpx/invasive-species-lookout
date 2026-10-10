@@ -157,14 +157,11 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
 }
 
 /**
- * Whether a teammate has checked this species' fact sheet against its sources yet
- * (the "reviewed_by:" line in backend/knowledge/<file>.md).
+ * "Draft" note, shown until a teammate has checked this species' fact sheet against its
+ * sources (the "reviewed_by:" line in backend/knowledge/<file>.md). Once checked, it disappears.
  */
 function ReviewNote({ factSheet }) {
-  if (!factSheet) return null;
-  if (factSheet.reviewed_by) {
-    return <p className="review-note reviewed">✓ Checked against its sources by {factSheet.reviewed_by}.</p>;
-  }
+  if (!factSheet || factSheet.reviewed_by) return null;
   return (
     <p className="review-note draft">
       📝 <strong>Draft:</strong> the text below was drafted by an AI assistant using only the sources listed under

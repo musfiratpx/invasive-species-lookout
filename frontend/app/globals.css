@@ -270,7 +270,6 @@ button {
 .found-by code { font-size: 0.7rem; }
 .review-note { font-size: 0.8rem; padding: 6px 8px; border-radius: var(--radius); }
 .review-note.draft { background: #fff8e1; border: 1px solid #f0d78c; }
-.review-note.reviewed { background: #e8f5e9; border: 1px solid #b7dfb9; }
 
 /* Browse panel: tabs, sortable species table, sighting lists */
 .browse h2 { margin: 4px 0 8px; }
