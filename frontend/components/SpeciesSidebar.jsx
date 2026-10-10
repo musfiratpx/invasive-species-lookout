@@ -11,11 +11,11 @@ import { useEffect, useRef, useState } from "react";
 import DangerBadge from "@/components/DangerBadge";
 import InsightSection from "@/components/InsightSection";
 import PhotoSlideshow from "@/components/PhotoSlideshow";
+import ReportButton from "@/components/ReportButton";
 import SeasonChart from "@/components/SeasonChart";
 import SoundPlayer from "@/components/SoundPlayer";
 import { getSpecies } from "@/lib/api";
 import { NY_STATUS_LABELS, STATUS_LABELS } from "@/lib/labels";
-import { REPORT_URL } from "@/lib/meanings";
 
 export default function SpeciesSidebar({ speciesId, onClose, onBack, backLabel, onShowOnMap, shownOnMap }) {
   const [species, setSpecies] = useState(null);
@@ -150,17 +150,5 @@ function Skeleton() {
       <div className="skeleton" style={{ height: 16, width: "40%" }} />
       <div className="skeleton" style={{ height: 80 }} />
     </div>
-  );
-}
-
-/** "Report a sighting" link to New York's official invasive species database. */
-export function ReportButton() {
-  return (
-    <p className="report">
-      <a className="report-button" href={REPORT_URL} target="_blank" rel="noreferrer">
-        📣 Report a sighting
-      </a>
-      <span className="muted"> on NY iMapInvasives (free; no account needed)</span>
-    </p>
   );
 }

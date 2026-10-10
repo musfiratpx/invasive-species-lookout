@@ -8,8 +8,9 @@
 
 import { useEffect, useRef } from "react";
 
-import { ReportButton } from "@/components/SpeciesSidebar";
-import { DANGER_COLORS, MONTHS } from "@/lib/labels";
+import MonthChart from "@/components/MonthChart";
+import ReportButton from "@/components/ReportButton";
+import { DANGER_COLORS } from "@/lib/labels";
 import { taxonIcon } from "@/lib/taxa";
 
 const LEVEL_ORDER = ["Very High", "High", "Moderate", "Low", "Not yet ranked"];
@@ -93,7 +94,7 @@ function Details({ park, onPickSpecies }) {
 
       <section>
         <h3>When people see them here</h3>
-        <MonthBars counts={park.by_month_of_year} />
+        <MonthChart counts={park.by_month_of_year} label="Sightings per month in this park" height={90} />
         <p className="muted">
           Sightings per month, all years ({park.first_seen} to {park.last_seen}). Busy months partly reflect when people
           visit and post, not only when species are present.
@@ -120,28 +121,5 @@ function Details({ park, onPickSpecies }) {
         </p>
       </section>
     </>
-  );
-}
-
-/** Small 12-month bar chart (plain SVG), like the species season chart. */
-function MonthBars({ counts }) {
-  const W = 300, H = 90, BOTTOM = 14, GAP = 4;
-  const max = Math.max(...counts, 1);
-  const bw = W / 12 - GAP;
-  return (
-    <div className="season-chart">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Sightings per month: ${MONTHS.map((m, i) => `${m} ${counts[i]}`).join(", ")}`}>
-        {counts.map((c, i) => {
-          const h = ((H - BOTTOM) * c) / max;
-          const x = i * (bw + GAP) + GAP / 2;
-          return (
-            <g key={MONTHS[i]}>
-              <rect className="bar" x={x} y={H - BOTTOM - h} width={bw} height={h}><title>{`${MONTHS[i]}: ${c}`}</title></rect>
-              <text x={x + bw / 2} y={H - 3} textAnchor="middle">{MONTHS[i][0]}</text>
-            </g>
-          );
-        })}
-      </svg>
-    </div>
   );
 }
