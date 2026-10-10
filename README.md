@@ -116,6 +116,7 @@ docs/
   DATA_SOURCES.md   every source with URL and date, plus a decisions log
   ROLES.md          team checklist
   DEMO.md           demo script, venue prep, judge Q&A
+  REVIEW_CHECKLIST.md  sentence-by-sentence fact-sheet review (made by scripts/make_review_checklist.py)
 backend/
   app/              FastAPI app: data.py (responses), danger.py, status.py, parks.py, rag/ (search + text)
   scripts/          data refresh scripts (see the table above)
