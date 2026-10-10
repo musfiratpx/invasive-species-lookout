@@ -101,7 +101,8 @@ export default function TypeFilter({ types, counts, selected, onChange, disabled
           aria-label="Plants and animals to show"
         >
           <p className="type-filter-heading">Show on map</p>
-          <OptionButton emoji="✨" label="All" count={total} pressed={selected === null} onClick={() => onChange(null)} />
+          {/* No icon for "All": its empty icon slot keeps the label lined up with the others. */}
+          <OptionButton emoji="" label="All" count={total} pressed={selected === null} onClick={() => onChange(null)} />
           <hr className="type-filter-divider" />
           {types.map((type) => (
             <OptionButton

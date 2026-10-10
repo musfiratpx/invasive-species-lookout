@@ -30,7 +30,7 @@ export const TYPE_FILTERS = [
   { id: "birds", label: "Birds", emoji: "🐦", taxa: ["Aves"] },
   { id: "insects", label: "Insects", emoji: "🐛", taxa: ["Insecta", "Arachnida"] },
   { id: "water", label: "Fish & shellfish", emoji: "🐟", taxa: ["Actinopterygii", "Mollusca"] },
-  { id: "other", label: "Other animals", emoji: "🦀", taxa: null }, // everything not listed above
+  { id: "other", label: "Other animals", emoji: "🐾", taxa: null }, // everything not listed above
 ];
 
 /** Which type filter a sighting belongs to. */
