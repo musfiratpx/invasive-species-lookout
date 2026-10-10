@@ -25,6 +25,10 @@ sources:
 
 ## How to handle it
 
+## Look-alikes
+<!-- Only species a source says it can be confused with (often a native one), and how the
+     source says to tell them apart. Shown word for word under "Don't confuse it with". -->
+
 ## How to report it
 <!-- Only species-specific reporting notes go here (e.g. "report collared swans to DEC").
      The general iMapInvasives instructions come from how-to-report.md and are shown for every species. -->

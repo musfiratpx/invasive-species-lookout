@@ -47,9 +47,9 @@ SPECIES = {"scientific_name": "Celastrus orbiculatus", "common_name": "Oriental 
 
 @pytest.fixture
 def chunks(tmp_path):
-    (tmp_path / "celastrus-orbiculatus.md").write_text(EXAMPLE_SHEET)
-    (tmp_path / "how-to-report.md").write_text(EXAMPLE_GENERAL)
-    (tmp_path / "_TEMPLATE.md").write_text(EXAMPLE_SHEET.replace("Celastrus orbiculatus", "Genus species"))
+    (tmp_path / "celastrus-orbiculatus.md").write_text(EXAMPLE_SHEET, encoding="utf-8")
+    (tmp_path / "how-to-report.md").write_text(EXAMPLE_GENERAL, encoding="utf-8")
+    (tmp_path / "_TEMPLATE.md").write_text(EXAMPLE_SHEET.replace("Celastrus orbiculatus", "Genus species"), encoding="utf-8")
     return load_chunks(tmp_path)
 
 
@@ -155,8 +155,8 @@ def test_cortex_request_shape(chunks, monkeypatch):
 
 def test_report_combines_species_note_and_general_instructions(tmp_path):
     sheet = EXAMPLE_SHEET + "\n## How to report it\nEXAMPLE TEXT: species-specific reporting note.\n"
-    (tmp_path / "celastrus-orbiculatus.md").write_text(sheet)
-    (tmp_path / "how-to-report.md").write_text(EXAMPLE_GENERAL)
+    (tmp_path / "celastrus-orbiculatus.md").write_text(sheet, encoding="utf-8")
+    (tmp_path / "how-to-report.md").write_text(EXAMPLE_GENERAL, encoding="utf-8")
     insights = build_insights(SPECIES, KeywordRetriever(load_chunks(tmp_path)), ExtractiveGenerator())
     first, second = insights["report"].split("\n\n")
     assert "species-specific" in first and "report sightings" in second
@@ -177,14 +177,23 @@ def test_report_and_handling_are_never_ai_written(chunks):
     assert insights["handling"]["text"] == "EXAMPLE TEXT: pull it up for testing."  # safety text, word for word
 
 
+def test_lookalikes_are_word_for_word_and_null_without_a_section(tmp_path):
+    sheet = EXAMPLE_SHEET + "\n## Look-alikes\nEXAMPLE TEXT: looks like a made-up native vine.\n"
+    (tmp_path / "celastrus-orbiculatus.md").write_text(sheet, encoding="utf-8")
+    insights = build_insights(SPECIES, KeywordRetriever(load_chunks(tmp_path)), _fake_cortex("AI WROTE THIS"))
+    assert insights["lookalikes"] == "EXAMPLE TEXT: looks like a made-up native vine."
+    (tmp_path / "celastrus-orbiculatus.md").write_text(EXAMPLE_SHEET, encoding="utf-8")
+    assert build_insights(SPECIES, KeywordRetriever(load_chunks(tmp_path)), ExtractiveGenerator())["lookalikes"] is None
+
+
 def test_html_comments_are_dropped(tmp_path):
-    (tmp_path / "x.md").write_text(EXAMPLE_SHEET.replace("## History\n", "## History\n<!-- a hint, not content -->\n"))
+    (tmp_path / "x.md").write_text(EXAMPLE_SHEET.replace("## History\n", "## History\n<!-- a hint, not content -->\n"), encoding="utf-8")
     assert all(c.section != "History" for c in load_chunks(tmp_path))
 
 
 def test_broken_header_is_skipped_not_fatal(tmp_path, capsys):
-    (tmp_path / "good.md").write_text(EXAMPLE_SHEET)
-    (tmp_path / "bad.md").write_text('---\nsources:\n  - title: "a "quoted" word"\n---\n## Summary\ntext\n')
+    (tmp_path / "good.md").write_text(EXAMPLE_SHEET, encoding="utf-8")
+    (tmp_path / "bad.md").write_text('---\nsources:\n  - title: "a "quoted" word"\n---\n## Summary\ntext\n', encoding="utf-8")
     chunks = load_chunks(tmp_path)
     assert any(c.file == "good.md" for c in chunks)
     assert all(c.file != "bad.md" for c in chunks)

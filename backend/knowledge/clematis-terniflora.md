@@ -1,6 +1,7 @@
 ---
 scientific_name: Clematis terniflora
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Japanese Virgin's Bower | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/japanese-virgins-bower/
@@ -23,6 +24,9 @@ Japanese virgin's bower is native to Japan and China and was brought to North Am
 New shoots grow from last year's woody stems in spring. It flowers in August, covering itself in a froth of small, four-petaled white flowers, which is when it is easiest to spot. Seeds form by late September, with silvery, feathery, curving seedheads that are spread by the wind.
 
 ## How to handle it
-Plants and their roots can be dug out, but root pieces may resprout and seeds in the soil can keep sprouting for some time, so repeat visits may be needed. Planting the native virgin's bower instead gives a similar look without the invasive risk. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Plants and their roots can be dug out, but root pieces may resprout and seeds in the soil can keep sprouting for some time, so repeat visits may be needed. Planting the native virgin's bower instead gives a similar look without the invasive risk.
+
+## Look-alikes
+It looks very much like the native virgin's bower, whose leaves are toothed and lobed instead of smooth-edged.
 
 ## How to report it

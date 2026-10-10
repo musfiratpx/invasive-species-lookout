@@ -1,6 +1,7 @@
 ---
 scientific_name: Acer pseudoplatanus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Sycamore Maple | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/sycamore-maple/
@@ -23,6 +24,6 @@ Sycamore maple is native to central and southern Europe. It was brought to the n
 Dangling clusters of yellowish-green flowers appear from May to June, followed by paired winged seeds with much broader wings than New York's native maples. A tree starts making seeds at about 25 to 30 years old and can then produce 10,000 to 170,000 seeds, most of which can sprout.
 
 ## How to handle it
-Small seedlings can be pulled or dug up, but all of the root must come out. Mowing or cutting usually does not kill it and just makes the stem fork. Managed areas need to be checked for several years for new sprouts and seedlings. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Small seedlings can be pulled or dug up, but all of the root must come out. Mowing or cutting usually does not kill it and just makes the stem fork. Managed areas need to be checked for several years for new sprouts and seedlings.
 
 ## How to report it

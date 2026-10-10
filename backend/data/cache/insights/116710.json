@@ -3,10 +3,10 @@
   "history": "Japanese stiltgrass is native to India and Asia, including China, Japan and Korea. It was found in Tennessee around 1919, most likely brought in as packing material for porcelain. By 2011 it had been reported in 16 New York counties.",
   "seasons": "It is an annual grass. In late summer and early fall, one or two thin flower spikes form at the top of each stem; each plant makes 100 to 1,000 seeds and then dies. Seeds can last at least three years in the soil and sprout readily after the ground is disturbed.",
   "handling": {
-    "text": "It is shallow-rooted and easy to pull. Pull it in late summer, before seeds form, but not before July, or seeds already in the soil can still grow and go to seed that year. Its seeds spread in moved soil, in water and on the feet of animals and people. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "It is shallow-rooted and easy to pull. Pull it in late summer, before seeds form, but not before July, or seeds already in the soil can still grow and go to seed that year. Its seeds spread in moved soil, in water and on the feet of animals and people.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Japanese Stiltgrass | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -25,9 +25,52 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "microstegium-vimineum.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "microstegium-vimineum.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": {
+      "retriever": "snowflake",
+      "files": [
+        "microstegium-vimineum.md"
+      ],
+      "section": "Seasonal differences",
+      "word_for_word": true
+    },
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "microstegium-vimineum.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:03.301246+00:00"
+  "generated_at": "2026-10-10T01:46:50.425728+00:00",
+  "lookalikes": null
 }

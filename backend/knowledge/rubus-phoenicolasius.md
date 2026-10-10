@@ -2,6 +2,7 @@
 scientific_name: Rubus phoenicolasius
 # false because the source says: "As wineberry is armed with thorns and hairs, minimizing exposed skin during mechanical control is advisable."
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Wineberry | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/wineberry/
@@ -12,6 +13,9 @@ sources:
   - title: "NYC Parks Rules, 56 RCNY §1-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)"
     url: https://www.nycgovparks.org/rules/section-1-04
     accessed: 2026-10-09
+  - title: "Invasive Plants and Biodiversity: A Targeted Management Guide for New York City Stewards (Natural Areas Conservancy, co-developed with the NYC Parks Stewardship Team, Dec 2023)"
+    url: https://fic.naturalareasnyc.org/docs/invasive-plants-guide-for-new-york-city-stewards
+    accessed: 2026-10-10
 ---
 
 ## Summary
@@ -24,6 +28,9 @@ Wineberry is native to East Asia. It was brought to North America in the 1890s a
 Leaves come out in April and flowers in May, with fruit from late June to August; the leaves drop in late November. Each cane lives two years: it grows leaves in its first year, then flowers and fruits in its second. Its long canes can take root where their tips touch the ground.
 
 ## How to handle it
-Wineberry is armed with thorns and hairs, so minimize exposed skin when handling it. It is easier to control than many invasive plants because it lacks a strong underground root system: small patches can be hand-pulled or dug out, with follow-up visits for a few years to remove new plants sprouting from root pieces. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Wineberry is armed with thorns and hairs, so minimize exposed skin when handling it. It is easier to control than many invasive plants because it lacks a strong underground root system: small patches can be hand-pulled or dug out, with follow-up visits for a few years to remove new plants sprouting from root pieces.
+
+## Look-alikes
+It is in the same group as native raspberries and blackberries. Wineberry leaves have 3 leaflets with white, furry undersides, and its stems are covered in dense, fine, sticky red hairs. Native raspberries and blackberries have 3 or 5 leaflets whose undersides are never furry-white, and stout thorns that stick straight out instead of red hairs. Wineberry's berries are often larger and brighter or more orange than native ones.
 
 ## How to report it

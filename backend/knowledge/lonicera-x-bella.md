@@ -1,6 +1,7 @@
 ---
 scientific_name: Lonicera x bella
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Honeysuckle Spp. | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/honeysuckle-spp/
@@ -26,6 +27,6 @@ New York's ranking form for this group of honeysuckles lists their native range 
 
 
 ## How to handle it
-Because birds spread honeysuckle seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Because birds spread honeysuckle seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year.
 
 ## How to report it

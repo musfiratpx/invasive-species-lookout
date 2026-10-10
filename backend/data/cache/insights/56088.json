@@ -3,10 +3,10 @@
   "history": "Black locust is native to the United States, in the central and southern Appalachians and the Ozarks, but it is not native to New York and has spread to all eastern states and Canadian provinces. It was widely planted in the past for many purposes, and New York State's own tree nursery still sells about 10,000 trees a year, mostly for reclaiming gravel pits.",
   "seasons": null,
   "handling": {
-    "text": "Black locust's bark, seeds and leaves can be fatal to livestock if eaten. It is hard to remove: taking out large trees takes major effort, and trees treated with herbicide can keep resprouting for several years. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Black locust's bark, seeds and leaves can be fatal to livestock if eaten. It is hard to remove: taking out large trees takes major effort, and trees treated with herbicide can keep resprouting for several years.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "New York Non-Native Plant Invasiveness Ranking Form, Robinia pseudoacacia",
@@ -21,9 +21,45 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "robinia-pseudoacacia.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "robinia-pseudoacacia.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": null,
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "robinia-pseudoacacia.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:44.733249+00:00"
+  "generated_at": "2026-10-10T01:47:31.089144+00:00",
+  "lookalikes": null
 }

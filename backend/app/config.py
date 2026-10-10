@@ -21,17 +21,17 @@ def _env(name, default=""):
 
 
 # --- Area -------------------------------------------------------------------
-# By default we cover all of Queens: iNaturalist place 675 = Queens County, NY.
-# Other places: 125479 = Kissena Park, 125415 = Kissena Corridor Park, 674 = New York City.
+# By default we cover all of New York City (all five boroughs): iNaturalist place 674.
+# Other places: 675 = Queens County, 125479 = Kissena Park, 125415 = Kissena Corridor Park.
 # Set INAT_PLACE_IDS= (empty) in .env to use the circle below instead.
-INAT_PLACE_IDS = [int(p) for p in os.getenv("INAT_PLACE_IDS", "675").split("#")[0].split(",") if p.strip()]
+INAT_PLACE_IDS = [int(p) for p in os.getenv("INAT_PLACE_IDS", "674").split("#")[0].split(",") if p.strip()]
 
 # The search circle (only used when INAT_PLACE_IDS is empty): 2 km around Kissena Park + Queens College.
 AREA_LAT = float(_env("AREA_LAT", "40.741"))
 AREA_LNG = float(_env("AREA_LNG", "-73.812"))
 AREA_RADIUS_KM = float(_env("AREA_RADIUS_KM", "2"))
 
-AREA_NAME = "Queens, New York City"
+AREA_NAME = "New York City"
 
 # --- Paths ------------------------------------------------------------------
 DATA_DIR = BACKEND_DIR / "data"
@@ -42,7 +42,9 @@ INVASIVE_LIST_CSV = DATA_DIR / "ny_invasive_list.csv"
 DANGER_LEVELS_CSV = DATA_DIR / "danger_levels.csv"
 OBSERVATIONS_CSV = CACHE_DIR / "observations.csv"
 MEDIA_JSON = CACHE_DIR / "media.json"
+PHOTO_ORDER_JSON = DATA_DIR / "photo_order.json"  # hand-picked first photos (see the file)
 SEASONALITY_JSON = CACHE_DIR / "seasonality.json"
+ACTIVITY_JSON = CACHE_DIR / "activity_by_month.json"  # all sightings per month, to adjust seasonality for activity
 INSIGHTS_DIR = CACHE_DIR / "insights"
 
 # --- Optional services --------------------------------------------------------

@@ -1,6 +1,7 @@
 ---
 scientific_name: Euphorbia cyparissias
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Cypress Spurge | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/cypress-spurge/
@@ -23,6 +24,6 @@ Cypress spurge is native to Eurasia. No one knows exactly how it reached the Uni
 Its small, lime-green to yellow flower clusters turn orange-red to brown as they age. Each plant can produce up to 900 seeds, which may stay alive in the soil for up to 20 years.
 
 ## How to handle it
-The plant's sap is toxic to cattle and horses. Pulling or digging only works if the whole deep root system comes out, and mowing usually makes it resprout unless it is done at least monthly. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+The plant's sap is toxic to cattle and horses. Pulling or digging only works if the whole deep root system comes out, and mowing usually makes it resprout unless it is done at least monthly.
 
 ## How to report it

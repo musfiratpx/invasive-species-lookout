@@ -3,10 +3,10 @@
   "history": "Giant knotweed is native to Asia (China, Japan and Korea). It has been planted occasionally for erosion control and sold as a garden plant, and it is now found throughout New York State.",
   "seasons": "It comes up early in the season and grows quickly; last year's dead stems stay standing through the winter.",
   "handling": {
-    "text": "Pieces of its stems and roots can grow into new plants, and it is extremely difficult to get rid of once established. Seeds and plant fragments can be carried in soil and compost. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Pieces of its stems and roots can grow into new plants, and it is extremely difficult to get rid of once established. Seeds and plant fragments can be carried in soil and compost.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "New York Non-Native Plant Invasiveness Ranking Form, Reynoutria sachalinensis",
@@ -21,9 +21,52 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "reynoutria-sachalinensis.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "reynoutria-sachalinensis.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": {
+      "retriever": "snowflake",
+      "files": [
+        "reynoutria-sachalinensis.md"
+      ],
+      "section": "Seasonal differences",
+      "word_for_word": true
+    },
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "reynoutria-sachalinensis.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:49.060932+00:00"
+  "generated_at": "2026-10-10T01:47:35.821997+00:00",
+  "lookalikes": null
 }

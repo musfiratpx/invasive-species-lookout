@@ -1,6 +1,7 @@
 ---
 scientific_name: Silphium perfoliatum
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Silphium perfoliatum"
     url: https://nyis.info/wp-content/uploads/2024/10/d8be1_Silphium.perforatum.NYS_.pdf
@@ -20,6 +21,6 @@ Cup-plant is native to the central United States and Canada, but most experts co
 
 
 ## How to handle it
-Large infestations take a major investment to control; managers along the Au Sable River have used cutting and spraying. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Large infestations take a major investment to control; managers along the Au Sable River have used cutting and spraying.
 
 ## How to report it

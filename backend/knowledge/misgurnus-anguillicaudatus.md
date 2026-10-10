@@ -1,6 +1,7 @@
 ---
 scientific_name: Misgurnus anguillicaudatus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Misgurnus anguillicaudatus (Pond Loach / Oriental Weatherfish) - Species Profile | USGS Nonindigenous Aquatic Species Database"
     url: https://nas.er.usgs.gov/queries/FactSheet.aspx?speciesID=498
@@ -23,6 +24,6 @@ The oriental weatherfish is native to eastern Asia, from Siberia to northern Vie
 
 
 ## How to handle it
-Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
+Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options.
 
 ## How to report it

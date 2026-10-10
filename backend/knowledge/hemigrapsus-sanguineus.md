@@ -1,6 +1,7 @@
 ---
 scientific_name: Hemigrapsus sanguineus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Asian Shore Crab | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/asian-shore-crab/
@@ -20,6 +21,5 @@ The Asian shore crab is native to the western Pacific Ocean, from Russia to Hong
 It breeds from May to September, and a female can produce three or four batches of eggs each season, each with up to 50,000 eggs. Its tiny larvae drift in the water for about a month before settling, so they can be carried long distances.
 
 ## How to handle it
-In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
 
 ## How to report it

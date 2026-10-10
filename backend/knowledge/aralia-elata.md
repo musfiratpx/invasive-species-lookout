@@ -1,6 +1,7 @@
 ---
 scientific_name: Aralia elata
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Japanese Angelica Tree | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/japanese-angelica-tree/
@@ -23,6 +24,6 @@ Japanese angelica tree is native to East Asia. It is a relatively recent invader
 It blooms in July and August with huge, flat clusters of white flowers, sometimes two feet across, which is when it is easiest to spot. Small purple to black berries generally appear in September.
 
 ## How to handle it
-Young plants can be pulled or dug up before they make seed; larger plants tend to resprout from roots left in the ground. Managed areas should be checked for several years for new seedlings. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Young plants can be pulled or dug up before they make seed; larger plants tend to resprout from roots left in the ground. Managed areas should be checked for several years for new seedlings.
 
 ## How to report it

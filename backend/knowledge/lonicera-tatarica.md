@@ -1,6 +1,7 @@
 ---
 scientific_name: Lonicera tatarica
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Honeysuckle Spp. | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/honeysuckle-spp/
@@ -23,6 +24,6 @@ Tartarian honeysuckle is native to Central Asia and southern Russia. It is belie
 It flowers from May to June with small, very fragrant tube-shaped flowers, from creamy white to shades of pink and crimson. Its quarter-inch red berries appear from mid-summer through early fall.
 
 ## How to handle it
-Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Because birds spread the seeds, control should start in late summer or early fall, before the berries are ready. Seedlings and young plants can be removed by hand when there are only a few, repeated every year.
 
 ## How to report it

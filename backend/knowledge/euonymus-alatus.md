@@ -1,6 +1,7 @@
 ---
 scientific_name: Euonymus alatus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Euonymus alatus"
     url: https://nyis.info/wp-content/uploads/2024/10/c77f1_Euonymus.alatus.NYS_.pdf
@@ -23,6 +24,6 @@ Winged burning bush is native to Asia. It spread through commercial sales as a l
 
 
 ## How to handle it
-Some local infestations cover up to 3 acres. Its seeds can stay alive for up to two years, so removal needs follow-up for several years. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Some local infestations cover up to 3 acres. Its seeds can stay alive for up to two years, so removal needs follow-up for several years.
 
 ## How to report it

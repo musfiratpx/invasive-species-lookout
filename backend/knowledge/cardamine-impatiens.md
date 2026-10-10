@@ -1,6 +1,7 @@
 ---
 scientific_name: Cardamine impatiens
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Narrowleaf Bittercress | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/narrowleaf-bittercress/
@@ -23,6 +24,6 @@ Narrowleaf bittercress is native to Eurasia. In the United States it was first r
 Its tiny white four-petaled flowers bloom from April to June, and seeds form from early May through early July. It finishes its life cycle and dies back shortly after midsummer.
 
 ## How to handle it
-Hand-pulling or digging young plants works if it is done before the seeds form. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Hand-pulling or digging young plants works if it is done before the seeds form.
 
 ## How to report it

@@ -1,6 +1,7 @@
 ---
 scientific_name: Cirsium arvense
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Canada Thistle | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/canada-thistle/
@@ -22,6 +23,6 @@ Despite its name, Canada thistle is native to Eurasia. It was brought to North A
 ## Seasonal differences
 
 ## How to handle it
-Canada thistle spreads mostly through its roots, so mowing can hold it back but will not usually get rid of it. Infestations often need several control methods together and ongoing monitoring, and the whole patch needs treatment to stop it from resprouting. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Canada thistle spreads mostly through its roots, so mowing can hold it back but will not usually get rid of it. Infestations often need several control methods together and ongoing monitoring, and the whole patch needs treatment to stop it from resprouting.
 
 ## How to report it

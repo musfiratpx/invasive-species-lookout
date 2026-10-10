@@ -3,10 +3,10 @@
   "history": "Common reed is native to Eurasia and Africa, and at least one strain is also native to the United States. The non-native strain was brought accidentally from Europe in ships' ballast in the late 1700s or early 1800s. It is now the most common Phragmites in New York and the Northeast.",
   "seasons": "Phragmites can grow over 15 feet tall. Its hollow stems are usually green with yellow joints during the growing season and turn yellow when dry in winter, and old dead stems stay standing in the stands. It blooms in late July and August with purple-to-gold, branching flower heads, followed by grayish, fluffy seeds.",
   "handling": {
-    "text": "Pulling Phragmites by hand does not work because of its tough, spreading root network, and small root pieces left in the soil grow into new plants. Mowing gives only short-term results. Because native and non-native Phragmites look alike, it should be properly identified before anyone manages it, and herbicides used in wetlands must be applied by a certified pesticide applicator. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Pulling Phragmites by hand does not work because of its tough, spreading root network, and small root pieces left in the soil grow into new plants. Mowing gives only short-term results. Because native and non-native Phragmites look alike, it should be properly identified before anyone manages it, and herbicides used in wetlands must be applied by a certified pesticide applicator.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Common Reed | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -25,9 +25,52 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "phragmites-australis.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "phragmites-australis.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": {
+      "retriever": "snowflake",
+      "files": [
+        "phragmites-australis.md"
+      ],
+      "section": "Seasonal differences",
+      "word_for_word": true
+    },
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "phragmites-australis.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:55:01.048688+00:00"
+  "generated_at": "2026-10-10T01:47:50.019265+00:00",
+  "lookalikes": "Because native and non-native Phragmites look alike, it should be properly identified before anyone manages it."
 }

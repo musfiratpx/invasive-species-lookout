@@ -1,12 +1,13 @@
 """
 Build the sidebar's text sections for one species: summary, history, seasons,
-handling and report.
+handling, look-alikes and report.
 
 For each section we retrieve chunks, then generate from ONLY those chunks.
 touch_safe never comes from AI: it is copied from the fact sheet header, which
 the Researcher fills in only when a source explicitly says so.
-"How to handle it" and "How to report it" are never rewritten by AI: safety advice and
-reporting steps must be exact, so we show the fact-sheet text word for word. AI only
+"How to handle it", "Look-alikes" and "How to report it" are never rewritten by AI: safety
+advice, the features that tell two species apart, and reporting steps must be exact, so we
+show the fact-sheet text word for word. AI only
 rewrites summary, history and seasons. (Testing showed the model sometimes adds small
 details, like "report it to NYC Parks", that the sources don't say.)
 """
@@ -23,7 +24,9 @@ SECTIONS = {
     "history": "History",
     "seasons": "Seasonal differences",
     "handling": "How to handle it",
+    "lookalikes": "Look-alikes",
 }
+WORD_FOR_WORD = {"handling", "lookalikes"}  # never given to the AI writer
 REPORT_HEADING = "How to report it"
 
 
@@ -59,7 +62,7 @@ def build_insights(species, retriever=None, generator=None):
         # Only give the writer this species' matching fact-sheet section, so one
         # section's facts don't leak into another (e.g. history into the summary).
         focused = [c for c in chunks if c.section == heading and c.scientific_name == name]
-        writer = ExtractiveGenerator() if key == "handling" else generator  # safety text stays word for word
+        writer = ExtractiveGenerator() if key in WORD_FOR_WORD else generator
         answer = writer.generate(heading, species, focused)
         result[key] = answer["text"]
         for source in answer["sources"]:
@@ -80,6 +83,7 @@ def build_insights(species, retriever=None, generator=None):
         "history": result["history"],
         "seasons": result["seasons"],
         "handling": {"text": result["handling"], "touch_safe": touch_safe},
+        "lookalikes": result["lookalikes"],
         "report": report_text,
         "sources": all_sources,
         "generated_with": {"retriever": retriever.name, "generator": generator.name},

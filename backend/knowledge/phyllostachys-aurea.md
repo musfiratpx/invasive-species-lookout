@@ -1,6 +1,7 @@
 ---
 scientific_name: Phyllostachys aurea
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Phyllostachys aurea"
     url: https://nyis.info/wp-content/uploads/2024/10/6ab45_Phyllostachys.aureosulcata_and_P.aurea_.NYS_.pdf
@@ -20,6 +21,6 @@ Bamboos in this group are among the most popular sold, and they spread mainly wh
 
 
 ## How to handle it
-Small patches can be controlled by repeated cutting or mowing, several times each growing season for several years, until the underground stems run out of energy. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Small patches can be controlled by repeated cutting or mowing, several times each growing season for several years, until the underground stems run out of energy.
 
 ## How to report it

@@ -3,10 +3,10 @@
   "history": "The northern snakehead is native to China and possibly Korea and Russia. It is believed to have reached the United States when aquarium owners dumped unwanted fish, or through intentional releases for food. In New York, the first one was documented in 2005 at Meadow Lake in Queens, and it is now considered established in New York. All snakeheads are listed as injurious wildlife under the federal Lacey Act.",
   "seasons": "Snakeheads breed in summer, from June to August, building nests by weaving water plants into a column to protect their eggs. Parents guard their young for up to four weeks and can become very aggressive toward other animals during this time.",
   "handling": {
-    "text": "NYIS advises that if you catch a snakehead, do not release it back into the water: kill it, freeze it in a double bag, and report the fish and its location to a natural resource agency. Note that NYC Parks rules say all fish caught in fresh water in city parks must be released immediately, so if you catch one in a city park, report it right away. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
+    "text": "NYIS advises that if you catch a snakehead, do not release it back into the water: kill it, freeze it in a double bag, and report the fish and its location to a natural resource agency. Note that NYC Parks rules say all fish caught in fresh water in city parks must be released immediately, so if you catch one in a city park, report it right away.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Northern Snakehead | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -25,9 +25,52 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "channa-argus.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "channa-argus.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": {
+      "retriever": "snowflake",
+      "files": [
+        "channa-argus.md"
+      ],
+      "section": "Seasonal differences",
+      "word_for_word": true
+    },
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "channa-argus.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:09.340139+00:00"
+  "generated_at": "2026-10-10T01:46:56.957069+00:00",
+  "lookalikes": "It is easily confused with the native bowfin and burbot."
 }

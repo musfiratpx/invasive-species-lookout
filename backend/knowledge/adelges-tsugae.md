@@ -1,6 +1,7 @@
 ---
 scientific_name: Adelges tsugae
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Hemlock Woolly Adelgid | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/hemlock-woolly-adelgid/
@@ -20,6 +21,5 @@ The hemlock woolly adelgid is native to Japan and possibly China. It was first f
 The white woolly masses appear in late winter and stay visible all year. Females lay eggs from March through May, and tiny reddish-brown crawlers hatch from April to June; crawlers are spread by wind, birds' feet and the fur of small mammals. A second generation lays eggs in June and July, and its young rest until late October before feeding again over the winter.
 
 ## How to handle it
-In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
 
 ## How to report it

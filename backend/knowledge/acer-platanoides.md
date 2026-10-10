@@ -1,6 +1,7 @@
 ---
 scientific_name: Acer platanoides
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Norway Maple | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/norway-maple/
@@ -23,6 +24,6 @@ Norway maple is native to Europe and western Asia. It came to the United States 
 Norway maple leafs out earlier in spring than other maples. Clusters of small yellow or yellow-green flowers appear in April and May, and over the summer the fruits mature into helicopter-like seeds with wide-spreading wings. In fall the leaves usually turn pale yellow. A quick way to tell it from sugar maple: a broken leaf stalk oozes milky sap.
 
 ## How to handle it
-Seedlings can be pulled from moist soil while they are small; larger saplings can be dug out with their roots, and big trees cut down. Planting native maples, such as red, sugar or silver maple, instead of Norway maple helps prevent its spread. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Seedlings can be pulled from moist soil while they are small; larger saplings can be dug out with their roots, and big trees cut down. Planting native maples, such as red, sugar or silver maple, instead of Norway maple helps prevent its spread.
 
 ## How to report it

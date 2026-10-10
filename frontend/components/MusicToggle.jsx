@@ -2,7 +2,8 @@
 /**
  * Background music on/off. OFF by default, and it only starts after a click
  * (browsers block sound that plays by itself). The choice is remembered in
- * localStorage. If the music file hasn't been generated yet, the button says so.
+ * localStorage. If the music file hasn't been generated yet, the button is hidden
+ * (a disabled "Music not available" button looked broken).
  * Music file: public/audio/background.mp3, made by backend/scripts/make_music.py.
  */
 
@@ -14,8 +15,17 @@ const VOLUME = 0.3;
 
 export default function MusicToggle() {
   const audio = useRef(null);
+  const resumeAfterAnimalAudio = useRef(false); // music was paused for a species recording
   const [on, setOn] = useState(false);
   const [missing, setMissing] = useState(false);
+  const [available, setAvailable] = useState(false); // only show the button once we know the file exists
+
+  // Check once (without downloading the whole file) whether the music has been generated.
+  useEffect(() => {
+    fetch(MUSIC_URL, { method: "HEAD" })
+      .then((r) => setAvailable(r.ok))
+      .catch(() => setAvailable(false));
+  }, []);
 
   useEffect(() => {
     const el = new Audio();
@@ -27,18 +37,17 @@ export default function MusicToggle() {
     audio.current = el;
 
     // Keep background music out of real animal recordings, then restore it afterward.
-    let resumeAfterAnimalAudio = false;
     const pauseForAnimalAudio = () => {
       if (!el.paused) {
-        resumeAfterAnimalAudio = true;
+        resumeAfterAnimalAudio.current = true;
         el.pause();
         setOn(false);
       }
     };
     const resumeAfterAnimalAudioStops = () => {
-      if (resumeAfterAnimalAudio) {
-        resumeAfterAnimalAudio = false;
-        el.play().then(() => setOn(true)).catch(() => setMissing(true));
+      if (resumeAfterAnimalAudio.current) {
+        resumeAfterAnimalAudio.current = false;
+        el.play().then(() => setOn(true)).catch(() => {});
       }
     };
     window.addEventListener("animal-audio-play", pauseForAnimalAudio);
@@ -50,7 +59,10 @@ export default function MusicToggle() {
     try {
       wantsMusic = localStorage.getItem(STORAGE_KEY) === "true";
     } catch {}
-    const startOnFirstClick = () => {
+    const startOnFirstClick = (event) => {
+      // A click on the music button itself is handled by toggle() below; starting here
+      // too would race with it and could switch the music straight back off.
+      if (event.target.closest?.(".music-button")) return;
       el.play().then(() => setOn(true)).catch(() => {});
     };
     if (wantsMusic) window.addEventListener("pointerdown", startOnFirstClick, { once: true });
@@ -65,7 +77,8 @@ export default function MusicToggle() {
 
   const toggle = () => {
     const el = audio.current;
-    const next = !on;
+    const next = el.paused; // the element itself is the truth; `on` can lag a render behind
+    resumeAfterAnimalAudio.current = false; // the visitor decided, so don't override them later
     try {
       localStorage.setItem(STORAGE_KEY, String(next));
     } catch {}
@@ -77,12 +90,11 @@ export default function MusicToggle() {
     }
   };
 
-  if (missing) {
-    return <button disabled title="Run backend/scripts/make_music.py to create it">Music not available</button>;
-  }
+  if (!available || missing) return null; // run backend/scripts/make_music.py to create the music
   return (
-    <button onClick={toggle} aria-pressed={on} aria-label={on ? "Turn background music off" : "Turn background music on"}>
-      {on ? "🔊 Music on" : "🔈 Music off"}
+    <button className="header-button music-button" onClick={toggle} aria-pressed={on} aria-label={on ? "Turn background music off" : "Turn background music on"}>
+      <span aria-hidden="true">{on ? "🔊" : "🔈"}</span>
+      <span className="music-label">{on ? " Music on" : " Music off"}</span>
     </button>
   );
 }

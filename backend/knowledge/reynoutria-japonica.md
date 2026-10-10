@@ -1,6 +1,7 @@
 ---
 scientific_name: Reynoutria japonica
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Japanese Knotweed | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/japanese-knotweed/
@@ -23,6 +24,6 @@ Japanese knotweed comes from eastern Asia (Japan, China and Korea). It was broug
 Shoots come up each spring from a network of underground stems that can stretch 65 feet or more. Branched sprays of small greenish-white flowers bloom from August to September, followed by small winged fruits. The stems are smooth and hollow, with a swollen joint where each leaf attaches.
 
 ## How to handle it
-Young plants can sometimes be pulled by hand, but any root left behind can resprout. All removed plant parts should be bagged and disposed of securely. It should not be mowed or cut with string trimmers, because the pieces get moved around and resprout, spreading it instead of controlling it. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Young plants can sometimes be pulled by hand, but any root left behind can resprout. All removed plant parts should be bagged and disposed of securely. It should not be mowed or cut with string trimmers, because the pieces get moved around and resprout, spreading it instead of controlling it.
 
 ## How to report it

@@ -1,6 +1,7 @@
 ---
 scientific_name: Nymphoides peltata
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Nymphoides peltata"
     url: https://nyis.info/wp-content/uploads/2024/10/48758_Nymphoides.peltata.NYS_.pdf
@@ -20,6 +21,6 @@ Yellow floating-heart is native to Asia and Europe. It is sometimes planted as a
 
 
 ## How to handle it
-Removing large stands is very difficult; any plant part left behind can grow back. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Removing large stands is very difficult; any plant part left behind can grow back.
 
 ## How to report it

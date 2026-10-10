@@ -3,10 +3,10 @@
   "history": "Lesser celandine is native to Europe, Asia and northern Africa and was probably brought to North America as a garden plant. The oldest known herbarium specimen in the United States was collected in Pennsylvania in 1867. It is now reported throughout the northeastern United States, west to Missouri, and in the Pacific Northwest.",
   "seasons": "Lesser celandine is a short-lived spring plant. Its shoots come up from late March to mid-April, and it flowers from late April to mid-May. By summer the leaves die back and the plant goes dormant underground, leaving bare ground that other weedy plants can move into.",
   "handling": {
-    "text": "Lesser celandine is hard to control because it spreads from small underground tubers and from tiny bulb-like buds (bulbils) that form on the plant. Small patches can be dug out, but every tuber must be removed from the soil. Mowing early in the season can slow it but risks spreading the bulbils. Herbicides can also be effective with less soil disturbance; NYIS notes to always check state and local regulations and follow label instructions. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Lesser celandine is hard to control because it spreads from small underground tubers and from tiny bulb-like buds (bulbils) that form on the plant. Small patches can be dug out, but every tuber must be removed from the soil. Mowing early in the season can slow it but risks spreading the bulbils. Herbicides can also be effective with less soil disturbance; NYIS notes to always check state and local regulations and follow label instructions.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Lesser Celandine | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -21,9 +21,52 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "ficaria-verna.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "ficaria-verna.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": {
+      "retriever": "snowflake",
+      "files": [
+        "ficaria-verna.md"
+      ],
+      "section": "Seasonal differences",
+      "word_for_word": true
+    },
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "ficaria-verna.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:17.334406+00:00"
+  "generated_at": "2026-10-10T01:47:04.594157+00:00",
+  "lookalikes": null
 }

@@ -1,6 +1,7 @@
 ---
 scientific_name: Agrilus planipennis
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Emerald Ash Borer (EAB) (NYS Department of Environmental Conservation)"
     url: https://dec.ny.gov/nature/animals-fish-plants/emerald-ash-borer-eab
@@ -23,6 +24,6 @@ The emerald ash borer comes from Asia. Its first North American populations were
 Adult beetles begin coming out of trees in late May and can be seen through early September, and they are most common in June and July.
 
 ## How to handle it
-New York limits moving firewood of any kind of tree to within 50 miles of where it came from, to slow the spread of pests like this one. An infested tree on your property does not have to be taken down unless it could be a hazard by falling. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
+New York limits moving firewood of any kind of tree to within 50 miles of where it came from, to slow the spread of pests like this one. An infested tree on your property does not have to be taken down unless it could be a hazard by falling.
 
 ## How to report it

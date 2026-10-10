@@ -1,6 +1,7 @@
 ---
 scientific_name: Lepidium latifolium
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Broad-leaved Pepper-grass | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/broad-leaved-pepper-grass/
@@ -23,6 +24,6 @@ Broad-leaved pepperweed is native to southern Europe and western Asia, and may h
 A rosette of leaves grows from late fall to early spring, and the plant flowers from late spring through summer and into fall. Old stems stay standing through the winter.
 
 ## How to handle it
-Pulling or digging it out is not recommended because of its extensive roots, but mowing repeatedly before it sets seed may help hold it back. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Pulling or digging it out is not recommended because of its extensive roots, but mowing repeatedly before it sets seed may help hold it back.
 
 ## How to report it

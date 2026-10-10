@@ -1,6 +1,7 @@
 ---
 scientific_name: Ludwigia peploides
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York Non-Native Plant Invasiveness Ranking Form, Ludwigia peploides"
     url: https://nyis.info/wp-content/uploads/2024/10/4dbbf_Ludwigia.peploides.NYS_.pdf
@@ -20,6 +21,6 @@ Floating primrose-willow is native to South America and the southeastern United 
 
 
 ## How to handle it
-No management method is known to control it well in the long term. Because it needs shallow water, restoring deeper water may help. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+No management method is known to control it well in the long term. Because it needs shallow water, restoring deeper water may help.
 
 ## How to report it

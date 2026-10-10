@@ -48,7 +48,7 @@ def _split_front_matter(text):
 
 def chunk_file(path):
     """All non-empty sections of one fact sheet, as Chunks."""
-    header, body = _split_front_matter(Path(path).read_text())
+    header, body = _split_front_matter(Path(path).read_text(encoding="utf-8"))
     name = header.get("scientific_name")
     scientific_name = _listed_name(name) if name else GENERAL
     sources = [{"title": s.get("title", ""), "url": s.get("url", "")}

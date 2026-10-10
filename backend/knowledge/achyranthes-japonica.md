@@ -1,6 +1,7 @@
 ---
 scientific_name: Achyranthes japonica
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Japanese Chaff Flower | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/japanese-chaff-flower/
@@ -23,6 +24,5 @@ Japanese chaff flower is native to East Asia, mainly Korea and Japan.
 It flowers from August to September with spikes of tiny green flowers at the ends of the stems and where the leaves join. The small bracts around the seeds easily stick to cloth.
 
 ## How to handle it
-In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
 
 ## How to report it

@@ -1,6 +1,7 @@
 ---
 scientific_name: Lespedeza cuneata
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Chinese Lespedeza | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/chinese-lespedeza/
@@ -23,6 +24,6 @@ Chinese lespedeza is native to Asia and Australia. Federal and state agencies br
 Small creamy-white to pale-yellow flowers with purple centers bloom in summer, and fruits form in the fall. Animals such as bobwhite quail eat the seeds and spread them.
 
 ## How to handle it
-Do not plant Chinese lespedeza. Hand-pulling is impractical because of its extensive root system; mowing plants while they are flowering, as low as possible, for two or three years in a row may help control it. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Do not plant Chinese lespedeza. Hand-pulling is impractical because of its extensive root system; mowing plants while they are flowering, as low as possible, for two or three years in a row may help control it.
 
 ## How to report it

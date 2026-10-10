@@ -4,11 +4,13 @@ Tick items off as you go. Hacking ends **Sunday Oct 11, 12:00 PM ET**.
 
 Everyone should read [CLAUDE.md](../CLAUDE.md) (the ground rules) and be able to explain [SCORING.md](SCORING.md) to a judge.
 
+**Presenting?** Follow [DEMO.md](DEMO.md): run `npm run demo`, practice the 60-second script, and learn the Q&A answers.
+
 ## Where we are (Oct 9, night)
 
-- ✅ Map covers **all of Queens** (iNaturalist place 675): 14,620 sightings of 76 listed species. Privacy-blurred sightings are counted but not drawn (they'd land in the wrong town).
+- ✅ Map covers **all of New York City** (iNaturalist place 674): 72,899 sightings of 83 listed species. Privacy-blurred sightings are counted but not drawn (they'd land in the wrong town).
 - ✅ Danger levels come from official NY data (151 species ranked). Tests pass.
-- ✅ Fact sheets drafted for **all 76 species** in `backend/knowledge/`, plus `how-to-report.md` with the verified NYC Parks rules. 278 sections loaded into Snowflake.
+- ✅ Fact sheets drafted for **all 83 species** in `backend/knowledge/`, plus `how-to-report.md` with the verified NYC Parks rules. 278 sections loaded into Snowflake.
 - ✅ Snowflake RAG is live: Cortex Search finds the right fact-sheet section for each species, and the sidebar shows that text **word for word** (Cortex rewriting is off; see the decision below).
 - ✅ Code is on GitHub: <https://github.com/musfiratpx/sail>.
 - ⏳ Not done: fact-sheet drafts need human review, real design, background music, and the latest local commits still need pushing.
@@ -22,11 +24,12 @@ Everyone should read [CLAUDE.md](../CLAUDE.md) (the ground rules) and be able to
 Owns: `backend/data/*.csv`, `backend/knowledge/`, `docs/DATA_SOURCES.md`
 
 - [x] Official NY invasive list (`ny_invasive_list.csv`) and danger levels (`danger_levels.csv`) built from DEC + nyis.info.
-- [x] Fact sheets drafted for all 76 Queens species (see the table in `DATA_SOURCES.md`).
+- [x] Fact sheets drafted for all 83 NYC species (see the table in `DATA_SOURCES.md`).
 - [x] `how-to-report.md` written; NYC Parks rule (56 RCNY §1-04) verified and added.
 - [ ] **Ask NYS DEC** what people should do if they catch a northern snakehead or Chinese mitten crab in a NYC park: NYIS says kill/destroy it, but NYC Parks rules say freshwater fish must be released (details in the `DATA_SOURCES.md` decisions log). Update `channa-argus.md` and `eriocheir-sinensis.md` with the answer.
 - [ ] **Review every fact sheet against its sources.** In `DATA_SOURCES.md`, change "Claude (draft), needs Researcher review" to your name when a sheet is checked. Start with the most-sighted: mugwort, mute swan, lesser celandine, multiflora rose, garlic mustard, black locust, *Phragmites*, Norway maple.
 - [ ] Fill the thinnest sheets if you find official sources: European rabbit (only its legal status), monk parakeet, green crab, rapa whelk, Asian shore crab, Japanese chaff flower, kudzu, and the plants with no "Seasonal differences".
+- [ ] Fill "## Look-alikes" where an official source names a species it's confused with (7 sheets have it so far), then run `python scripts/build_insights.py --only-lookalikes` and `python scripts/load_chunks.py`.
 - [ ] Replace the monk parakeet source (currently a *proposed* 2021 NY bill) with Cornell All About Birds or a DEC page. Open them in a browser; they block automated access.
 - [ ] Spot-check 5 rows of `danger_levels.csv` against their ranking-form PDFs (the `source_url` column).
 - [ ] Fill in `health_warning` in `danger_levels.csv` **only** where an official source says so. Rebuilding with `build_danger_levels.py` keeps your warnings.
@@ -53,8 +56,8 @@ Owns: `frontend/lib/api.js`, `docs/API.md`, `frontend/components/`
 - [x] Map → sidebar flow with loading skeleton, error message, Escape/✕ to close.
 - [x] "How to report it" section added to the sidebar.
 - [ ] Keep `lib/api.js` and `docs/API.md` in sync: every fetch goes through `api.js`.
-- [x] Map opens on all of Queens (zoom 12, clusters); icons appear from zoom 15. Only on-screen icons are drawn, so 14,620 points stay fast.
-- [ ] Music toggle works once `background.mp3` exists (Backend runs `make_music.py`).
+- [x] Map opens on all of NYC (zoom 11, clusters); icons appear from zoom 15. Only on-screen icons are drawn, so 72,899 points stay fast.
+- [ ] Music toggle works once `background.mp3` exists (Backend runs `make_music.py`). Until then the button is hidden.
 - [ ] Optional: a species list / search panel using `getSpeciesList()` (see "Backend human discussion" below).
 - [ ] Optional: a "How we score" page built from `docs/SCORING.md`.
 

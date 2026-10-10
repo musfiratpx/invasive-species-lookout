@@ -1,15 +1,17 @@
 "use client";
 /**
- * Danger level: a 4-step meter, the label, where it came from, and a
- * "How we score" panel. It only ever shows what the API sent. Nothing is
+ * Danger level: a 4-step meter and the label, always visible (plus a health warning, if
+ * an official source gives one). What it means, where it came from and "How we score"
+ * fold away under "What does … mean?", to keep the panel short. It only ever shows what the API sent. Nothing is
  * computed or guessed here. (Full explanation: docs/SCORING.md)
  */
 
 import { useState } from "react";
 
 import { DANGER_COLORS } from "@/lib/labels";
+import { PART_575_QA_URL, dangerMeaning, legalMeaning } from "@/lib/meanings";
 
-export default function DangerBadge({ danger }) {
+export default function DangerBadge({ danger, nyStatus }) {
   const [showHow, setShowHow] = useState(false);
   const color = DANGER_COLORS[danger.level ?? null];
 
@@ -22,28 +24,29 @@ export default function DangerBadge({ danger }) {
       </div>
       <strong>{danger.label}</strong>
 
-      {danger.basis === "ny_plant_rank" && (
-        <p className="muted">
-          New York plant invasiveness rank: {danger.ny_rank} (score {danger.score} out of 100)
-        </p>
-      )}
-      {danger.basis === "ny_part575_status" && (
-        <p className="muted">Based on its New York legal category (prohibited or regulated).</p>
-      )}
-      {danger.level === null && <p className="muted">No official rank found yet. We don't guess.</p>}
-
+      {/* Safety first: a health warning is never folded away. */}
       {danger.health_warning && <p className="warning">⚠ {danger.health_warning}</p>}
 
-      <p>
-        {danger.source_url && (
-          <>
-            <a href={danger.source_url} target="_blank" rel="noreferrer">Source</a> ·{" "}
-          </>
+      <details className="info-more">
+        <summary>{danger.level ? `What does “${danger.label}” mean?` : "Why isn’t it ranked?"}</summary>
+        {/* Plain-language meaning, built only from the official definitions (lib/meanings.js) */}
+        <p className="meaning">{dangerMeaning(danger)}</p>
+        {legalMeaning(nyStatus) && (
+          <p className="meaning">
+            {legalMeaning(nyStatus)}{" "}
+            <a href={PART_575_QA_URL} target="_blank" rel="noreferrer">NYS DEC</a>
+          </p>
         )}
-        <button onClick={() => setShowHow((s) => !s)} aria-expanded={showHow}>How we score</button>
-      </p>
-
-      {showHow && <HowWeScore />}
+        <p>
+          {danger.source_url && (
+            <>
+              <a href={danger.source_url} target="_blank" rel="noreferrer">Source</a> ·{" "}
+            </>
+          )}
+          <button onClick={() => setShowHow((s) => !s)} aria-expanded={showHow}>How we score</button>
+        </p>
+        {showHow && <HowWeScore />}
+      </details>
     </div>
   );
 }

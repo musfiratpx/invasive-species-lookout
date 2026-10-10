@@ -1,6 +1,7 @@
 ---
 scientific_name: Microstegium vimineum
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Japanese Stiltgrass | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/japanese-stiltgrass/
@@ -23,6 +24,6 @@ Japanese stiltgrass is native to India and Asia, including China, Japan and Kore
 It is an annual grass. In late summer and early fall, one or two thin flower spikes form at the top of each stem; each plant makes 100 to 1,000 seeds and then dies. Seeds can last at least three years in the soil and sprout readily after the ground is disturbed.
 
 ## How to handle it
-It is shallow-rooted and easy to pull. Pull it in late summer, before seeds form, but not before July, or seeds already in the soil can still grow and go to seed that year. Its seeds spread in moved soil, in water and on the feet of animals and people. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+It is shallow-rooted and easy to pull. Pull it in late summer, before seeds form, but not before July, or seeds already in the soil can still grow and go to seed that year. Its seeds spread in moved soil, in water and on the feet of animals and people.
 
 ## How to report it

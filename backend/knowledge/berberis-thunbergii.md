@@ -1,6 +1,7 @@
 ---
 scientific_name: Berberis thunbergii
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Japanese Barberry | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/japanese-barberry/
@@ -23,6 +24,6 @@ Japanese barberry is native to Asia. It was brought to the United States as an o
 In April and May it has umbrella-shaped clusters of white flowers on the undersides of its branches. Its oblong red berries appear in September.
 
 ## How to handle it
-The stems have thorns, single or in pairs. Smaller shrubs can be pulled up; larger shrubs and infestations are treated with herbicides, which are applied in early spring and late fall when native plants are dormant. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+The stems have thorns, single or in pairs. Smaller shrubs can be pulled up; larger shrubs and infestations are treated with herbicides, which are applied in early spring and late fall when native plants are dormant.
 
 ## How to report it

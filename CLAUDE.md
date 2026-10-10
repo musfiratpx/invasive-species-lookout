@@ -1,6 +1,6 @@
 # Kissena Invasive Watch: ground rules
 
-An interactive map of invasive species across Queens, NYC (started around Kissena Park and Queens College), built at HackKnight 2026 by beginner developers. Optimize for: works end to end, easy to read, honest data.
+An interactive map of invasive species across New York City (started around Kissena Park and Queens College, then all of Queens), built at HackKnight 2026 by beginner developers. Optimize for: works end to end, easy to read, honest data.
 
 These rules are non-negotiable:
 

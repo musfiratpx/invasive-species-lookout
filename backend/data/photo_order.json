@@ -1,0 +1,14 @@
+{
+  "_about": "Hand-picked photo choices, applied on top of cache/media.json (so re-running fetch_media.py doesn't undo them). Keys are species IDs. 'first': observation links of photos to show first, in this order. 'not_in_quiz': observation links of photos that are real but misleading out of context, so the quiz skips them (they still show in the species panel). Say why in 'why'.",
+  "62671": {
+    "name": "kudzu",
+    "first": [
+      "https://www.inaturalist.org/observations/141158907",
+      "https://www.inaturalist.org/observations/125349109"
+    ],
+    "not_in_quiz": [
+      "https://www.inaturalist.org/observations/180326073"
+    ],
+    "why": "The old first photo shows small runners on a sidewalk, which look like clover. These show kudzu's big three-part leaves up close, then how it smothers a wall."
+  }
+}

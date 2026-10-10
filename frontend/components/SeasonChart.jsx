@@ -1,52 +1,49 @@
 "use client";
 /**
- * 12-month bar chart of real sightings, drawn with plain SVG.
- * Switch between our area (Queens) and all of NYC. Local numbers are
- * often small, and the NYC view shows the seasonal pattern more clearly.
+ * Species season chart: when people report this species across New York City, month by month.
+ * One switch: "Compared with all sightings" (default) or "Raw counts".
+ * Raw counts mostly follow how many people are out posting: every late April the City
+ * Nature Challenge makes almost every species look like it peaks. The default view divides
+ * by everyone's sightings that month (per 10,000 sightings of any species), which removes
+ * most of that, so a real peak (like Asian bittersweet's winter berries) stands out.
+ * (The API calls the series "by_month_of_year"; it covers our whole map area, all of NYC.
+ * The old Queens / All of NYC switch is gone because the map now covers all of NYC.)
  */
 
 import { useState } from "react";
 
-import { MONTHS } from "@/lib/labels";
+import MonthChart from "@/components/MonthChart";
 
-const WIDTH = 300;
-const HEIGHT = 110;
-const BOTTOM = 14; // room for month labels
-const BAR_GAP = 4;
+const per10k = (n) => `${n.toLocaleString()} per 10,000 sightings`;
+const WHERE = "across New York City";
 
-export default function SeasonChart({ kissena, nyc }) {
-  const [view, setView] = useState("kissena");
-  const counts = view === "kissena" ? kissena : nyc;
-  const max = Math.max(...counts, 1);
-  const barWidth = WIDTH / 12 - BAR_GAP;
-  const total = counts.reduce((a, b) => a + b, 0);
+export default function SeasonChart({ sightings, speciesName }) {
+  // Adjusted values exist once fetch_seasonality.py has saved the monthly totals.
+  const canAdjust = Boolean(sightings.by_month_per_10k);
+  const [adjusted, setAdjusted] = useState(true);
+  const showAdjusted = adjusted && canAdjust;
+
+  const raw = sightings.by_month_of_year;
+  const values = showAdjusted ? sightings.by_month_per_10k : raw;
+  const total = raw.reduce((a, b) => a + b, 0);
 
   return (
-    <div className="season-chart">
-      <div role="group" aria-label="Which area to show">
-        <button onClick={() => setView("kissena")} aria-pressed={view === "kissena"}>Queens</button>{" "}
-        <button onClick={() => setView("nyc")} aria-pressed={view === "nyc"}>All of NYC</button>
-      </div>
-
-      <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} role="img"
-           aria-label={`Sightings per month, ${view === "kissena" ? "Queens" : "New York City"}: ` +
-             MONTHS.map((m, i) => `${m} ${counts[i]}`).join(", ")}>
-        {counts.map((count, i) => {
-          const h = ((HEIGHT - BOTTOM) * count) / max;
-          const x = i * (barWidth + BAR_GAP) + BAR_GAP / 2;
-          return (
-            <g key={MONTHS[i]}>
-              <rect className="bar" x={x} y={HEIGHT - BOTTOM - h} width={barWidth} height={h}>
-                <title>{`${MONTHS[i]}: ${count}`}</title>
-              </rect>
-              <text x={x + barWidth / 2} y={HEIGHT - 3} textAnchor="middle">{MONTHS[i][0]}</text>
-            </g>
-          );
-        })}
-      </svg>
+    <div>
+      {canAdjust && (
+        <div className="segmented" role="group" aria-label="What to count">
+          <button onClick={() => setAdjusted(true)} aria-pressed={showAdjusted}>Compared with all sightings</button>
+          <button onClick={() => setAdjusted(false)} aria-pressed={!showAdjusted}>Raw counts</button>
+        </div>
+      )}
+      <MonthChart
+        counts={values}
+        format={showAdjusted ? per10k : undefined}
+        label={showAdjusted ? `Sightings of ${speciesName} per 10,000 sightings of any species, by month, ${WHERE}` : `Sightings per month ${WHERE}`}
+      />
       <p className="muted">
-        {total} research-grade iNaturalist sightings by month
-        {view === "kissena" ? " in Queens" : " across New York City"}.
+        {showAdjusted
+          ? `Out of every 10,000 iNaturalist sightings ${WHERE} each month, how many were ${speciesName}. This evens out busy months, like late April's City Nature Challenge, when everyone posts more.`
+          : `${total.toLocaleString()} research-grade iNaturalist sightings by month ${WHERE}. Raw counts also rise when more people are out posting, not only when the species is around.`}
       </p>
     </div>
   );

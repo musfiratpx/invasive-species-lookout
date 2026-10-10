@@ -1,6 +1,7 @@
 ---
 scientific_name: Elaeagnus umbellata
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Autumn Olive | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/autumn-olive/
@@ -23,6 +24,6 @@ Autumn olive is native to East Asia.
 Autumn olive flowers in early summer. Mature shrubs then produce dense clusters of bright red berries.
 
 ## How to handle it
-Seedlings can be pulled by hand. Larger plants are cut and the stump treated with herbicide, and follow-up treatments may be needed. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Seedlings can be pulled by hand. Larger plants are cut and the stump treated with herbicide, and follow-up treatments may be needed.
 
 ## How to report it

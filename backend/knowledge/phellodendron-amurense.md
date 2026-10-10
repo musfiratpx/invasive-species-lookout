@@ -1,6 +1,7 @@
 ---
 scientific_name: Phellodendron amurense
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Amur Cork Tree | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/amur-cork-tree/
@@ -23,6 +24,6 @@ Amur cork tree is native to East Asia. It was brought to the United States in th
 Male and female flowers grow on separate trees. Female trees bloom with clusters of small green flowers in late spring, which become drooping clusters of small, round, black fruit in mid-fall. The fruit stays on the trees through the winter.
 
 ## How to handle it
-Managers remove female trees first to cut seed production. Seedlings and saplings can be hand-pulled; trees that are cut down will resprout unless the stump is treated, so control takes several years. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Managers remove female trees first to cut seed production. Seedlings and saplings can be hand-pulled; trees that are cut down will resprout unless the stump is treated, so control takes several years.
 
 ## How to report it

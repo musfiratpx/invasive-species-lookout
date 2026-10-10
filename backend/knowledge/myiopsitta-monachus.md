@@ -1,6 +1,7 @@
 ---
 scientific_name: Myiopsitta monachus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "New York State Assembly Bill A1783 (2021), proposed \"Monk Parakeet Protection Act\" - legislative findings"
     url: https://legislation.nysenate.gov/pdf/bills/2021/A1783
@@ -23,6 +24,5 @@ According to the findings in a proposed 2021 New York State Assembly bill, the a
 
 
 ## How to handle it
-In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
 
 ## How to report it

@@ -1,6 +1,7 @@
 ---
 scientific_name: Rapana venosa
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Rapana venosa (Veined Rapa Whelk) - Species Profile | USGS Nonindigenous Aquatic Species Database"
     url: https://nas.er.usgs.gov/queries/FactSheet.aspx?speciesID=1018
@@ -20,6 +21,5 @@ The veined rapa whelk is native to the western Pacific, including the Sea of Jap
 
 
 ## How to handle it
-In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
 
 ## How to report it

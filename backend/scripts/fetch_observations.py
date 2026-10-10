@@ -33,6 +33,9 @@ TAXON_MAP_JSON = config.CACHE_DIR / "taxon_map.json"
 OBSERVATION_COLUMNS = [
     "observation_id", "observed_on", "scientific_name", "common_name", "iconic_taxon",
     "taxon_id", "latitude", "longitude", "place_guess", "url", "license", "observer", "obscured",
+    # How precise the public location is, in meters (blank if the observer didn't say).
+    # Some sightings are only placed at a borough like "Queens" (its center point), so the map hides imprecise ones.
+    "accuracy_m",
     # Extra columns: which list entry this sighting belongs to. A sighting of a
     # variety (taxon_id) is grouped under the listed species (species_id).
     "species_id", "listed_name",
@@ -145,6 +148,7 @@ def download_observations(matches, taxon_map):
             "license": obs.get("license_code") or "",
             "observer": (obs.get("user") or {}).get("login", ""),
             "obscured": bool(obs.get("obscured")),
+            "accuracy_m": obs.get("public_positional_accuracy") or obs.get("positional_accuracy") or "",
             "species_id": taxon_map[listed_name]["taxon_id"],
             "listed_name": listed_name,
         })

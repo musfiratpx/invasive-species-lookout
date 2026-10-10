@@ -4,13 +4,12 @@
  */
 
 import "leaflet/dist/leaflet.css";
-import "react-leaflet-cluster/dist/assets/MarkerCluster.css";
-import "react-leaflet-cluster/dist/assets/MarkerCluster.Default.css";
+import "leaflet.markercluster/dist/MarkerCluster.css"; // cluster animations; bubble colors are ours (globals.css)
 import "./globals.css";
 
 export const metadata = {
   title: "Kissena Invasive Watch",
-  description: "Invasive species sightings across Queens, New York City, starting from Kissena Park.",
+  description: "Invasive species sightings across New York City, starting from Kissena Park in Queens.",
 };
 
 export default function RootLayout({ children }) {

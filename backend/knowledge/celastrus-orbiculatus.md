@@ -1,6 +1,7 @@
 ---
 scientific_name: Celastrus orbiculatus
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Oriental Bittersweet | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/oriental-bittersweet/
@@ -11,6 +12,9 @@ sources:
   - title: "NYC Parks Rules, 56 RCNY §1-04 Prohibited Uses (Rules of the City of New York, Title 56, Chapter 1; amended through Mar 30, 2025)"
     url: https://www.nycgovparks.org/rules/section-1-04
     accessed: 2026-10-09
+  - title: "Invasive Plants and Biodiversity: A Targeted Management Guide for New York City Stewards (Natural Areas Conservancy, co-developed with the NYC Parks Stewardship Team, Dec 2023)"
+    url: https://fic.naturalareasnyc.org/docs/invasive-plants-guide-for-new-york-city-stewards
+    accessed: 2026-10-10
 ---
 
 ## Summary
@@ -23,6 +27,9 @@ Oriental bittersweet is native to eastern Asia. It was brought to North America 
 Flowers bloom where the leaves meet the stem in May and early June. In fall the vine produces bright reddish-orange fruit. Its rounded to oval leaves alternate along the stem.
 
 ## How to handle it
-Individual vines can be pulled up by the roots and removed by hand, or cut and the stumps treated with herbicide. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Individual vines can be pulled up by the roots and removed by hand, or cut and the stumps treated with herbicide.
+
+## Look-alikes
+It can be confused with the native American bittersweet, a close relative that is fairly rare in New York City, so most bittersweet you see in the city is the invasive kind. Oriental bittersweet's leaves are nearly as wide as they are long, with rounded teeth, and they open flat or folded like a book in spring. American bittersweet's leaves are narrower, with sharp teeth, and are rolled up like a scroll in early spring. Oriental bittersweet has yellow husks and small fruit clusters all along the stem where the leaves attach; American bittersweet has orange-red husks and larger clusters only at the branch tips.
 
 ## How to report it

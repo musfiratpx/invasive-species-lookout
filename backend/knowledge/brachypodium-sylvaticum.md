@@ -1,6 +1,7 @@
 ---
 scientific_name: Brachypodium sylvaticum
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Slender False Brome | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/slender-false-brome/
@@ -23,6 +24,6 @@ Slender false brome is native to Europe, Asia and North Africa. It is not clear 
 Its drooping flower stalks grow up to two feet high, and it flowers and sets seed between June and September.
 
 ## How to handle it
-Cleaning footwear, hiking gear and vehicles after visiting infested areas helps stop its spread. Small patches can be removed by hand in spring, before it flowers. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Cleaning footwear, hiking gear and vehicles after visiting infested areas helps stop its spread. Small patches can be removed by hand in spring, before it flowers.
 
 ## How to report it

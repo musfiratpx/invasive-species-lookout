@@ -7,6 +7,12 @@ Two views per species, both from real research-grade iNaturalist sightings:
                Kissena alone often has only a few sightings, so the NYC curve shows
                the seasonal pattern more clearly. The UI must label which one it shows.
 
+Also saves data/cache/activity_by_month.json: how many research-grade sightings of
+ANY species people posted each month, in our area and in all of NYC (2 requests).
+Raw counts mostly follow how many people are out posting (e.g. the City Nature
+Challenge every late April), so the app divides by these totals to show each
+species' share of all sightings that month instead.
+
 Usage (from backend/):  python scripts/fetch_seasonality.py
 """
 
@@ -15,7 +21,9 @@ import sys
 
 import _setup  # noqa: F401  (adds backend/ to the import path)
 import pandas as pd
-from _setup import NYC_PLACE_ID, polite
+from _setup import NYC_PLACE_ID, area_params, polite
+from datetime import datetime, timezone
+
 from pyinaturalist import get_observation_histogram
 
 from app import config
@@ -37,6 +45,28 @@ def nyc_by_month(species_id):
     return [int(histogram.get(m, 0)) for m in range(1, 13)]
 
 
+def all_sightings_by_month(**where):
+    """Research-grade sightings of every species per month (January first), for an area."""
+    histogram = polite(get_observation_histogram, quality_grade="research", interval="month_of_year", **where)
+    return [int(histogram.get(m, 0)) for m in range(1, 13)]
+
+
+def save_activity(refresh):
+    """All-species monthly totals for our area and NYC. Reused from the cache unless refresh."""
+    if config.ACTIVITY_JSON.exists() and not refresh:
+        print("All-sightings totals: reusing data/cache/activity_by_month.json")
+        return
+    print("All-sightings totals per month (2 requests)...")
+    activity = {
+        "area": all_sightings_by_month(**area_params()),  # same area as observations.csv
+        "nyc": all_sightings_by_month(place_id=NYC_PLACE_ID),
+        "area_params": area_params(),
+        "fetched_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    config.ACTIVITY_JSON.write_text(json.dumps(activity, indent=2))
+    print(f"  area: {sum(activity['area']):,}   NYC: {sum(activity['nyc']):,}")
+
+
 def main():
     observations = pd.read_csv(config.OBSERVATIONS_CSV)
     species = observations.drop_duplicates("species_id")[["species_id", "listed_name"]]
@@ -51,7 +81,7 @@ def main():
         cached_nyc = old.get(str(species_id), {}).get("nyc")
         seasonality[str(species_id)] = {
             "scientific_name": row["listed_name"],
-            "kissena": kissena_by_month(observations, species_id),  # = our area (now all of Queens)
+            "kissena": kissena_by_month(observations, species_id),  # = our area (now all of NYC)
             "nyc": cached_nyc if cached_nyc else nyc_by_month(species_id),
         }
         s = seasonality[str(species_id)]
@@ -59,6 +89,7 @@ def main():
 
     config.SEASONALITY_JSON.write_text(json.dumps(seasonality, indent=2))
     print(f"\nSaved {config.SEASONALITY_JSON.relative_to(config.BACKEND_DIR)}")
+    save_activity(refresh="--refresh" in sys.argv)
 
 
 if __name__ == "__main__":

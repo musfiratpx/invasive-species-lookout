@@ -3,10 +3,10 @@
   "history": "Despite its name, Canada thistle is native to Eurasia. It was brought to North America in shipments of agricultural seed, and it spreads by its roots and by people moving it around.",
   "seasons": null,
   "handling": {
-    "text": "Canada thistle spreads mostly through its roots, so mowing can hold it back but will not usually get rid of it. Infestations often need several control methods together and ongoing monitoring, and the whole patch needs treatment to stop it from resprouting. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Canada thistle spreads mostly through its roots, so mowing can hold it back but will not usually get rid of it. Infestations often need several control methods together and ongoing monitoring, and the whole patch needs treatment to stop it from resprouting.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Canada Thistle | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -25,9 +25,45 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "cirsium-arvense.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "cirsium-arvense.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": null,
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "cirsium-arvense.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:51.087336+00:00"
+  "generated_at": "2026-10-10T01:47:38.116964+00:00",
+  "lookalikes": null
 }

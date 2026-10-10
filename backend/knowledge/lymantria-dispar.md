@@ -2,6 +2,7 @@
 scientific_name: Lymantria dispar
 # false because the source says: "Spongy moth caterpillar hairs can cause skin irritation, so be careful not to touch them without protection."
 touch_safe: false
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Spongy Moth (NYS Department of Environmental Conservation)"
     url: https://dec.ny.gov/nature/animals-fish-plants/insects-and-other-species/spongy-moth
@@ -21,6 +22,6 @@ The spongy moth comes from France. It was accidentally brought to the United Sta
 Egg masses look like light-brown, fuzzy or spongy patches on tree trunks and other surfaces, each holding 600 to 700 eggs; they can be found from about August through April. In spring, tiny black caterpillars hatch and eat tender new leaves, growing to about 2.5 inches. They turn into moths in late June and early July: the females cannot fly, while males are often seen flying in summer and fall.
 
 ## How to handle it
-Do not touch the caterpillars without protection: their hairs can cause mild to moderate skin irritation in some people, especially in late spring and early summer when caterpillars are hatching and growing. On your own property, DEC says egg masses can be destroyed by scraping them off into a container of detergent. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.
+Do not touch the caterpillars without protection: their hairs can cause mild to moderate skin irritation in some people, especially in late spring and early summer when caterpillars are hatching and growing. On your own property, DEC says egg masses can be destroyed by scraping them off into a container of detergent.
 
 ## How to report it

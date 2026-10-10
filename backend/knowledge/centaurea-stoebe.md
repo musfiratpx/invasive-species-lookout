@@ -1,6 +1,7 @@
 ---
 scientific_name: Centaurea stoebe
 touch_safe: null
+reviewed_by:  # your name once you've checked this sheet against its sources
 sources:
   - title: "Spotted Knapweed | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)"
     url: https://nyis.info/species/spotted-knapweed/
@@ -23,6 +24,6 @@ Spotted knapweed is native to southeastern Europe. It was brought to North Ameri
 In its first year it grows as a low rosette of leaves 6 to 8 inches long. In later years it grows up to 3 feet tall with flowers at the ends of its many branches; a plant can live up to nine years. Each plant can produce up to 1,000 seeds, which are carried by the wind.
 
 ## How to handle it
-Several insects and fungi have been released to help control spotted knapweed, with varying success, and herbicides can reduce it. Its seeds build up in the soil and resist heat, so control takes ongoing monitoring, and burning or composting only works at very high temperatures. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.
+Several insects and fungi have been released to help control spotted knapweed, with varying success, and herbicides can reduce it. Its seeds build up in the soil and resist heat, so control takes ongoing monitoring, and burning or composting only works at very high temperatures.
 
 ## How to report it

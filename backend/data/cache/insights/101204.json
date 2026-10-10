@@ -3,10 +3,10 @@
   "history": "The eastern mosquitofish is native to Atlantic and Gulf Slope drainages as far west as southern Alabama. Because of their reputation for eating mosquito larvae, they were stocked widely around the world starting in the early 1900s; in 1905, mosquitofish reportedly from North Carolina were released into New Jersey waters to control mosquitoes. They generally don't tolerate cold well, so spreading in northern states is limited.",
   "seasons": null,
   "handling": {
-    "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
+    "text": "Never release aquarium or pond fish into lakes, ponds or streams. NYS DEC suggests donating unwanted fish to a school, nature center, aquarium or zoo, returning them to the store, trading them with another hobbyist, or asking a veterinarian or pet store about humane options.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Gambusia holbrooki (Eastern Mosquitofish) - Species Profile | USGS Nonindigenous Aquatic Species Database",
@@ -29,9 +29,45 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "gambusia-holbrooki.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "gambusia-holbrooki.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": null,
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "gambusia-holbrooki.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:02.197375+00:00"
+  "generated_at": "2026-10-10T01:46:49.295562+00:00",
+  "lookalikes": null
 }

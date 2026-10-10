@@ -3,10 +3,10 @@
   "history": "Purple loosestrife is native to Europe, Asia and northern Africa. It was probably brought to North America several times, both by accident in ships' ballast and on purpose as an herbal remedy for digestive problems. It was well established in New England by the 1830s and spread along canals and other waterways; it is now found throughout Canada and in every U.S. state except Hawaii and Florida.",
   "seasons": "Shoots come up as early as late April, and flowering starts by mid-June. Seeds begin forming by late July and continue into autumn; one plant can make over 2 million seeds. The plant dies back at the first frost, but its dead stems stay standing through the winter.",
   "handling": {
-    "text": "Small patches can be pulled by hand, but the whole root crown must come out. Mowing or otherwise damaging the plants can spread pieces that regrow. Removing it takes several years to clear out the adult plants and the seeds in the soil. Four kinds of beetles have been released in the U.S. to feed on purple loosestrife, with some success. In New York City parks like Kissena, cutting, killing or removing plants without permission from NYC Parks is against park rules, so report it instead.",
+    "text": "Small patches can be pulled by hand, but the whole root crown must come out. Mowing or otherwise damaging the plants can spread pieces that regrow. Removing it takes several years to clear out the adult plants and the seeds in the soil. Four kinds of beetles have been released in the U.S. to feed on purple loosestrife, with some success.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Purple Loosestrife | New York Invasive Species Information (NYIS, Cornell University / NY Sea Grant)",
@@ -25,9 +25,52 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "lythrum-salicaria.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "lythrum-salicaria.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": {
+      "retriever": "snowflake",
+      "files": [
+        "lythrum-salicaria.md"
+      ],
+      "section": "Seasonal differences",
+      "word_for_word": true
+    },
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "lythrum-salicaria.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:54:54.082832+00:00"
+  "generated_at": "2026-10-10T01:47:42.137155+00:00",
+  "lookalikes": null
 }

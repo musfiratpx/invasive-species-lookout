@@ -3,10 +3,10 @@
   "history": "The emerald ash borer comes from Asia. Its first North American populations were confirmed in 2002 in southeast Michigan and Windsor, Ontario, and it was likely brought there in the mid-1990s in ash wood used for shipping pallets and packing material. It was first discovered in New York State in 2009.",
   "seasons": "Adult beetles begin coming out of trees in late May and can be seen through early September, and they are most common in June and July.",
   "handling": {
-    "text": "New York limits moving firewood of any kind of tree to within 50 miles of where it came from, to slow the spread of pests like this one. An infested tree on your property does not have to be taken down unless it could be a hazard by falling. In New York City parks like Kissena, park rules forbid chasing, harassing, harming or removing any animal, nest or eggs.",
+    "text": "New York limits moving firewood of any kind of tree to within 50 miles of where it came from, to slow the spread of pests like this one. An infested tree on your property does not have to be taken down unless it could be a hazard by falling.",
     "touch_safe": null
   },
-  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks like Kissena Park, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
+  "report": "New York's official database for invasive species sightings is iMapInvasives, run by the New York Natural Heritage Program (a partnership between SUNY ESF and the NYS Department of Environmental Conservation). You can make a free account and report directly to the online database, which is the preferred method, or use the iMapInvasives mobile app for iPhone and Android, which can upload your records once you have a connection again. If you don't want an account, the site has a public report form; those reports are reviewed by Natural Heritage Program staff each week before being added.\n\nIn New York City parks, report what you find instead of removing it yourself. NYC Parks rules forbid cutting, killing or removing any plants, flowers, shrubs or other vegetation without permission from the Parks Commissioner, and forbid chasing, harassing, harming or removing any animal, nest, or the eggs of any amphibian, reptile or bird (56 RCNY \u00a71-04).",
   "sources": [
     {
       "title": "Emerald Ash Borer (EAB) (NYS Department of Environmental Conservation)",
@@ -25,9 +25,52 @@
       "url": "https://www.nyimapinvasives.org/report"
     }
   ],
+  "found_by": {
+    "summary": {
+      "retriever": "snowflake",
+      "files": [
+        "agrilus-planipennis.md"
+      ],
+      "section": "Summary",
+      "word_for_word": true
+    },
+    "history": {
+      "retriever": "snowflake",
+      "files": [
+        "agrilus-planipennis.md"
+      ],
+      "section": "History",
+      "word_for_word": true
+    },
+    "seasons": {
+      "retriever": "snowflake",
+      "files": [
+        "agrilus-planipennis.md"
+      ],
+      "section": "Seasonal differences",
+      "word_for_word": true
+    },
+    "handling": {
+      "retriever": "snowflake",
+      "files": [
+        "agrilus-planipennis.md"
+      ],
+      "section": "How to handle it",
+      "word_for_word": true
+    },
+    "report": {
+      "retriever": "snowflake",
+      "files": [
+        "how-to-report.md"
+      ],
+      "section": "How to report it",
+      "word_for_word": true
+    }
+  },
   "generated_with": {
     "retriever": "snowflake",
     "generator": "extractive"
   },
-  "generated_at": "2026-10-09T21:55:05.534193+00:00"
+  "generated_at": "2026-10-10T01:47:54.257923+00:00",
+  "lookalikes": null
 }
