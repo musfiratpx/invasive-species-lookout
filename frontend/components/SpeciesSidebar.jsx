@@ -135,7 +135,7 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         {/* These two tags come from counting reports, which can mislead, so say so right here. */}
         {(species.nyc_status.includes("spreading") || species.nyc_status.includes("new_arrival")) && (
           <details className="info">
-            <summary>ⓘ <span className="visually-hidden">What these tags mean</span></summary>
+            <summary>ⓘ What these tags mean</summary>
             <p className="muted">
               These count iNaturalist reports, not a field survey. “Spreading” means more reports so far this year
               than 1.5× the same period last year (and at least 5). “New arrival” means the first report in New York City was
@@ -145,7 +145,7 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         )}
         <p className="muted">First reported in NYC: {formatMonth(sightings.first_seen)}</p>
         <details className="info">
-          <summary>ⓘ <span className="visually-hidden">About these numbers</span></summary>
+          <summary>ⓘ About these numbers</summary>
           <p className="muted">
             All are research-grade iNaturalist sightings in New York City.
             {hidden > 0 && ` ${mapCount.toLocaleString()} are on the map; the other ${hidden.toLocaleString()} have a private or imprecise location.`}

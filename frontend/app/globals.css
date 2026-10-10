@@ -446,10 +446,9 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .sidebar details.group > summary { cursor: pointer; font-weight: 700; font-size: var(--text-md); }
 .sidebar details.group h4 { font-size: var(--text-sm); margin: var(--space-3) 0 var(--space-1); }
 /* Small fold-outs: the ⓘ under "In New York City", and "What does High mean?" under the danger meter */
-details.info { display: inline-block; margin: 0 0 4px; }
-details.info > summary { cursor: pointer; list-style: none; color: var(--muted); }
+details.info { display: block; margin: 2px 0 0; }
+details.info > summary { cursor: pointer; list-style: none; color: var(--link); font-size: var(--text-sm); }
 details.info > summary::-webkit-details-marker { display: none; }
-details.info[open] { display: block; }
 .info-more { margin: 4px 0 0; }
 .info-more > summary { cursor: pointer; color: var(--link); font-size: var(--text-sm); }
 /* Phones only: handle that shrinks the bottom sheet to a strip (shown in section 9) */
@@ -501,11 +500,11 @@ details.info[open] { display: block; }
 .slideshow { position: relative; }
 /* No overflow: hidden here on purpose: it would make the photo squeeze in beside the floating
    close button. The photo and overlay round their own corners instead, and the ✕ sits on the photo. */
-.slide-frame {
-  aspect-ratio: 4 / 3; background: var(--surface); border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-}
-.slide-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); }
+/* display: block (not flex) for the same reason: a flex box also squeezes in beside a float. */
+.slide-frame { aspect-ratio: 4 / 3; background: var(--surface); border-radius: var(--radius); }
+.slide-frame img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); }
+.slide-frame > a { display: block; padding: var(--space-6) var(--space-4); text-align: center; } /* "View this photo on iNaturalist" */
+.slide-frame.muted { display: flex; align-items: center; justify-content: center; } /* "No photos yet" */
 .slide-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
 .dots { display: flex; gap: 4px; }
 .dot { width: 10px; height: 10px; padding: 0; border-radius: 50%; background: var(--border); border: none; }
@@ -525,10 +524,9 @@ details.info[open] { display: block; }
 
 /* "Report it, don't pull it" box (species panel and park profile) */
 /* Species panel: the at-a-glance row under the name, items separated by dots */
-.glance { display: flex; flex-wrap: wrap; gap: 2px 0; margin: 4px 0 8px; font-size: var(--text-sm); color: var(--muted); }
+/* Items spaced apart instead of "·" separators, so wrapping never leaves a stray dot */
+.glance { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); margin: var(--space-3) 0 var(--space-2); font-size: var(--text-sm); color: var(--muted); }
 .glance > span { white-space: nowrap; }
-/* The dot goes after each item (not before), so a wrapped line never starts with a dot */
-.glance > span:not(:last-child)::after { content: "·"; margin: 0 6px; }
 .glance .swatch { margin-right: 4px; vertical-align: -1px; }
 
 .act-box { background: var(--lime-tint); border: 1px solid var(--olive); border-radius: var(--radius); padding: var(--space-2) var(--space-3); margin: var(--space-2) 0; font-size: var(--text-sm); }
