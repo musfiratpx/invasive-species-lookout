@@ -10,7 +10,8 @@
  *   previews the species inside; from zoom 17 points are shown one by one.
  * - Crowded spots: clicking a bubble zooms in; once you're zoomed in close (16+),
  *   it opens a list of the species there instead.
- * - Extras: zoom down to level 20, a scale bar, "Find me" (opens "Near you", NearMePanel.jsx) and "All of NYC" buttons,
+ * - Extras: zoom down to level 20, a scale bar, an "All of NYC" button, and your location for
+ *   "Near you" (asked for by the toolbar's Near me button, see NearMePanel.jsx),
  *   and zooming to a species' sightings when one is picked in search.
  * - Parks: at mid zoom every park is outlined faintly and can be tapped (ParkOutlines.jsx).
  *   When a park is picked, its official boundary is outlined boldly and the map zooms to
@@ -284,18 +285,17 @@ function SightingsLayer({ points, sightings, focusKey, outline, parkNames, selec
     // Scale bar (feet and meters), bottom right above the map credits.
     const scale = L.control.scale({ position: "bottomright" }).addTo(map);
 
-    // "Find me" and "All of NYC" buttons under the +/- zoom buttons.
+    // "All of NYC" button under the +/- zoom buttons. (Finding you is the toolbar's "Near me"
+    // button; a second 📍 here did exactly the same thing.)
     const Buttons = L.Control.extend({
       onAdd() {
         const box = L.DomUtil.create("div", "leaflet-bar map-buttons");
         box.innerHTML =
-          '<button type="button" data-action="locate" title="Show where I am" aria-label="Show where I am">📍</button>' +
           '<button type="button" data-action="home" title="Show all of New York City" aria-label="Show all of New York City">⌂</button>';
         L.DomEvent.disableClickPropagation(box);
         box.addEventListener("click", (e) => {
           const action = e.target.closest("[data-action]")?.dataset.action;
           if (action === "home") map.setView(CENTER, ZOOM, motion());
-          if (action === "locate") map.locate(); // location stays in the browser (see NearMePanel.jsx)
         });
         return box;
       },

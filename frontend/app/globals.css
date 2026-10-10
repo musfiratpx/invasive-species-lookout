@@ -304,7 +304,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .progress { height: 6px; background: var(--surface); border-radius: 999px; overflow: hidden; margin: 8px 0 2px; }
 .progress span { display: block; height: 100%; background: var(--cluster); transition: width 0.2s; }
 
-/* Find me / All of NYC buttons (styled like Leaflet's +/- buttons) */
+/* "All of NYC" button (styled like Leaflet's +/- buttons) */
 .map-buttons button {
   display: block; width: 30px; height: 30px; border: none; border-radius: 0; padding: 0;
   background: var(--bg); font-size: var(--text-md); line-height: 30px; text-align: center;

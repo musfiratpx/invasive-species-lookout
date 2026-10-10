@@ -1,7 +1,7 @@
 "use client";
 /**
  * "Near you": a photo grid of the listed species that people have reported near where you
- * are, most-reported first. Opened by the 📍 button on the map or "Near me" in the toolbar,
+ * are, most-reported first. Opened by the "📍 Near me" button in the toolbar,
  * once the browser shares your location.
  *
  * - A 500 m / 1 km / 2 km switch sets how far to look (the map's dashed circle follows it).

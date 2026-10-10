@@ -272,7 +272,7 @@ export default function Home() {
 
   const closeSidebar = useCallback(() => setSelectedSpeciesId(null), []);
 
-  // Location found (📍 on the map, or "Near me" in the toolbar): show what's been seen nearby.
+  // Location found (after "Near me" in the toolbar): show what's been seen nearby.
   const showNearMe = useCallback((spot) => {
     setLocation(spot);
     setSelectedSpeciesId(null);
