@@ -27,10 +27,10 @@ Snapshot taken 2026-10-10: 72,899 sightings of 83 listed species in New York Cit
 
 780 sightings have `obscured = true`: iNaturalist moves the point by up to ~20 km, so some appear outside NYC or over water to protect the observer or the species, so the map should mark them as approximate.
 
-**Things to say if asked:**
-- Sightings show where people *looked and posted*, not everywhere a species *is*. Busy paths and popular events (like City Nature Challenge weekends) show up as spikes.
+**Things to note:**
+- Sightings show where people *looked and posted*, not everywhere a species *is*. Busy paths and popular events show up as spikes.
 - Three list entries are below species level: porcelain berry (a variety), red-eared slider (a subspecies) and Africanized honey bee. Sightings identified only to the parent species (e.g. *Trachemys scripta*) are **not** counted, because the list doesn't say so. The Researcher can decide to add the species name to `synonyms`.
-- Two listed names have no iNaturalist match (*Myriophyllum heterophyllum × laxum*, *Achatina achatina*). Neither appears in our NYC sightings.
+- There are some listed invasive species that's not included in iNaturalist, because it doesn't appear in local NYC sightings.
 
 ## Known gaps and quirks (2026-10-09)
 
