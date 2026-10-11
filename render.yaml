@@ -1,12 +1,12 @@
 # Render Blueprint: puts the app online as two web services (https://render.com/docs/blueprint-spec).
-#   kissena-api  = the FastAPI backend (reads the cached data committed in backend/data/cache)
-#   kissena-web  = the Next.js frontend
+#   isl-api      = the FastAPI backend (reads the cached data committed in backend/data/cache)
+#   isl-web      = the Next.js frontend
 # In Render: New > Blueprint > pick this repo. Values marked "sync: false" are asked for
 # in the Render dashboard, so secrets never go in this file. See README "Deploying to Render".
 
 services:
   - type: web
-    name: kissena-api
+    name: isl-api
     runtime: python
     rootDir: backend
     plan: free
@@ -32,7 +32,7 @@ services:
         sync: false
 
   - type: web
-    name: kissena-web
+    name: isl-web
     runtime: node
     rootDir: frontend
     plan: free
