@@ -95,14 +95,19 @@ export default function Hero({ species, parks, updatedAt }) {
     <>
       <section className="hero" id="about">
         {/* Logo floats over the top of the slideshow (no solid bar). The mark is the tab icon (app/icon.png) with its green made see-through. */}
-        <nav className="site-nav" aria-label="Site">
-          <p className="logo"><img className="logo-mark" src="/images/logo.png" alt="" /> Invasive Species Lookout</p>
-        </nav>
-        {/* Background photos, stacked; the current one fades in. Decorative, so hidden from screen readers. */}
-        {HERO_PHOTOS.map((p, i) => (
-          <div key={p.file} className={i === current ? "hero-slide active" : "hero-slide"}
-               style={{ backgroundImage: `url(${p.file})` }} aria-hidden="true" />
-        ))}
+        <header className="site-nav">
+          <p className="logo"><img className="logo-mark" src="/images/logo.png" alt="" width="128" height="128" /> Invasive Species Lookout</p>
+        </header>
+        {/* Background photos, stacked; the current one fades in. Decorative, so hidden from screen readers.
+            Only the current photo and its two neighbors get an image, so the page doesn't download all of
+            them up front (the next one is ready before it fades in; the previous one is still fading out). */}
+        {HERO_PHOTOS.map((p, i) => {
+          const nearby = i === current || i === (current + 1) % count || i === (current - 1 + count) % count;
+          return (
+            <div key={p.file} className={i === current ? "hero-slide active" : "hero-slide"}
+                 style={nearby ? { backgroundImage: `url(${p.file})` } : undefined} aria-hidden="true" />
+          );
+        })}
         <div className="hero-fade" aria-hidden="true" />
         <div className="hero-content">
           <p className="eyebrow">ALL FIVE BOROUGHS OF NEW YORK CITY · BUILT AT QUEENS COLLEGE</p>

@@ -1,12 +1,12 @@
 /**
  * NOT SHOWN RIGHT NOW: taken off the page (team decision). To bring it back, import it
- * in app/page.js, put <HowItWorks /> after the "explore" section, and add a nav link to
- * "#approach" in Hero.jsx. Its styles are still in globals.css (".approach").
+ * in app/page.js and put <HowItWorks /> after the "explore" section. Its styles are still
+ * in globals.css (".approach").
  *
  * "How it works": a short section under the map that explains, in plain words, the rules
  * the app follows (see CLAUDE.md): what counts as invasive, where sightings and danger
- * levels come from, and why we say "report it, don't pull it". The nav's "How it works"
- * link jumps here. Keep every sentence true to what the app actually does.
+ * levels come from, and why we say "report it, don't pull it". Keep every sentence true
+ * to what the app actually does.
  */
 
 import { PART_575_QA_URL, REPORT_URL } from "@/lib/meanings";

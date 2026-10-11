@@ -10,11 +10,24 @@
  * file only handles the box and its keys.
  */
 
+import { useEffect, useState } from "react";
+
 // The first row in the Browse list. Found on the page instead of passed around, because
 // Browse decides the order (sort and tab), and this is the only place that needs it.
 const firstRow = () => document.querySelector(".sidebar.browse .row-button");
 
 export default function SearchBox({ query, onChangeQuery, onOpen, onClose, speciesCount, parkCount }) {
+  // Phones get a short hint: the long one was cut off after "Search 83 spec".
+  // Checked after the first render, so the server and browser draw the same page first.
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const phone = window.matchMedia("(max-width: 640px)");
+    const update = () => setNarrow(phone.matches);
+    update();
+    phone.addEventListener("change", update);
+    return () => phone.removeEventListener("change", update);
+  }, []);
+
   function onKeyDown(e) {
     if (e.key === "Enter") { e.preventDefault(); firstRow()?.click(); }
     else if (e.key === "ArrowDown") { e.preventDefault(); onOpen(); setTimeout(() => firstRow()?.focus()); } // after Browse appears
@@ -26,7 +39,7 @@ export default function SearchBox({ query, onChangeQuery, onOpen, onClose, speci
       <input
         id="search-box"
         type="search"
-        placeholder={`Search ${speciesCount || ""} species and ${parkCount || ""} parks, or try “birds”…`}
+        placeholder={narrow ? "Search…" : `Search ${speciesCount || ""} species and ${parkCount || ""} parks, or try “birds”…`}
         aria-describedby="search-box-hint"
         aria-controls="browse-panel"
         value={query}
