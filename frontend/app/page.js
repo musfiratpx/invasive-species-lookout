@@ -1,9 +1,10 @@
 "use client";
 /**
- * The one page of the app. From the top: the nav bar and welcome banner (Hero.jsx, from the
+ * The one page of the app. From the top: the full-screen welcome banner (Hero.jsx, from the
  * SAIL mockup); the "Explore" section with the map app in a large frame: a toolbar (search
- * box that opens Browse, music, Quiz + full screen), map, legend/filters, the side panel (species details,
- * park profile or Browse list) and a short footer (data date + Credits dialog).
+ * box that opens Browse, Near me, Quiz, music, full screen), map, legend/filters, the side
+ * panel (species details, park profile or Browse list) and a short footer (data date +
+ * Credits dialog).
  *
  * "Focus" narrows the map to one thing at a time:
  *   - { kind: "species", id }  only that species' sightings;
@@ -307,6 +308,9 @@ export default function Home() {
         is, how risky it is, and what to do about it.
       </p>
     </div>
+    {/* While the map is full screen it leaves the page, so an empty box of the same size keeps
+        its place: the page doesn't jump, and "Exit full screen" lands back on the map. */}
+    {mapFull && <div className="app-placeholder" aria-hidden="true" />}
     <div className={mapFull ? "app full-screen" : "app"}>
       <header className="header">
         <label className="toolbar-label" htmlFor="search-box">Find a species</label>
