@@ -6,7 +6,7 @@ Every fact has links to the source, and danger levels are from official rankings
 
 **Try it live: <https://invasive.surf>** (or [run it on your own computer](#run-it-on-your-own-computer)).
 
-![The home page: a welcome banner over a credited iNaturalist photo with totals (72,899 sightings, 83 listed species, 460 parks), then the map of all five boroughs with numbered sighting bubbles and the danger-level filter](docs/screenshot.jpg)
+![The home page of invasive.surf: a full-screen banner over a credited iNaturalist photo of multiflora rose, with the headline "There are more invasive species in NYC than you think" and totals (72,899 sightings, 83 listed species, 460 parks); below it, the map of all five boroughs with numbered sighting bubbles, a toolbar with search, Near me, Quiz, Music and Full screen, and the danger-level filter](docs/screenshot.jpg)
 
 ## What you can do
 
