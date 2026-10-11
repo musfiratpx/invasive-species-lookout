@@ -185,10 +185,13 @@ Field notes:
 Every NYC park (all five boroughs) with at least one sighting, most sightings first. Boundaries are NYC Parks' official "Parks Properties" (NYC Open Data). Properties sharing a specific name (e.g. two pieces of "Kissena Corridor Park") are merged into one park (only within the same borough: Manhattan's and Brooklyn's "Columbus Park" stay separate); generic names like "Park" get their address added.
 
 ```json
-[{"park_id": "Q001", "name": "Alley Pond Park", "acres": 635.514, "type": "Flagship Park", "sightings": 3138, "species": 49}]
+[{"park_id": "Q001", "name": "Alley Pond Park", "acres": 635.514, "type": "Flagship Park", "sightings": 3138, "species": 49,
+  "photo": {"url": "…", "artist": "…", "license": "CC BY-SA 3.0", "license_url": "…", "file_page": "…", ...}}]
 ```
 
 Only sightings with a trustworthy location (not privacy-blurred, accuracy within 1 km) are matched to parks.
+
+`photo` is the same openly licensed Wikimedia Commons photo the park profile shows (with its credit), or `null` for parks that have none (most small ones).
 
 ## `GET /api/parks/outlines`
 

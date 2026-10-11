@@ -75,6 +75,13 @@ def test_thumbnails_are_openly_licensed_and_credited():
             assert s["thumb"]["observation_url"].startswith("https://www.inaturalist.org/observations/")
 
 
+def test_park_photos_are_openly_licensed_and_credited():
+    for park in client.get("/api/parks").json():
+        if park["photo"]:
+            assert park["photo"]["license"] and park["photo"]["artist"]
+            assert park["photo"]["file_page"].startswith("https://commons.wikimedia.org/")
+
+
 def test_unknown_species_is_404():
     assert client.get("/api/species/0").status_code == 404
 

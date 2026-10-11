@@ -287,6 +287,7 @@ body.map-full { overflow: hidden; } /* the page behind doesn't scroll while the 
 
 .main { position: relative; flex: 1; min-height: 0; }
 
+.footer-narrow { display: none; } /* phones only, see section 9 */
 .footer {
   display: flex; align-items: center; justify-content: space-between; gap: var(--gap);
   font-size: var(--text-sm); color: var(--muted);
@@ -765,6 +766,11 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 .dialog h2 { margin: 0 0 8px; font-size: var(--text-lg); }
+/* Dialog ✕: pinned to the top-right corner, on the same center line as the title.
+   (As a sticky float it sat ~10 px lower than the title.) */
+.dialog { position: relative; }
+.dialog h2 { padding-right: 40px; } /* long titles don't run under the ✕ */
+.dialog .sidebar-close { position: absolute; float: none; top: 14px; right: 14px; margin: 0; }
 /* Credits */
 .dialog dt { font-weight: 600; margin-top: 10px; font-size: var(--text-sm); }
 .dialog dd { margin: 2px 0 0; font-size: var(--text-sm); }
@@ -858,6 +864,15 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
 
 /* Phones: the side panel becomes a bottom sheet */
 @media (max-width: 640px) {
+  /* Footer: the short version of the data line, so it stays on one row */
+  .footer-wide { display: none; }
+  .footer-narrow { display: inline; }
+  /* Browse chips: one swipeable row per group instead of four rows above the list */
+  .browse-chips > div { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .browse-chips > div::-webkit-scrollbar { display: none; }
+  /* Fade at the right edge, so it's clear the row scrolls sideways */
+  .browse-chips > div { -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
+  .browse-chip { flex: none; }
   /* Quiz: a shorter photo, so the three answers fit on the screen under it */
   .quiz-photo img { max-height: 34svh; }
   /* Banner and section: tighter padding; the map frame fills the phone screen */
@@ -905,6 +920,7 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
 
 /* Touch screens: buttons at least 44 px tall, the size fingers can hit reliably. */
 @media (pointer: coarse) {
+  .quiz-keys-hint, .quiz-key { display: none; } /* number keys mean nothing on a touch screen */
   .segmented button, .row-button, .sidebar-close, .panel-close, .panel-back, .header-button, .chip, .focus-banner button { min-height: 44px; }
   .sidebar-close { min-width: 44px; border-radius: 50%; }
   .panel-close { min-width: 44px; }

@@ -70,7 +70,7 @@ export default function NearMePanel({ location, outside, radius, onChangeRadius,
 
   return (
     <aside className={covered ? "sidebar covered" : "sidebar"} aria-label="Species near you">
-      <PanelHead kicker="Near you / around your location" onClose={onClose} closeRef={closeButton} closeLabel="Close near you panel" />
+      <PanelHead kicker="Around your location" onClose={onClose} closeRef={closeButton} closeLabel="Close near you panel" />
       <h2>Near you</h2>
 
       {outside ? (
@@ -111,9 +111,9 @@ export default function NearMePanel({ location, outside, radius, onChangeRadius,
                         <span className="swatch" style={{ background: DANGER_COLORS[s.danger_level ?? null] }} aria-hidden="true" />
                         {DANGER_LABELS[s.danger_level ?? null]}
                       </span>
-                      <span className="park-species-detail">
-                        {count} seen · closest {distanceText(closest)} · last {formatDay(latest)}
-                      </span>
+                      {/* Two short lines instead of one that wrapped three times in the narrow cards */}
+                      <span className="park-species-detail">{count} seen · closest {distanceText(closest)}</span>
+                      <span className="park-species-detail">Last seen {formatDay(latest)}</span>
                     </button>
                     {s.thumb && <PhotoCredit photo={s.thumb} />}
                   </li>

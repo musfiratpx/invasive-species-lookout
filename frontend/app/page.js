@@ -445,9 +445,11 @@ export default function Home() {
       </main>
 
       <footer className="footer">
+        {/* Phones get a shorter line (footer-wide/-narrow in globals.css), so it fits on one row. */}
         <span>
-          Sightings from iNaturalist
-          {updatedAt && `, updated ${new Date(updatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`}
+          <span className="footer-wide">Sightings from iNaturalist{updatedAt && ", updated "}</span>
+          <span className="footer-narrow">iNaturalist{updatedAt && " · "}</span>
+          {updatedAt && new Date(updatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
           <span className="footer-extra"> · Danger levels from official New York rankings</span>
         </span>
         <button className="link-button" onClick={() => setCreditsOpen(true)}>Credits &amp; sources</button>

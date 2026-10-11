@@ -19,6 +19,9 @@ import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
 import { TYPE_FILTERS, matchesGroupWord, taxonIcon, typeFilterOf } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
 
+/** Wikimedia's small (120 px) version of a park photo: list rows don't need the full 1280 px one. */
+const smallParkPhoto = (url) => url.replace(/\/\d+px-/, "/120px-");
+
 /** A–Z by the name people see (common name, or scientific name when there is none). */
 const byName = (a, b) => a.localeCompare(b, "en", { sensitivity: "base" });
 const speciesName = (s) => s.common_name || s.scientific_name;
@@ -136,8 +139,10 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
 
   return (
     <aside ref={panel} id="browse-panel" className={covered ? "sidebar browse covered" : "sidebar browse"} aria-label="Browse species and parks">
-      <PanelHead kicker="Browse / species and parks" onClose={onClose} closeRef={closeButton} closeLabel="Close browse panel" />
-      <h2>Browse</h2>
+      {/* The header label is the panel's only title ("Browse" twice in a row read as a mistake).
+          The hidden h2 keeps a heading for screen readers. */}
+      <PanelHead kicker="Browse species and parks" onClose={onClose} closeRef={closeButton} closeLabel="Close browse panel" />
+      <h2 className="visually-hidden">Browse species and parks</h2>
       <div className="segmented browse-tabs" role="group" aria-label="Browse by">
         {Object.entries(TABS).map(([id, t]) => (
           <button key={id} aria-pressed={tab === id} onClick={() => onChangeTab(id)}>
@@ -197,6 +202,11 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
                   </button>
                   {/* Links can't go inside a button, so the photo credit and the first-sighting link sit under it. */}
                   {(tab === "species" || tab === "new") && item.thumb && <PhotoCredit photo={item.thumb} />}
+                  {tab === "parks" && item.photo && (
+                    <a className="photo-credit" href={item.photo.file_page} target="_blank" rel="noreferrer" title={`${item.photo.artist}, ${item.photo.license}`}>
+                      Photo: {item.photo.artist} · {item.photo.license}
+                    </a>
+                  )}
                   {tab === "new" && (
                     // The evidence: the actual first sighting.
                     <a className="row-link" href={item.first_observation_url} target="_blank" rel="noreferrer">
@@ -266,7 +276,10 @@ function SpeciesRow({ s, query }) {
 function ParkRow({ p, query }) {
   return (
     <>
-      <span aria-hidden="true">🌳</span>
+      {/* Same size as the species photos, so the two lists line up. Small version of the park's photo. */}
+      {p.photo
+        ? <img className="row-thumb" src={smallParkPhoto(p.photo.url)} alt="" loading="lazy" />
+        : <span className="row-thumb row-thumb-empty" aria-hidden="true">🌳</span>}
       <span className="search-name">
         <Highlight text={p.name} query={query} />
         <em>{p.type} · {Math.round(p.acres).toLocaleString()} acres</em>
@@ -289,14 +302,15 @@ function ArrivalRow({ a }) {
         : <span className="row-thumb row-thumb-empty" aria-hidden="true">{taxonIcon(a.iconic_taxon).emoji}</span>}
       <span className="search-name">
         {speciesName(a)}
-        <em>First recorded in {a.borough} · {formatDay(a.first_seen)}</em>
+        {/* Short lines (the note above the list explains "first recorded"), so rows don't wrap. */}
+        <em>New in {a.borough} · {formatDay(a.first_seen)}</em>
       </span>
       <span className="row-detail">
         <span className="danger-cell">
           <span className="swatch" style={{ background: DANGER_COLORS[a.danger_level ?? null] }} aria-hidden="true" />
           {DANGER_LABELS[a.danger_level ?? null]}
         </span>
-        <span>{before ? `Already in ${before} other borough${before > 1 ? "s" : ""}` : "First in NYC"}</span>
+        <span>{before ? `Also in ${before} borough${before > 1 ? "s" : ""}` : "First in NYC"}</span>
       </span>
     </>
   );

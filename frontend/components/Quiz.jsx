@@ -123,7 +123,7 @@ export default function Quiz({ hidden, onClose, onLearnMore }) {
             <QuizPhoto photo={question.photo} />
             <div className="quiz-answers">
 
-            <p><strong>Which invasive species is this?</strong> <span className="muted">(or press 1, 2 or 3)</span></p>
+            <p><strong>Which invasive species is this?</strong> <span className="muted quiz-keys-hint">(or press 1, 2 or 3)</span></p>
             <div className="quiz-choices" role="group" aria-label="Answer choices">
               {question.choices.map((s, i) => {
                 const isAnswer = s.species_id === question.answer.species_id;

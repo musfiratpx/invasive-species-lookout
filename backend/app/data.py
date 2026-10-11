@@ -196,6 +196,7 @@ def park_list():
             result.append({
                 "park_id": park_id, "name": park["name"], "acres": park["acres"], "type": park["type"],
                 "sightings": int(len(group)), "species": int(group["species_id"].nunique()),
+                "photo": _park_photo(park_id),  # for the Browse list; None for most small parks
             })
     return sorted(result, key=lambda p: p["sightings"], reverse=True)
 
