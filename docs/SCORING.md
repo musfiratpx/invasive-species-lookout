@@ -1,6 +1,6 @@
 # How we score
 
-Nothing on this page is decided by AI. Every number comes from an official source or a simple count of real sightings.
+ Every number comes from an official source or a simple count of real sightings.
 
 ## Is it invasive?
 
@@ -33,4 +33,4 @@ Computed from research-grade iNaturalist sightings in our area, which is all of 
 | Spreading | Sightings so far this year are more than 1.5× the same period last year, and at least 5 |
 | New arrival | The first sighting in the area was within the last 365 days |
 
-**Caveat:** these tags count what people *reported*, not a field survey. More people posting from a busy path, or a bioblitz weekend, can look like "spreading".
+**Caveat:** these tags count what people *reported*, not a field survey. 
