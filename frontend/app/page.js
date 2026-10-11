@@ -356,8 +356,8 @@ export default function Home() {
         />
         {focus && (
           <div className="focus-banner" role="status">
-            <span>
-              {inPark ? "🌳 " : "Showing only "}
+            <span className="focus-text">
+              {inPark ? "🌳 " : <span className="focus-only">Showing only </span>}
               <strong>{focusName}</strong>{" "}
               <span className="focus-count">
                 {visible.length.toLocaleString()} on the map

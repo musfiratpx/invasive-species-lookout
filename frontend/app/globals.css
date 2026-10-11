@@ -896,7 +896,16 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
   .music-label, .button-label { display: none; }
   .footer { font-size: var(--text-xs); }
   .footer-extra { display: none; }
-  .focus-banner { top: auto; bottom: 56px; font-size: var(--text-sm); }
+  /* "Showing only …": one line at the top of the map, right of the +/− buttons, where the
+     bottom sheet and its handle can't cover it. Long names end in "…"; the count is dropped. */
+  .focus-banner {
+    top: var(--gap); bottom: auto; left: 56px; right: var(--gap); transform: none; max-width: none;
+    font-size: var(--text-sm); padding: 4px 4px 4px 12px; gap: 6px;
+  }
+  .panel-open .focus-banner { left: 56px; max-width: none; }
+  .focus-text { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .focus-only, .focus-count { display: none; }
+  .focus-banner button { padding: 4px 12px; min-height: 36px; }
   /* Bottom of the map: no scale bar (not much room), smaller map credits, and the Filter button
      sits just above the credits instead of covering them (the credits must stay readable) */
   .leaflet-control-scale { display: none; }
