@@ -149,19 +149,22 @@ button {
 html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map */
 
 /* Nav bar and welcome banner (Hero.jsx), as in the SAIL mockup */
+/* The logo sits on top of the slideshow, with no bar behind it */
 .site-nav {
-  display: flex; justify-content: space-between; align-items: center; gap: var(--gap);
-  padding: 20px 5%; background: var(--forest); color: var(--on-forest);
+  position: relative; z-index: 2; /* above the photos and fade */
+  margin-top: 8px; /* a little lower than the side gap, so it doesn't hug the top edge */
+  display: flex; align-items: center; color: var(--on-forest);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45); /* readable on bright photos too */
 }
-.site-nav a { color: inherit; text-decoration: none; }
-.site-nav a:hover { text-decoration: underline; }
-.logo { font-family: var(--serif); font-size: var(--text-xl); display: inline-flex; align-items: center; gap: 0.4em; }
-/* The magnifying-glass logo (public/images/logo.png), a bit taller than the letters next to it */
-.logo-mark { width: 1.4em; height: 1.4em; flex-shrink: 0; border-radius: 6px; }
-.site-nav-links { display: flex; gap: 24px; }
+.logo { margin: 0; font-family: var(--serif); font-size: 1.7rem; display: inline-flex; align-items: center; gap: 0.4em; }
+/* The magnifying-glass logo (public/images/logo.png, white on see-through), a bit taller than the letters */
+.logo-mark { width: 1.3em; height: 1.3em; flex-shrink: 0; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.45)); }
 .hero {
   position: relative; /* for the photo credit in the corner */
-  min-height: 55vh; display: flex; align-items: center; padding: 60px 8%; /* short enough that the map peeks in below */
+  /* Fills the screen. --edge is the same gap above the logo and beside everything, so the logo
+     sits as far from the top as from the side. Bottom room is for the photo arrows + credit. */
+  --edge: clamp(20px, 6vw, 88px);
+  min-height: 100svh; display: flex; flex-direction: column; padding: var(--edge) var(--edge) 72px;
   background-color: var(--hero-blank); overflow: hidden;
   color: var(--on-forest);
 }
@@ -173,11 +176,12 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 /* Dark green fade from the left, so the white text stays readable on any photo */
 .hero-fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(9, 36, 29, 0.9), rgba(9, 36, 29, 0.25)); }
 .hero-content { position: relative; z-index: 1; } /* above the photos and fade */
-.hero-content { max-width: 760px; }
+.hero-content { max-width: 760px; margin-top: clamp(20px, 3svh, 32px); } /* close under the logo */
 .eyebrow { font-size: var(--text-xs); letter-spacing: 2px; margin: 0; }
 .hero .eyebrow { color: var(--lime); }
-.hero h1 { font-size: clamp(44px, 7vw, 76px); line-height: 1; margin: 20px 0; max-width: 11em; text-wrap: balance; }
-.hero-description { max-width: 520px; line-height: 1.8; color: var(--on-forest-muted); }
+/* Shrinks on short screens too (svh), so everything fits on one screen with the credit showing */
+.hero h1 { font-size: clamp(40px, min(7vw, 8svh), 76px); line-height: 1; margin: 16px 0; max-width: 11em; text-wrap: balance; }
+.hero-description { max-width: 560px; line-height: 1.65; color: var(--on-forest-muted); }
 .hero-button {
   display: inline-block; margin-top: 20px; padding: 14px 18px;
   background: var(--lime); color: var(--forest); text-decoration: none; border-radius: 999px; /* pill, like every other button */
@@ -189,7 +193,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 .hero-button.secondary { background: transparent; color: var(--on-forest); border: 1px solid rgba(247, 245, 233, 0.6); }
 .hero-button.secondary:hover { background: rgba(247, 245, 233, 0.1); filter: none; }
 /* Live numbers under the buttons (from the loaded data, never typed in) */
-.hero-stats { display: flex; flex-wrap: wrap; gap: 16px 44px; margin: 40px 0 0; }
+.hero-stats { display: flex; flex-wrap: wrap; gap: 16px 44px; margin: 32px 0 0; }
 .hero-stats dt { font-size: var(--text-xs); letter-spacing: 2px; text-transform: uppercase; color: var(--lime); }
 .hero-stats dd { margin: 4px 0 0; font-family: var(--serif); font-size: var(--text-2xl); color: var(--on-forest); }
 .hero-date { margin: 14px 0 0; font-size: var(--text-sm); color: var(--on-forest-muted); }
@@ -231,10 +235,10 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
 
 /* "Explore your environment" section around the map app. Less side padding than the
    mockup (8%) so the map gets more room. */
-.discovery { padding: 60px 4% 32px; }
-.section-heading { max-width: 600px; margin-bottom: 28px; }
+.discovery { padding: 44px 4% 32px; } /* same gap above the heading as between the text and the map */
+.section-heading { max-width: 780px; margin-bottom: 40px; } /* wide enough for the heading on one line */
 .section-heading .eyebrow { color: var(--olive-text); } /* the mockup's lime is unreadable on cream */
-.section-heading h2 { font-size: var(--text-2xl); margin: 10px 0 12px; text-wrap: balance; } /* no single word left alone on the last line */
+.section-heading h2 { font-size: 2.8rem; margin: 0 0 12px; text-wrap: balance; } /* no single word left alone on the last line */
 .section-heading p { line-height: 1.7; color: var(--muted); margin: 0; }
 
 /* The map app: a big framed panel, nearly a full screen tall */
@@ -245,6 +249,12 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
   border: 1px solid rgba(25, 59, 48, 0.25); /* a crisp edge against the page */
   box-shadow: 0 4px 16px rgba(25, 59, 48, 0.18);
 }
+/* Full-screen button: the map app covers the whole window (dialogs, at z-index 2000, still go on top) */
+.app.full-screen {
+  position: fixed; inset: 0; z-index: 1500;
+  height: 100svh; min-height: 0; border: none; border-radius: 0; box-shadow: none;
+}
+body.map-full { overflow: hidden; } /* the page behind doesn't scroll while the map is full screen */
 
 .header {
   height: var(--header-height);
@@ -261,6 +271,7 @@ html { scroll-behavior: smooth; } /* "Meet the species" glides down to the map *
    gets its own size and nudge to look the same size and sit on the button's center line. */
 .sym-near { font-size: 22px; transform: translateY(-2px); }
 .sym-quiz { font-size: 17px; transform: translateY(2px); }
+.sym-full { font-size: 17px; }
 .header-button .sym-music { font-size: 19px; width: 12px; justify-content: flex-start; } /* ♪ has extra blank space on its right */
 .header-button:hover { background: rgba(247, 245, 233, 0.12); }
 .header-button[aria-pressed="true"] { background: var(--lime); color: var(--forest); }
@@ -795,13 +806,11 @@ mark.match { background: var(--lime); color: inherit; border-radius: 2px; paddin
   /* Quiz: a shorter photo, so the three answers fit on the screen under it */
   .quiz-photo img { max-height: 34svh; }
   /* Banner and section: tighter padding; the map frame fills the phone screen */
-  .site-nav { padding: 14px 16px; }
-  .logo { font-size: var(--text-lg); }
-  .site-nav-links { gap: 14px; font-size: var(--text-sm); }
-  .hero { min-height: 70svh; padding: 40px 20px 104px; } /* bottom room for the photo arrows + credit, so they never cover the stats */
+  .logo { font-size: 1.3rem; }
+  .hero { --edge: 20px; padding-bottom: 104px; } /* bottom room for the photo arrows + credit, so they never cover the stats */
   .discovery { padding: 36px 8px 8px; }
   .section-heading { padding: 0 8px; }
-  .section-heading h2 { font-size: 32px; }
+  .section-heading h2 { font-size: 34px; }
   .approach { padding: 48px 20px; }
   .hero-stats dd { font-size: 26px; }
   .app { height: calc(100svh - 16px); min-height: 480px; border-radius: 10px; }

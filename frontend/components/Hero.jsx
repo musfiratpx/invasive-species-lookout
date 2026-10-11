@@ -1,6 +1,7 @@
 /**
- * Top of the page (layout from Moses's SAIL field-guide mockup, moses-panel branch): a nav bar
- * and a big welcome banner about invasive species. The map app sits below, in "Explore".
+ * Top of the page (layout from Moses's SAIL field-guide mockup, moses-panel branch): a full-screen
+ * welcome banner about invasive species, with the logo floating over its photos (no solid bar).
+ * The map app sits below, in "Explore".
  *
  * Every number and species name here comes from the loaded data (the species and park
  * lists), never typed in by hand, so it stays true when the data is refreshed. While the
@@ -92,15 +93,11 @@ export default function Hero({ species, parks, updatedAt }) {
 
   return (
     <>
-      <nav className="site-nav" aria-label="Site">
-        <a className="logo" href="#about">{/* Same picture as the browser tab icon (app/icon.png); its green is the nav green. */}<img className="logo-mark" src="/images/logo.png" alt="" /> Invasive Species Lookout</a>
-        {/* Just the map: Report and Quiz already have buttons in the banner and the map toolbar. */}
-        <div className="site-nav-links">
-          <a href="#explore">Map</a>
-        </div>
-      </nav>
-
       <section className="hero" id="about">
+        {/* Logo floats over the top of the slideshow (no solid bar). The mark is the tab icon (app/icon.png) with its green made see-through. */}
+        <nav className="site-nav" aria-label="Site">
+          <p className="logo"><img className="logo-mark" src="/images/logo.png" alt="" /> Invasive Species Lookout</p>
+        </nav>
         {/* Background photos, stacked; the current one fades in. Decorative, so hidden from screen readers. */}
         {HERO_PHOTOS.map((p, i) => (
           <div key={p.file} className={i === current ? "hero-slide active" : "hero-slide"}

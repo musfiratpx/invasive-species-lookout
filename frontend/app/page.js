@@ -2,7 +2,7 @@
 /**
  * The one page of the app. From the top: the nav bar and welcome banner (Hero.jsx, from the
  * SAIL mockup); the "Explore" section with the map app in a large frame: a toolbar (search
- * box that opens Browse, music + Quiz), map, legend/filters, the side panel (species details,
+ * box that opens Browse, music, Quiz + full screen), map, legend/filters, the side panel (species details,
  * park profile or Browse list) and a short footer (data date + Credits dialog).
  *
  * "Focus" narrows the map to one thing at a time:
@@ -61,6 +61,7 @@ export default function Home() {
   const [expectedCount, setExpectedCount] = useState(null);
   const [updatedAt, setUpdatedAt] = useState(null); // when the sightings were last fetched from iNaturalist
   const [creditsOpen, setCreditsOpen] = useState(false);
+  const [mapFull, setMapFull] = useState(false); // the map app covers the whole window
   const [quiz, setQuiz] = useState("closed"); // "closed", "open", or "paused" (hidden while you look at a species, progress kept)
   const [browseTab, setBrowseTab] = useState(null); // null = Browse closed, else "species", "parks" or "new"
   const [searchText, setSearchText] = useState(""); // what's typed in the header box; filters Browse
@@ -284,19 +285,29 @@ export default function Home() {
   const closePark = useCallback(() => setParkPanelOpen(false), []);
   const inPark = focus?.kind === "park";
 
+  // Full-screen map: stop the page behind it from scrolling, and let Esc go back to the page.
+  // Esc only does that when nothing else is open, since Esc first closes panels and dialogs.
+  const nothingElseOpen = !panelKey && quiz !== "open" && !creditsOpen;
+  useEffect(() => {
+    if (!mapFull) return;
+    document.body.classList.add("map-full");
+    const onKey = (e) => { if (e.key === "Escape" && nothingElseOpen) setMapFull(false); };
+    window.addEventListener("keydown", onKey);
+    return () => { document.body.classList.remove("map-full"); window.removeEventListener("keydown", onKey); };
+  }, [mapFull, nothingElseOpen]);
+
   return (
     <>
     <Hero species={speciesList} parks={parks} updatedAt={updatedAt} />
     <section className="discovery" id="explore">
     <div className="section-heading">
-      <p className="eyebrow">WHAT&apos;S GROWING NEAR YOU</p>
       <h2>Find invasive species near you.</h2>
       <p>
         Every point is a real sighting of a species on New York&apos;s official invasive list. Tap one to see what it
         is, how risky it is, and what to do about it.
       </p>
     </div>
-    <div className="app">
+    <div className={mapFull ? "app full-screen" : "app"}>
       <header className="header">
         <label className="toolbar-label" htmlFor="search-box">Find a species</label>
         <SearchBox
@@ -315,6 +326,11 @@ export default function Home() {
           <span className="symbol sym-quiz" aria-hidden="true">◎</span><span className="button-label"> Quiz</span>
         </button>
         <MusicToggle />
+        <button className="header-button" onClick={() => setMapFull((f) => !f)} aria-pressed={mapFull}
+                aria-label={mapFull ? "Exit full screen, back to the page" : "Full screen map"}>
+          <span className="symbol sym-full" aria-hidden="true">{mapFull ? "✕" : "⤢"}</span>
+          <span className="button-label">{mapFull ? " Exit full screen" : " Full screen"}</span>
+        </button>
       </header>
 
       <main className={["main", panelKey && "panel-open", sheetCollapsed && "sheet-collapsed"].filter(Boolean).join(" ")}>

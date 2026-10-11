@@ -4376,12 +4376,68 @@
     "scientific_name": "Alopochen aegyptiacus",
     "photos": [
       {
-        "photo_id": 463968435,
-        "medium_url": "https://static.inaturalist.org/photos/463968435/medium.jpeg",
-        "large_url": "https://static.inaturalist.org/photos/463968435/large.jpeg",
-        "attribution": "(c) Coby Klein, all rights reserved",
-        "license": null,
-        "observation_url": "https://www.inaturalist.org/observations/258578549"
+        "photo_id": 39259167,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/39259167/medium.jpg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/39259167/large.jpg",
+        "attribution": "(c) Larry Chen, some rights reserved (CC BY-NC)",
+        "license": "cc-by-nc",
+        "observation_url": "https://www.inaturalist.org/observations/25355157"
+      },
+      {
+        "photo_id": 426928247,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/426928247/medium.jpg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/426928247/large.jpg",
+        "attribution": "(c) Jon J. Laysell, some rights reserved (CC BY-NC)",
+        "license": "cc-by-nc",
+        "observation_url": "https://www.inaturalist.org/observations/239690202"
+      },
+      {
+        "photo_id": 130517490,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/130517490/medium.jpeg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/130517490/large.jpeg",
+        "attribution": "(c) Lu\u00eds Louren\u00e7o, some rights reserved (CC BY-NC-ND)",
+        "license": "cc-by-nc-nd",
+        "observation_url": "https://www.inaturalist.org/observations/79674316"
+      },
+      {
+        "photo_id": 228144005,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/228144005/medium.jpg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/228144005/large.jpg",
+        "attribution": "(c) Katy, some rights reserved (CC BY-NC)",
+        "license": "cc-by-nc",
+        "observation_url": "https://www.inaturalist.org/observations/133897146"
+      },
+      {
+        "photo_id": 92295762,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/92295762/medium.jpeg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/92295762/large.jpeg",
+        "attribution": "(c) Nick Leggatt, some rights reserved (CC BY-NC)",
+        "license": "cc-by-nc",
+        "observation_url": "https://www.inaturalist.org/observations/57841025"
+      },
+      {
+        "photo_id": 265283830,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/265283830/medium.jpeg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/265283830/large.jpeg",
+        "attribution": "(c) b3ugaz, some rights reserved (CC BY-NC)",
+        "license": "cc-by-nc",
+        "observation_url": "https://www.inaturalist.org/observations/153595177"
+      },
+      {
+        "photo_id": 9849695,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/9849695/medium.jpeg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/9849695/large.jpeg",
+        "attribution": "(c) Brendan O'Loughlin, some rights reserved (CC BY-NC)",
+        "license": "cc-by-nc",
+        "observation_url": "https://www.inaturalist.org/observations/7547667"
+      },
+      {
+        "photo_id": 467668422,
+        "medium_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/467668422/medium.jpg",
+        "large_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/467668422/large.jpg",
+        "attribution": "(c) Marley Diehl, some rights reserved (CC BY-NC)",
+        "license": "cc-by-nc",
+        "observation_url": "https://www.inaturalist.org/observations/260418827"
       }
     ],
     "sound": null

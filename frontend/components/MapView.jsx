@@ -27,6 +27,7 @@ import { useEffect, useRef } from "react";
 import { MapContainer, useMap } from "react-leaflet";
 
 import Basemap from "@/components/Basemap";
+import KeepMapSized from "@/components/KeepMapSized";
 import ParkOutlines from "@/components/ParkOutlines";
 import ScrollZoomOnClick from "@/components/ScrollZoomOnClick";
 import { makeMarkerIcon } from "@/components/SpeciesIcon";
@@ -404,6 +405,7 @@ export default function MapView({ points, sightings, focusKey, outline, allOutli
       scrollWheelZoom={false} /* turned on by a click, so the page can scroll past the map (ScrollZoomOnClick) */>
       <Basemap /> {/* simplified green background map (lib/basemapStyle.js) */}
       <ScrollZoomOnClick />
+      <KeepMapSized /> {/* redraws the map when it goes full screen and back */}
       <ParkOutlines
         outlines={allOutlines}
         focusedParkId={focusKey?.startsWith("park:") ? focusKey.slice(5) : null}

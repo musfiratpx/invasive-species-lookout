@@ -2,9 +2,10 @@
 Collect real photos and (if any exist) one real sound recording for each species
 in data/cache/observations.csv. Saves data/cache/media.json.
 
-Photos: up to 8 per species from research-grade observations in our map area (all of
-New York City). Creative Commons photos are preferred; we only fall back to
-"all rights reserved" photos (shown as a link, not embedded) if there are fewer than 3 CC ones.
+Photos: up to 8 per species from research-grade observations, NYC first. Creative Commons
+photos are preferred: if NYC has fewer than 3, we look for CC ones in New York State, then
+anywhere. Only then do we fall back to NYC "all rights reserved" photos (shown as a link,
+not embedded), so a species like the Egyptian goose still gets a photo people can see.
 
 Sound: animals only (plants don't make sounds). Our map area (NYC) first, then all of
 New York State. At most one recording.
@@ -60,10 +61,12 @@ def find_photos(species_id, where, licenses):
 
 
 def collect_photos(species_id):
-    """CC photos from our area (NYC), then CC from NYC, then any license, until we have enough."""
+    """CC photos from our area (NYC), then NY State, then anywhere, then NYC with any license, until we have enough."""
     attempts = [
         (area_params(), CC_LICENSES),
         ({"place_id": NYC_PLACE_ID}, CC_LICENSES),
+        ({"place_id": NY_STATE_PLACE_ID}, CC_LICENSES),
+        ({}, CC_LICENSES),  # anywhere in the world: still a real photo of the same species
         ({"place_id": NYC_PLACE_ID}, None),
     ]
     photos, seen = [], set()
