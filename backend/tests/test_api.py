@@ -38,7 +38,7 @@ def test_early_warning_items_are_recent_and_linked():
         assert item["species_id"] in species_ids
         assert item["first_seen"] >= body["since"]
         assert item["borough"] in {"Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"}
-        # Every "first" links to the real iNaturalist observation (ground rule 6: real data only).
+        # Every "first" links to the real iNaturalist observation 
         assert item["first_observation_url"].startswith("https://www.inaturalist.org/observations/")
         # Boroughs listed as "already in" were reached before this one.
         assert all(e["first_seen"] < item["first_seen"] for e in item["already_in"])
@@ -68,7 +68,6 @@ def test_every_photo_has_credit():
 
 
 def test_thumbnails_are_openly_licensed_and_credited():
-    # "All rights reserved" photos may only be linked, never shown as a thumbnail.
     for s in client.get("/api/species").json():
         if s["thumb"]:
             assert s["thumb"]["license"]
@@ -154,7 +153,7 @@ def test_report_note_is_only_the_species_own_advice():
 
 
 def test_seasonality_is_also_adjusted_for_how_busy_each_month_is():
-    sightings = client.get("/api/species/52856").json()["sightings"]  # common mugwort
+    sightings = client.get("/api/species/52856").json()["sightings"]  
     totals = json.loads(ACTIVITY_JSON.read_text(encoding="utf-8"))
     for raw, adjusted, all_sightings in [
         (sightings["by_month_of_year"], sightings["by_month_per_10k"], totals["area"]),

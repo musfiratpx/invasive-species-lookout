@@ -2,7 +2,7 @@
 -- Creates tables for every sighting (a TimescaleDB hypertable, split by year) and the five borough
 -- outlines (PostGIS shapes). scripts/load_tiger.py fills them from our cached files, and
 -- scripts/build_early_warning.py asks: which species were first recorded in a borough recently?
--- Safe to run again: nothing is created twice.
+-- Nothing is created twice.
 -- Docs: https://docs.tigerdata.com/api/latest/hypertable/create_hypertable/
 
 -- PostGIS adds map shapes and "is this point inside that borough?" queries.
