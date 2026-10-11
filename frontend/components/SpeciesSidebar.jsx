@@ -1,13 +1,14 @@
 "use client";
 /**
- * Slide-in panel with everything about one species: a big photo with the name and danger
- * level laid over it, an at-a-glance row (legal status · sightings · last seen), "Copy link",
- * a small ▶ "read aloud" button after each paragraph of text, danger level (with what it means),
- * status in NYC, sound, then collapsible groups:
+ * Slide-in panel with everything about one species (layout after the SAIL "species story"
+ * mockup): a header row (PanelHead), a full-width photo with the name, scientific name, legal
+ * status and danger level laid over it, an at-a-glance row (sightings · last seen), "Copy link",
+ * a small ▶ "read aloud" button next to each subheading, danger level (with what it means),
+ * status in NYC, sound, then fold-out groups:
  * "What to do" (handling + reporting, open by default because it's safety info),
  * "About this species" (summary, history, look-alikes), "Through the year" (sourced seasons text, then
  * the chart of when people report it), "Sources".
- * Once the name scrolls out of view, a slim bar with the name stays at the top of the panel.
+ * Once the name scrolls out of view, the header row shows the name instead of its label.
  * Closes with the X button or Escape.
  * (On phones, CSS turns it into a bottom sheet.)
  */
@@ -17,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import CopyLink from "@/components/CopyLink";
 import DangerBadge from "@/components/DangerBadge";
 import InsightSection from "@/components/InsightSection";
+import PanelHead from "@/components/PanelHead";
 import PhotoSlideshow from "@/components/PhotoSlideshow";
 import ReadAloud from "@/components/ReadAloud";
 import ReportDontPull from "@/components/ReportDontPull";
@@ -26,6 +28,7 @@ import YearChart from "@/components/YearChart";
 import { getSpecies } from "@/lib/api";
 import { formatDay, formatMonth } from "@/lib/dates";
 import { DANGER_COLORS, NY_STATUS_LABELS, STATUS_LABELS } from "@/lib/labels";
+import { taxonIcon } from "@/lib/taxa";
 import { useReturnFocus } from "@/lib/useReturnFocus";
 
 // iNaturalist groups the park rule's "plants" wording fits (algae and fungi are pulled, not chased).
@@ -34,6 +37,7 @@ const NOT_ANIMALS = ["Plantae", "Fungi", "Chromista", "Protozoa"];
 export default function SpeciesSidebar({ speciesId, mapCount, onClose, onBack, backLabel, onShowOnMap, shownOnMap }) {
   const [species, setSpecies] = useState(null);
   const [error, setError] = useState(null);
+  const [titleHidden, setTitleHidden] = useState(false); // the big name scrolled out of view
   const closeButton = useRef(null);
   useReturnFocus();
 
@@ -42,6 +46,7 @@ export default function SpeciesSidebar({ speciesId, mapCount, onClose, onBack, b
     let cancelled = false; // ignore a slow answer if the user already picked another species
     setSpecies(null);
     setError(null);
+    setTitleHidden(false);
     getSpecies(speciesId)
       .then((data) => !cancelled && setSpecies(data))
       .catch(() => !cancelled && setError("Couldn't load this species."));
@@ -60,52 +65,47 @@ export default function SpeciesSidebar({ speciesId, mapCount, onClose, onBack, b
 
   return (
     <aside className="sidebar" aria-label="Species details">
-      {/* The ✕ sits over the photo's corner without taking up any room (see .sidebar-close-wrap). */}
-      <div className="sidebar-close-wrap">
-        <button ref={closeButton} className="sidebar-close" onClick={onClose} aria-label="Close species panel">
-          ✕
-        </button>
-      </div>
-
-      {onBack && (
-        <button className="sidebar-back" onClick={onBack}>
-          ← {backLabel}
-        </button>
-      )}
+      <PanelHead
+        kicker={species ? `Species profile / ${taxonIcon(species.iconic_taxon).label}` : "Species profile"}
+        stuckTitle={species && titleHidden ? species.common_name || species.scientific_name : null}
+        onClose={onClose} closeRef={closeButton} closeLabel="Close species panel"
+        onBack={onBack} backLabel={backLabel}
+      />
       {error && <p role="alert">{error}</p>}
       {!species && !error && <Skeleton />}
-      {species && <SpeciesDetails species={species} mapCount={mapCount} onShowOnMap={onShowOnMap} shownOnMap={shownOnMap} />}
+      {species && (
+        <SpeciesDetails species={species} mapCount={mapCount} onShowOnMap={onShowOnMap} shownOnMap={shownOnMap}
+                        onTitleHidden={setTitleHidden} />
+      )}
     </aside>
   );
 }
 
-function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
+function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap, onTitleHidden }) {
   const { insights, sightings, danger } = species;
   const hidden = mapCount != null ? sightings.total - mapCount : 0;
   const name = species.common_name || species.scientific_name;
 
-  // Show the slim name bar once the big title has scrolled out of view.
+  // Tell the header row once the big name has scrolled out of view, so it can show the name.
   const title = useRef(null);
-  const [titleHidden, setTitleHidden] = useState(false);
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setTitleHidden(!entry.isIntersecting));
+    const observer = new IntersectionObserver(([entry]) => onTitleHidden(!entry.isIntersecting));
     if (title.current) observer.observe(title.current);
     return () => observer.disconnect();
-  }, []);
+  }, [onTitleHidden]);
+  const legal = NY_STATUS_LABELS[species.ny_status];
 
   return (
     <>
-      <div className="sticky-name" aria-hidden="true">
-        <div className={titleHidden ? "sticky-name-bar show" : "sticky-name-bar"}>{name}</div>
-      </div>
-
       <PhotoSlideshow
         photos={species.photos}
         speciesName={name}
         overlay={
           <div className="species-title" ref={title}>
             <h2>{species.common_name}</h2>
-            <p className="scientific-name">{species.scientific_name}</p>
+            <p className="scientific-name">
+              <i>{species.scientific_name}</i>{legal && <span> · {legal}</span>}
+            </p>
             <p className="danger-pill">
               <span className="swatch" style={{ background: DANGER_COLORS[danger.level ?? null] }} aria-hidden="true" />
               {danger.level ? `${danger.label} danger` : danger.label}
@@ -116,15 +116,17 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
 
       <section>
         <AtAGlance species={species} />
-        <CopyLink speciesId={species.species_id} />
-        {onShowOnMap && (
-          <button className="show-on-map" onClick={onShowOnMap} disabled={shownOnMap}>
-            {shownOnMap ? "Showing only this species on the map" : "Show only this species on the map"}
-          </button>
-        )}
+        <div className="panel-actions">
+          {onShowOnMap && (
+            <button className="show-on-map" onClick={onShowOnMap} disabled={shownOnMap}>
+              {shownOnMap ? "Showing only this species on the map" : "Show only this species on the map"}
+            </button>
+          )}
+          <CopyLink speciesId={species.species_id} />
+        </div>
       </section>
 
-      <section>
+      <section className="card">
         <h3>Danger level</h3>
         <DangerBadge danger={species.danger} nyStatus={species.ny_status} />
       </section>
@@ -164,25 +166,20 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
         <ReportDontPull kind={NOT_ANIMALS.includes(species.iconic_taxon) ? "plant" : "animal"} note={insights.report_note} />
         {insights.handling.touch_safe === false && <p className="warning">Sources say: do not touch.</p>}
         {insights.handling.touch_safe === true && <p className="muted">Sources say it is safe to touch.</p>}
-        <h4>How to handle it</h4>
-        <p className={insights.handling.is_default ? "warning" : undefined}>
-          {insights.handling.text} <ReadAloud text={insights.handling.text} />
-        </p>
+        <h4>How to handle it <ReadAloud text={insights.handling.text} label="“How to handle it”" /></h4>
+        <p className={insights.handling.is_default ? "warning" : undefined}>{insights.handling.text}</p>
       </details>
 
       <details className="group" open>
         <summary>About this species</summary>
-        <h4>Summary</h4>
-        <InsightSection text={insights.summary} />
-        <h4>History</h4>
-        <InsightSection text={insights.history} />
+        <InsightSection heading="Summary" text={insights.summary} />
+        <InsightSection heading="History" text={insights.history} />
         {/* Word for word from the fact sheet, like "How to handle it": telling two species apart must be exact.
             Only shown when a source names a look-alike: most species have none, and an empty heading on
             every species would just make the panel longer. */}
         {insights.lookalikes && (
           <>
-            <h4>Don&apos;t confuse it with</h4>
-            <InsightSection text={insights.lookalikes} />
+            <InsightSection heading="Don’t confuse it with" text={insights.lookalikes} />
           </>
         )}
       </details>
@@ -191,8 +188,7 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
           when people report it, which also depends on how many people are out posting. */}
       <details className="group">
         <summary>Through the year</summary>
-        <h4>What changes by season</h4>
-        <InsightSection text={insights.seasons} />
+        <InsightSection heading="What changes by season" text={insights.seasons} />
         <h4>When people report it</h4>
         <SeasonChart sightings={sightings} speciesName={name} />
         <h4>Reports per year</h4>
@@ -201,20 +197,20 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
 
       <details className="group">
         <summary>Sources</summary>
-        <ul>
+        <ul className="link-rows">
           {insights.sources.map((source) => (
             <li key={source.url}>
-              <a href={source.url} target="_blank" rel="noreferrer">{source.title}</a>
+              <a href={source.url} target="_blank" rel="noreferrer"><span>Read: {source.title}</span></a>
             </li>
           ))}
           {species.danger.source_url && (
             <li>
-              <a href={species.danger.source_url} target="_blank" rel="noreferrer">Danger level source</a>
+              <a href={species.danger.source_url} target="_blank" rel="noreferrer"><span>Read: Danger level source</span></a>
             </li>
           )}
           <li>
             <a href="https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf" target="_blank" rel="noreferrer">
-              NYS DEC 6 NYCRR Part 575 invasive species list
+              <span>Read: NYS DEC 6 NYCRR Part 575 invasive species list</span>
             </a>
           </li>
         </ul>
@@ -226,13 +222,11 @@ function SpeciesDetails({ species, mapCount, onShowOnMap, shownOnMap }) {
   );
 }
 
-/** One line under the photo: legal status · sightings · last seen. (Danger is on the photo.) */
+/** One line under the name: sightings · last seen. (Danger is on the photo, legal status after the scientific name.) */
 function AtAGlance({ species }) {
   const { sightings } = species;
-  const legal = NY_STATUS_LABELS[species.ny_status];
   return (
     <p className="glance">
-      {legal && <span>{legal}</span>}
       <span>{sightings.total.toLocaleString()} sighting{sightings.total === 1 ? "" : "s"}</span>
       <span>Last seen {formatDay(sightings.last_seen)}</span>
     </p>

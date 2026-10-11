@@ -29,6 +29,7 @@ Each photo and sound carries its own attribution, license and observation link i
 | Source | Used for | URL | Checked |
 |---|---|---|---|
 | NYC Parks "Parks Properties" (NYC Department of Parks and Recreation, NYC Open Data) | Park boundaries, names, acres for park profiles | <https://data.cityofnewyork.us/d/enfh-gkve> | 2026-10-09 |
+| Wikipedia (geosearch + page images) and Wikimedia Commons (licenses) | One photo per park profile, where a match exists (`cache/park_photos.json`, `scripts/fetch_park_photos.py`) | <https://www.mediawiki.org/wiki/API:Geosearch>, <https://commons.wikimedia.org> | 2026-10-11 |
 
 ## Map and music
 
@@ -154,4 +155,5 @@ Record judgment calls here so the team can explain them.
 | 2026-10-09 | Cypress spurge sheet skips the NYIS "Impact" paragraph | That paragraph on the NYIS page describes *leafy* spurge (a copy error on their page), so we used only text that names cypress spurge. |
 | 2026-10-09 | `touch_safe: false` added for water chestnut | NYIS: the spiny nuts "can lead to injuries if stepped on". |
 | 2026-10-09 | Curly pondweed keeps rank "Very High" although its score is 79.79 | We copy the official rank as published. |
+| 2026-10-11 | Park photos come from the park's own Wikipedia article, only when the article's name is the park's name and its map pin is inside (or within ~300 m of) the official boundary; only Commons files with a CC or public domain license | So a photo is never of the wrong place, and every one can be embedded with its photographer and license. Parks with no match show no photo rather than a guess. |
 | 2026-10-10 | Season charts show each species' sightings per 10,000 sightings of any species that month (raw counts one tap away) | Raw monthly counts mostly follow how many people post: Queens had 30,800 research-grade sightings in April vs 5,438 in January, so most species looked like they peaked in April (City Nature Challenge). Dividing by the monthly total of all sightings (iNaturalist histogram, `cache/activity_by_month.json`) removes most of that; e.g. Asian bittersweet's December peak (winter berries) stands out. Park charts keep raw counts (we don't have all-species totals per park) with a caveat. |

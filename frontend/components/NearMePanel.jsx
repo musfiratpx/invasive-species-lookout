@@ -19,6 +19,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import PanelHead from "@/components/PanelHead";
 import PhotoCredit from "@/components/PhotoCredit";
 import { formatDay } from "@/lib/dates";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
@@ -69,7 +70,7 @@ export default function NearMePanel({ location, outside, radius, onChangeRadius,
 
   return (
     <aside className={covered ? "sidebar covered" : "sidebar"} aria-label="Species near you">
-      <button ref={closeButton} className="sidebar-close" onClick={onClose} aria-label="Close near you panel">✕</button>
+      <PanelHead kicker="Near you / around your location" onClose={onClose} closeRef={closeButton} closeLabel="Close near you panel" />
       <h2>Near you</h2>
 
       {outside ? (

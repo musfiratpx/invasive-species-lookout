@@ -12,6 +12,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import Highlight from "@/components/Highlight";
+import PanelHead from "@/components/PanelHead";
 import PhotoCredit from "@/components/PhotoCredit";
 import { formatDay, formatMonth } from "@/lib/dates";
 import { DANGER_COLORS, DANGER_LABELS } from "@/lib/labels";
@@ -135,7 +136,7 @@ export default function BrowsePanel({ tab, onChangeTab, query: typed = "", speci
 
   return (
     <aside ref={panel} id="browse-panel" className={covered ? "sidebar browse covered" : "sidebar browse"} aria-label="Browse species and parks">
-      <button ref={closeButton} className="sidebar-close" onClick={onClose} aria-label="Close browse panel">✕</button>
+      <PanelHead kicker="Browse / species and parks" onClose={onClose} closeRef={closeButton} closeLabel="Close browse panel" />
       <h2>Browse</h2>
       <div className="segmented browse-tabs" role="group" aria-label="Browse by">
         {Object.entries(TABS).map(([id, t]) => (

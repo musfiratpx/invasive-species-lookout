@@ -1,6 +1,6 @@
 "use client";
 /**
- * A small ▶ button that reads one paragraph out loud, placed next to each paragraph in the
+ * A small ▶ button that reads a section out loud, placed next to each subheading in the
  * species panel so people can listen at their own pace. Press it again (■) to stop.
  *
  * It uses the browser's own built-in voice (speechSynthesis): free, works offline, and no
@@ -8,7 +8,7 @@
  * It reads only the text already on screen, word for word. It is not a species sound.
  * Hidden in browsers without a built-in voice.
  *
- * Only one paragraph reads at a time: starting one tells the others (with a window event)
+ * Only one section reads at a time: starting one tells the others (with a window event)
  * to switch their button back to ▶.
  */
 
@@ -16,7 +16,7 @@ import { useEffect, useId, useRef, useState } from "react";
 
 const STARTED = "read-aloud-started";
 
-export default function ReadAloud({ text, label = "this paragraph" }) {
+export default function ReadAloud({ text, label = "this text" }) {
   const id = useId();
   const [supported, setSupported] = useState(false);
   const [speaking, setSpeaking] = useState(false);

@@ -146,9 +146,12 @@ Field notes:
    "attribution": "(c) Misha Zitser, some rights reserved (CC BY-NC)",
    "license": "cc-by-nc",
    "observer_note": "A snort can be heard at second 3",
-   "observation_url": "https://www.inaturalist.org/observations/142509792"}
+   "observation_url": "https://www.inaturalist.org/observations/142509792",
+   "waveform": [0.21, 0.35, 0.8, ...], "seconds": 36.5}
   ```
-  `observer_note` is the observer's own description and may be empty.
+  `observer_note` is the observer's own description and may be empty. `waveform` (60 loudness
+  levels from 0 to 1) and `seconds` are measured from the real recording by
+  `scripts/build_sound_waves.py`, for the player's waveform picture; both are `null` before it has run.
 - **`insights`**: written by `scripts/build_insights.py` from our source documents.
   - A `null` section means our sources don't cover it. Show "No information in our sources yet".
   - `handling.text` is never empty. When `is_default` is `true`, it's the cautious default message.
@@ -205,6 +208,10 @@ A park's profile. Unknown `park_id` → `404`.
 ```json
 {
   "park_id": "Q024", "name": "Kissena Park", "acres": 237.147, "type": "Community Park", "address": "...",
+  "photo": {"url": "https://upload.wikimedia.org/...", "width": 1024, "height": 683, "artist": "...",
+            "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/...",
+            "file_page": "https://commons.wikimedia.org/wiki/File:...", "article": "Kissena Park",
+            "article_url": "https://en.wikipedia.org/wiki/Kissena_Park"},
   "sightings": 498, "species_count": 31,
   "species_by_danger": {"Very High": 16, "High": 12, "Moderate": 2, "Not yet ranked": 1},
   "species": [{"species_id": "52856", "scientific_name": "Artemisia vulgaris", "common_name": "common mugwort",
@@ -220,6 +227,7 @@ A park's profile. Unknown `park_id` → `404`.
 - `species_by_danger` counts **species** (not sightings) at each danger level.
 - `species[].sightings` is sightings **in this park**.
 - `outline` is GeoJSON for drawing the park boundary.
+- `photo` is `null` for parks with no matching, openly licensed photo (most small parks). See `scripts/fetch_park_photos.py` for how matches are checked.
 
 The map endpoint also includes `park_id` (or `null`) on each sighting.
 

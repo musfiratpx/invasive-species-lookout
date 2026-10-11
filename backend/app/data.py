@@ -180,6 +180,12 @@ def parks_by_id():
     return {p["park_id"]: p for p in load_parks()}
 
 
+@lru_cache(maxsize=1)
+def park_photos():
+    """{park_id: photo} from data/cache/park_photos.json; empty before the script has run."""
+    return _read_json(config.PARK_PHOTOS_JSON, {})
+
+
 def park_list():
     """Every NYC park with at least one sighting, most sightings first."""
     df = observations().dropna(subset=["park_id"])
@@ -216,6 +222,15 @@ def park_outlines():
     return {"type": "FeatureCollection", "features": features}
 
 
+def _park_photo(park_id):
+    """The park's openly licensed photo with its credit, or None (most small parks have none)."""
+    photo = park_photos().get(park_id)
+    if not photo:
+        return None
+    keys = ("url", "width", "height", "artist", "license", "license_url", "file_page", "article", "article_url")
+    return {k: photo.get(k) for k in keys}
+
+
 def park_detail(park_id):
     """Everything the park profile panel shows, or None for an unknown park."""
     park = parks_by_id().get(park_id)
@@ -243,6 +258,7 @@ def park_detail(park_id):
         "acres": park["acres"],
         "type": park["type"],
         "address": park["address"].title() if park["address"] else None,  # the city data is ALL CAPS
+        "photo": _park_photo(park_id),
         "sightings": int(len(group)),
         "species_count": len(species),
         "species_by_danger": by_level,
@@ -367,6 +383,21 @@ def _by_year(dates):
     return [{"year": y, "count": int(counts.get(y, 0))} for y in range(newest - YEARS_SHOWN + 1, newest + 1)]
 
 
+@lru_cache(maxsize=1)
+def sound_waves():
+    """{species_id: {peaks, seconds}} from data/cache/sound_waves.json; empty before the script has run."""
+    return _read_json(config.SOUND_WAVES_JSON, {})
+
+
+def _sound(species_id):
+    """The species' real recording (or None), with its waveform picture when we have one."""
+    sound = media().get(species_id, {}).get("sound")
+    if not sound:
+        return None
+    wave = sound_waves().get(species_id)
+    return {**sound, "waveform": wave["peaks"] if wave else None, "seconds": wave["seconds"] if wave else None}
+
+
 def species_detail(species_id):
     """Everything the sidebar needs for one species, or None if it isn't in our data."""
     df = observations()
@@ -399,6 +430,6 @@ def species_detail(species_id):
             "by_year": _by_year(dates),
         },
         "photos": _photos(species_id),
-        "sound": media().get(species_id, {}).get("sound"),  # null when no real recording exists
+        "sound": _sound(species_id),  # null when no real recording exists
         "insights": _insights(species_id),
     }

@@ -13,6 +13,7 @@ const CREDITS = [
   ["Invasive status", "NYS DEC, 6 NYCRR Part 575 Prohibited and Regulated Invasive Species list", "https://dec.ny.gov/docs/lands_forests_pdf/islist.pdf"],
   ["Plant danger ranks", "New York Non-Native Plant Invasiveness Ranking forms (nyis.info)", "https://nyis.info"],
   ["Park boundaries", "NYC Parks Properties, NYC Department of Parks and Recreation (NYC Open Data)", "https://data.cityofnewyork.us/d/enfh-gkve"],
+  ["Park photos", "Wikimedia Commons photographers (openly licensed; each photo is credited with its license in the park profile)", "https://commons.wikimedia.org"],
   ["Species fact sheets", "NYIS (Cornell / NY Sea Grant), NYS DEC, USGS, WNY PRISM, NY iMapInvasives (linked under Sources in each species panel)", null],
   ["Reporting", "NY iMapInvasives, New York's official invasive species database", "https://www.nyimapinvasives.org/report"],
   ["Park rules and volunteering", "NYC Parks Rules (56 RCNY §1-04) and NYC Parks Stewardship volunteer projects", "https://www.nycgovparks.org/reg/stewardship"],

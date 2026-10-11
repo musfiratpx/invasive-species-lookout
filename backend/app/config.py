@@ -47,6 +47,8 @@ SEASONALITY_JSON = CACHE_DIR / "seasonality.json"
 ACTIVITY_JSON = CACHE_DIR / "activity_by_month.json"  # all sightings per month, to adjust seasonality for activity
 INSIGHTS_DIR = CACHE_DIR / "insights"
 EARLY_WARNING_JSON = CACHE_DIR / "early_warning.json"  # species first recorded in a borough recently (scripts/build_early_warning.py)
+PARK_PHOTOS_JSON = CACHE_DIR / "park_photos.json"  # one Wikimedia Commons photo per park (scripts/fetch_park_photos.py)
+SOUND_WAVES_JSON = CACHE_DIR / "sound_waves.json"  # waveform pictures of the real recordings (scripts/build_sound_waves.py)
 
 # --- Optional services --------------------------------------------------------
 SNOWFLAKE = {
