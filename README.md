@@ -4,7 +4,7 @@ An interactive map of **invasive species across New York City**, built at **Hack
 
 Every fact has links to the source, and danger levels are from official rankings. Not made up from AI. 
 
-**Made by: Musfirat, Jaicee, Moses**
+**Made by: Jaicee Cofresi, Moses Ezekiel, Musfirat Rahman**
 
 **Try it live: <https://invasive.surf>** (or [run it on your own computer](#run-it-on-your-own-computer)).
 
